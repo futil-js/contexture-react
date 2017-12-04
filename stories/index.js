@@ -1,5 +1,6 @@
+import 'babel-polyfill'
 import React from 'react'
-import { observable } from 'mobx'
+import { observable, toJS, extendObservable } from 'mobx'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { withInfo } from '@storybook/addon-info'
@@ -263,6 +264,30 @@ storiesOf('SearchRoot', module)
           },
         ],
       })}
+      types={Types}
+    />
+  ))
+
+// MOBX IMDB TEST
+
+import * as contextureClient from 'contexture-client'
+let tree = contextureClient.ContextTree(observable({
+  key: 'root',
+  join: 'and',
+  children: [{
+    key: 'test',
+    type: 'facet',
+    field: 'title',
+    data: {
+      value: 'Rabbit Fire',
+    }
+  }]
+}), dto => service.post('/search', dto), undefined, { debug: true, snapshot: toJS, extend: extendObservable })
+
+storiesOf('IMDB', module)
+  .add('One Filter', () => (
+    <SearchRoot
+      tree={tree}
       types={Types}
     />
   ))
