@@ -270,19 +270,117 @@ storiesOf('SearchRoot', module)
 
 // MOBX IMDB TEST
 
+import Contexture from 'contexture'
+import elasticsearch from 'elasticsearch-browser'
+let process = Contexture({
+  schemas: {
+    gsaProduct: {
+      elasticsearch: {
+        index: 'gsa-data-import',
+        type: 'product-type',
+      },
+    },
+    unspsc: {
+      elasticsearch: {
+        index: 'unspsc-data',
+        type: 'logs',
+      },
+    },
+  },
+  providers: {
+    elasticsearch: require('contexture-elasticsearch')({
+      getClient: _.memoize(() =>
+        elasticsearch.Client({
+          apiVersion: '5.3',
+          host: '35.184.199.74:1337',
+        })
+      ),
+      request: {
+        timeout: '30s',
+        headers: {
+          'sp-app-name': 'TEST1337',
+        },
+      },
+      types: {
+        bool: require('contexture-elasticsearch/src/example-types/bool'),
+        cardinality: require('contexture-elasticsearch/src/example-types/cardinality'),
+        date: require('contexture-elasticsearch/src/example-types/date'),
+        dateHistogram: require('contexture-elasticsearch/src/example-types/dateHistogram'),
+        default: require('contexture-elasticsearch/src/example-types/default'),
+        esTwoLevelAggregation: require('contexture-elasticsearch/src/example-types/esTwoLevelAggregation'),
+        exists: require('contexture-elasticsearch/src/example-types/exists'),
+        facet: require('contexture-elasticsearch/src/example-types/facet'),
+        geo: require('contexture-elasticsearch/src/example-types/geo'),
+        groupedMetric: require('contexture-elasticsearch/src/example-types/groupedMetric'),
+        matchCardinality: require('contexture-elasticsearch/src/example-types/matchCardinality'),
+        matchStats: require('contexture-elasticsearch/src/example-types/matchStats'),
+        nLevelAggregation: require('contexture-elasticsearch/src/example-types/nLevelAggregation'),
+        number: require('contexture-elasticsearch/src/example-types/number'),
+        percentileRanks: require('contexture-elasticsearch/src/example-types/percentileRanks'),
+        query: require('contexture-elasticsearch/src/example-types/query'),
+        rangeStats: require('contexture-elasticsearch/src/example-types/rangeStats'),
+        results: require('contexture-elasticsearch/src/example-types/results'),
+        terms: require('contexture-elasticsearch/src/example-types/terms'),
+        termsDelta: require('contexture-elasticsearch/src/example-types/termsDelta'),
+        termsStatsHits: require('contexture-elasticsearch/src/example-types/termsStatsHits'),
+        terms_stats: require('contexture-elasticsearch/src/example-types/terms_stats'),
+        text: require('contexture-elasticsearch/src/example-types/text'),
+        twoLevelMatch: require('contexture-elasticsearch/src/example-types/twoLevelMatch'),
+      }
+    }),
+  },
+})
+
 import * as contextureClient from 'contexture-client'
 let tree = contextureClient.ContextTree(observable({
   key: 'root',
+  type: 'group',
   join: 'and',
-  children: [{
-    key: 'test',
-    type: 'facet',
-    field: 'title',
-    data: {
-      value: 'Rabbit Fire',
-    }
-  }]
-}), dto => service.post('/search', dto), undefined, { debug: true, snapshot: toJS, extend: extendObservable })
+  schema: 'unspsc',
+  children: [
+    {
+      key: 'classFacet',
+      type: 'facet',
+      filterOnly: true,
+      field: 'Class',
+      data: {
+        values: [],
+        fieldMode: 'word',
+      },
+    },
+    {
+      key: 'sanityCheck',
+      type: 'exists',
+      field: 'CommodityTitle',
+      data: {
+        value: true,
+      },
+    },
+    {
+      key: 'codes',
+      type: 'results',
+      config: {
+        pageSize: 1000,
+        page: 1,
+        include: ['Class', 'ClassTitle']
+      },
+      context: {
+        response: {
+          results: [],
+          totalRecords: null,
+        },
+      },
+    },
+  ],
+}), async dto => {
+  console.log('SERVICE CALL', dto)
+  let cleanDto = JSON.parse(JSON.stringify(dto).replace(/children/g, 'items'))
+  console.log('SERVICE CALL CLEAN', cleanDto)
+  let result = await process(cleanDto, {
+    debug: true,
+  })
+  console.log('RESULT', result)
+}, undefined, { debug: true, snapshot: toJS, extend: extendObservable })
 
 storiesOf('IMDB', module)
   .add('One Filter', () => (
