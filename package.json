@@ -72,7 +72,10 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "contexture": "0.0.5",
     "contexture-client": "smartprocure/contexture-client#feature/mobx-test",
+    "contexture-elasticsearch": "^0.1.1",
+    "elasticsearch-browser": "^14.0.0",
     "futil-js": "^1.36.0",
     "lodash": "^4.17.4",
     "mobx": "^3.3.2",
