@@ -274,16 +274,10 @@ import Contexture from 'contexture'
 import elasticsearch from 'elasticsearch-browser'
 let process = Contexture({
   schemas: {
-    gsaProduct: {
+    imdb: {
       elasticsearch: {
-        index: 'gsa-data-import',
-        type: 'product-type',
-      },
-    },
-    unspsc: {
-      elasticsearch: {
-        index: 'unspsc-data',
-        type: 'logs',
+        index: 'movies',
+        type: 'movie',
       },
     },
   },
@@ -291,42 +285,11 @@ let process = Contexture({
     elasticsearch: require('contexture-elasticsearch')({
       getClient: _.memoize(() =>
         elasticsearch.Client({
-          apiVersion: '5.3',
-          host: '35.184.199.74:1337',
+          apiVersion: '6.0',
+          host: 'https://first-cluster-5089088915.us-east-1.bonsaisearch.net',
         })
       ),
-      request: {
-        timeout: '30s',
-        headers: {
-          'sp-app-name': 'TEST1337',
-        },
-      },
-      types: {
-        bool: require('contexture-elasticsearch/src/example-types/bool'),
-        cardinality: require('contexture-elasticsearch/src/example-types/cardinality'),
-        date: require('contexture-elasticsearch/src/example-types/date'),
-        dateHistogram: require('contexture-elasticsearch/src/example-types/dateHistogram'),
-        default: require('contexture-elasticsearch/src/example-types/default'),
-        esTwoLevelAggregation: require('contexture-elasticsearch/src/example-types/esTwoLevelAggregation'),
-        exists: require('contexture-elasticsearch/src/example-types/exists'),
-        facet: require('contexture-elasticsearch/src/example-types/facet'),
-        geo: require('contexture-elasticsearch/src/example-types/geo'),
-        groupedMetric: require('contexture-elasticsearch/src/example-types/groupedMetric'),
-        matchCardinality: require('contexture-elasticsearch/src/example-types/matchCardinality'),
-        matchStats: require('contexture-elasticsearch/src/example-types/matchStats'),
-        nLevelAggregation: require('contexture-elasticsearch/src/example-types/nLevelAggregation'),
-        number: require('contexture-elasticsearch/src/example-types/number'),
-        percentileRanks: require('contexture-elasticsearch/src/example-types/percentileRanks'),
-        query: require('contexture-elasticsearch/src/example-types/query'),
-        rangeStats: require('contexture-elasticsearch/src/example-types/rangeStats'),
-        results: require('contexture-elasticsearch/src/example-types/results'),
-        terms: require('contexture-elasticsearch/src/example-types/terms'),
-        termsDelta: require('contexture-elasticsearch/src/example-types/termsDelta'),
-        termsStatsHits: require('contexture-elasticsearch/src/example-types/termsStatsHits'),
-        terms_stats: require('contexture-elasticsearch/src/example-types/terms_stats'),
-        text: require('contexture-elasticsearch/src/example-types/text'),
-        twoLevelMatch: require('contexture-elasticsearch/src/example-types/twoLevelMatch'),
-      }
+      types: require('contexture-elasticsearch/src/types')()
     }),
   },
 })
@@ -336,33 +299,24 @@ let tree = contextureClient.ContextTree(observable({
   key: 'root',
   type: 'group',
   join: 'and',
-  schema: 'unspsc',
+  schema: 'imdb',
   children: [
     {
       key: 'classFacet',
       type: 'facet',
       filterOnly: true,
-      field: 'Class',
+      field: 'title',
       data: {
         values: [],
-        fieldMode: 'word',
+        fieldMode: 'field',
       },
     },
     {
-      key: 'sanityCheck',
-      type: 'exists',
-      field: 'CommodityTitle',
-      data: {
-        value: true,
-      },
-    },
-    {
-      key: 'codes',
+      key: 'results',
       type: 'results',
       config: {
         pageSize: 1000,
-        page: 1,
-        include: ['Class', 'ClassTitle']
+        page: 1
       },
       context: {
         response: {
