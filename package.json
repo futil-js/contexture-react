@@ -6,7 +6,7 @@
   "scripts": {
     "pre-build": "rm -rf ./dist",
     "build": "babel ./src --out-dir ./dist",
-    "prepublish": "npm run build",    
+    "prepublish": "npm run build",
     "storybook": "start-storybook -p 3000",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
@@ -73,7 +73,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "contexture": "0.0.5",
-    "contexture-client": "smartprocure/contexture-client#feature/mobx-test",
+    "contexture-client": "1.0.4",
     "contexture-elasticsearch": "^0.1.4",
     "elasticsearch-browser": "^14.0.0",
     "futil-js": "^1.36.0",

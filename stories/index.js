@@ -334,6 +334,7 @@ let tree = contextureClient.ContextTree(observable({
     debug: true,
   })
   console.log('RESULT', result)
+  return { data: result }
 }, undefined, { debug: true, snapshot: toJS, extend: extendObservable })
 
 storiesOf('IMDB', module)
