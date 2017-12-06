@@ -286,7 +286,7 @@ let process = Contexture({
       getClient: _.memoize(() =>
         elasticsearch.Client({
           apiVersion: '6.0',
-          host: 'https://first-cluster-5089088915.us-east-1.bonsaisearch.net',
+          host: 'https://y85ukgvi1w:4s1cvayng9@first-cluster-5089088915.us-east-1.bonsaisearch.net',
         })
       ),
       types: require('contexture-elasticsearch/src/types')()
