@@ -366,7 +366,6 @@ exports[`Storyshots FilterContents FilterContents 1`] = `
     </option>
   </select>
   testKey
-  {"type":"test","key":"testKey"}
 </div>
 `;
 
@@ -504,7 +503,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                           </option>
                         </select>
                         filter 1
-                        {"type":"query","key":"filter 1"}
                       </div>
                       <div
                         style={
@@ -742,7 +740,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                       </option>
                                     </select>
                                     filter 2a
-                                    {"type":"query","key":"filter 2a"}
                                   </div>
                                   <div
                                     style={
@@ -919,7 +916,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                       </option>
                                     </select>
                                     filter 2b
-                                    {"type":"query","key":"filter 2b"}
                                   </div>
                                   <div
                                     style={
@@ -1158,7 +1154,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                   </option>
                                                 </select>
                                                 filter 4a
-                                                {"key":"filter 4a","type":"facet"}
                                               </div>
                                               <div
                                                 style={
@@ -1336,7 +1331,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                   </option>
                                                 </select>
                                                 filter 4b
-                                                {"type":"query","key":"filter 4b"}
                                               </div>
                                               <div
                                                 style={
@@ -1525,7 +1519,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                           </option>
                         </select>
                         filter 3
-                        {"type":"query","key":"filter 3"}
                       </div>
                       <div
                         style={
@@ -1783,7 +1776,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                       </option>
                                     </select>
                                     filter 5a
-                                    {"key":"filter 5a","type":"number"}
                                   </div>
                                   <div
                                     style={
@@ -1961,7 +1953,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                       </option>
                                     </select>
                                     filter 5b
-                                    {"type":"query","key":"filter 5b"}
                                   </div>
                                   <div
                                     style={
@@ -2281,7 +2272,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                   </option>
                                                 </select>
                                                 filter 4a
-                                                {"type":"query","key":"filter 4a"}
                                               </div>
                                               <div
                                                 style={
@@ -2459,7 +2449,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                                   </option>
                                                 </select>
                                                 txt filter 4b
-                                                {"key":"txt filter 4b","type":"text"}
                                               </div>
                                               <div
                                                 style={
@@ -2643,7 +2632,6 @@ exports[`Storyshots Group Multiple Filters 1`] = `
                                       </option>
                                     </select>
                                     asdf
-                                    {"key":"asdf","typ":"query"}
                                   </div>
                                   <div
                                     style={
@@ -2831,7 +2819,6 @@ exports[`Storyshots Group One Filter 1`] = `
                           </option>
                         </select>
                         filter 1
-                        {"key":"filter 1","type":"query"}
                       </div>
                       <div
                         style={
@@ -3580,7 +3567,6 @@ exports[`Storyshots Rule index 1`] = `
               </option>
             </select>
             testKey
-            {"type":"test","key":"testKey"}
           </div>
           <div
             style={
@@ -3793,6 +3779,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                             Object {
                               "display": "inline-block",
                               "verticalAlign": "top",
+                              "width": "100%",
                             }
                           }
                         >
@@ -3802,7 +3789,6 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                             />
                           </span>
                         </div>
-                        {"key":"filter 1","type":"query","data":{"words":[]}}
                       </div>
                       <div
                         style={
@@ -4055,6 +4041,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                         Object {
                                           "display": "inline-block",
                                           "verticalAlign": "top",
+                                          "width": "100%",
                                         }
                                       }
                                     >
@@ -4064,7 +4051,6 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                         />
                                       </span>
                                     </div>
-                                    {"key":"filter 2a","type":"query","data":{"words":[]}}
                                   </div>
                                   <div
                                     style={
@@ -4256,6 +4242,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                         Object {
                                           "display": "inline-block",
                                           "verticalAlign": "top",
+                                          "width": "100%",
                                         }
                                       }
                                     >
@@ -4265,7 +4252,6 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                         />
                                       </span>
                                     </div>
-                                    {"key":"filter 2b","type":"query","data":{"words":[]}}
                                   </div>
                                   <div
                                     style={
@@ -4519,12 +4505,12 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                     Object {
                                                       "display": "inline-block",
                                                       "verticalAlign": "top",
+                                                      "width": "100%",
                                                     }
                                                   }
                                                 >
                                                   <div />
                                                 </div>
-                                                {"key":"filter 4a","type":"facet"}
                                               </div>
                                               <div
                                                 style={
@@ -4717,6 +4703,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                     Object {
                                                       "display": "inline-block",
                                                       "verticalAlign": "top",
+                                                      "width": "100%",
                                                     }
                                                   }
                                                 >
@@ -4726,7 +4713,6 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                     />
                                                   </span>
                                                 </div>
-                                                {"key":"filter 4b","type":"query","data":{"words":[]}}
                                               </div>
                                               <div
                                                 style={
@@ -4930,6 +4916,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                             Object {
                               "display": "inline-block",
                               "verticalAlign": "top",
+                              "width": "100%",
                             }
                           }
                         >
@@ -4939,7 +4926,6 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                             />
                           </span>
                         </div>
-                        {"key":"filter 3","type":"query","data":{"words":[]}}
                       </div>
                       <div
                         style={
@@ -5212,6 +5198,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                         Object {
                                           "display": "inline-block",
                                           "verticalAlign": "top",
+                                          "width": "100%",
                                         }
                                       }
                                     >
@@ -5226,7 +5213,6 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                         />
                                       </span>
                                     </div>
-                                    {"key":"filter 5a","type":"number","data":{}}
                                   </div>
                                   <div
                                     style={
@@ -5419,6 +5405,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                         Object {
                                           "display": "inline-block",
                                           "verticalAlign": "top",
+                                          "width": "100%",
                                         }
                                       }
                                     >
@@ -5428,7 +5415,6 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                         />
                                       </span>
                                     </div>
-                                    {"key":"filter 5b","type":"query","data":{"words":[]}}
                                   </div>
                                   <div
                                     style={
@@ -5763,6 +5749,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                     Object {
                                                       "display": "inline-block",
                                                       "verticalAlign": "top",
+                                                      "width": "100%",
                                                     }
                                                   }
                                                 >
@@ -5772,7 +5759,6 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                     />
                                                   </span>
                                                 </div>
-                                                {"key":"filter 4a","type":"query","data":{"words":[]}}
                                               </div>
                                               <div
                                                 style={
@@ -5965,6 +5951,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                     Object {
                                                       "display": "inline-block",
                                                       "verticalAlign": "top",
+                                                      "width": "100%",
                                                     }
                                                   }
                                                 >
@@ -6031,7 +6018,6 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                                     </select>
                                                   </span>
                                                 </div>
-                                                {"key":"txt filter 4b","type":"text","data":{"values":[]}}
                                               </div>
                                               <div
                                                 style={
@@ -6230,6 +6216,7 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                         Object {
                                           "display": "inline-block",
                                           "verticalAlign": "top",
+                                          "width": "100%",
                                         }
                                       }
                                     >
@@ -6239,7 +6226,6 @@ exports[`Storyshots SearchRoot Multiple Filters 1`] = `
                                         />
                                       </span>
                                     </div>
-                                    {"key":"asdf","type":"query","data":{"words":[]}}
                                   </div>
                                   <div
                                     style={
@@ -6464,6 +6450,7 @@ exports[`Storyshots SearchRoot One Filter 1`] = `
                             Object {
                               "display": "inline-block",
                               "verticalAlign": "top",
+                              "width": "100%",
                             }
                           }
                         >
@@ -6473,7 +6460,6 @@ exports[`Storyshots SearchRoot One Filter 1`] = `
                             />
                           </span>
                         </div>
-                        {"key":"filter 1","type":"query"}
                       </div>
                       <div
                         style={
@@ -6692,6 +6678,7 @@ exports[`Storyshots SearchRoot One Filter on a misplaced root 1`] = `
                             Object {
                               "display": "inline-block",
                               "verticalAlign": "top",
+                              "width": "100%",
                             }
                           }
                         >
@@ -6701,7 +6688,6 @@ exports[`Storyshots SearchRoot One Filter on a misplaced root 1`] = `
                             />
                           </span>
                         </div>
-                        {"key":"filter 1","type":"query"}
                       </div>
                       <div
                         style={
@@ -6932,35 +6918,55 @@ exports[`Storyshots SearchRoot One Filter with facet options 1`] = `
                             Object {
                               "display": "inline-block",
                               "verticalAlign": "top",
+                              "width": "100%",
                             }
                           }
                         >
                           <div>
-                            <div>
-                              <input
-                                onChange={[Function]}
-                                type="checkbox"
-                              />
+                            <div
+                              style={
+                                Object {
+                                  "display": "flex",
+                                  "justifyContent": "space-between",
+                                }
+                              }
+                            >
+                              <div>
+                                <input
+                                  onChange={[Function]}
+                                  type="checkbox"
+                                />
+                                 
+                                Option 1
+                              </div>
                                
-                              Option 1
-                               (
-                              2
-                              )
+                              <div>
+                                2
+                              </div>
                             </div>
-                            <div>
-                              <input
-                                onChange={[Function]}
-                                type="checkbox"
-                              />
+                            <div
+                              style={
+                                Object {
+                                  "display": "flex",
+                                  "justifyContent": "space-between",
+                                }
+                              }
+                            >
+                              <div>
+                                <input
+                                  onChange={[Function]}
+                                  type="checkbox"
+                                />
+                                 
+                                Option 2
+                              </div>
                                
-                              Option 2
-                               (
-                              1
-                              )
+                              <div>
+                                1
+                              </div>
                             </div>
                           </div>
                         </div>
-                        {"key":"filter 1","type":"facet","context":{"options":[{"name":"Option 1","count":2},{"name":"Option 2","count":1}]}}
                       </div>
                       <div
                         style={
@@ -7191,6 +7197,7 @@ exports[`Storyshots SearchRoot One Filter with fields 1`] = `
                             Object {
                               "display": "inline-block",
                               "verticalAlign": "top",
+                              "width": "100%",
                             }
                           }
                         >
@@ -7200,7 +7207,6 @@ exports[`Storyshots SearchRoot One Filter with fields 1`] = `
                             />
                           </span>
                         </div>
-                        {"key":"filter 1","type":"query"}
                       </div>
                       <div
                         style={

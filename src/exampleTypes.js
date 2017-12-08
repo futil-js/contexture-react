@@ -1,6 +1,7 @@
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import React from 'react'
+import styles from './styles'
 import { observable } from 'mobx'
 import { Component, lensOf } from './mobx-react-utils'
 import { value } from './actout'
@@ -48,8 +49,8 @@ export default {
     label: 'List',
     Component: Component(({ node }) => (
       <div>
-        {_.map(option => <div key={option.name}>
-          <input type="checkbox" onChange={F.flip('selected', option)}/> {option.name} ({option.count})
+        {_.map(option => <div key={option.name} style={styles.flexJustifyContentBetween}>
+          <div><input type="checkbox" onChange={F.flip('selected', option)}/> {option.name}</div> <div>{option.count}</div>
         </div>, _.get('context.options', node))}
       </div>
     )),
