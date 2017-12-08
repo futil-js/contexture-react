@@ -1,4 +1,5 @@
 import React from 'react'
+import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import { observable, action } from 'mobx'
 import DDContext from './DragDrop/DDContext'
@@ -30,6 +31,7 @@ let ContextureClientBridge = (Types, Tree) => ({
     node.data.words.push({ word: 'hi' })
     Tree.add(tree.path.split('->'), node)
   },
+  mutate: (tree, node, data) => Tree.mutate(node.path.split('->'), { data }),
   remove: (tree, node) => Tree.remove(node.path.split('->')),
   join: (tree, join) => Tree.mutate(tree.path.split('->'), { join }),
 })
@@ -43,6 +45,7 @@ let ObservableTreeBridge = Types => ({
     })
     tree.children.push(node)
   },
+  mutate: (tree, node, data) => F.extendOn(node, { data }),
   remove(tree, node) {
     tree.children.remove(node)
   },

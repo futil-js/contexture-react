@@ -65,9 +65,9 @@ export default {
     )),
   },
   query: {
-    Component: Component(node => (
+    Component: Component(({ node, root }) => (
       <span>
-        <input type="text" onChange={e => node.data && F.extendOn(node.data, { query: e.target.value })} />
+        <input type="text" onChange={e => root.mutate(node, { query: e.target.value })} />
       </span>
     )),
     init(node) {
