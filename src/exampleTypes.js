@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import * as F from 'futil-js'
 import React from 'react'
 import { observable } from 'mobx'
 import { Component, lensOf } from './mobx-react-utils'
@@ -45,20 +46,11 @@ let textOperatorOptions = [
 export default {
   facet: {
     label: 'List',
-    Component: Component(() => (
+    Component: Component(({ node }) => (
       <div>
-        <div>
-          <input type="checkbox" /> Label
-        </div>
-        <div>
-          <input type="checkbox" /> Label
-        </div>
-        <div>
-          <input type="checkbox" /> Label
-        </div>
-        <div>
-          <input type="checkbox" /> Label
-        </div>
+        {_.map(option => <div key={option.name}>
+          <input type="checkbox" onChange={F.flip(F.lensProp('selected', option))}/> {option.name}
+        </div>, node.options)}
       </div>
     )),
   },

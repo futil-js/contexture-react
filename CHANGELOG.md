@@ -2,6 +2,7 @@
 
 * Allowing specific paths to be used instead of the search root.
 * Making the field picker work.
+* Made the facet component actually work.
 
 # 0.1.5
 

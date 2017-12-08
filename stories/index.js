@@ -228,6 +228,25 @@ storiesOf('SearchRoot', module)
       types={Types}
     />
   ))
+  .add('One Filter with facet options', () => (
+    <SearchRoot
+      tree={observable({
+        key: 'root',
+        join: 'and',
+        children: [{
+          key: 'filter 1',
+          type: 'facet',
+          options: [{
+            name: 'Option 1',
+          }, {
+            name: 'Option 2',
+          }]
+        }],
+      })}
+      fields={['field1', 'field2', { label: 'Field 3', value: 'field3' }]}
+      types={Types}
+    />
+  ))
   .add('One Filter on a misplaced root', () => (
     <SearchRoot
       tree={observable({
