@@ -43,7 +43,13 @@ let FilterContents = ({ node, root, fields }) => {
       </select>
       {node.key}
       {TypeComponent && (
-        <div style={{ display: 'inline-block', verticalAlign: 'top', width: '100%' }}>
+        <div
+          style={{
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: '100%',
+          }}
+        >
           <TypeComponent {...{ node, root }} />
         </div>
       )}

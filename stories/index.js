@@ -233,19 +233,24 @@ storiesOf('SearchRoot', module)
       tree={observable({
         key: 'root',
         join: 'and',
-        children: [{
-          key: 'filter 1',
-          type: 'facet',
-          context: {
-            options: [{
-              name: 'Option 1',
-              count: 2,
-            }, {
-              name: 'Option 2',
-              count: 1,
-            }]
-          }
-        }],
+        children: [
+          {
+            key: 'filter 1',
+            type: 'facet',
+            context: {
+              options: [
+                {
+                  name: 'Option 1',
+                  count: 2,
+                },
+                {
+                  name: 'Option 2',
+                  count: 1,
+                },
+              ],
+            },
+          },
+        ],
       })}
       fields={['field1', 'field2', { label: 'Field 3', value: 'field3' }]}
       types={Types}

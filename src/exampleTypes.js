@@ -49,9 +49,18 @@ export default {
     label: 'List',
     Component: Component(({ node }) => (
       <div>
-        {_.map(option => <div key={option.name} style={styles.flexJustifyContentBetween}>
-          <div><input type="checkbox" onChange={F.flip('selected', option)}/> {option.name}</div> <div>{option.count}</div>
-        </div>, _.get('context.options', node))}
+        {_.map(
+          option => (
+            <div key={option.name} style={styles.flexJustifyContentBetween}>
+              <div>
+                <input type="checkbox" onChange={F.flip('selected', option)} />{' '}
+                {option.name}
+              </div>{' '}
+              <div>{option.count}</div>
+            </div>
+          ),
+          _.get('context.options', node)
+        )}
       </div>
     )),
   },
