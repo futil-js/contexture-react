@@ -265,7 +265,7 @@ storiesOf('SearchRoot', module)
           {
             key: 'search',
             join: 'and',
-            children: [{ key: 'filter 1', type: 'query' }],
+            children: [{ key: 'filter 1', type: 'query', data: {} }],
           },
         ],
       })}
