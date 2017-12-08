@@ -47,15 +47,21 @@ let textOperatorOptions = [
 export default {
   facet: {
     label: 'List',
-    Component: Component(({ node }) => (
+    Component: Component(({ node, root }) => (
       <div>
         {_.map(
           option => (
             <div key={option.name} style={styles.flexJustifyContentBetween}>
               <div>
-                <input type="checkbox" onChange={F.flip('selected', option)} />{' '}
+                <input type="checkbox" onChange={e => {
+                  let value = e.target.value
+                  let values = _.get('node.data.values').slice()
+                  if (_.includes(value, values)) values = _.pull(value, values)
+                  else values.push(value)
+                  root.mutate(node, { values })
+                }} />
                 {option.name}
-              </div>{' '}
+              </div>
               <div>{option.count}</div>
             </div>
           ),
