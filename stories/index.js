@@ -236,11 +236,15 @@ storiesOf('SearchRoot', module)
         children: [{
           key: 'filter 1',
           type: 'facet',
-          options: [{
-            name: 'Option 1',
-          }, {
-            name: 'Option 2',
-          }]
+          context: {
+            options: [{
+              name: 'Option 1',
+              count: 2,
+            }, {
+              name: 'Option 2',
+              count: 1,
+            }]
+          }
         }],
       })}
       fields={['field1', 'field2', { label: 'Field 3', value: 'field3' }]}

@@ -6943,6 +6943,9 @@ exports[`Storyshots SearchRoot One Filter with facet options 1`] = `
                               />
                                
                               Option 1
+                               (
+                              2
+                              )
                             </div>
                             <div>
                               <input
@@ -6951,10 +6954,13 @@ exports[`Storyshots SearchRoot One Filter with facet options 1`] = `
                               />
                                
                               Option 2
+                               (
+                              1
+                              )
                             </div>
                           </div>
                         </div>
-                        {"key":"filter 1","type":"facet","options":[{"name":"Option 1"},{"name":"Option 2"}]}
+                        {"key":"filter 1","type":"facet","context":{"options":[{"name":"Option 1","count":2},{"name":"Option 2","count":1}]}}
                       </div>
                       <div
                         style={

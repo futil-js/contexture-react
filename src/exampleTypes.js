@@ -49,8 +49,8 @@ export default {
     Component: Component(({ node }) => (
       <div>
         {_.map(option => <div key={option.name}>
-          <input type="checkbox" onChange={F.flip(F.lensProp('selected', option))}/> {option.name}
-        </div>, node.options)}
+          <input type="checkbox" onChange={F.flip('selected', option)}/> {option.name} ({option.count})
+        </div>, _.get('context.options', node))}
       </div>
     )),
   },
