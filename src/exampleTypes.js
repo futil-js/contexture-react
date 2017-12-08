@@ -67,7 +67,10 @@ export default {
   query: {
     Component: Component(({ node, root }) => (
       <span>
-        <input type="text" onChange={e => root.mutate(node, { query: e.target.value })} />
+        <input
+          type="text"
+          onChange={e => root.mutate(node, { query: e.target.value })}
+        />
       </span>
     )),
     init(node) {
