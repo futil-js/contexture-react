@@ -1,5 +1,6 @@
+import 'babel-polyfill'
 import React from 'react'
-import { observable } from 'mobx'
+import { observable, toJS, extendObservable } from 'mobx'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { withInfo } from '@storybook/addon-info'
@@ -291,6 +292,83 @@ storiesOf('SearchRoot', module)
           },
         ],
       })}
+      types={Types}
+    />
+  ))
+
+// MOBX IMDB TEST
+
+import Contexture from 'contexture'
+import elasticsearch from 'elasticsearch-browser'
+let process = Contexture({
+  schemas: {
+    imdb: {
+      elasticsearch: {
+        index: 'movies',
+        type: 'movie',
+      },
+    },
+  },
+  providers: {
+    elasticsearch: require('contexture-elasticsearch')({
+      getClient: _.memoize(() =>
+        elasticsearch.Client({
+          apiVersion: '6.0',
+          host: 'https://y85ukgvi1w:4s1cvayng9@first-cluster-5089088915.us-east-1.bonsaisearch.net',
+        })
+      ),
+      types: require('contexture-elasticsearch/src/types')()
+    }),
+  },
+})
+
+import * as contextureClient from 'contexture-client'
+let tree = contextureClient.ContextTree(observable({
+  key: 'root',
+  type: 'group',
+  join: 'and',
+  schema: 'imdb',
+  children: [
+    {
+      key: 'classFacet',
+      type: 'facet',
+      filterOnly: true,
+      field: 'title',
+      data: {
+        values: [],
+        fieldMode: 'field',
+      },
+    },
+    {
+      key: 'results',
+      type: 'results',
+      config: {
+        pageSize: 1000,
+        page: 1
+      },
+      context: {
+        response: {
+          results: [],
+          totalRecords: null,
+        },
+      },
+    },
+  ],
+}), async dto => {
+  console.log('SERVICE CALL', dto)
+  let cleanDto = JSON.parse(JSON.stringify(dto).replace(/children/g, 'items'))
+  console.log('SERVICE CALL CLEAN', cleanDto)
+  let result = await process(cleanDto, {
+    debug: true,
+  })
+  console.log('RESULT', result)
+  return { data: result }
+}, undefined, { debug: true, snapshot: toJS, extend: extendObservable })
+
+storiesOf('IMDB', module)
+  .add('One Filter', () => (
+    <SearchRoot
+      tree={tree}
       types={Types}
     />
   ))
