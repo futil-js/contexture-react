@@ -86,13 +86,13 @@ export default InjectTreeNode(
             {_.map(
               x => (
                 <tr key={x._id}>
-                  {_.map(({ field, display = x => x, Cell = 'td' }) => {
+                  {_.map(({ field, display, Cell = 'td' }) => {
                     let record = getRecord(x)
                     let props = { key: field }
                     // React warns you if you send record as a property to `td`
                     if (Cell !== 'td') props.record = record
                     return (
-                      <Cell {...props}>{display(record[field], record)}</Cell>
+                      <Cell {...props}>{(display || x => x)(record[field], record)}</Cell>
                     )
                   }, schema)}
                 </tr>
