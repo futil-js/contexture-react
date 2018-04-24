@@ -92,9 +92,7 @@ export default InjectTreeNode(
                     // React warns you if you send record as a property to `td`
                     if (Cell !== 'td') props.record = record
                     return (
-                      <Cell {...props}>
-                        {display(record[field], record)}
-                      </Cell>
+                      <Cell {...props}>{display(record[field], record)}</Cell>
                     )
                   }, schema)}
                 </tr>
