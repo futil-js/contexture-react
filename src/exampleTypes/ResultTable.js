@@ -12,7 +12,7 @@ let buildSchema = F.mapValuesIndexed((val, field) => ({
   field,
   label: F.autoLabel(field),
   order: 0,
-  display: val.push && _.join(', '),
+  display: val && val.push && _.join(', '),
 }))
 let inferSchema = _.flow(getResults, _.head, getRecord, buildSchema)
 let getIncludes = (node, schema) =>
