@@ -11,7 +11,7 @@ let toggleElement = (check, val, arr = []) =>
   (check ? _.pull : F.push)(val, arr)
 
 export default injectTreeNode(
-  observer(({ tree, node, values, hide = {}, TextInput = 'input' }) => (
+  observer(({ tree, node, hide = {}, TextInput = 'input' }) => (
     <div>
       {!hide.facetFilter && (
         <TextInput
@@ -23,7 +23,7 @@ export default injectTreeNode(
         />
       )}
       {_.map(({ name, count }) => {
-        let checked = _.includes(name, node.values || values)
+        let checked = _.includes(name, node.values)
         return (
           <Flex
             key={name}
@@ -33,7 +33,7 @@ export default injectTreeNode(
               type="checkbox"
               onChange={() => {
                 tree.mutate(node.path, {
-                  values: toggleElement(checked, name, node.values || values),
+                  values: toggleElement(checked, name, node.values),
                 })
               }}
               checked={checked}
