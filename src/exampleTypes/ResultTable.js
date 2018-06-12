@@ -18,7 +18,7 @@ let buildSchema = F.mapValuesIndexed((val, field) => ({
   field,
   label: F.autoLabel(field),
   order: 0,
-  display: val.push && _.join(', '),
+  display: val && val.push && _.join(', '),
 }))
 let inferSchema = _.flow(
   getResults,
@@ -35,7 +35,7 @@ let Header = withStateLens({ popover: false })(
     <th>
       <a onClick={F.flip(popover)}>
         {label}{' '}
-        {field === node.sortField && (node.sortDir === 'asc' ? '^' : 'v')}
+        {field === node.sortField && (node.sortDir === 'asc' ? '↑' : '↓')}
       </a>
       <Popover isOpen={popover}>
         <div style={{ textAlign: 'left' }}>
@@ -99,14 +99,15 @@ let ResultTable = InjectTreeNode(
             {_.map(
               x => (
                 <tr key={x._id}>
-                  {_.map(
-                    ({ field, display = x => x, Cell = 'td' }) => (
-                      <Cell key={field}>
-                        {display(getRecord(x)[field], getRecord(x))}
-                      </Cell>
-                    ),
-                    schema
-                  )}
+                  {_.map(({ field, display, Cell = 'td' }) => {
+                    let record = getRecord(x)
+                    let props = { key: field }
+                    // React warns you if you send record as a property to `td`
+                    if (Cell !== 'td') props.record = record
+                    return (
+                      <Cell {...props}>{(display || x => x)(record[field], record)}</Cell>
+                    )
+                  }, schema)}
                 </tr>
               ),
               getResults(node)

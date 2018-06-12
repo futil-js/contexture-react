@@ -39,7 +39,7 @@ let Facet = injectTreeNode(
               checked={checked}
             />
             <div style={{ flex: 2, paddingLeft: '5px', paddingRight: '5px' }}>
-              {name}
+              {`${name}`}
             </div>
             <div>{count}</div>
           </Flex>
