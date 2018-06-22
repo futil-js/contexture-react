@@ -1,3 +1,6 @@
+﻿# 1.5.0
+* Renamed the Date component to DateComponent.
+
 # 1.4.0
 * Add TagsQuery example component
 * Add DateRangePicker

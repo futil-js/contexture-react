@@ -21,6 +21,6 @@ let DateComponent = injectTreeNode(
   )),
   exampleTypes.date
 )
-DateComponent.displayName = 'Date'
+DateComponent.displayName = 'DateComponent'
 
 export default DateComponent

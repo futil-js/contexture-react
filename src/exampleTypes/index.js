@@ -1,6 +1,6 @@
 import Facet from './Facet'
 import Number from './Number'
-import Date from './Date'
+import DateComponent from './DateComponent'
 import DateRangePicker from './DateRangePicker'
 import Query from './Query'
 import TagsQuery from './TagsQuery'
@@ -26,7 +26,7 @@ export default (
   let Components = {
     Facet: partial({ TextInput, Checkbox, RadioList }, Facet),
     Number: partial({ NumberInput }, Number),
-    Date: partial({ DateInput }, Date),
+    Date: partial({ DateInput }, DateComponent),
     DateRangePicker,
     Query: partial({ TextInput }, Query),
     TagsQuery: partial({ TagsInput }, TagsQuery),
@@ -40,7 +40,7 @@ export default (
     facet: Components.Facet,
     query: Components.Query,
     number: Components.Number,
-    date: Components.Date,
+    date: Components.DateComponent,
     tagsQuery: Components.TagsQuery,
   }
   return { ...Components, TypeMap }
