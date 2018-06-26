@@ -26,7 +26,7 @@ export default (
   let Components = {
     Facet: partial({ TextInput, Checkbox, RadioList }, Facet),
     Number: partial({ NumberInput }, Number),
-    Date: partial({ DateInput }, DateComponent),
+    DateComponent: partial({ DateInput }, DateComponent),
     DateRangePicker,
     Query: partial({ TextInput }, Query),
     TagsQuery: partial({ TagsInput }, TagsQuery),
