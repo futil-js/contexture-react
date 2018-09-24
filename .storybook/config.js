@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import { configure, setAddon } from '@storybook/react'
 import { setOptions } from '@storybook/addon-options'
 import JSXAddon from 'storybook-addon-jsx'
