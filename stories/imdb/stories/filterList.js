@@ -2,10 +2,8 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { fromPromise } from 'mobx-utils'
 import { Provider } from 'mobx-react'
-import Contexture, { esClient } from '../utils/contexture'
-import { getESSchemas } from '../../../src/utils/schema'
-import { Flex, Awaiter, SpacedList } from '../../../src/layout/'
-import { FilterList } from '../../../src/FilterList'
+import Contexture, { updateSchemas } from '../utils/contexture'
+import { FilterList, Flex, Awaiter, SpacedList } from '../../../src'
 import { DarkBox, Adder, Pager, ExampleTypes } from '../../DemoControls'
 let {
   Query,
@@ -16,7 +14,7 @@ let {
   TypeMap,
 } = ExampleTypes
 
-let formatYear = x => new Date(x).getFullYear() + 1
+let formatYear = x => new Date(x).getUTCFullYear()
 
 let tree = Contexture({
   key: 'searchRoot',
@@ -73,7 +71,7 @@ let tree = Contexture({
 })
 
 let schemas = fromPromise(
-  getESSchemas(esClient).then(
+  updateSchemas().then(
     _.merge(_, {
       movies: {
         fields: {

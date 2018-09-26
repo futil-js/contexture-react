@@ -5,14 +5,11 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider, observer } from 'mobx-react'
 
-import { Awaiter, Flex } from '../../src/layout/'
-import QueryBuilder from '../../src/queryBuilder/'
-import { getESSchemas } from '../../src/utils/schema'
-import { FilterList } from '../../src/FilterList'
+import { QueryBuilder, FilterList, Awaiter, Flex } from '../../src/'
 import { Input, ClampedHTML, Adder, Pager, ExampleTypes } from '../DemoControls'
 let { ResultCount, ResultTable, TypeMap } = ExampleTypes
 
-import Contexture, { es, schemas, updateClient } from './contexture'
+import Contexture, { updateClient } from './contexture'
 
 let state = observable({
   url: '',
@@ -71,10 +68,8 @@ let overrideLookups = _.each(schema => {
 
 let updateEs = host => {
   state.url = host
-  updateClient({ host })
   state.schemas = fromPromise(
-    getESSchemas(es.client).then(x => {
-      F.extendOn(schemas, x)
+    updateClient({ host }).then(x => {
       changeSchema(_.keys(x)[0])
       return x
     })
@@ -113,7 +108,9 @@ let Story = observer(() => {
                     onChange={e => changeSchema(e.target.value)}
                   >
                     {_.map(
-                      x => <option key={x}>{x}</option>,
+                      x => (
+                        <option key={x}>{x}</option>
+                      ),
                       _.sortBy(_.identity, _.keys(schemas))
                     )}
                   </select>

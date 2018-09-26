@@ -1,15 +1,13 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { bgStriped } from '../styles/generic'
+import { loading } from '../styles/generic'
 
-export default Component =>
-  observer(
-    props =>
-      props.loading ? (
-        <div style={{ ...bgStriped, opacity: '0.5' }}>
-          <Component {...props} />
-        </div>
-      ) : (
-        <Component {...props} />
-      )
-  )
+let StripedLoader = (Component, style = {}) =>
+  observer(props => (
+    <div style={{ ...style, ...(props.loading && loading) }}>
+      <Component {...props} />
+    </div>
+  ))
+StripedLoader.displayName = 'StripedLoader'
+
+export default StripedLoader

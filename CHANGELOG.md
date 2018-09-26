@@ -1,5 +1,96 @@
-﻿# 1.5.0
+# 1.14.0
 * Renamed the Date component to DateComponent.
+
+# 1.13.2
+* Only use needed provider in FilterList component.
+
+# 1.13.1
+* Updated duti to it's latest version.
+
+# 1.13.0
+* Allow excluding results fields from visible ResultsTable columns using the fields property.
+
+# 1.12.0
+* Don't show sort options for column in `ResultTable` if `disableSort` is set to true.
+* Hide column menu after clicking sort option.
+
+# 1.11.1
+* Fixed tests
+
+# 1.11.0
+* Set `displayName` for components so they're visible in React dev tools.
+* Don't show `+ Filter` for column if `typeDefault` is not set or `disableFilter` is set to true.
+
+# 1.10.1
+* Added the availability to access the record's _id as part of the
+  results obtained from the getRecord function of ResultTable.
+
+# 1.10.0
+* Add support for collapsing and pausing facet components in FilterList.
+
+# 1.9.5
+* Add support to ResultTable for displaying cell values from nested objects
+  when the cell value is not a simple object such a string/number.
+
+# 1.9.4
+* Made the Popover component work properly when the parent component
+  can be horizontally scrolled and it's width exceeds the width of the
+  page.
+
+# 1.9.3
+* Make grey vest checkbox use a real checkbox so the event api of onChange has parity with native
+* Make facet options clickable anywhere on the row, instead of just on the label/checkbox
+* Make ResultTable respect HeaderCell from field schema
+* Internal refactoring of futil candidates / actout util
+
+# 1.9.2
+* Removed min-width from gv-table thead tr
+
+# 1.9.1
+* The Modal should have zIndex:1
+
+# 1.9.0
+* Add CheckableResultsTable
+
+# 1.8.0
+* Add support for `mapNodeToProps` on `FilterList`
+* Add support for `displayBlank` on `Facet`, which defaults to <i>Not Specified</i>
+* Make the main npm script be `dist` to support importing direct from contexture-react
+* Make inject tree node generate deterministic nodeKey if not provided
+* Make ResultCount be inline-block and add inject tree node style support
+
+# 1.7.2
+* Made Grey Vest able to compose styles.
+
+# 1.7.1
+* Republish with build (CI published failed due to revoked token)
+
+# 1.7.0
+* Add support for column filtering and reordering to `ResultTable`
+* Add support for `loadingAware` flag on injectTreeNode
+* Make `ResultTable` loading indicator only apply to the body and not the headers
+* Make `ResultTable` HeaderCell configurable (includes `activeFilter` prop)
+
+# 1.6.0
+* Add support for adding columns to `ResultTable` (note that it doesn't work with `infer`ed fields)
+* Improve ResultTable field drop down styling
+* Add Text example type
+* Add LensInput to layout
+* Export FilterAdder, ModalFilterAdder, FilterList components, and Layout components at the root for easier importing
+
+# 1.5.1
+* Support disabling pager items in grey vest
+* Don't rerender from StripedLoader when changing styles
+* Add basic IE11 grid support
+
+# 1.5.0
+* Add `display` support to `Facet` example type to format options
+
+# 1.4.2
+* Fix import paths
+
+# 1.4.1
+* Downgrade mobx to 4 and move mobx deps to peer dependencies
 
 # 1.4.0
 * Add TagsQuery example component

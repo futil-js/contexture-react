@@ -2,21 +2,27 @@ import React from 'react'
 import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
-import { partial, withStateLens, hover } from '../utils/mobx-react-utils'
-import { Flex, TextHighlight } from '../layout'
-import ModalFilterAdder from '../ModalFilterAdder'
+import { hover } from '../utils/actout'
+import { partial, withStateLens } from '../utils/mobx-react-utils'
+import { Flex, TextHighlight, FilteredPicker, ModalFilterAdder } from '../'
 import ExampleTypeConstructor from '../exampleTypes/'
 
-export let Input = x => (
+export let Input = ({ style = {}, ...x }) => (
   <input
-    style={{ padding: '5px', textIndent: '5px', margin: '5px auto' }}
+    style={{
+      padding: '5px',
+      textIndent: '5px',
+      margin: '5px auto',
+      ...style,
+    }}
     {...x}
   />
 )
+Input.displayName = 'Input'
 
 // Low effort custom checkbox
-export let Checkbox = ({ checked, onChange }) => (
-  <div
+export let Checkbox = ({ checked, onChange, style = {} }) => (
+  <label
     className="gv-input"
     style={{
       height: '24px',
@@ -27,11 +33,16 @@ export let Checkbox = ({ checked, onChange }) => (
       alignItems: 'center',
       margin: '2px',
       cursor: 'pointer',
+      ...style,
     }}
-    onClick={() => onChange(!checked)}
   >
+    <input
+      type="checkbox"
+      style={{ display: 'none' }}
+      {...{ checked, onChange }}
+    />
     {checked ? '✔' : String.fromCharCode(160)}
-  </div>
+  </label>
 )
 
 export let GVStyle = () => (
@@ -50,7 +61,6 @@ export let GVStyle = () => (
       .gv-table td, .gv-table th {
         padding: 20px;
         text-align: left;
-        min-width: 100px;
       }
       .gv-table thead tr {
         border-bottom: solid 2px #9ABCDA;
@@ -71,7 +81,7 @@ export let GVStyle = () => (
         color: #454545;
       }
       
-      .gv-input, .gv-body select, .gv-body button, .gv-body input {
+      .gv-input, .gv-body select, .gv-body input {
         outline: none;
         font-size: 16px;
         font-family: Lato;
@@ -123,8 +133,15 @@ export let GVStyle = () => (
 )
 export let Table = x => <table className="gv-table" {...x} />
 
-export let Button = ({ isActive, primary, style = {}, ...x }) => (
-  <button
+export let Button = ({
+  isActive,
+  primary,
+  style = {},
+  as: As = 'button',
+  ...x
+}) => (
+  <As
+    className="gv-input"
     style={{
       minWidth: '150px',
       padding: '5px',
@@ -138,7 +155,12 @@ export let Button = ({ isActive, primary, style = {}, ...x }) => (
     {...x}
   />
 )
-export let ButtonRadio = ({ value, onChange = () => {}, options }) => (
+export let ButtonRadio = ({
+  value,
+  onChange = () => {},
+  options,
+  style = {},
+}) => (
   <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
     {_.map(
       x => (
@@ -146,6 +168,7 @@ export let ButtonRadio = ({ value, onChange = () => {}, options }) => (
           key={x.value}
           isActive={x.value === value}
           onClick={() => onChange(x.value)}
+          style={style}
         >
           {x.label}
         </Button>
@@ -156,9 +179,9 @@ export let ButtonRadio = ({ value, onChange = () => {}, options }) => (
 )
 
 // Lifted from demo theme to prevent codependency
-export let Highlight = x => (
+export let Highlight = ({ style = {}, ...x }) => (
   <TextHighlight
-    Wrap={x => <b style={{ backgroundColor: 'yellow' }} {...x} />}
+    Wrap={x => <b style={{ backgroundColor: 'yellow', ...style }} {...x} />}
     {...x}
   />
 )
@@ -185,12 +208,11 @@ export let Adder = ModalFilterAdder({
 })
 
 export let PagerItem = withStateLens({ hovering: false })(
-  observer(({ active, hovering, ...x }) => (
+  observer(({ active, hovering, disabled, style = {}, ...x }) => (
     <span
       style={{
         padding: '5px',
-        background: F.view(hovering) ? '#f5f5f5' : 'white',
-
+        background: F.view(hovering) || disabled ? '#f5f5f5' : 'white',
         border: '2px solid #EDEDED',
         borderRadius: '4px',
         ...(active && {
@@ -198,7 +220,11 @@ export let PagerItem = withStateLens({ hovering: false })(
           borderColor: '#0076DE',
           color: '#0076DE',
         }),
-        cursor: 'pointer',
+        ...(disabled && {
+          pointerEvents: 'none',
+        }),
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        ...style,
       }}
       {...hover(hovering)}
       {...x}
@@ -211,5 +237,10 @@ export let ExampleTypes = ExampleTypeConstructor({
   Checkbox,
   RadioList: ButtonRadio,
   Table,
+  FieldPicker: partial(
+    { Input, Highlight, Item: ListGroupItem },
+    FilteredPicker
+  ),
+  ListGroupItem,
 })
 export let Pager = partial({ Item: PagerItem }, ExampleTypes.ResultPager)

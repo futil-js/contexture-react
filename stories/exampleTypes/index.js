@@ -1,9 +1,16 @@
+import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { observable, set } from 'mobx'
 import { Provider } from 'mobx-react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+
+// Lifted from contexture-client since it's not exported
+let treeLens = _.curry((tree, path, prop) => ({
+  get: () => _.get(prop, tree.getNode(path)),
+  set: value => tree.mutate(path, { [prop]: value }),
+}))
 
 let tree = observable({
   facet: {
@@ -17,6 +24,10 @@ let tree = observable({
         {
           name: 'a',
           count: 15,
+        },
+        {
+          name: '',
+          count: 4,
         },
         {
           name: 'b',
@@ -35,6 +46,13 @@ let tree = observable({
     type: 'query',
     field: 'title',
     query: '',
+  },
+  titleText: {
+    key: 'titleText',
+    path: ['titleText'],
+    type: 'text',
+    field: 'title',
+    value: '',
   },
   tagsQuery: {
     key: 'tagsQuery',
@@ -67,6 +85,9 @@ let tree = observable({
             a: 1,
             b: 2,
             c: 3,
+            nested: {
+              value: 4,
+            },
           },
           {
             _id: '124',
@@ -74,6 +95,9 @@ let tree = observable({
             a: 1,
             b: 4,
             c: 3,
+            nested: {
+              value: 5,
+            },
           },
           {
             _id: '135',
@@ -81,6 +105,9 @@ let tree = observable({
             a: 1,
             b: 2,
             c: 3,
+            nested: {
+              value: 6,
+            },
           },
         ],
         startRecord: 1,
@@ -156,65 +183,85 @@ let testTree = {
     set(tree[path], blob)
   }),
 }
-import SpacedList from '../../src/layout/SpacedList'
-let formatYear = x => new Date(x).getFullYear() + 1
-import ExampleTypes from '../../src/exampleTypes/'
-import { Flex } from '../../src/layout/Flex'
-import { Input } from '../DemoControls'
+testTree.lens = treeLens(testTree)
+
+let formatYear = x => new Date(x).getUTCFullYear()
+import { Flex, SpacedList } from '../../src/layout'
+import { ExampleTypes } from '../DemoControls'
 let {
   Facet,
   Number,
   Query,
+  Text,
   ResultCount,
   ResultTable,
   DateHistogram,
   TagsQuery,
-} = ExampleTypes({ Input })
+} = ExampleTypes
+
+const onBeforeRender = () => {
+  testTree.getNode(['results']).include = null
+}
 
 export default () =>
   storiesOf('Example Types', module)
-    .addWithJSX('Full Demo', () => (
-      <div
-        style={{
-          backgroundColor: '#333',
-          color: '#AAA',
-          padding: '20px',
-          borderRadius: '10px',
-        }}
-      >
-        <Provider tree={testTree}>
-          <SpacedList>
-            <Query path={['query']} />
-            <Flex>
-              <div style={{ flex: 1 }}>
-                <SpacedList>
-                  <TagsQuery path={['tagsQuery']} />
-                  <Facet path={['facet']} />
-                  <Facet path={['facet']} />
-                  <Number path={['number']} />
-                  <Number path={['number']} />
-                </SpacedList>
-              </div>
-              <div style={{ flex: 4 }}>
-                <SpacedList>
-                  <DateHistogram path={['dateHistogram']} format={formatYear} />
-                  <ResultCount path={['results']} />
-                  <Flex
-                    style={{ alignItems: 'baseline', justifyContent: 'center' }}
-                  >
-                    <ResultTable path={['results']} infer />
-                  </Flex>
-                </SpacedList>
-              </div>
-            </Flex>
-          </SpacedList>
-        </Provider>
-      </div>
-    ))
-    .addWithJSX('ResultTable Customizations', () => (
-      <div>
-        <style>
-          {`
+    .addWithJSX(
+      'Full Demo',
+      () => (
+        <div
+          style={{
+            backgroundColor: '#333',
+            color: '#AAA',
+            padding: '20px',
+            borderRadius: '10px',
+          }}
+        >
+          <Provider tree={testTree}>
+            <SpacedList>
+              <Query path={['query']} />
+              <Flex>
+                <div style={{ flex: 1 }}>
+                  <SpacedList>
+                    <TagsQuery path={['tagsQuery']} />
+                    <Text path={['titleText']} />
+                    <Facet path={['facet']} />
+                    <Facet path={['facet']} display={F.autoLabel} />
+                    <Number path={['number']} />
+                    <Number path={['number']} />
+                  </SpacedList>
+                </div>
+                <div style={{ flex: 4 }}>
+                  <SpacedList>
+                    <DateHistogram
+                      path={['dateHistogram']}
+                      format={formatYear}
+                    />
+                    <ResultCount path={['results']} />
+                    <Flex
+                      style={{
+                        alignItems: 'baseline',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <ResultTable path={['results']} infer />
+                    </Flex>
+                  </SpacedList>
+                </div>
+              </Flex>
+            </SpacedList>
+          </Provider>
+        </div>
+      ),
+      {
+        onBeforeRender,
+      }
+    )
+    .addWithJSX(
+      'ResultTable Customizations',
+      () => (
+        <div>
+          <style>
+            {`
             .example-table tr:nth-child(even) {
               background-color: rgba(0, 0, 0, 0.5)
             }
@@ -230,22 +277,75 @@ export default () =>
               border-bottom: solid 2px #ccc
             }
           `}
-        </style>
-        <ResultTable
-          tree={testTree}
-          path={['results']}
-          Table={x => <table className="example-table" {...x} />}
-          infer
-          fields={{
-            b: {
-              label: 'Field B',
-              order: -2,
-            },
-            title: {
-              order: 1,
-              Cell: x => <td style={{ color: 'red' }} {...x} />,
-            },
-          }}
-        />
-      </div>
-    ))
+          </style>
+          <ResultTable
+            tree={testTree}
+            path={['results']}
+            Table={x => <table className="example-table" {...x} />}
+            infer
+            fields={{
+              b: {
+                label: 'Field B',
+                order: -2,
+                HeaderCell: ({ style, ...props }) => (
+                  <th
+                    style={{ color: 'green', ...style }}
+                    {..._.omit('activeFilter', props)}
+                  />
+                ),
+              },
+              title: {
+                order: 1,
+                Cell: x => <td style={{ color: 'red' }} {...x} />,
+              },
+            }}
+          />
+        </div>
+      ),
+      {
+        onBeforeRender,
+      }
+    )
+    .addWithJSX(
+      'ResultTable Display Field Optional',
+      () => {
+        testTree.getNode(['results']).include = ['title', 'a', 'b']
+        return (
+          <div>
+            <style>
+              {`
+            .example-table tr:nth-child(even) {
+              background-color: rgba(0, 0, 0, 0.5)
+            }
+            .example-table {
+              background: white;
+              color: #444;
+              border-collapse: collapse;
+            }
+            .example-table td, .example-table th {
+              padding: 5px
+            }
+            .example-table thead {
+              border-bottom: solid 2px #ccc
+            }
+          `}
+            </style>
+            <ResultTable
+              tree={testTree}
+              path={['results']}
+              Table={x => <table className="example-table" {...x} />}
+              fields={{
+                title: {
+                  Cell: x => <td style={{ color: 'red' }} {...x} />,
+                },
+              }}
+            />
+          </div>
+        )
+      },
+      {
+        onBeforeRender() {
+          testTree.getNode(['results']).include = ['title', 'a', 'b']
+        },
+      }
+    )

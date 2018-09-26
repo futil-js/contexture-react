@@ -1,33 +1,15 @@
+import * as F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
-import { Provider } from 'mobx-react'
+import { Provider, observer } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import {
-  FilterList,
-  Label,
-  Flex,
-  Awaiter,
-  SpacedList,
-  Grid,
-} from '../../../src'
-import {
-  GVStyle,
-  Adder,
-  Button,
-  Pager,
-  ExampleTypes,
-  Checkbox,
-  ButtonRadio,
-} from '../../../src/themes/greyVest'
-let {
-  ResultCount,
-  ResultTable,
-  TypeMap,
-  TagsQuery,
-  DateRangePicker,
-} = ExampleTypes
+import { withStateLens } from '../../../src/utils/mobx-react-utils'
+import { FilterList, Flex, Awaiter, SpacedList, Grid } from '../../../src'
+import * as Theme from '../../../src/themes/greyVest'
+let { GVStyle, Adder, Button, Pager, ExampleTypes, ButtonRadio } = Theme
+let { ResultCount, CheckableResultTable, TypeMap, TagsQuery } = ExampleTypes
 
 let tree = Contexture({
   key: 'root',
@@ -38,23 +20,6 @@ let tree = Contexture({
       key: 'bar',
       type: 'tagsQuery',
       field: 'title',
-    },
-    {
-      key: 'status',
-      field: 'released',
-      type: 'date',
-      useDateMath: true,
-    },
-    {
-      key: 'titleContains',
-      type: 'tagsQuery',
-      field: 'title',
-    },
-    {
-      key: 'titleDoesNotContain',
-      type: 'tagsQuery',
-      field: 'title',
-      join: 'none',
     },
     {
       key: 'criteria',
@@ -83,14 +48,13 @@ let tree = Contexture({
       key: 'results',
       type: 'results',
       include: [
+        '_checkbox',
         'poster',
         'title',
         'actors',
         'genres',
-        'metaScore',
         'rated',
         'released',
-        'plot',
       ],
     },
   ],
@@ -123,6 +87,15 @@ let schemas = fromPromise(
     .then(_.tap(() => tree.refresh(['root'])))
 )
 
+let CheckboxResultTable = withStateLens({ selected: [] })(
+  observer(({ selected, ...props }) => (
+    <div>
+      {JSON.stringify(F.view(selected))}
+      <CheckableResultTable {...{ selected, ...props }} />
+    </div>
+  ))
+)
+
 export default () => (
   <div className="gv-body">
     <link
@@ -137,24 +110,6 @@ export default () => (
             <div>
               <h1>Filters</h1>
               <SpacedList>
-                <div>
-                  <Label>Released</Label>
-                  <DateRangePicker
-                    path={['root', 'status']}
-                    ranges={[
-                      { label: 'All Time', from: '', to: '' },
-                      { label: 'This Year', from: 'now/y', to: '' },
-                      { label: 'Last Year', from: 'now-1y/y', to: 'now/y' },
-                    ]}
-                  />
-                </div>
-                <div>
-                  <Label>Title</Label>
-                  Contains
-                  <TagsQuery path={['root', 'titleContains']} />
-                  Does Not Contain
-                  <TagsQuery path={['root', 'titleDoesNotContain']} />
-                </div>
                 <FilterList
                   path={['root', 'criteria']}
                   fields={schemas.movies.fields}
@@ -170,13 +125,6 @@ export default () => (
             <div>
               <Grid columns="1fr 25px 150px" style={{ alignItems: 'center' }}>
                 <TagsQuery path={['root', 'bar']} />
-                <Checkbox
-                  checked={state.autoUpdate}
-                  onChange={val => {
-                    tree.disableAutoUpdate = !val
-                    state.autoUpdate = !!val
-                  }}
-                />
                 {!state.autoUpdate && (
                   <Button onClick={tree.triggerUpdate} primary>
                     Search
@@ -207,11 +155,12 @@ export default () => (
                 </Flex>
               </Flex>
               <div className="gv-box">
-                <ResultTable
-                  path={['root', 'results']}
+                <CheckboxResultTable
                   fields={schemas[tree.tree.schema].fields}
+                  path={['root', 'results']}
                   criteria={['root', 'criteria']}
                   typeComponents={TypeMap}
+                  getValue="title"
                 />
                 <Flex
                   style={{ justifyContent: 'space-around', padding: '10px' }}

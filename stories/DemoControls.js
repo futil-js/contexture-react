@@ -1,15 +1,10 @@
 import * as F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import {
-  withStateLens,
-  hover,
-  focus,
-  partial,
-} from '../src/utils/mobx-react-utils'
-import { TextHighlight } from '../src/layout/'
+import { hover, focus } from '../src/utils/actout'
+import { withStateLens, partial } from '../src/utils/mobx-react-utils'
 import ExampleTypeConstructor from '../src/exampleTypes/'
-import ModalFilterAdder from '../src/ModalFilterAdder'
+import { TextHighlight, FilteredPicker, ModalFilterAdder } from '../src'
 
 export let Button = x => (
   <button
@@ -114,6 +109,17 @@ export let Adder = ModalFilterAdder({
   Item: ListGroupItem,
 })
 
-export let ExampleTypes = ExampleTypeConstructor({ Input })
+export let ExampleTypes = ExampleTypeConstructor({
+  Input,
+  Table: 'table',
+  FieldPicker: partial(
+    {
+      Input,
+      Highlight,
+      Item: ListGroupItem,
+    },
+    FilteredPicker
+  ),
+})
 let { ResultPager } = ExampleTypes
 export let Pager = partial({ Item: PagerItem }, ResultPager)

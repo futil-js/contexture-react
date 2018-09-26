@@ -1,9 +1,10 @@
 {
   "name": "contexture-react",
-  "version": "1.5.0",
+  "version": "1.14.0",
   "description": "React components for building contexture interfaces",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "start": "npm run storybook",
     "pre-build": "rm -rf ./dist",
     "build": "babel ./src --out-dir ./dist --source-maps",
     "prepublish": "npm run build",
@@ -30,7 +31,11 @@
     "url": "https://github.com/smartprocure/contexture-react/issues"
   },
   "homepage": "https://github.com/smartprocure/contexture-react#readme",
-  "peerDependencies": {},
+  "peerDependencies": {
+    "mobx": "^4.3.1",
+    "mobx-react": "^5.2.0",
+    "mobx-utils": "^5.0.0"
+  },
   "prettier": {
     "singleQuote": true,
     "semi": false,
@@ -42,7 +47,8 @@
   "jest": {
     "moduleNameMapper": {
       "\\.(md)$": "<rootDir>/__mocks__/fileMock.js"
-    }
+    },
+    "testURL": "http://localhost/"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.1",
@@ -60,13 +66,16 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "contexture": "^0.2.1",
-    "contexture-client": "^2.13.0",
-    "contexture-elasticsearch": "^0.9.1",
-    "duti": "^0.9.3",
+    "contexture-client": "^2.13.6",
+    "contexture-elasticsearch": "^0.10.1",
+    "duti": "latest",
     "elasticsearch-browser": "^14.2.2",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
     "jest": "^22.4.3",
+    "mobx": "^4.3.1",
+    "mobx-react": "^5.2.0",
+    "mobx-utils": "^5.0.0",
     "prettier": "^1.8.2",
     "raw-loader": "^0.5.1",
     "react": "^16.2.0",
@@ -77,9 +86,6 @@
   "dependencies": {
     "futil-js": "^1.45.0",
     "lodash": "^4.17.4",
-    "mobx": "^5.0.0",
-    "mobx-react": "^5.2.0",
-    "mobx-utils": "^5.0.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4"
   }

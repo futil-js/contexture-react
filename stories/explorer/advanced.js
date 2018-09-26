@@ -5,14 +5,11 @@ import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { Provider, observer } from 'mobx-react'
 
-import { Awaiter, Flex } from '../../src/layout/'
-import QueryBuilder from '../../src/queryBuilder/'
-import { getESSchemas } from '../../src/utils/schema'
-import ExampleTypes from '../../src/exampleTypes/'
-import { Input } from '../DemoControls'
-let { ResultCount, ResultTable, TypeMap } = ExampleTypes({ Input })
+import { Awaiter, Flex, QueryBuilder } from '../../src/'
+import { Input, ExampleTypes } from '../DemoControls'
+let { ResultCount, ResultTable, TypeMap } = ExampleTypes
 
-import Contexture, { es, schemas, updateClient } from './contexture'
+import Contexture, { updateClient } from './contexture'
 
 let state = observable({
   url: '',
@@ -53,10 +50,8 @@ let changeSchema = schema => {
 
 let updateEs = host => {
   state.url = host
-  updateClient({ host })
   state.schemas = fromPromise(
-    getESSchemas(es.client).then(x => {
-      F.extendOn(schemas, x)
+    updateClient({ host }).then(x => {
       changeSchema(_.keys(x)[0])
       return x
     })
@@ -82,7 +77,9 @@ let Story = observer(() => {
                   onChange={e => changeSchema(e.target.value)}
                 >
                   {_.map(
-                    x => <option key={x}>{x}</option>,
+                    x => (
+                      <option key={x}>{x}</option>
+                    ),
                     _.sortBy(_.identity, _.keys(schemas))
                   )}
                 </select>
@@ -110,7 +107,10 @@ let Story = observer(() => {
                       path={['root', 'criteria']}
                     />
                     <ResultCount path={['root', 'results']} />
-                    <ResultTable path={['root', 'results']} infer />
+                    <ResultTable
+                      path={['root', 'results']}
+                      fields={schemas[tree.tree.schema].fields}
+                    />
                   </div>
                 </Provider>
               </div>

@@ -37,6 +37,7 @@ let YAxis = ({ height, borderColor, min, max }) => (
     <div style={{ padding: '5px' }}>&nbsp;</div>
   </div>
 )
+YAxis.displayName = 'YAxis'
 
 let BarChart = observer(
   ({
@@ -63,7 +64,7 @@ let BarChart = observer(
             <div key={x.key}>
               <div
                 style={{
-                  height: x[valueField] / max * height,
+                  height: (x[valueField] / max) * height,
                   background: background(x, max),
                   margin: `0 ${gutter}px`,
                 }}
