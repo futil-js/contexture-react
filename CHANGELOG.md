@@ -1,5 +1,8 @@
-# 1.16.0
+# 1.17.0
 * Add table layout support for terms stats type.
+
+# 1.16.0
+* Added a column that shows the additional matching fields on ResultsTable.
 
 # 1.15.0
 * GreyVest: Tag design styline
