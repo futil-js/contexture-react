@@ -1,4 +1,4 @@
-# 1.15.1
+# 1.16.0
 * Add table layout support for terms stats type.
 
 # 1.15.0
