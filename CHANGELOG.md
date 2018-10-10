@@ -1,5 +1,8 @@
-# 1.17.0
+# 1.18.0
 * Add table layout support for terms stats type.
+
+# 1.17.0
+* Added support for mapNodeToProps on ResultTable.
 
 # 1.16.0
 * Added a column that shows the additional matching fields on ResultsTable.
