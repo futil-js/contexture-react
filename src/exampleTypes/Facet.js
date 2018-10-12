@@ -109,8 +109,8 @@ let Facet = injectTreeNode(
           <Flex style={{ justifyContent: 'space-between', margin: '5px 0' }}>
             {!!node.context.cardinality && (
               <div>
-                Showing {_.min([node.size || 10, node.context.options.length])} of{' '}
-                {node.context.cardinality}
+                Showing {_.min([node.size || 10, node.context.options.length])}{' '}
+                of {node.context.cardinality}
               </div>
             )}
             {node.context.cardinality > (node.size || 10) && (
