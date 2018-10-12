@@ -64,6 +64,8 @@ let tree = Contexture({
       key: 'genreScores',
       type: 'terms_stats',
       key_field: 'genres',
+      // IMPORTANT: This property is required but not supported ?!
+      // See: https://github.com/smartprocure/contexture-elasticsearch/blob/master/src/example-types/terms_stats.js
       value_field: 'metaScore',
       order: 'sum',
     },
@@ -134,7 +136,13 @@ export default () => (
                   format={formatYear}
                 />
                 <TermsStats
+                  infer
+                  fields={_.pick(
+                    ['title', 'year', 'genres'],
+                    schemas.movies.fields
+                  )}
                   path={['searchRoot', 'genreScores']}
+                  criteria={['searchRoot', 'criteria']}
                   layout="table"
                   tableAttrs={{ style: { margin: 'auto' } }}
                   columns={[
