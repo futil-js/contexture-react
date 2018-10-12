@@ -1,3 +1,7 @@
+﻿# 1.17.1
+* Fixed the radio list of the Facet type to react properly on first
+  click (when the facet node didn't have a subscribable mod property).
+
 # 1.17.0
 * Added support for mapNodeToProps on ResultTable.
 
