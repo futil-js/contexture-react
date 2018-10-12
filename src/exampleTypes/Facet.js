@@ -1,6 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
+import { set } from 'mobx'
 import { observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
@@ -57,74 +58,77 @@ let Facet = injectTreeNode(
       RadioList = RadioListDefault,
       display = x => x,
       displayBlank = () => <i>Not Specified</i>,
-    }) => (
-      <div className="contexture-facet">
-        <RadioList
-          value={node.mode || 'include'} // Fix by changing defaults in client example type
-          onChange={mode => tree.mutate(node.path, { mode })}
-          options={[
-            {
-              label: 'Include',
-              value: 'include',
-            },
-            {
-              label: 'Exclude',
-              value: 'exclude',
-            },
-          ]}
-        />
-        {!hide.facetFilter && (
-          <TextInput
-            value={node.optionsFilter}
-            onChange={e =>
-              tree.mutate(node.path, { optionsFilter: e.target.value })
-            }
-            placeholder="Find..."
+    }) => {
+      if (!node.mode) set(node, { mode: 'include' })
+      return (
+        <div className="contexture-facet">
+          <RadioList
+            value={node.mode || 'include'} // Fix by changing defaults in client example type
+            onChange={mode => tree.mutate(node.path, { mode })}
+            options={[
+              {
+                label: 'Include',
+                value: 'include',
+              },
+              {
+                label: 'Exclude',
+                value: 'exclude',
+              },
+            ]}
           />
-        )}
-        <SelectAll node={node} tree={tree} Checkbox={Checkbox} />
-        {_.map(({ name, count }) => {
-          let lens = tree.lens(node.path, 'values')
-          return (
-            <label
-              key={name}
-              style={{
-                justifyContent: 'space-between',
-                alignItems: 'baseline',
-                display: 'flex',
-                cursor: 'pointer',
-              }}
-            >
-              <Checkbox {...F.domLens.checkboxValues(name, lens)} />
-              <div style={{ flex: 2, padding: '0 5px' }}>
-                {display(name) || displayBlank()}
-              </div>
-              <div>{count}</div>
-            </label>
-          )
-        }, _.get('context.options', node))}
-        <Flex style={{ justifyContent: 'space-between', margin: '5px 0' }}>
-          {!!node.context.cardinality && (
-            <div>
-              Showing {_.min([node.size || 10, node.context.options.length])} of{' '}
-              {node.context.cardinality}
-            </div>
+          {!hide.facetFilter && (
+            <TextInput
+              value={node.optionsFilter}
+              onChange={e =>
+                tree.mutate(node.path, { optionsFilter: e.target.value })
+              }
+              placeholder="Find..."
+            />
           )}
-          {node.context.cardinality > (node.size || 10) && (
-            <div>
-              <a
-                onClick={() =>
-                  tree.mutate(node.path, { size: (node.size || 10) + 10 })
-                }
-                style={{ cursor: 'pointer' }}
+          <SelectAll node={node} tree={tree} Checkbox={Checkbox} />
+          {_.map(({ name, count }) => {
+            let lens = tree.lens(node.path, 'values')
+            return (
+              <label
+                key={name}
+                style={{
+                  justifyContent: 'space-between',
+                  alignItems: 'baseline',
+                  display: 'flex',
+                  cursor: 'pointer',
+                }}
               >
-                View More
-              </a>
-            </div>
-          )}
-        </Flex>
-      </div>
-    )
+                <Checkbox {...F.domLens.checkboxValues(name, lens)} />
+                <div style={{ flex: 2, padding: '0 5px' }}>
+                  {display(name) || displayBlank()}
+                </div>
+                <div>{count}</div>
+              </label>
+            )
+          }, _.get('context.options', node))}
+          <Flex style={{ justifyContent: 'space-between', margin: '5px 0' }}>
+            {!!node.context.cardinality && (
+              <div>
+                Showing {_.min([node.size || 10, node.context.options.length])}{' '}
+                of {node.context.cardinality}
+              </div>
+            )}
+            {node.context.cardinality > (node.size || 10) && (
+              <div>
+                <a
+                  onClick={() =>
+                    tree.mutate(node.path, { size: (node.size || 10) + 10 })
+                  }
+                  style={{ cursor: 'pointer' }}
+                >
+                  View More
+                </a>
+              </div>
+            )}
+          </Flex>
+        </div>
+      )
+    }
   ),
   exampleTypes.facet
 )
