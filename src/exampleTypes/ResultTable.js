@@ -223,34 +223,38 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
 Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
-let TableBody = observer(({ node, visibleFields, Modal, Table, hideOtherHighlightedResults }) => (
-  <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
-    {!!getResults(node).length &&
-      _.map(
-        x => (
-          <tr key={x._id}>
-            {_.map(
-              ({ field, display = x => x, Cell = 'td' }) => (
-                <Cell key={field}>
-                  {display(_.get(field, getRecord(x)), getRecord(x))}
-                </Cell>
-              ),
-              visibleFields
-            )}
-            {hideOtherHighlightedResults ? null : <HighlightedColumn
-              {...{
-                node,
-                additionalFields: _.result('additionalFields.slice', x),
-                Modal,
-                Table,
-              }}
-            />}
-          </tr>
-        ),
-        getResults(node)
-      )}
-  </tbody>
-))
+let TableBody = observer(
+  ({ node, visibleFields, Modal, Table, hideOtherHighlightedResults }) => (
+    <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
+      {!!getResults(node).length &&
+        _.map(
+          x => (
+            <tr key={x._id}>
+              {_.map(
+                ({ field, display = x => x, Cell = 'td' }) => (
+                  <Cell key={field}>
+                    {display(_.get(field, getRecord(x)), getRecord(x))}
+                  </Cell>
+                ),
+                visibleFields
+              )}
+              {hideOtherHighlightedResults ? null : (
+                <HighlightedColumn
+                  {...{
+                    node,
+                    additionalFields: _.result('additionalFields.slice', x),
+                    Modal,
+                    Table,
+                  }}
+                />
+              )}
+            </tr>
+          ),
+          getResults(node)
+        )}
+    </tbody>
+  )
+)
 TableBody.displayName = 'TableBody'
 
 let ResultTable = InjectTreeNode(
@@ -317,7 +321,7 @@ let ResultTable = InjectTreeNode(
             visibleFields,
             Modal,
             Table,
-            hideOtherHighlightedResults
+            hideOtherHighlightedResults,
           }}
         />
       </Table>
