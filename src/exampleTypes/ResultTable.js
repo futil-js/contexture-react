@@ -223,7 +223,7 @@ let Header = withStateLens({ popover: false, adding: false, filtering: false })(
 Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
-let TableBody = observer(({ node, visibleFields, Modal, Table }) => (
+let TableBody = observer(({ node, visibleFields, Modal, Table, hideOtherHighlightedResults }) => (
   <tbody style={node.markedForUpdate || node.updating ? loading : {}}>
     {!!getResults(node).length &&
       _.map(
@@ -237,14 +237,14 @@ let TableBody = observer(({ node, visibleFields, Modal, Table }) => (
               ),
               visibleFields
             )}
-            <HighlightedColumn
+            {hideOtherHighlightedResults ? null : <HighlightedColumn
               {...{
                 node,
                 additionalFields: _.result('additionalFields.slice', x),
                 Modal,
                 Table,
               }}
-            />
+            />}
           </tr>
         ),
         getResults(node)
@@ -255,7 +255,7 @@ TableBody.displayName = 'TableBody'
 
 let ResultTable = InjectTreeNode(
   observer(({ // Props
-    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => {}, Icon = DefaultIcon }) => {
+    fields, infer, path, criteria, node, tree, Table = 'table', HeaderCell, Modal, ListGroupItem, FieldPicker, typeComponents, mapNodeToProps = () => {}, Icon = DefaultIcon, hideOtherHighlightedResults }) => {
     // From Provider // Theme/Components
     let mutate = tree.mutate(path)
     // NOTE infer + add columns does not work together (except for anything explicitly passed in)
@@ -312,10 +312,13 @@ let ResultTable = InjectTreeNode(
           </tr>
         </thead>
         <TableBody
-          node={node}
-          visibleFields={visibleFields}
-          Modal={Modal}
-          Table={Table}
+          {...{
+            node,
+            visibleFields,
+            Modal,
+            Table,
+            hideOtherHighlightedResults
+          }}
         />
       </Table>
     )

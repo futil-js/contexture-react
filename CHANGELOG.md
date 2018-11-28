@@ -1,3 +1,6 @@
+﻿# 1.28.0
+* ResultTable should optionally not show the highlighted column.
+
 # 1.27.1
 * GeoFilter util now accepts parameter for its hereMaps configuration
 
