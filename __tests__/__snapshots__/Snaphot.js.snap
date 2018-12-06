@@ -2553,6 +2553,7 @@ exports[`Storyshots IMDB Check List 1`] = `
         border-radius: 3px;
         display: flex;
         overflow: hidden;
+        height: 60px;
       }
       .gv-button-group &gt; :first-child {
         border-top-right-radius: 0px;
@@ -2965,6 +2966,7 @@ exports[`Storyshots IMDB Grey Vest Theme 1`] = `
         border-radius: 3px;
         display: flex;
         overflow: hidden;
+        height: 60px;
       }
       .gv-button-group &gt; :first-child {
         border-top-right-radius: 0px;
