@@ -368,6 +368,7 @@ export let GVStyle = () => (
         border-radius: 3px;
         display: flex;
         overflow: hidden;
+        height: 60px;
       }
       .gv-button-group > :first-child {
         border-top-right-radius: 0px;

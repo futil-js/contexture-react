@@ -1,3 +1,6 @@
+# 1.29.0
+* Fix height of gv-button-group to 60px.
+
 # 1.28.1
 * Add z-index to `sticky` search-bar
 
