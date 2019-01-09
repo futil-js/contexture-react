@@ -1,3 +1,6 @@
+# 1.31.1
+* Facet: Center align items instead of baseline
+
 # 1.31.0
 * TagsQuery: Add tag popover with support for changing join, per tag distance (0 vs 3 distance as "fuzzy" v "exact"), exact toggle, per tag disabling, and an apply distance to all tags link
 * TagsText: Add Support
