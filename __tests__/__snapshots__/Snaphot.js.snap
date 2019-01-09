@@ -6786,7 +6786,6 @@ exports[`Storyshots QueryBuilder/Examples Multiple Filters 1`] = `
                                                           "lastUpdateTime": null,
                                                           "markedForUpdate": null,
                                                           "missedUpdate": null,
-                                                          "operator": "containsWord",
                                                           "path": Array [
                                                             "root",
                                                             "group24",
