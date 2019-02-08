@@ -868,12 +868,13 @@ export let Pager = props => (
   />
 )
 
-let Tabs = ({ value, onChange = () => {}, options }) => (
+let Tabs = ({ value, onChange = () => {}, options, tabStyle = {} }) => (
   <div className="gv-tab-container">
     {_.map(
       x => (
         <div
           key={x.value}
+          style={tabStyle}
           className={`gv-tab ${x.value === value ? 'active' : ''}`}
           onClick={() => onChange(x.value)}
         >

@@ -1,3 +1,6 @@
+# 1.38.0
+* Tabs: parametrize individual tab styles
+
 # 1.37.2
 * Fix Date Picker styling in grey vest to match grey vest theme
 
