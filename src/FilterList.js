@@ -45,15 +45,14 @@ export let Label = inject(_.pick('tree'))(
                     lineHeight: '1.4rem',
                   }}
                 >
-                  // If contexture-client diffed the tree before sending a
-                  // request...
-                  <Item
-                    onClick={() => {
-                      if (node.hasValue) tree.clear(node.path)
-                    }}
-                  >
-                    Clear Filter
-                  </Item>
+                  {/* If only contexture-client diffed the tree before sending a request... */}
+                  {node.hasValue ? (
+                    <Item onClick={() => tree.clear(node.path)}>
+                      Clear Filter
+                    </Item>
+                  ) : (
+                    ''
+                  )}
                 </Popover>
               </span>
               {
