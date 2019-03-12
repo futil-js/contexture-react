@@ -140,6 +140,7 @@ let tree = Contexture({
       key_field: 'genres',
       value_field: 'metaScore',
       order: 'sum',
+      size: 25
     },
   ],
 })
