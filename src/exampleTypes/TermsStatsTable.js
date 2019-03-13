@@ -8,23 +8,18 @@ import ExpandableTable, { Column } from '../layout/ExpandableTable'
 import { Flex } from '../layout/Flex'
 import Select from '../layout/Select'
 
+let toolBarStyle = { justifyContent: 'space-between', alignItems: 'center' }
 let SimpleLabel = ({ text }) => (
   <label style={{ paddingRight: '5px' }}>{text}</label>
 )
 let SimpleFilter = observer(({ Input = 'input', ...props }) => (
-  <Flex
-    style={{
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      width: '75%',
-    }}
-  >
+  <Flex style={{...toolBarStyle, width: '75%'}} >
     <SimpleLabel text="Filter:" />
     <Input type="text" {...props} />
   </Flex>
 ))
 let SelectSize = observer(({ node, tree }) => (
-  <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+  <Flex style={toolBarStyle}>
     <SimpleLabel text="Size:" />
     <Select
       onChange={e => {
@@ -61,7 +56,7 @@ let TermsStatsTable = injectTreeNode(
       ...props
     }) => (
       <div>
-        <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+        <Flex style={toolBarStyle}>
           <Filter
             Input={Input}
             {...F.domLens.value(tree.lens(node.path, 'filter'))}
