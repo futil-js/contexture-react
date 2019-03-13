@@ -18,7 +18,14 @@ let SimpleFilter = observer(({ Input = 'input', ...props }) => (
     <Input type="text" {...props} />
   </Flex>
 ))
-let SelectSize = observer(({ node, tree }) => (
+let SelectSize = observer(({ node, tree, options = [
+  10,
+  25,
+  50,
+  100,
+  500,
+  1000,
+]}) => (
   <Flex style={toolBarStyle}>
     <SimpleLabel text="Size:" />
     <Select
@@ -28,14 +35,7 @@ let SelectSize = observer(({ node, tree }) => (
       value={_.getOr(25, 'size', node)}
       placeholder={null}
       style={{ width: '100px' }}
-      options={_.map(x => ({ value: x, label: x }), [
-        10,
-        25,
-        50,
-        100,
-        500,
-        1000,
-      ])}
+      options={_.map(x => ({ value: x, label: x }), options)}
     />
   </Flex>
 ))
@@ -53,6 +53,7 @@ let TermsStatsTable = injectTreeNode(
       MoreControls = 'div',
       Input = 'input',
       Filter = SimpleFilter,
+      sizeOptions,
       ...props
     }) => (
       <div>
@@ -61,7 +62,7 @@ let TermsStatsTable = injectTreeNode(
             Input={Input}
             {...F.domLens.value(tree.lens(node.path, 'filter'))}
           />
-          <SelectSize node={node} tree={tree} />
+          <SelectSize node={node} tree={tree} options={sizeOptions} />
         </Flex>
         <ExpandableTable
           {...{
