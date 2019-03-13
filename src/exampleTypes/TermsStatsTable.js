@@ -18,27 +18,22 @@ let SimpleFilter = observer(({ Input = 'input', ...props }) => (
     <Input type="text" {...props} />
   </Flex>
 ))
-let SelectSize = observer(({ node, tree, options = [
-  10,
-  25,
-  50,
-  100,
-  500,
-  1000,
-]}) => (
-  <Flex style={toolBarStyle}>
-    <SimpleLabel text="Size:" />
-    <Select
-      onChange={e => {
-        tree.mutate(node.path, { size: e.target.value })
-      }}
-      value={_.getOr(25, 'size', node)}
-      placeholder={null}
-      style={{ width: '100px' }}
-      options={_.map(x => ({ value: x, label: x }), options)}
-    />
-  </Flex>
-))
+let SelectSize = observer(
+  ({ node, tree, options = [10, 25, 50, 100, 500, 1000] }) => (
+    <Flex style={toolBarStyle}>
+      <SimpleLabel text="Size:" />
+      <Select
+        onChange={e => {
+          tree.mutate(node.path, { size: e.target.value })
+        }}
+        value={_.getOr(25, 'size', node)}
+        placeholder={null}
+        style={{ width: '100px' }}
+        options={_.map(x => ({ value: x, label: x }), options)}
+      />
+    </Flex>
+  )
+)
 let TermsStatsTable = injectTreeNode(
   observer(
     ({
