@@ -8,23 +8,32 @@ import ExpandableTable, { Column } from '../layout/ExpandableTable'
 import { Flex } from '../layout/Flex'
 import Select from '../layout/Select'
 
-let SimpleLabel = ({text}) => (<label style={{paddingRight: '5px'}}>{text}</label>)
+let SimpleLabel = ({ text }) => (
+  <label style={{ paddingRight: '5px' }}>{text}</label>
+)
 let SimpleFilter = observer(({ Input = 'input', ...props }) => (
-  <Flex style={{ justifyContent: 'space-between', alignItems: 'center', width: '75%' }}>
-    <SimpleLabel text='Filter:'/><Input type="text" {...props} />
+  <Flex
+    style={{
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '75%',
+    }}
+  >
+    <SimpleLabel text="Filter:" />
+    <Input type="text" {...props} />
   </Flex>
 ))
-let SelectSize = observer(({node, tree}) => (
-  <Flex style={{ justifyContent: 'space-between', alignItems: 'center'}}>
-    <SimpleLabel text='Size:'/>
+let SelectSize = observer(({ node, tree }) => (
+  <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+    <SimpleLabel text="Size:" />
     <Select
       onChange={e => {
         tree.mutate(node.path, { size: e.target.value })
       }}
       value={_.getOr(25, 'size', node)}
       placeholder={null}
-      style={{width: '100px'}}
-      options={_.map(x => ({value: x, label: x }), [25, 50, 100, 500, 1000])}
+      style={{ width: '100px' }}
+      options={_.map(x => ({ value: x, label: x }), [25, 50, 100, 500, 1000])}
     />
   </Flex>
 ))
@@ -50,7 +59,7 @@ let TermsStatsTable = injectTreeNode(
             Input={Input}
             {...F.domLens.value(tree.lens(node.path, 'filter'))}
           />
-          <SelectSize node={node} tree={tree}/>
+          <SelectSize node={node} tree={tree} />
         </Flex>
         <ExpandableTable
           {...{
