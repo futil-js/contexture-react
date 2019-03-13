@@ -33,7 +33,7 @@ let SelectSize = observer(({ node, tree }) => (
       value={_.getOr(25, 'size', node)}
       placeholder={null}
       style={{ width: '100px' }}
-      options={_.map(x => ({ value: x, label: x }), [25, 50, 100, 500, 1000])}
+      options={_.map(x => ({ value: x, label: x }), [10, 25, 50, 100, 500, 1000])}
     />
   </Flex>
 ))
