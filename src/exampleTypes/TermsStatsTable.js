@@ -13,7 +13,7 @@ let SimpleLabel = ({ text }) => (
   <label style={{ paddingRight: '5px' }}>{text}</label>
 )
 let SimpleFilter = observer(({ Input = 'input', ...props }) => (
-  <Flex style={{...toolBarStyle, width: '75%'}} >
+  <Flex style={{ ...toolBarStyle, width: '75%' }}>
     <SimpleLabel text="Filter:" />
     <Input type="text" {...props} />
   </Flex>
