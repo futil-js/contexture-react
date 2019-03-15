@@ -90,7 +90,7 @@ export let Label = inject(_.pick('tree'))(
 )
 Label.displayName = 'Label'
 
-export let FieldLabel = InjectTreeNode(
+export let FieldLabel = InjectTreeNode()(
   observer(({ node, node: { field } = {}, fields, Icon, ListItem, label }) => (
     <Label node={node} Icon={Icon} ListItem={ListItem}>
       {label || _.get([field, 'label'], fields) || field}
@@ -99,13 +99,13 @@ export let FieldLabel = InjectTreeNode(
 )
 FieldLabel.displayName = 'FieldLabel'
 
-export let DefaultMissingTypeComponent = InjectTreeNode(({ node = {} }) => (
+export let DefaultMissingTypeComponent = InjectTreeNode()(({ node = {} }) => (
   <div>
     Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
   </div>
 ))
 
-export let FilterList = InjectTreeNode(
+export let FilterList = InjectTreeNode({ allowEmptyNode: true })(
   observer(
     ({
       node,
@@ -158,7 +158,6 @@ export let FilterList = InjectTreeNode(
         )}
       </div>
     )
-  ),
-  { allowEmptyNode: true }
+  )
 )
 FilterList.displayName = 'FilterList'

@@ -931,7 +931,7 @@ Tabs = observer(Tabs)
 
 export { Tabs }
 
-export let MissingTypeComponent = InjectTreeNode(({ node = {} }) => (
+export let MissingTypeComponent = InjectTreeNode()(({ node = {} }) => (
   <ErrorText>
     Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
   </ErrorText>

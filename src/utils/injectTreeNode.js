@@ -1,19 +1,13 @@
 import _ from 'lodash/fp'
 import { injectDefaults } from './mobx-react-utils'
-import StripedLoader from './StripedLoader'
 import { autoKey } from './dsl'
 
-export default (
-  render,
-  {
-    type,
-    reactors,
-    nodeProps = _.keys(reactors),
-    loadingAware = false,
-    allowEmptyNode = false,
-    style,
-  } = {}
-) =>
+export default ({
+  type,
+  reactors,
+  nodeProps = _.keys(reactors),
+  allowEmptyNode = false,
+} = {}) =>
   injectDefaults(({ tree, node, group, path, ...props }) => {
     node = node || tree.getNode(path)
 
@@ -45,9 +39,5 @@ export default (
     } else if (!node && !allowEmptyNode)
       throw Error(`Node not provided, and couldn't find node at ${path}`)
 
-    return {
-      tree,
-      node,
-      ...(loadingAware ? { loading: node && node.updating } : {}),
-    }
-  })(StripedLoader(render, style))
+    return { tree, node }
+  })

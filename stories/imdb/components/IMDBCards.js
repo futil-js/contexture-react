@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 import { Flex } from '../../../src/layout/Flex'
 import InjectTreeNode from '../../../src/utils/injectTreeNode'
 
-let IMDBCards = InjectTreeNode(
+let IMDBCards = InjectTreeNode()(
   observer(({ node }) => (
     <Flex style={{ flexWrap: 'wrap', justifyContent: 'center' }}>
       {_.map(

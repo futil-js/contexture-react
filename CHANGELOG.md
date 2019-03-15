@@ -1,3 +1,6 @@
+# 1.43.6
+* Decouple Loading component from injectTreeNode so themes can customize it
+
 # 1.43.5
 * Geo filter address formatting adjustments.
 

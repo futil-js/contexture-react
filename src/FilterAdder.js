@@ -36,4 +36,4 @@ let FilterAdder = ({
   )
 }
 
-export default InjectTreeNode(observer(FilterAdder), { allowEmptyNode: true })
+export default InjectTreeNode({ allowEmptyNode: true })(observer(FilterAdder))

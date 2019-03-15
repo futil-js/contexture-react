@@ -2,8 +2,6 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import injectTreeNode from '../utils/injectTreeNode'
-import { exampleTypes } from 'contexture-client'
 import { bgJoin } from '../styles/generic'
 import { TagsInput as DefaultTagsInput } from '../layout/TagsInput'
 import DefaultRadioList from '../layout/RadioList'
@@ -12,7 +10,8 @@ import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 
 let tagValueField = 'word'
-let TagsQuery = ({
+
+export default observer(({
   tree,
   node,
   TagsInput = DefaultTagsInput,
@@ -125,6 +124,4 @@ let TagsQuery = ({
       PopoverContents={TagQueryPopever}
     />
   )
-}
-
-export default injectTreeNode(observer(TagsQuery), exampleTypes.tagsQuery)
+})

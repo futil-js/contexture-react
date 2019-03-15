@@ -1,8 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Flex } from '../layout/Flex'
-import { exampleTypes } from 'contexture-client'
-import injectTreeNode from '../utils/injectTreeNode'
 import F from 'futil-js'
 import _ from 'lodash/fp'
 
@@ -120,84 +118,71 @@ let allRollingOpts = [
 let rollingOptIsSelected = (node, opt) =>
   node.from === opt.value.from && node.to === opt.value.to
 
-let DateComponent = injectTreeNode(
-  observer(
-    ({
-      tree,
-      node,
-      DateInput,
-      RadioList,
-      Select,
-      excludeRollingRanges = [],
-    }) => {
-      let rollingOpts = _.reject(
-        opt => _.includes(opt.type, excludeRollingRanges),
-        allRollingOpts
-      )
+export default observer(
+  ({ tree, node, DateInput, RadioList, Select, excludeRollingRanges = [] }) => {
+    let rollingOpts = _.reject(
+      opt => _.includes(opt.type, excludeRollingRanges),
+      allRollingOpts
+    )
 
-      let handleRollingSelection = idx => {
-        let range = rollingOpts[idx].value
-        tree.mutate(node.path, range)
-      }
-
-      return (
-        <div>
-          <RadioList
-            options={F.autoLabelOptions(['exact', 'rolling'])}
-            value={node.useDateMath ? 'rolling' : 'exact'}
-            style={{ marginBottom: 10 }}
-            onChange={mode => {
-              tree.mutate(
-                node.path,
-                mode === 'rolling'
-                  ? {
-                      useDateMath: true,
-                      from: '',
-                      to: '',
-                    }
-                  : {
-                      useDateMath: false,
-                      from: null,
-                      to: null,
-                    }
-              )
-            }}
-          />
-          {!node.useDateMath && (
-            <Flex
-              style={{ justifyContent: 'space-between', alignItems: 'center' }}
-            >
-              <DateInput
-                value={node.from}
-                onChange={date => tree.mutate(node.path, { from: date })}
-              />
-              <div>-</div>
-              <DateInput
-                value={node.to}
-                onChange={date => tree.mutate(node.path, { to: date })}
-              />
-            </Flex>
-          )}
-          {node.useDateMath && (
-            <Select
-              value={`${node.from}-${node.to}`}
-              onChange={e => handleRollingSelection(e.target.value)}
-              options={F.map(
-                opt => ({
-                  label: opt.label,
-                  value: `${opt.value.from}-${opt.value.to}`,
-                  selected: rollingOptIsSelected(node, opt),
-                }),
-                rollingOpts
-              )}
-            />
-          )}
-        </div>
-      )
+    let handleRollingSelection = idx => {
+      let range = rollingOpts[idx].value
+      tree.mutate(node.path, range)
     }
-  ),
-  exampleTypes.date
-)
-DateComponent.displayName = 'Date'
 
-export default DateComponent
+    return (
+      <div>
+        <RadioList
+          options={F.autoLabelOptions(['exact', 'rolling'])}
+          value={node.useDateMath ? 'rolling' : 'exact'}
+          style={{ marginBottom: 10 }}
+          onChange={mode => {
+            tree.mutate(
+              node.path,
+              mode === 'rolling'
+                ? {
+                    useDateMath: true,
+                    from: '',
+                    to: '',
+                  }
+                : {
+                    useDateMath: false,
+                    from: null,
+                    to: null,
+                  }
+            )
+          }}
+        />
+        {!node.useDateMath && (
+          <Flex
+            style={{ justifyContent: 'space-between', alignItems: 'center' }}
+          >
+            <DateInput
+              value={node.from}
+              onChange={date => tree.mutate(node.path, { from: date })}
+            />
+            <div>-</div>
+            <DateInput
+              value={node.to}
+              onChange={date => tree.mutate(node.path, { to: date })}
+            />
+          </Flex>
+        )}
+        {node.useDateMath && (
+          <Select
+            value={`${node.from}-${node.to}`}
+            onChange={e => handleRollingSelection(e.target.value)}
+            options={F.map(
+              opt => ({
+                label: opt.label,
+                value: `${opt.value.from}-${opt.value.to}`,
+                selected: rollingOptIsSelected(node, opt),
+              }),
+              rollingOpts
+            )}
+          />
+        )}
+      </div>
+    )
+  }
+)
