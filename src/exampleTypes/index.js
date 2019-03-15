@@ -55,122 +55,122 @@ export default ({
       wrapLoading(Loading()),
       defaultProps({ TextInput, Checkbox, RadioList }),
       injectTreeNode(exampleTypes.facet),
-      setDisplayName('Facet'),
+      setDisplayName('Facet')
     )(Facet),
 
     Number: _.flow(
       wrapLoading(Loading()),
       defaultProps({ NumberInput, Button }),
       injectTreeNode(exampleTypes.number),
-      setDisplayName('Number'),
+      setDisplayName('Number')
     )(Number),
 
     Date: _.flow(
       wrapLoading(Loading()),
       defaultProps({ DateInput, RadioList, Select }),
       injectTreeNode(exampleTypes.date),
-      setDisplayName('Date'),
+      setDisplayName('Date')
     )(Date),
 
     DateRangePicker: _.flow(
       wrapLoading(Loading()),
       injectTreeNode(exampleTypes.date),
-      setDisplayName('DateRangePicker'),
+      setDisplayName('DateRangePicker')
     )(DateRangePicker),
 
     Query: _.flow(
       wrapLoading(Loading()),
       defaultProps({ TextInput }),
       injectTreeNode(exampleTypes.query),
-      setDisplayName('Query'),
+      setDisplayName('Query')
     )(Query),
 
     TagsQuery: _.flow(
       wrapLoading(Loading()),
       defaultProps({ TagsInput, Checkbox, RadioList, Button }),
       injectTreeNode(exampleTypes.tagsQuery),
-      setDisplayName('TagsQuery'),
+      setDisplayName('TagsQuery')
     )(TagsQuery),
 
     Exists: _.flow(
       wrapLoading(Loading()),
       defaultProps({ RadioList }),
       injectTreeNode(exampleTypes.exists),
-      setDisplayName('Exists'),
+      setDisplayName('Exists')
     )(Exists),
 
     Bool: _.flow(
       wrapLoading(Loading()),
       defaultProps({ RadioList }),
       injectTreeNode(exampleTypes.bool),
-      setDisplayName('Bool'),
+      setDisplayName('Bool')
     )(Bool),
 
     ResultTable: _.flow(
       wrapLoading(Loading()),
       defaultProps({ Table, Modal, FieldPicker, ListGroupItem, Icon }),
       injectTreeNode(),
-      setDisplayName('ResultTable'),
+      setDisplayName('ResultTable')
     )(ResultTable),
 
     ResultCount: _.flow(
       wrapLoading(Loading({ display: 'inline-block' })),
       injectTreeNode(exampleTypes.results),
-      setDisplayName('ResultCount'),
+      setDisplayName('ResultCount')
     )(ResultCount),
 
     ResultPager: _.flow(
       wrapLoading(Loading()),
       defaultProps({ Icon }),
       injectTreeNode(),
-      setDisplayName('ResultPager'),
+      setDisplayName('ResultPager')
     )(ResultPager),
 
     DateHistogram: _.flow(
       wrapLoading(Loading()),
       injectTreeNode(exampleTypes.dateHistogram),
-      setDisplayName('DateHistogram'),
+      setDisplayName('DateHistogram')
     )(DateHistogram),
 
     TermsStats: _.flow(
       wrapLoading(Loading()),
       injectTreeNode(exampleTypes.TermsStats),
-      setDisplayName('TermsStats'),
+      setDisplayName('TermsStats')
     )(TermsStats),
 
     TermsStatsTable: _.flow(
       wrapLoading(Loading()),
       defaultProps({ Button }),
       injectTreeNode(exampleTypes.TermsStats),
-      setDisplayName('TermsStatsTable'),
+      setDisplayName('TermsStatsTable')
     )(TermsStatsTable),
 
     Geo: _.flow(
       wrapLoading(Loading()),
       defaultProps({ NumberInput }),
       injectTreeNode(exampleTypes.geo),
-      setDisplayName('Geo'),
+      setDisplayName('Geo')
     )(Geo),
 
     Text: _.flow(
       wrapLoading(Loading()),
       defaultProps({ Input }),
       injectTreeNode(),
-      setDisplayName('Text'),
+      setDisplayName('Text')
     )(Text),
 
     TagsText: _.flow(
       wrapLoading(Loading()),
       defaultProps({ TagsInput, Select }),
       injectTreeNode(),
-      setDisplayName('TagsText'),
+      setDisplayName('TagsText')
     )(TagsText),
 
     CheckableTermsStatsTable: _.flow(
       wrapLoading(Loading()),
       defaultProps({ Button }),
       injectTreeNode(),
-      setDisplayName('CheckableTermsStatsTable'),
+      setDisplayName('CheckableTermsStatsTable')
     )(CheckableTermsStatsTable),
   }
 
@@ -178,7 +178,7 @@ export default ({
     wrapLoading(Loading()),
     defaultProps({ ResultTable: Components.ResultTable, Checkbox }),
     injectTreeNode(),
-    setDisplayName('CheckableResultTable'),
+    setDisplayName('CheckableResultTable')
   )(CheckableResultTable)
 
   let TypeMap = {
