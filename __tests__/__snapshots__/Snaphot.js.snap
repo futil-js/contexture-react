@@ -1793,6 +1793,452 @@ exports[`Storyshots Example Types Geo filter & HERE maps 1`] = `
 </div>
 `;
 
+exports[`Storyshots Example Types Loader 1`] = `
+Array [
+  "Loading:",
+  <div
+    style={
+      Object {
+        "backgroundImage": "linear-gradient(-45deg, rgba(200, 200, 200, 0.2) 25%, transparent 25%, transparent 50%, rgba(200, 200, 200, 0.2) 50%, rgba(200, 200, 200, 0.2) 75%, transparent 75%, transparent",
+        "backgroundSize": "1rem 1rem",
+        "opacity": 0.5,
+      }
+    }
+  >
+    <div
+      className="contexture-facet"
+    >
+      <div
+        style={
+          Object {
+            "alignItems": "baseline",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <label
+          onClick={[Function]}
+        >
+          <input
+            checked={true}
+            onChange={[Function]}
+            type="radio"
+          />
+          Include
+        </label>
+        <label
+          onClick={[Function]}
+        >
+          <input
+            checked={false}
+            onChange={[Function]}
+            type="radio"
+          />
+          Exclude
+        </label>
+      </div>
+      <input
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        placeholder="Find..."
+        style={
+          Object {
+            "background": "rgba(255, 255, 255, 0.7)",
+            "border": "solid 1px #efefef",
+            "borderRadius": "30px",
+            "boxSizing": "border-box",
+            "display": "block",
+            "margin": "0 auto",
+            "outline": "none",
+            "padding": "5px",
+            "textIndent": "5px",
+            "transition": "background 0.3s",
+            "width": "100%",
+          }
+        }
+        value=""
+      />
+      <label
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          type="checkbox"
+        />
+        <div
+          style={
+            Object {
+              "flex": 2,
+              "padding": "0 5px",
+            }
+          }
+        >
+          Select All
+        </div>
+      </label>
+      <label
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <input
+          checked={true}
+          onChange={[Function]}
+          type="checkbox"
+        />
+        <div
+          style={
+            Object {
+              "flex": 2,
+              "padding": "0 5px",
+            }
+          }
+        >
+          A
+        </div>
+        <div>
+          15
+        </div>
+      </label>
+      <label
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          type="checkbox"
+        />
+        <div
+          style={
+            Object {
+              "flex": 2,
+              "padding": "0 5px",
+            }
+          }
+        >
+          <i>
+            Not Specified
+          </i>
+        </div>
+        <div>
+          4
+        </div>
+      </label>
+      <label
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          type="checkbox"
+        />
+        <div
+          style={
+            Object {
+              "flex": 2,
+              "padding": "0 5px",
+            }
+          }
+        >
+          B
+        </div>
+        <div>
+          3
+        </div>
+      </label>
+      <label
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          type="checkbox"
+        />
+        <div
+          style={
+            Object {
+              "flex": 2,
+              "padding": "0 5px",
+            }
+          }
+        >
+          C
+        </div>
+        <div>
+          1
+        </div>
+      </label>
+      <div
+        className="contexture-facet-cardinality"
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      />
+    </div>
+  </div>,
+  <div
+    style={
+      Object {
+        "marginBottom": 40,
+      }
+    }
+  />,
+  "Not Loading:",
+  <div
+    style={Object {}}
+  >
+    <div
+      className="contexture-facet"
+    >
+      <div
+        style={
+          Object {
+            "alignItems": "baseline",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <label
+          onClick={[Function]}
+        >
+          <input
+            checked={true}
+            onChange={[Function]}
+            type="radio"
+          />
+          Include
+        </label>
+        <label
+          onClick={[Function]}
+        >
+          <input
+            checked={false}
+            onChange={[Function]}
+            type="radio"
+          />
+          Exclude
+        </label>
+      </div>
+      <input
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        placeholder="Find..."
+        style={
+          Object {
+            "background": "rgba(255, 255, 255, 0.7)",
+            "border": "solid 1px #efefef",
+            "borderRadius": "30px",
+            "boxSizing": "border-box",
+            "display": "block",
+            "margin": "0 auto",
+            "outline": "none",
+            "padding": "5px",
+            "textIndent": "5px",
+            "transition": "background 0.3s",
+            "width": "100%",
+          }
+        }
+        value=""
+      />
+      <label
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          type="checkbox"
+        />
+        <div
+          style={
+            Object {
+              "flex": 2,
+              "padding": "0 5px",
+            }
+          }
+        >
+          Select All
+        </div>
+      </label>
+      <label
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <input
+          checked={true}
+          onChange={[Function]}
+          type="checkbox"
+        />
+        <div
+          style={
+            Object {
+              "flex": 2,
+              "padding": "0 5px",
+            }
+          }
+        >
+          A
+        </div>
+        <div>
+          15
+        </div>
+      </label>
+      <label
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          type="checkbox"
+        />
+        <div
+          style={
+            Object {
+              "flex": 2,
+              "padding": "0 5px",
+            }
+          }
+        >
+          <i>
+            Not Specified
+          </i>
+        </div>
+        <div>
+          4
+        </div>
+      </label>
+      <label
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          type="checkbox"
+        />
+        <div
+          style={
+            Object {
+              "flex": 2,
+              "padding": "0 5px",
+            }
+          }
+        >
+          B
+        </div>
+        <div>
+          3
+        </div>
+      </label>
+      <label
+        style={
+          Object {
+            "alignItems": "center",
+            "cursor": "pointer",
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <input
+          checked={false}
+          onChange={[Function]}
+          type="checkbox"
+        />
+        <div
+          style={
+            Object {
+              "flex": 2,
+              "padding": "0 5px",
+            }
+          }
+        >
+          C
+        </div>
+        <div>
+          1
+        </div>
+      </label>
+      <div
+        className="contexture-facet-cardinality"
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      />
+    </div>
+  </div>,
+]
+`;
+
 exports[`Storyshots Example Types ResultTable Customizations 1`] = `
 <div>
   <style>
