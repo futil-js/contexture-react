@@ -186,18 +186,14 @@ let tree = observable({
     },
   },
 })
-let mkTestTree = tree => {
-  let t = {
-    getNode: ([path]) => tree[path],
-    mutate: _.curry(([path], blob) => {
-      action('mutate')(path, blob)
-      set(tree[path], blob)
-    }),
-  }
-  t.lens = treeLens(t)
-  return t
+let testTree = {
+  getNode: ([path]) => tree[path],
+  mutate: _.curry(([path], blob) => {
+    action('mutate')(path, blob)
+    set(tree[path], blob)
+  }),
 }
-let testTree = mkTestTree(tree)
+testTree.lens = treeLens(testTree)
 
 let formatYear = x => new Date(x).getUTCFullYear()
 import { Flex, SpacedList } from '../../src/layout'
@@ -399,16 +395,3 @@ export default () =>
         },
       }
     )
-    .addWithJSX('Loader', () => (
-      <React.Fragment>
-        Loading:
-        <Provider tree={mkTestTree(_.set('facet.updating', true, tree))}>
-          <Facet path={['facet']} display={F.autoLabel} />
-        </Provider>
-        <div style={{ marginBottom: 40 }} />
-        Not Loading:
-        <Provider tree={mkTestTree(_.set('facet.updating', false, tree))}>
-          <Facet path={['facet']} display={F.autoLabel} />
-        </Provider>
-      </React.Fragment>
-    ))
