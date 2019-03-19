@@ -1,3 +1,4 @@
+import F from 'futil-js'
 import _ from 'lodash/fp'
 import { exampleTypes } from 'contexture-client'
 import Facet from './Facet'
@@ -25,13 +26,6 @@ import DefaultSelect from '../layout/Select'
 import WrappedDateInput from '../layout/WrappedDateInput'
 import injectTreeNode from '../utils/injectTreeNode'
 import StripedLoader from '../utils/StripedLoader'
-import { injectDefaults } from '../utils/mobx-react-utils'
-
-let wrapLoading = Loading =>
-  _.flow(
-    Loading,
-    injectDefaults(({ node }) => ({ isLoading: node && node.updating }))
-  )
 
 export default ({
   Input = 'input',
@@ -50,136 +44,104 @@ export default ({
   Select = DefaultSelect,
   Loading = StripedLoader,
 } = {}) => {
+  let injectNodeAndLoad = (...args) =>
+    _.flow(
+      Loading,
+      injectTreeNode(...args)
+    )
+
   let Components = {
     Facet: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ TextInput, Checkbox, RadioList }),
-      injectTreeNode(exampleTypes.facet),
-      setDisplayName('Facet')
+      injectNodeAndLoad(exampleTypes.facet),
+      defaultProps({ TextInput, Checkbox, RadioList })
     )(Facet),
 
     Number: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ NumberInput, Button }),
-      injectTreeNode(exampleTypes.number),
-      setDisplayName('Number')
+      injectNodeAndLoad(exampleTypes.number),
+      defaultProps({ NumberInput, Button })
     )(Number),
 
     Date: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ DateInput, RadioList, Select }),
-      injectTreeNode(exampleTypes.date),
-      setDisplayName('Date')
+      injectNodeAndLoad(exampleTypes.date),
+      defaultProps({ DateInput, RadioList, Select })
     )(Date),
 
-    DateRangePicker: _.flow(
-      wrapLoading(Loading()),
-      injectTreeNode(exampleTypes.date),
-      setDisplayName('DateRangePicker')
-    )(DateRangePicker),
+    DateRangePicker: injectNodeAndLoad(exampleTypes.date)(DateRangePicker),
 
     Query: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ TextInput }),
-      injectTreeNode(exampleTypes.query),
-      setDisplayName('Query')
+      injectNodeAndLoad(exampleTypes.query),
+      defaultProps({ TextInput })
     )(Query),
 
     TagsQuery: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ TagsInput, Checkbox, RadioList, Button }),
-      injectTreeNode(exampleTypes.tagsQuery),
-      setDisplayName('TagsQuery')
+      injectNodeAndLoad(exampleTypes.tagsQuery),
+      defaultProps({ TagsInput, Checkbox, RadioList, Button })
     )(TagsQuery),
 
     Exists: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ RadioList }),
-      injectTreeNode(exampleTypes.exists),
-      setDisplayName('Exists')
+      injectNodeAndLoad(exampleTypes.exists),
+      defaultProps({ RadioList })
     )(Exists),
 
     Bool: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ RadioList }),
-      injectTreeNode(exampleTypes.bool),
-      setDisplayName('Bool')
+      injectNodeAndLoad(exampleTypes.bool),
+      defaultProps({ RadioList })
     )(Bool),
 
     ResultTable: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ Table, Modal, FieldPicker, ListGroupItem, Icon }),
-      injectTreeNode(),
-      setDisplayName('ResultTable')
+      injectNodeAndLoad(),
+      defaultProps({ Table, Modal, FieldPicker, ListGroupItem, Icon })
     )(ResultTable),
 
     ResultCount: _.flow(
-      wrapLoading(Loading({ display: 'inline-block' })),
-      injectTreeNode(exampleTypes.results),
-      setDisplayName('ResultCount')
+      injectNodeAndLoad(exampleTypes.results),
+      defaultProps({ loaderStyle: { display: 'inline-block' } })
     )(ResultCount),
 
     ResultPager: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ Icon }),
-      injectTreeNode(),
-      setDisplayName('ResultPager')
+      injectNodeAndLoad(),
+      defaultProps({ Icon })
     )(ResultPager),
 
-    DateHistogram: _.flow(
-      wrapLoading(Loading()),
-      injectTreeNode(exampleTypes.dateHistogram),
-      setDisplayName('DateHistogram')
-    )(DateHistogram),
+    DateHistogram: injectNodeAndLoad(exampleTypes.dateHistogram)(DateHistogram),
 
-    TermsStats: _.flow(
-      wrapLoading(Loading()),
-      injectTreeNode(exampleTypes.TermsStats),
-      setDisplayName('TermsStats')
-    )(TermsStats),
+    TermsStats: injectNodeAndLoad(exampleTypes.TermsStats)(TermsStats),
 
     TermsStatsTable: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ Button }),
-      injectTreeNode(exampleTypes.TermsStats),
-      setDisplayName('TermsStatsTable')
+      injectNodeAndLoad(exampleTypes.TermsStats),
+      defaultProps({ Button })
     )(TermsStatsTable),
 
     Geo: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ NumberInput }),
-      injectTreeNode(exampleTypes.geo),
-      setDisplayName('Geo')
+      injectNodeAndLoad(exampleTypes.geo),
+      defaultProps({ NumberInput })
     )(Geo),
 
     Text: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ Input }),
-      injectTreeNode(),
-      setDisplayName('Text')
+      injectNodeAndLoad(),
+      defaultProps({ Input })
     )(Text),
 
     TagsText: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ TagsInput, Select }),
-      injectTreeNode(),
-      setDisplayName('TagsText')
+      injectNodeAndLoad(),
+      defaultProps({ TagsInput, Select })
     )(TagsText),
 
     CheckableTermsStatsTable: _.flow(
-      wrapLoading(Loading()),
-      defaultProps({ Button }),
-      injectTreeNode(),
-      setDisplayName('CheckableTermsStatsTable')
+      injectNodeAndLoad(),
+      defaultProps({ Button })
     )(CheckableTermsStatsTable),
   }
 
   Components.CheckableResultTable = _.flow(
-    wrapLoading(Loading()),
-    defaultProps({ ResultTable: Components.ResultTable, Checkbox }),
-    injectTreeNode(),
-    setDisplayName('CheckableResultTable')
+    injectNodeAndLoad(),
+    defaultProps({ ResultTable: Components.ResultTable, Checkbox })
   )(CheckableResultTable)
+
+  Components = F.mapValuesIndexed(
+    (Component, name) => setDisplayName(name)(Component),
+    Components
+  )
 
   let TypeMap = {
     facet: Components.Facet,
