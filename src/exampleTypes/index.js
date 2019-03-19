@@ -44,10 +44,10 @@ export default ({
   Select = DefaultSelect,
   Loading = StripedLoader,
 } = {}) => {
-  let injectNodeAndLoad = (...args) =>
+  let injectNodeAndLoad = x =>
     _.flow(
       Loading,
-      injectTreeNode(...args)
+      injectTreeNode(x)
     )
 
   let Components = {
