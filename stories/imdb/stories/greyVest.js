@@ -227,7 +227,7 @@ export default () => (
     <GVStyle />
     <Awaiter promise={schemas}>
       {schemas => (
-        <Provider treee={tree}>
+        <Provider tree={tree}>
           <div
             className="gv-grid"
             style={state.showBuilder ? { gridTemplateColumns: '1fr' } : {}}
