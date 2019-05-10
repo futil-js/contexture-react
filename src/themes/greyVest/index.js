@@ -505,6 +505,10 @@ export let GVStyle = () => (
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker > div {
