@@ -1,3 +1,10 @@
+# 1.48.7
+* Popover: Support uncontrolled state and anchoring
+* Add stories for popovers
+
+# 1.48.6
+* StripedLoader: Fix regression in 1.48.7
+
 # 1.48.6
 * StripedLoader: Fix loading styles
 

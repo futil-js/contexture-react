@@ -465,6 +465,10 @@ exports[`Storyshots Components (Grey Vest)|Box Box 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -1012,6 +1016,10 @@ exports[`Storyshots Components (Grey Vest)|Button Active 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -1560,6 +1568,10 @@ exports[`Storyshots Components (Grey Vest)|Button As Div 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -2108,6 +2120,10 @@ exports[`Storyshots Components (Grey Vest)|Button Basic Usage 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -2656,6 +2672,10 @@ exports[`Storyshots Components (Grey Vest)|Button Primary 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -3204,6 +3224,10 @@ exports[`Storyshots Components (Grey Vest)|LinkButton LinkButton 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -3754,6 +3778,10 @@ exports[`Storyshots Components (Grey Vest)|Refs Default 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -4333,6 +4361,10 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Basic 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -4889,6 +4921,10 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Builder 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -5445,6 +5481,10 @@ exports[`Storyshots Components (Grey Vest)|Search Layout Results Only 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -5996,6 +6036,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Anonymous Values 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -6559,6 +6603,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Base Usage 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -7122,6 +7170,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Controlled 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -7693,6 +7745,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Custom TabList and TabPanel 1`] 
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -8260,6 +8316,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Docs 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -9250,6 +9310,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Tab Render Function 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -9813,6 +9877,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs TabLabel and TabContent 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -10376,6 +10444,10 @@ exports[`Storyshots Components (Grey Vest)|Tabs Uncontrolled with defaultValue 1
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -10939,6 +11011,10 @@ exports[`Storyshots Components (Grey Vest)|ToggleFiltersButton Basic Usage 1`] =
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -11115,14 +11191,243 @@ exports[`Storyshots Components (Unthemed)|Layout NestedPicker 1`] = `
 </div>
 `;
 
-exports[`Storyshots Components (Unthemed)|Layout Popover 1`] = `
-<div>
+exports[`Storyshots Components (Unthemed)|Layout/Popover (Legacy) Controlled with no anchor 1`] = `
+<button
+  onClick={[Function]}
+  style={
+    Object {
+      "bottom": undefined,
+      "left": undefined,
+      "position": "relative",
+      "right": undefined,
+      "top": undefined,
+    }
+  }
+>
+  Open Popover
+</button>
+`;
+
+exports[`Storyshots Components (Unthemed)|Layout/Popover Controlled with anchor 1`] = `
+<span
+  onClick={[Function]}
+>
   <button
     onClick={[Function]}
+    style={
+      Object {
+        "bottom": undefined,
+        "left": undefined,
+        "position": "absolute",
+        "right": undefined,
+        "top": undefined,
+      }
+    }
   >
     Open Popover
   </button>
-</div>
+</span>
+`;
+
+exports[`Storyshots Components (Unthemed)|Layout/Popover Dynamic Positioning 1`] = `
+Array [
+  <span
+    onClick={[Function]}
+  >
+    <button
+      style={
+        Object {
+          "bottom": undefined,
+          "left": 10,
+          "position": "absolute",
+          "right": undefined,
+          "top": 10,
+        }
+      }
+    >
+      Open Popover
+    </button>
+  </span>,
+  <span
+    onClick={[Function]}
+  >
+    <button
+      style={
+        Object {
+          "bottom": undefined,
+          "left": "50%",
+          "position": "absolute",
+          "right": undefined,
+          "top": 10,
+        }
+      }
+    >
+      Open Popover
+    </button>
+  </span>,
+  <span
+    onClick={[Function]}
+  >
+    <button
+      style={
+        Object {
+          "bottom": undefined,
+          "left": undefined,
+          "position": "absolute",
+          "right": 10,
+          "top": 10,
+        }
+      }
+    >
+      Open Popover
+    </button>
+  </span>,
+  <span
+    onClick={[Function]}
+  >
+    <button
+      style={
+        Object {
+          "bottom": 10,
+          "left": 10,
+          "position": "absolute",
+          "right": undefined,
+          "top": undefined,
+        }
+      }
+    >
+      Open Popover
+    </button>
+  </span>,
+  <span
+    onClick={[Function]}
+  >
+    <button
+      style={
+        Object {
+          "bottom": 10,
+          "left": "50%",
+          "position": "absolute",
+          "right": undefined,
+          "top": undefined,
+        }
+      }
+    >
+      Open Popover
+    </button>
+  </span>,
+  <span
+    onClick={[Function]}
+  >
+    <button
+      style={
+        Object {
+          "bottom": 10,
+          "left": undefined,
+          "position": "absolute",
+          "right": 10,
+          "top": undefined,
+        }
+      }
+    >
+      Open Popover
+    </button>
+  </span>,
+  <span
+    onClick={[Function]}
+  >
+    <button
+      style={
+        Object {
+          "bottom": undefined,
+          "left": 10,
+          "position": "absolute",
+          "right": undefined,
+          "top": "50%",
+        }
+      }
+    >
+      Open Popover
+    </button>
+  </span>,
+  <span
+    onClick={[Function]}
+  >
+    <button
+      style={
+        Object {
+          "bottom": undefined,
+          "left": undefined,
+          "position": "absolute",
+          "right": 10,
+          "top": "50%",
+        }
+      }
+    >
+      Open Popover
+    </button>
+  </span>,
+  <div
+    style={
+      Object {
+        "background": "rgba(0,0,0,0.5)",
+        "height": 200,
+        "left": "40%",
+        "overflow": "auto",
+        "position": "absolute",
+        "top": "40%",
+        "width": 400,
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "height": 800,
+          "width": "100%",
+        }
+      }
+    >
+      <span
+        onClick={[Function]}
+      >
+        <button
+          style={
+            Object {
+              "bottom": undefined,
+              "left": "30%",
+              "position": "absolute",
+              "right": undefined,
+              "top": "40%",
+            }
+          }
+        >
+          Open Popover
+        </button>
+      </span>
+    </div>
+  </div>,
+]
+`;
+
+exports[`Storyshots Components (Unthemed)|Layout/Popover Uncontrolled with anchor 1`] = `
+<span
+  onClick={[Function]}
+>
+  <button
+    style={
+      Object {
+        "bottom": undefined,
+        "left": undefined,
+        "position": "absolute",
+        "right": undefined,
+        "top": undefined,
+      }
+    }
+  >
+    Open Popover
+  </button>
+</span>
 `;
 
 exports[`Storyshots Developer Notes|Docs CHANGELOG.md 1`] = `
@@ -11816,6 +12121,10 @@ exports[`Storyshots Live Demos|IMDB Check List 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -12378,6 +12687,10 @@ exports[`Storyshots Live Demos|IMDB Grey Vest Theme 1`] = `
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -12480,7 +12793,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
       style={
         Object {
           "height": "100%",
-          "width": "100%",
         }
       }
     >
@@ -12537,7 +12849,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               style={
                 Object {
                   "height": "100%",
-                  "width": "100%",
                 }
               }
             >
@@ -12621,7 +12932,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               style={
                 Object {
                   "height": "100%",
-                  "width": "100%",
                 }
               }
             >
@@ -12730,7 +13040,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
               style={
                 Object {
                   "height": "100%",
-                  "width": "100%",
                 }
               }
             >
@@ -12834,7 +13143,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           style={
             Object {
               "height": "100%",
-              "width": "100%",
             }
           }
         >
@@ -12862,7 +13170,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
                 Object {
                   "display": "inline-block",
                   "height": "100%",
-                  "width": "100%",
                 }
               }
             >
@@ -12874,7 +13181,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
           style={
             Object {
               "height": "100%",
-              "width": "100%",
             }
           }
         >
@@ -12900,7 +13206,6 @@ exports[`Storyshots Live Demos|IMDB Quick Start 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           />
@@ -13446,6 +13751,10 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Falsey Trees 
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -13999,6 +14308,10 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton Multiple Tree
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -14552,6 +14865,10 @@ exports[`Storyshots Search Components (Grey Vest)|/TreePauseButton One Tree 1`] 
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -15105,6 +15422,10 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -15183,7 +15504,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Defau
     style={
       Object {
         "height": "100%",
-        "width": "100%",
       }
     }
   >
@@ -15893,6 +16213,10 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
         border: solid 1px #f1f1f1;
         padding: 5px;
+        font-weight: normal;
+        text-align: left;
+        background: white;
+        margin: 5px;
       }
 
       .panel-tree-picker &gt; div {
@@ -15978,7 +16302,6 @@ exports[`Storyshots Search Components (Grey Vest)|Example Types/Tags Query Respo
       style={
         Object {
           "height": "100%",
-          "width": "100%",
         }
       }
     >
@@ -16246,7 +16569,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
       style={
         Object {
           "height": "100%",
-          "width": "100%",
         }
       }
     >
@@ -16302,7 +16624,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -16356,7 +16677,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -16417,7 +16737,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -16643,7 +16962,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -16869,7 +17187,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -16948,7 +17265,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -17023,7 +17339,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -17225,7 +17540,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
             style={
               Object {
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -17368,7 +17682,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
               Object {
                 "display": "inline-block",
                 "height": "100%",
-                "width": "100%",
               }
             }
           >
@@ -17391,7 +17704,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Full Demo 1`] = `
               style={
                 Object {
                   "height": "100%",
-                  "width": "100%",
                 }
               }
             >
@@ -17604,7 +17916,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types Geo filter & HERE
         style={
           Object {
             "height": "100%",
-            "width": "100%",
           }
         }
       >
@@ -17815,7 +18126,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Custo
     style={
       Object {
         "height": "100%",
-        "width": "100%",
       }
     }
   >
@@ -18038,7 +18348,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/ResultTable Displ
     style={
       Object {
         "height": "100%",
-        "width": "100%",
       }
     }
   >
@@ -18111,7 +18420,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Defaul
   style={
     Object {
       "height": "100%",
-      "width": "100%",
     }
   }
 >
@@ -18335,7 +18643,6 @@ exports[`Storyshots Search Components (Unthemed)|Example Types/Tags Query Respon
     style={
       Object {
         "height": "100%",
-        "width": "100%",
       }
     }
   >
@@ -18554,7 +18861,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterAdder Example 1`] = `
     style={
       Object {
         "height": "100%",
-        "width": "100%",
       }
     }
   >
@@ -18584,7 +18890,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterAdder With NestedPickerMo
   style={
     Object {
       "height": "100%",
-      "width": "100%",
     }
   }
 >
@@ -18603,7 +18908,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
   style={
     Object {
       "height": "100%",
-      "width": "100%",
     }
   }
 >
@@ -18615,7 +18919,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
         style={
           Object {
             "height": "100%",
-            "width": "100%",
           }
         }
       >
@@ -18651,7 +18954,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
         style={
           Object {
             "height": "100%",
-            "width": "100%",
           }
         }
       >
@@ -18687,7 +18989,6 @@ exports[`Storyshots Search Components (Unthemed)|FilterList Example 1`] = `
         style={
           Object {
             "height": "100%",
-            "width": "100%",
           }
         }
       >
@@ -18860,7 +19161,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                             style={
                               Object {
                                 "height": "100%",
-                                "width": "100%",
                               }
                             }
                           >
@@ -19125,7 +19425,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                         style={
                                           Object {
                                             "height": "100%",
-                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -19329,7 +19628,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                         style={
                                           Object {
                                             "height": "100%",
-                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -19595,7 +19893,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                     style={
                                                       Object {
                                                         "height": "100%",
-                                                        "width": "100%",
                                                       }
                                                     }
                                                   >
@@ -19869,7 +20166,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                     style={
                                                       Object {
                                                         "height": "100%",
-                                                        "width": "100%",
                                                       }
                                                     }
                                                   >
@@ -20085,7 +20381,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                             style={
                               Object {
                                 "height": "100%",
-                                "width": "100%",
                               }
                             }
                           >
@@ -20370,7 +20665,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                         style={
                                           Object {
                                             "height": "100%",
-                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -20615,7 +20909,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                         style={
                                           Object {
                                             "height": "100%",
-                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -20962,7 +21255,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                     style={
                                                       Object {
                                                         "height": "100%",
-                                                        "width": "100%",
                                                       }
                                                     }
                                                   >
@@ -21167,7 +21459,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                                     style={
                                                       Object {
                                                         "height": "100%",
-                                                        "width": "100%",
                                                       }
                                                     }
                                                   >
@@ -21416,7 +21707,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder Multiple Filters 1
                                         style={
                                           Object {
                                             "height": "100%",
-                                            "width": "100%",
                                           }
                                         }
                                       >
@@ -21642,7 +21932,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter 1`] = `
                             style={
                               Object {
                                 "height": "100%",
-                                "width": "100%",
                               }
                             }
                           >
@@ -21862,7 +22151,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter on a mi
                             style={
                               Object {
                                 "height": "100%",
-                                "width": "100%",
                               }
                             }
                           >
@@ -22082,7 +22370,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fa
                             style={
                               Object {
                                 "height": "100%",
-                                "width": "100%",
                               }
                             }
                           >
@@ -22458,7 +22745,6 @@ exports[`Storyshots Search Components (Unthemed)|QueryBuilder One Filter with fi
                             style={
                               Object {
                                 "height": "100%",
-                                "width": "100%",
                               }
                             }
                           >
