@@ -17,7 +17,7 @@ import { addEventListener, setNodeStyles } from '../utils/dom'
 
 let { min, max, floor } = Math
 
-let getPopoverTopleft = (windowRect, anchorRect, popoverRect, position) => {
+let getPopoverTopleft = ({ windowRect, anchorRect, popoverRect, position }) => {
   /*
    * These rectangles represent the places we can render a popover, relative to
    * its anchor element. They are positioned by applying translation functions:
@@ -33,28 +33,28 @@ let getPopoverTopleft = (windowRect, anchorRect, popoverRect, position) => {
     (translate, position) => ({ position, rectangle: translate(popoverRect) }),
     {
       top: _.flow(
-        v => moveY(anchorRect.top - v.bottom)(v),
-        v => moveX(middleX(anchorRect) - middleX(v))(v),
-        v => moveX(min(0, windowRect.right - v.right - 1))(v),
-        v => moveX(max(0, windowRect.left - v.left))(v)
+        pop => moveY(anchorRect.top - pop.bottom)(pop),
+        pop => moveX(middleX(anchorRect) - middleX(pop))(pop),
+        pop => moveX(min(0, windowRect.right - pop.right - 1))(pop),
+        pop => moveX(max(0, windowRect.left - pop.left))(pop)
       ),
       right: _.flow(
-        v => moveX(anchorRect.right - v.left)(v),
-        v => moveY(middleY(anchorRect) - middleY(v))(v),
-        v => moveY(min(0, windowRect.bottom - v.bottom))(v),
-        v => moveY(max(0, windowRect.top - v.top))(v)
+        pop => moveX(anchorRect.right - pop.left)(pop),
+        pop => moveY(middleY(anchorRect) - middleY(pop))(pop),
+        pop => moveY(min(0, windowRect.bottom - pop.bottom))(pop),
+        pop => moveY(max(0, windowRect.top - pop.top))(pop)
       ),
       bottom: _.flow(
-        v => moveY(anchorRect.bottom - v.top)(v),
-        v => moveX(middleX(anchorRect) - middleX(v))(v),
-        v => moveX(min(0, windowRect.right - v.right - 1))(v),
-        v => moveX(max(0, windowRect.left - v.left))(v)
+        pop => moveY(anchorRect.bottom - pop.top)(pop),
+        pop => moveX(middleX(anchorRect) - middleX(pop))(pop),
+        pop => moveX(min(0, windowRect.right - pop.right - 1))(pop),
+        pop => moveX(max(0, windowRect.left - pop.left))(pop)
       ),
       left: _.flow(
-        v => moveX(anchorRect.left - v.right)(v),
-        v => moveY(middleY(anchorRect) - middleY(v))(v),
-        v => moveY(min(0, windowRect.bottom - v.bottom))(v),
-        v => moveY(max(0, windowRect.top - v.top))(v)
+        pop => moveX(anchorRect.left - pop.right)(pop),
+        pop => moveY(middleY(anchorRect) - middleY(pop))(pop),
+        pop => moveY(min(0, windowRect.bottom - pop.bottom))(pop),
+        pop => moveY(max(0, windowRect.top - pop.top))(pop)
       ),
     }
   )
@@ -90,16 +90,6 @@ let getPopoverTopleft = (windowRect, anchorRect, popoverRect, position) => {
   )
 }
 
-let addMargins = (node, rect) => {
-  let styles = window.getComputedStyle(node)
-  return {
-    top: rect.top - parseInt(styles['margin-top']),
-    right: rect.right + parseInt(styles['margin-right']),
-    bottom: rect.bottom + parseInt(styles['margin-bottom']),
-    left: rect.left - parseInt(styles['margin-left']),
-  }
-}
-
 let AnchoredPopover = ({
   children,
   style,
@@ -115,26 +105,37 @@ let AnchoredPopover = ({
       moveX(window.scrollX),
       moveY(window.scrollY)
     )
-    let windowRect = {
-      top: 0,
-      left: 0,
-      bottom: window.innerHeight,
-      right: window.innerWidth,
+
+    // getBoundingClientRect doesn't include margins in its calculation
+    let addMargins = (node, rect) => {
+      let styles = window.getComputedStyle(node)
+      return {
+        top: rect.top - parseInt(styles['margin-top']),
+        right: rect.right + parseInt(styles['margin-right']),
+        bottom: rect.bottom + parseInt(styles['margin-bottom']),
+        left: rect.left - parseInt(styles['margin-left']),
+      }
     }
+
     setNodeStyles(
-      getPopoverTopleft(
-        scrollTranslate(windowRect),
-        scrollTranslate(
+      getPopoverTopleft({
+        position,
+        windowRect: scrollTranslate({
+          top: 0,
+          left: 0,
+          bottom: window.innerHeight,
+          right: window.innerWidth,
+        }),
+        anchorRect: scrollTranslate(
           fromObject(
             anchorParentRef.current.firstElementChild.getBoundingClientRect()
           )
         ),
-        addMargins(
+        popoverRect: addMargins(
           popoverRef.current,
           fromObject(popoverRef.current.getBoundingClientRect())
         ),
-        position
-      ),
+      }),
       popoverRef.current
     )
   }
