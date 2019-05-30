@@ -1,6 +1,6 @@
 import F from 'futil-js'
 import _ from 'lodash/fp'
-import React, { useRef, useEffect, useState, Children } from 'react'
+import React, { useRef, useEffect, Children } from 'react'
 import { createPortal } from 'react-dom'
 import { Observer } from 'mobx-react'
 import OutsideClickHandler from 'react-outside-click-handler'

@@ -1,5 +1,3 @@
-import _ from 'lodash/fp'
-
 let { min, max } = Math
 
 export let moveX = by => rect => ({
