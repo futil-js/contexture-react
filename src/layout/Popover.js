@@ -11,9 +11,9 @@ import {
   middleY,
   area,
   intersection,
-  fromObject,
 } from '../utils/rectangle'
 import { addEventListener, setNodeStyles } from '../utils/dom'
+import { useStateLens } from '../utils/react'
 
 let { min, max, floor } = Math
 
@@ -73,11 +73,10 @@ let getPopoverTopleft = ({ windowRect, anchorRect, popoverRect, position }) => {
   // than latter ones.
   let heuristics = [
     // Prefer the popover with the largest visible area
-    popover =>
-      F.flurry(intersection, area, floor)(
-        popover.rectangle,
-        boundingRect(popover.position)
-      ),
+    popover => {
+      let rect = intersection(popover.rectangle, boundingRect(popover.position))
+      return rect && floor(area(rect))
+    },
     // Prefer the popover in the requested position
     popover => popover.position === position,
     // Prefer the popover where its bounding rectangle has the largest area
@@ -127,13 +126,11 @@ let AnchoredPopover = ({
           right: window.innerWidth,
         }),
         anchorRect: scrollTranslate(
-          fromObject(
-            anchorParentRef.current.firstElementChild.getBoundingClientRect()
-          )
+          anchorParentRef.current.firstElementChild.getBoundingClientRect()
         ),
         popoverRect: addMargins(
           popoverRef.current,
-          fromObject(popoverRef.current.getBoundingClientRect())
+          popoverRef.current.getBoundingClientRect()
         ),
       }),
       popoverRef.current
@@ -183,8 +180,6 @@ let SimplePopover = ({ children, style }) => (
   </div>
 )
 
-let stateLens = ([value, setValue]) => ({ get: () => value, set: setValue })
-
 let Popover = ({ isOpen, anchor, position, ...props }) => {
   if (!isOpen && !anchor)
     throw new Error(
@@ -194,8 +189,7 @@ let Popover = ({ isOpen, anchor, position, ...props }) => {
   let anchorParentRef = useRef(null)
 
   // Support controlled state with isOpen
-  let open = isOpen || stateLens(useState(false))
-  let MaybeObserver = isOpen ? Observer : ({ children }) => children()
+  let open = isOpen || useStateLens(false)
 
   // Support anchoring
   let Anchor = anchor && (
@@ -206,12 +200,12 @@ let Popover = ({ isOpen, anchor, position, ...props }) => {
   let Anchored =
     anchor &&
     createPortal(
-      <AnchoredPopover {...{ anchorParentRef, position }} {...props} />,
+      <AnchoredPopover {...{ anchorParentRef, position, ...props }} />,
       document.body
     )
 
   return (
-    <MaybeObserver>
+    <Observer>
       {() => (
         <>
           {Anchor}
@@ -222,7 +216,7 @@ let Popover = ({ isOpen, anchor, position, ...props }) => {
           )}
         </>
       )}
-    </MaybeObserver>
+    </Observer>
   )
 }
 Popover.displayName = 'Popover'

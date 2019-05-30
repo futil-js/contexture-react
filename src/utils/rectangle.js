@@ -26,11 +26,12 @@ export let middleY = rect => (rect.bottom + rect.top) / 2
 
 export let area = rect => width(rect) * height(rect)
 
-export let intersection = (box1, box2) => ({
-  top: max(box2.top, box1.top),
-  right: min(box2.right, box1.right),
-  bottom: min(box2.bottom, box1.bottom),
-  left: max(box2.left, box1.left),
-})
-
-export let fromObject = _.pick(['top', 'right', 'bottom', 'left'])
+export let intersection = (box1, box2) => {
+  let rect = {
+    top: max(box2.top, box1.top),
+    right: min(box2.right, box1.right),
+    bottom: min(box2.bottom, box1.bottom),
+    left: max(box2.left, box1.left),
+  }
+  return !width(rect) || !height(rect) ? null : rect
+}
