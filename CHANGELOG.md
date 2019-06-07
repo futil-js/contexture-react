@@ -1,3 +1,8 @@
+# 1.49.2
+* ErrorList: Don't render child elements if no errors are given
+* ErrorList: Allow passing props through to ErrorText and ErrorBlock
+* Storybook: New stories to validate the above
+
 # 1.49.1
 * TagsInput: Remove 100% height
 * StripedLoader: Remove 100% height
