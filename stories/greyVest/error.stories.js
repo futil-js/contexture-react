@@ -12,6 +12,29 @@ storiesOf('Components (Grey Vest)|Error', module)
       {['Error 1', 'Error 2', ['Error 3A', 'Error 3B']]}
     </ErrorList>
   ))
+  .addWithJSX('Empty', () => (
+    <>
+      <ErrorList />
+      <ErrorList block />
+    </>
+  ))
+  .addWithJSX('Styled', () => (
+    <>
+      <ErrorList style={{color: 'forestgreen'}}>
+        Ceci n'est pas une error
+      </ErrorList>
+      <ErrorList
+        block
+        style={{
+          fontWeight: 800,
+          fontSize: '2em',
+          textTransform: 'uppercase'
+        }}
+      >
+        Extremely loud error
+      </ErrorList>
+    </>
+  ))
   .addWithJSX('Form Demo', () => (
     <Box>
       <h1 style={{ margin: '15px 0' }}>Header</h1>
