@@ -1,4 +1,3 @@
-import isEmpty from 'lodash/fp/isEmpty'
 import React from 'react'
 import ErrorList from './ErrorList'
 import { Flex } from '../../layout/Flex'
