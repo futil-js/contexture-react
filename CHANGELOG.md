@@ -1,7 +1,13 @@
-# 1.49.2
+# 1.49.4
 * ErrorList: Don't render child elements if no errors are given
 * ErrorList: Allow passing props through to ErrorText and ErrorBlock
 * Storybook: New stories to validate the above
+
+# 1.49.3
+* Fix error when adding a new field in QueryBuilder
+
+# 1.49.2
+* Shrink font sizes to match design
 
 # 1.49.1
 * TagsInput: Remove 100% height
