@@ -20,7 +20,7 @@ storiesOf('Components (Grey Vest)|Error', module)
   ))
   .addWithJSX('Styled', () => (
     <>
-      <ErrorList style={{color: 'forestgreen'}}>
+      <ErrorList style={{ color: 'forestgreen' }}>
         Ceci n'est pas une error
       </ErrorList>
       <ErrorList
@@ -28,7 +28,7 @@ storiesOf('Components (Grey Vest)|Error', module)
         style={{
           fontWeight: 800,
           fontSize: '2em',
-          textTransform: 'uppercase'
+          textTransform: 'uppercase',
         }}
       >
         Extremely loud error
