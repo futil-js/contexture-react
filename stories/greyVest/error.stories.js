@@ -50,3 +50,15 @@ storiesOf('Components (Grey Vest)|Error', module)
       </Flex>
     </Box>
   ))
+  .addWithJSX('Custom Component', () => {
+    let MyErrorComponent = ({children, ...props}) => (
+      <li {...props}>{children}</li>
+    )
+    return (
+      <ol>
+        <ErrorList ErrorComponent={MyErrorComponent}>
+          {['First error', 'Second error', 'Third error']}
+        </ErrorList>
+      </ol>
+    )
+  })

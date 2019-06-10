@@ -33,6 +33,7 @@ import TabList from './TabList'
 export { Tabs, Tab, TabContent, TabLabel } from './Tabs'
 import ErrorList from './ErrorList'
 import ErrorText from './ErrorText'
+import ErrorBlock from './ErrorBlock'
 import Box from './Box'
 import LinkButton from './LinkButton'
 import TreePauseButton from './TreePauseButton'
@@ -56,6 +57,8 @@ export {
   ButtonRadio,
   TabList,
   ErrorList,
+  ErrorText,
+  ErrorBlock,
   Box,
   LinkButton,
   TreePauseButton,
