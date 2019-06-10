@@ -8,9 +8,12 @@ let ErrorList = ({ ErrorComponent, block = false, children, ...props }) => {
     ErrorComponent = block ? ErrorBlock : ErrorText
   }
   return _.map(
-    e => e
-      ? <ErrorComponent key={e} {...props}>{e}</ErrorComponent> 
-      : null,
+    e =>
+      e ? (
+        <ErrorComponent key={e} {...props}>
+          {e}
+        </ErrorComponent>
+      ) : null,
     _.castArray(children)
   )
 }

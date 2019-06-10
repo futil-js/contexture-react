@@ -51,7 +51,7 @@ storiesOf('Components (Grey Vest)|Error', module)
     </Box>
   ))
   .addWithJSX('Custom Component', () => {
-    let MyErrorComponent = ({children, ...props}) => (
+    let MyErrorComponent = ({ children, ...props }) => (
       <li {...props}>{children}</li>
     )
     return (
