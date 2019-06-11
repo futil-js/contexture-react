@@ -8,14 +8,14 @@ storiesOf('Components (Grey Vest)|Error', module)
   .addDecorator(decorator)
   .addWithJSX('Text', () => <ErrorList>I am an error</ErrorList>)
   .addWithJSX('Block', () => (
-    <ErrorList ErrorComponent={ErrorBlock}>
+    <ErrorList Component={ErrorBlock}>
       {['Error 1', 'Error 2', ['Error 3A', 'Error 3B']]}
     </ErrorList>
   ))
   .addWithJSX('Empty', () => (
     <>
       <ErrorList />
-      <ErrorList ErrorComponent={ErrorBlock} />
+      <ErrorList Component={ErrorBlock} />
     </>
   ))
   .addWithJSX('Styled', () => (
@@ -24,7 +24,7 @@ storiesOf('Components (Grey Vest)|Error', module)
         Ceci n'est pas une error
       </ErrorList>
       <ErrorList
-        ErrorComponent={ErrorBlock}
+        Component={ErrorBlock}
         style={{
           fontWeight: 800,
           fontSize: '2em',
@@ -38,7 +38,7 @@ storiesOf('Components (Grey Vest)|Error', module)
   .addWithJSX('Form Demo', () => (
     <Box>
       <h1 style={{ margin: '15px 0' }}>Header</h1>
-      <ErrorList ErrorComponent={ErrorBlock}>Block error</ErrorList>
+      <ErrorList Component={ErrorBlock}>Block error</ErrorList>
       <Flex column style={{ marginBottom: 25 }}>
         <Flex as="label" column style={{ flex: 1 }}>
           <div className="filter-field-label" style={{ marginBottom: 14 }}>
@@ -56,7 +56,7 @@ storiesOf('Components (Grey Vest)|Error', module)
     )
     return (
       <ol>
-        <ErrorList ErrorComponent={MyErrorComponent}>
+        <ErrorList Component={MyErrorComponent}>
           {['First error', 'Second error', 'Third error']}
         </ErrorList>
       </ol>

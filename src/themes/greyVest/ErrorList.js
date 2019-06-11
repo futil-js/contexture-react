@@ -1,15 +1,14 @@
 import React from 'react'
-import _ from 'lodash/fp'
 import ErrorText from './ErrorText'
 
-let ErrorList = ({ ErrorComponent = ErrorText, children, ...props }) =>
-  _.map(
-    e =>
+let ErrorList = ({ Component = ErrorText, children, ...props }) => 
+  React.Children.map(
+    children,
+    e => 
       e ? (
-        <ErrorComponent key={e} {...props}>
+        <Component key={e} {...props}>
           {e}
-        </ErrorComponent>
-      ) : null,
-    _.castArray(children)
+        </Component>
+      ) : null
   )
 export default ErrorList
