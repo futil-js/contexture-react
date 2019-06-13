@@ -1,3 +1,6 @@
+# 1.49.5
+* Use local observable store in TagsInput
+
 # 1.49.4
 * Add minWidth to TagsInput
 
