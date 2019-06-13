@@ -66,8 +66,7 @@ let TagsInput = observer(
     placeholder = 'Search...',
     splitCommas,
     PopoverContents,
-    className,
-    ...props
+    style,
   }) => {
     let state = useLocalStore(() => ({
       currentInput: '',
@@ -80,7 +79,7 @@ let TagsInput = observer(
         _.map(addTag)
       )
     return (
-      <div className={F.compactJoin(' ', ['tags-input', className])} {...props}>
+      <div className="tags-input" style={{ ...style }}>
         <Flex
           style={{
             cursor: 'text',
