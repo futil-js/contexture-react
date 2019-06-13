@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import F from 'futil-js'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
@@ -11,6 +12,7 @@ import Awaiter from '../src/layout/Awaiter'
 import TextHighlight from '../src/layout/TextHighlight'
 import { Flex } from '../src/layout/Flex'
 import { NestedPicker, ModalPicker } from '../src'
+import { TagsInput } from '../src/layout/TagsInput'
 
 let ModalDemo = withStateLens({ isOpen: false })(
   observer(({ isOpen }) => (
@@ -112,3 +114,16 @@ storiesOf('Components (Unthemed)|Layout', module)
       Modal={Modal}
     />
   ))
+  .addWithJSX('TagsInput', () => {
+    let [tags, setTags] = React.useState([])
+    return (
+      <TagsInput
+        tags={tags}
+        addTag={tag => setTags(_.concat(tags, tag))}
+        removeTag={tag => setTags(_.pull(tag, tags))}
+        placeholder="Add tags..."
+        tagStyle={{ color: 'white', backgroundColor: '#0076de' }}
+        PopoverContents={({ tag }) => <h1>{tag}</h1>}
+      />
+    )
+  })
