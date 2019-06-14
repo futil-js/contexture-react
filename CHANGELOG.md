@@ -1,7 +1,13 @@
-# 1.49.4
+# 1.49.6
 * ErrorList: Don't render child elements if no errors are given
 * ErrorList: Allow passing props through to ErrorText and ErrorBlock
 * Storybook: New stories to validate the above
+
+# 1.49.5
+* Simplify QueryBuilder and contexture-mobx with the latest contexture-client
+
+# 1.49.4
+* Add minWidth to TagsInput
 
 # 1.49.3
 * Fix error when adding a new field in QueryBuilder
