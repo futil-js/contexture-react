@@ -17,6 +17,7 @@ import {
 import ExampleTypeConstructor from '../../exampleTypes/'
 import QueryBuilderComponent from '../../queryBuilder'
 import { default as DefaultModal } from '../../layout/Modal'
+import List from '../../layout/List'
 
 import Input from './Input'
 import Checkbox from './Checkbox'
@@ -31,7 +32,6 @@ import Button from './Button'
 import ButtonRadio from './ButtonRadio'
 import TabList from './TabList'
 export { Tabs, Tab, TabContent, TabLabel } from './Tabs'
-import ErrorList from './ErrorList'
 import ErrorText from './ErrorText'
 import ErrorBlock from './ErrorBlock'
 import Box from './Box'
@@ -56,7 +56,6 @@ export {
   Button,
   ButtonRadio,
   TabList,
-  ErrorList,
   ErrorText,
   ErrorBlock,
   Box,
@@ -805,4 +804,12 @@ export let QueryBuilder = defaultProps({ Button, MissingTypeComponent })(
 
 export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(
   BaseSearchFilters
+)
+
+export let ErrorList = defaultProps({ Component: ErrorText })(
+  List
+)
+
+export let ErrorBlockList = defaultProps({ Component: ErrorBlock })(
+  List
 )

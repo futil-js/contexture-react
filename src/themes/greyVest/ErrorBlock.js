@@ -1,5 +1,5 @@
 import React from 'react'
-import ErrorList from './ErrorList'
+import List from '../../layout/List'
 import { Flex } from '../../layout/Flex'
 
 let ErrorBlock = ({ children, ...props }) => (
@@ -7,9 +7,9 @@ let ErrorBlock = ({ children, ...props }) => (
     <i className="material-icons" style={{ marginRight: 8 }}>
       warning
     </i>
-    <div>
-      <ErrorList>{children}</ErrorList>
-    </div>
+    <List>
+      {children}
+    </List>
   </Flex>
 )
 export default ErrorBlock
