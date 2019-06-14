@@ -2,7 +2,12 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import decorator from './decorator'
 import { Flex } from './../../src/layout/Flex'
-import { Box, ErrorList, ErrorBlockList, Input } from './../../src/themes/greyVest'
+import {
+  Box,
+  ErrorList,
+  ErrorBlockList,
+  Input,
+} from './../../src/themes/greyVest'
 
 storiesOf('Components (Grey Vest)|Error', module)
   .addDecorator(decorator)
@@ -55,7 +60,7 @@ storiesOf('Components (Grey Vest)|Error', module)
         style={{
           width: 160,
           backgroundColor: 'black',
-          color: 'white'
+          color: 'white',
         }}
         {...props}
       >

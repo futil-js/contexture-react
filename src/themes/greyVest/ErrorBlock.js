@@ -7,9 +7,7 @@ let ErrorBlock = ({ children, ...props }) => (
     <i className="material-icons" style={{ marginRight: 8 }}>
       warning
     </i>
-    <List>
-      {children}
-    </List>
+    <List>{children}</List>
   </Flex>
 )
 export default ErrorBlock

@@ -806,10 +806,6 @@ export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(
   BaseSearchFilters
 )
 
-export let ErrorList = defaultProps({ Component: ErrorText })(
-  List
-)
+export let ErrorList = defaultProps({ Component: ErrorText })(List)
 
-export let ErrorBlockList = defaultProps({ Component: ErrorBlock })(
-  List
-)
+export let ErrorBlockList = defaultProps({ Component: ErrorBlock })(List)
