@@ -1,5 +1,6 @@
 import React from 'react'
 import F from 'futil-js'
+import _ from 'lodash/fp'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { observer } from 'mobx-react'
@@ -65,6 +66,19 @@ let FlexDemo = ({ style, ...props }) => (
   </Flex>
 )
 
+let FlexChildSpacingDemo = ({ childSpacing }) => (
+  <Flex style={{ margin: 10 }} childSpacing={childSpacing}>
+    {_.times(
+      i => (
+        <div style={{ backgroundColor: '#F0F', padding: 10, flex: 1 }}>
+          Item{i + 1}
+        </div>
+      ),
+      6
+    )}
+  </Flex>
+)
+
 storiesOf('Components (Unthemed)|Layout', module)
   .addWithJSX('Popover', () => <PopoverDemo />)
   .addWithJSX('Modal', () => <ModalDemo />)
@@ -78,6 +92,13 @@ storiesOf('Components (Unthemed)|Layout', module)
       <Flex column alignItems="center">
         <h1>No children</h1>
         <Flex />
+      </Flex>
+      <Flex column alignItems="stretch">
+        <h1 style={{ alignSelf: 'center' }}>
+          With <code>childSpacing</code> prop
+        </h1>
+        <FlexChildSpacingDemo childSpacing={20} />
+        <FlexChildSpacingDemo childSpacing="20%" />
       </Flex>
     </>
   ))
