@@ -6,7 +6,7 @@ import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
 import injectTreeNode from '../utils/injectTreeNode'
 
-let ceilTens = _.partial(_.ceil.convert({fixed: false}), [_, -1])
+let ceilTens = _.partial(_.ceil.convert({ fixed: false }), [_, -1])
 
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 let RadioListDefault = ({ value, onChange, options }) => (
@@ -145,7 +145,8 @@ let Facet = injectTreeNode(
             justifyContent="space-between"
           >
             <div>
-              Showing {_.min([node.size || minSize, node.context.options.length])} of{' '}
+              Showing{' '}
+              {_.min([node.size || minSize, node.context.options.length])} of{' '}
               {node.context.cardinality}
             </div>
             <div>
@@ -157,14 +158,14 @@ let Facet = injectTreeNode(
                   <a
                     key="less"
                     onClick={() =>
-                      tree.mutate(node.path, { 
+                      tree.mutate(node.path, {
                         size: _.max([
                           _.min([
                             node.size,
-                            ceilTens(node.context.options.length)
+                            ceilTens(node.context.options.length),
                           ]) - sizeIncrement,
-                          minSize
-                        ])
+                          minSize,
+                        ]),
                       })
                     }
                     style={{ cursor: 'pointer' }}
@@ -176,13 +177,15 @@ let Facet = injectTreeNode(
                   <a
                     key="more"
                     onClick={() =>
-                      tree.mutate(node.path, { size: (node.size || minSize) + sizeIncrement })
+                      tree.mutate(node.path, {
+                        size: (node.size || minSize) + sizeIncrement,
+                      })
                     }
                     style={{ cursor: 'pointer' }}
                   >
                     View More
                   </a>
-                )
+                ),
               ])}
             </div>
           </Flex>
