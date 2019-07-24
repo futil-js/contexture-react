@@ -6,6 +6,18 @@ import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
 import injectTreeNode from '../utils/injectTreeNode'
 
+/*
+_.max([
+  _.min([
+    ceilTens(node.context.cardinality), 
+    node.size
+  ]) - 10,
+  10
+])
+*/
+
+let ceilTens = _.partial(_.ceil.convert({fixed: false}), [_, -1])
+
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 let RadioListDefault = ({ value, onChange, options }) => (
   <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
@@ -135,29 +147,54 @@ let Facet = injectTreeNode(
             </label>
           )
         }, _.get('context.options', node))}
-        <Flex
-          className="contexture-facet-cardinality"
-          style={{ justifyContent: 'space-between' }}
-        >
-          {!!node.context.cardinality && (
+        {!!node.context.cardinality && (
+          <Flex
+            className="contexture-facet-cardinality"
+            justifyContent="space-between"
+          >
             <div>
               Showing {_.min([node.size || 10, node.context.options.length])} of{' '}
               {node.context.cardinality}
             </div>
-          )}
-          {node.context.cardinality > (node.size || 10) && (
             <div>
-              <a
-                onClick={() =>
-                  tree.mutate(node.path, { size: (node.size || 10) + 10 })
-                }
-                style={{ cursor: 'pointer' }}
-              >
-                View More
-              </a>
+              {_.flow(
+                _.compact,
+                F.intersperse(' — ')
+              )([
+                _.min([node.context.cardinality, node.size || 0]) > 10 && (
+                  <a
+                    key="less"
+                    onClick={() =>
+                      tree.mutate(node.path, { 
+                        size: _.max([
+                          _.min([
+                            ceilTens(node.context.cardinality), 
+                            node.size
+                          ]) - 10,
+                          10
+                        ])
+                      })
+                    }
+                    style={{ cursor: 'pointer' }}
+                  >
+                    View Less
+                  </a>
+                ),
+                node.context.cardinality > (node.size || 10) && (
+                  <a
+                    key="more"
+                    onClick={() =>
+                      tree.mutate(node.path, { size: (node.size || 10) + 10 })
+                    }
+                    style={{ cursor: 'pointer' }}
+                  >
+                    View More
+                  </a>
+                )
+              ])}
             </div>
-          )}
-        </Flex>
+          </Flex>
+        )}
       </div>
     )
   ),
