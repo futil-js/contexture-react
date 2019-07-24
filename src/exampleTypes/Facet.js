@@ -110,6 +110,8 @@ let Facet = injectTreeNode(
       displayBlank = () => <i>Not Specified</i>,
       formatCount = x => x,
       ButtonGroup = 'div',
+      minSize = 10,
+      sizeIncrement = 10,
     }) => (
       <div className="contexture-facet">
         <RadioList
@@ -153,7 +155,7 @@ let Facet = injectTreeNode(
             justifyContent="space-between"
           >
             <div>
-              Showing {_.min([node.size || 10, node.context.options.length])} of{' '}
+              Showing {_.min([node.size || minSize, node.context.options.length])} of{' '}
               {node.context.cardinality}
             </div>
             <div>
@@ -161,17 +163,17 @@ let Facet = injectTreeNode(
                 _.compact,
                 F.intersperse(' — ')
               )([
-                _.min([node.context.cardinality, node.size || 0]) > 10 && (
+                _.min([node.size, node.context.options.length]) > minSize && (
                   <a
                     key="less"
                     onClick={() =>
                       tree.mutate(node.path, { 
                         size: _.max([
                           _.min([
-                            ceilTens(node.context.cardinality), 
-                            node.size
-                          ]) - 10,
-                          10
+                            node.size,
+                            ceilTens(node.context.options.length)
+                          ]) - sizeIncrement,
+                          minSize
                         ])
                       })
                     }
@@ -180,11 +182,11 @@ let Facet = injectTreeNode(
                     View Less
                   </a>
                 ),
-                node.context.cardinality > (node.size || 10) && (
+                node.context.cardinality > (node.size || minSize) && (
                   <a
                     key="more"
                     onClick={() =>
-                      tree.mutate(node.path, { size: (node.size || 10) + 10 })
+                      tree.mutate(node.path, { size: node.size + sizeIncrement })
                     }
                     style={{ cursor: 'pointer' }}
                   >
