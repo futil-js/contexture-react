@@ -6,16 +6,6 @@ import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
 import injectTreeNode from '../utils/injectTreeNode'
 
-/*
-_.max([
-  _.min([
-    ceilTens(node.context.cardinality), 
-    node.size
-  ]) - 10,
-  10
-])
-*/
-
 let ceilTens = _.partial(_.ceil.convert({fixed: false}), [_, -1])
 
 let CheckboxDefault = props => <input type="checkbox" {...props} />
@@ -186,7 +176,7 @@ let Facet = injectTreeNode(
                   <a
                     key="more"
                     onClick={() =>
-                      tree.mutate(node.path, { size: node.size + sizeIncrement })
+                      tree.mutate(node.path, { size: (node.size || minSize) + sizeIncrement })
                     }
                     style={{ cursor: 'pointer' }}
                   >
