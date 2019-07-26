@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import _ from 'lodash/fp'
+import { ciel } from 'lodash'
 import F from 'futil-js'
 import { observer, Observer } from 'mobx-react'
 import { exampleTypes } from 'contexture-client'
 import { Flex } from '../layout/Flex'
 import injectTreeNode from '../utils/injectTreeNode'
 
-let ceilTens = _.partial(_.ceil.convert({ fixed: false }), [_, -1])
+let ceilTens = x => ciel(x, -1)
 
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 let RadioListDefault = ({ value, onChange, options }) => (
