@@ -1,6 +1,3 @@
-# 1.54.7
-* Grid: Add `rows` prop
-
 # 1.54.6
 * Facet: add "view less" link
 
