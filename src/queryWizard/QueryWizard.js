@@ -8,7 +8,7 @@ import {
   CheckButton as DefaultCheckButton,
   Modal as DefaultModal,
   StepsAccordion as DefaultStepsAccordion,
-  AccordionStep,
+  AccordionStep as DefaultAccordionStep,
 } from '../layout'
 import { withNode } from '../utils/hoc'
 
@@ -25,13 +25,16 @@ let generateStepTitle = (node, title) => i => (
 
 let QueryWizard = withNode(
   ({
-    StepsAccordion = DefaultStepsAccordion,
-    FilterButtonList = DefaultFilterButtonList,
-    CheckButton = DefaultCheckButton,
-    Button = 'button',
-    Modal = DefaultModal,
-    MissingTypeComponent = DefaultMissingTypeComponent,
-    Icon = DefaultIcon,
+    theme = {
+      StepsAccordion: DefaultStepsAccordion,
+      AccordionStep: DefaultAccordionStep,
+      FilterButtonList: DefaultFilterButtonList,
+      CheckButton: DefaultCheckButton,
+      Button: 'button',
+      Modal: DefaultModal,
+      MissingTypeComponent: DefaultMissingTypeComponent,
+      Icon: DefaultIcon,
+    },
     tree,
     node,
     fields = {},
@@ -40,21 +43,17 @@ let QueryWizard = withNode(
     mapNodeToProps = _.noop,
     style,
   }) => (
-    <StepsAccordion {...{ Button, Icon, style, onSubmit }}>
+    <theme.StepsAccordion {...{ theme, style, onSubmit }}>
       {F.mapIndexed(
         (child, i) => (
-          <AccordionStep
+          <theme.AccordionStep
             key={i}
             isRequired={i === 0}
             title={generateStepTitle(node, title)}
           >
-            <FilterButtonList
+            <theme.FilterButtonList
               {...{
-                CheckButton,
-                Button,
-                Icon,
-                MissingTypeComponent,
-                Modal,
+                theme,
                 node: child,
                 tree,
                 fields,
@@ -62,11 +61,11 @@ let QueryWizard = withNode(
               }}
               key={node.key}
             />
-          </AccordionStep>
+          </theme.AccordionStep>
         ),
         _.get('children', node)
       )}
-    </StepsAccordion>
+    </theme.StepsAccordion>
   )
 )
 

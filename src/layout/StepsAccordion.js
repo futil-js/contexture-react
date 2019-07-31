@@ -9,34 +9,33 @@ import { Flex } from './Flex'
 // We don't observe on Step because then it would rerender its children when `node`
 // changes, which unfocuses query inputs as soon as the first character is entered.
 let Buttons = observer(
-  ({ step, totalSteps, currentStep, Button, Icon, onSubmit }) => (
+  ({ step, totalSteps, currentStep, theme, onSubmit }) => (
     <>
       {step > 0 && (
-        <Button onClick={F.sets(step - 1, currentStep)} className="back-button">
-          <Icon icon="PreviousPage" />
+        <theme.Button onClick={F.sets(step - 1, currentStep)} className="back-button">
+          <theme.Icon icon="PreviousPage" />
           Back
-        </Button>
+        </theme.Button>
       )}
       {step < totalSteps - 1 ? (
-        <Button
+        <theme.Button
           primary
           onClick={F.sets(step + 1, currentStep)}
           disabled={false}
         >
           Continue
-        </Button>
+        </theme.Button>
       ) : (
-        <Button primary onClick={onSubmit}>
+        <theme.Button primary onClick={onSubmit}>
           View Results
-        </Button>
+        </theme.Button>
       )}
     </>
   )
 )
 
 export let AccordionStep = ({
-  Button,
-  Icon,
+  theme,
   style,
   className,
   step,
@@ -66,14 +65,14 @@ export let AccordionStep = ({
           {!isRequired && <em style={{ marginLeft: 6 }}>(Optional)</em>}
         </Flex>
         <div className="filter-field-label-icon">
-          <Icon icon={isOpen ? 'FilterListCollapse' : 'FilterListExpand'} />
+          <theme.Icon icon={isOpen ? 'FilterListCollapse' : 'FilterListExpand'} />
         </div>
       </Flex>
       {isOpen && (
         <>
           <div className="step-contents">{children}</div>
           <Buttons
-            {...{ step, totalSteps, currentStep, onSubmit, Button, Icon }}
+            {...{ step, totalSteps, currentStep, onSubmit, theme }}
           />
         </>
       )}
@@ -82,8 +81,10 @@ export let AccordionStep = ({
 }
 
 let StepsAccordion = ({
-  Button = 'button',
-  Icon = DefaultIcon,
+  theme = {
+    Button: 'button',
+    Icon: DefaultIcon,
+  },
   onSubmit = _.noop,
   children,
   ...props
@@ -93,7 +94,7 @@ let StepsAccordion = ({
     <div {...props}>
       {React.Children.map(children, (child, i) => (
         <child.type
-          {...{ Button, Icon, currentStep, onSubmit }}
+          {...{ theme, currentStep, onSubmit }}
           key={i}
           step={i}
           totalSteps={_.size(children)}

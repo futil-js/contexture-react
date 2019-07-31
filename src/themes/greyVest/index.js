@@ -978,24 +978,35 @@ export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(
 )
 
 export let FilterButtonList = defaultProps({
-  Button,
-  CheckButton,
-  Icon,
-  Modal,
+  theme: {
+    Button,
+    CheckButton,
+    Icon,
+    Modal: DefaultModal,
+    Popover: DefaultPopover,
+    MissingTypeComponent,
+  },
   className: 'gv-filter-button-list',
 })(BaseFilterButtonList)
 
 export let StepsAccordion = defaultProps({
-  Button,
-  Icon,
+  theme: {
+    Button,
+    Icon,
+  },
   className: 'gv-steps-accordion',
 })(DefaultStepsAccordion)
 
 export let QueryWizard = defaultProps({
-  StepsAccordion,
-  FilterButtonList,
-  CheckButton,
-  Modal,
-  Button,
-  Icon,
+  theme: {
+    StepsAccordion,
+    AccordionStep,
+    FilterButtonList,
+    CheckButton,
+    Modal: DefaultModal,
+    Popover: DefaultPopover,
+    Button,
+    Icon,
+    MissingTypeComponent,
+  }
 })(QueryWizardComponent)

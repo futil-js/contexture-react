@@ -19,10 +19,7 @@ let FilterButtonItem = withLoader(
     tree,
     fields,
     mapNodeToProps,
-    Button,
-    CheckButton,
-    MissingTypeComponent,
-    Modal,
+    theme,
   }) => {
     let mappedProps = mapNodeToProps(node, fields)
     let modal = F.stateLens(React.useState(false))
@@ -34,10 +31,10 @@ let FilterButtonItem = withLoader(
     let description = _.get('description', mappedProps)
     return (
       <>
-        <CheckButton checked={node.hasValue} onClick={F.on(modal)}>
+        <theme.CheckButton checked={node.hasValue} onClick={F.on(modal)}>
           {title}
-        </CheckButton>
-        <Modal isOpen={modal}>
+        </theme.CheckButton>
+        <theme.Modal isOpen={modal}>
           <div className="filter-button-modal">
             <h1>{title}</h1>
             {description && (
@@ -45,19 +42,20 @@ let FilterButtonItem = withLoader(
             )}
             <div className="filter-component">
               <Dynamic
-                Component={MissingTypeComponent}
+                theme={theme}
+                Component={theme.MissingTypeComponent}
                 tree={tree}
                 node={node}
                 path={_.toArray(node.path)}
                 {...mappedProps}
               />
             </div>
-            <Button onClick={() => tree.clear(node.path)}>Clear</Button>
-            <Button primary onClick={F.off(modal)}>
+            <theme.Button onClick={() => tree.clear(node.path)}>Clear</theme.Button>
+            <theme.Button primary onClick={F.off(modal)}>
               Done
-            </Button>
+            </theme.Button>
           </div>
-        </Modal>
+        </theme.Modal>
       </>
     )
   }
@@ -81,12 +79,14 @@ let FilterButtonList = withNode(
     fields = {},
     mapNodeToProps = _.noop,
     className = 'filter-button-list',
-    Button = 'button',
-    CheckButton = DefaultCheckButton,
-    Icon = DefaultIcon,
-    MissingTypeComponent = DefaultMissingTypeComponent,
-    Modal = DefaultModal,
-    Popover = DefaultPopover,
+    theme = {
+      Button: 'button',
+      CheckButton: DefaultCheckButton,
+      Icon: DefaultIcon,
+      MissingTypeComponent: DefaultMissingTypeComponent,
+      Modal: DefaultModal,
+      Popover: DefaultPopover,
+    },
     nested = false,
   }) => (
     <GroupBox
@@ -104,12 +104,7 @@ let FilterButtonList = withNode(
               node: child,
               fields,
               mapNodeToProps,
-              Button,
-              CheckButton,
-              Icon,
-              MissingTypeComponent,
-              Modal,
-              Popover,
+              theme,
               className,
             }}
           />

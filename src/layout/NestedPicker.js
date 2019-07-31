@@ -20,13 +20,13 @@ const DefaultItem = ({ children, onClick, disabled }) => (
 )
 
 let FilteredSection = observer(
-  ({ options, onClick, highlight, Highlight, Item }) => (
+  ({ options, onClick, highlight, theme }) => (
     <div>
       {F.mapIndexed(
         (option, field) => (
-          <Item key={field} onClick={() => onClick(option.value)}>
-            <Highlight text={option.label} pattern={highlight} />
-          </Item>
+          <theme.Item key={field} onClick={() => onClick(option.value)}>
+            <theme.Highlight text={option.label} pattern={highlight} />
+          </theme.Item>
         ),
         options
       )}
@@ -38,11 +38,11 @@ FilteredSection.displayName = 'FilteredSection'
 let getItemLabel = item =>
   isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
 
-let Section = observer(({ options, onClick, selected, Item }) => (
+let Section = observer(({ options, onClick, selected, theme }) => (
   <div>
     {_.map(
       item => (
-        <Item
+        <theme.Item
           key={item._key}
           onClick={() => onClick(item.value || item._key, item)}
           active={selected === item._key}
@@ -50,7 +50,7 @@ let Section = observer(({ options, onClick, selected, Item }) => (
           hasChildren={!isField(item)}
         >
           {getItemLabel(item)}
-        </Item>
+        </theme.Item>
       ),
       _.flow(
         F.unkeyBy('_key'),
@@ -76,7 +76,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
   }
   return x
 })(
-  observer(({ selectAtLevel, state, nestedOptions, Item }) => (
+  observer(({ selectAtLevel, state, nestedOptions, theme }) => (
     <div
       className="panel-tree-picker"
       style={{ display: 'inline-flex', width: '100%', overflow: 'auto' }}
@@ -85,7 +85,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
         options={nestedOptions}
         onClick={selectAtLevel(0)}
         selected={state.selected[0]}
-        Item={Item}
+        theme={theme}
       />
       {F.mapIndexed(
         (_key, index) => (
@@ -94,7 +94,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
             options={_.get(state.selected.slice(0, index + 1), nestedOptions)}
             onClick={selectAtLevel(index + 1)}
             selected={state.selected[index + 1]}
-            Item={Item}
+            theme={theme}
           />
         ),
         state.selected
@@ -109,22 +109,23 @@ let NestedPicker = ({
   options,
   onChange,
   filter,
-  Input = 'input',
-  Highlight = TextHighlight,
-  Item = DefaultItem,
+  theme = {
+    Input: 'input',
+    Highlight: TextHighlight,
+    Item: DefaultItem,
+  }
 }) => (
   <div>
-    <Input {...F.domLens.value(filter)} placeholder="Enter filter keyword..." />
+    <theme.Input {...F.domLens.value(filter)} placeholder="Enter filter keyword..." />
     {F.view(filter) ? (
       <FilteredSection
         options={matchLabel(F.view(filter))(options)}
         onClick={onChange}
         highlight={F.view(filter)}
-        Highlight={Highlight}
-        Item={Item}
+        theme={theme}
       />
     ) : (
-      <PanelTreePicker options={options} onChange={onChange} Item={Item} />
+      <PanelTreePicker options={options} onChange={onChange} theme={theme} />
     )}
   </div>
 )
