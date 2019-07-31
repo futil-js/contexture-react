@@ -23,6 +23,7 @@ import {
   CheckButton as DefaultCheckButton,
   StepsAccordion as DefaultStepsAccordion,
   AccordionStep,
+  Popover as DefaultPopover,
 } from '../../layout'
 
 import Input from './Input'
@@ -963,9 +964,13 @@ export let FiltersBox = props => (
 )
 
 export let QueryBuilder = defaultProps({
-  Button,
-  MissingTypeComponent,
-  Picker: FieldPicker,
+  theme: {
+    Button,
+    MissingTypeComponent,
+    Picker: FieldPicker,
+    Popover: DefaultPopover,
+    Modal: DefaultModal,
+  }
 })(QueryBuilderComponent)
 
 export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(

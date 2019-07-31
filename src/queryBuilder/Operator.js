@@ -2,7 +2,7 @@ import React from 'react'
 import * as F from 'futil-js'
 import { Component, lenservable } from '../utils/mobx-react-utils'
 import styles from '../styles'
-import Popover from '../layout/Popover'
+import DefaultPopover from '../layout/Popover'
 import OperatorMenu from './OperatorMenu'
 import { OperatorMoveTarget } from './DragDrop/MoveTargets'
 
@@ -73,7 +73,7 @@ let Operator = Component(
       isOpen: false,
     }),
   }),
-  ({ state, parentState, node, child, parent, tree, index }) => (
+  ({ theme = { Popover: DefaultPopover }, state, parentState, node, child, parent, tree, index }) => (
     <div>
       {!(index !== 0 || node.join === 'not') ? (
         <BlankOperator {...{ state, node, child }} />
@@ -81,7 +81,7 @@ let Operator = Component(
         <JoinOperator {...{ state, node, child, parentState }} />
       )}
       <OperatorMoveTarget {...{ node, tree, index }} />
-      <Popover
+      <theme.Popover
         isOpen={state.lens.isOpen}
         style={{
           ...styles.operatorPopover,
@@ -90,7 +90,7 @@ let Operator = Component(
         }}
       >
         <OperatorMenu {...{ node, parentState, tree, parent }} />
-      </Popover>
+      </theme.Popover>
     </div>
   ),
   'Operator'

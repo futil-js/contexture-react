@@ -2,29 +2,32 @@ import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { withStateLens } from '../utils/mobx-react-utils'
+import { NestedPicker, Modal as DefaultModal } from './'
 
 export let ModalPicker = withStateLens({ isOpen: false })(
   observer(
     ({
       options,
       isOpen,
-      Button = 'button',
+      theme = {
+        Button: 'button',
+        Picker: NestedPicker,
+        Modal: DefaultModal,
+      },
       onChange,
       label,
-      Picker,
-      Modal,
     }) => (
       <div>
-        <Modal isOpen={isOpen}>
-          <Picker
+        <theme.Modal isOpen={isOpen}>
+          <theme.Picker
             options={options}
             onChange={x => {
               onChange(x)
               F.off(isOpen)()
             }}
           />
-        </Modal>
-        <Button onClick={F.on(isOpen)}>{label}</Button>
+        </theme.Modal>
+        <theme.Button onClick={F.on(isOpen)}>{label}</theme.Button>
       </div>
     )
   )

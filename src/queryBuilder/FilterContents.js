@@ -6,6 +6,7 @@ import {
   ModalPicker,
   Modal as DefaultModal,
   NestedPicker,
+  Popover as DefaultPopover,
   Dynamic,
   Grid,
 } from '../layout/'
@@ -25,11 +26,14 @@ let FilterContents = inject(_.defaults)(
       tree,
       fields,
       types = {},
-      Button = 'button',
-      Modal = DefaultModal,
-      Picker = NestedPicker,
+      theme = {
+        Button: 'button',
+        Modal: DefaultModal,
+        Picker: NestedPicker,
+        Popover: DefaultPopover,
+        MissingTypeComponent: DefaultMissingTypeComponent,
+      },
       mapNodeToProps = _.noop,
-      MissingTypeComponent = DefaultMissingTypeComponent,
     }) => {
       // `get` allows us to create a dependency on field before we know it
       // exists (because the client will only add it if it's a type that uses it
@@ -42,7 +46,7 @@ let FilterContents = inject(_.defaults)(
       return (
         <Grid columns="auto auto 1fr" style={{ width: '100%' }}>
           <ModalPicker
-            {...{ Modal, Picker, Button }}
+            theme={theme}
             label={nodeField ? nodeLabel : 'Pick a Field'}
             options={fieldsToOptions(fields)}
             onChange={field =>
@@ -85,7 +89,8 @@ let FilterContents = inject(_.defaults)(
               }}
             >
               <Dynamic
-                component={types[node.type] || MissingTypeComponent}
+                theme={theme}
+                component={types[node.type] || theme.MissingTypeComponent}
                 tree={tree}
                 node={node}
                 {...mapNodeToProps(node, fields, types)}

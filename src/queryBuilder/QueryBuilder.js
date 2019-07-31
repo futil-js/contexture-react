@@ -2,9 +2,14 @@ import React from 'react'
 import { observable } from 'mobx'
 import DDContext from './DragDrop/DDContext'
 import { Component } from '../utils/mobx-react-utils'
-import { Modal as DefaultModal, NestedPicker } from '../layout/'
+import {
+  Modal as DefaultModal,
+  NestedPicker, 
+  Popover as DefaultPopover, 
+} from '../layout/'
 import Group from './Group'
 import styles from '../styles'
+import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 
 let { background } = styles
 
@@ -29,11 +34,14 @@ export default DDContext(
       path,
       fields,
       types = {},
-      Button = 'button',
-      Modal = DefaultModal,
-      Picker = NestedPicker,
+      theme = {
+        Button: 'button',
+        Modal: DefaultModal,
+        Picker: NestedPicker,
+        Popover: DefaultPopover,
+        MissingTypeComponent: DefaultMissingTypeComponent,
+      },
       mapNodeToProps,
-      MissingTypeComponent,
     }) => (
       <div style={{ background }}>
         {state.getNode(path) && (
@@ -42,23 +50,20 @@ export default DDContext(
             tree={state}
             isRoot={true}
             {...{
-              Button,
-              Modal,
-              Picker,
+              theme,
               fields,
               types,
               mapNodeToProps,
-              MissingTypeComponent,
             }}
           />
         )}
-        <Button
+        <theme.Button
           onClick={() => {
             state.adding = !state.adding
           }}
         >
           {state.adding ? 'Cancel' : 'Add Filter'}
-        </Button>
+        </theme.Button>
       </div>
     ),
     'QueryBuilder'

@@ -15,6 +15,7 @@ import { blankNode } from '../utils/search'
 
 let GroupItem = FilterDragSource(props => {
   let {
+    theme,
     child,
     node,
     index,
@@ -35,7 +36,7 @@ let GroupItem = FilterDragSource(props => {
     >
       {!(isRoot && node.children.length === 1) && (
         <Operator
-          {...{ node, child, tree, parent, index, parentState: state }}
+          {...{ theme, node, child, tree, parent, index, parentState: state }}
         />
       )}
       <Component {...props} node={child} parent={node} />
