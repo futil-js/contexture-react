@@ -10,7 +10,7 @@ import {
 } from './layout'
 import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
-import { withNode, withLoader } from './utils/hoc'
+import { defaultTheme, withNode, withLoader } from './utils/hoc'
 import styles from './styles'
 
 let FilterButtonItem = withLoader(
@@ -72,21 +72,24 @@ let GroupBox = ({ nodeJoinColor, children, nested, className }) => (
   </Flex>
 )
 
-let FilterButtonList = withNode(
+let FilterButtonList = _.flow(
+  defaultTheme({
+    Button: 'button',
+    CheckButton: DefaultCheckButton,
+    Icon: DefaultIcon,
+    MissingTypeComponent: DefaultMissingTypeComponent,
+    Modal: DefaultModal,
+    Popover: DefaultPopover,
+  }),
+  withNode
+)(
   ({
     node,
     tree,
     fields = {},
     mapNodeToProps = _.noop,
     className = 'filter-button-list',
-    theme = {
-      Button: 'button',
-      CheckButton: DefaultCheckButton,
-      Icon: DefaultIcon,
-      MissingTypeComponent: DefaultMissingTypeComponent,
-      Modal: DefaultModal,
-      Popover: DefaultPopover,
-    },
+    theme,
     nested = false,
   }) => (
     <GroupBox

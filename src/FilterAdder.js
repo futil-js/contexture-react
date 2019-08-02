@@ -1,23 +1,29 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import { contexturify } from './utils/hoc'
+import { observer } from 'mobx-react'
+import { withOptionalNode, withLoader } from './utils/hoc'
 import { newNodeFromField } from './utils/search'
 
 export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
 
 let getGroupFields = node => _.map('field', _.getOr([], 'children', node))
 
-let FilterAdder = ({ tree, node, path, fields, Picker, uniqueFields }) => {
+let FilterAdder = _.flow(
+  observer,
+  withOptionalNode,
+  withLoader,
+)(({ tree, node, path, fields, theme, uniqueFields }) => {
   let options = fieldsToOptions(fields)
   if (uniqueFields) {
     options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
   }
   return (
-    <Picker
+    <theme.Picker
       options={options}
       onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
     />
   )
-}
+})
+FilterAdder.displayName = 'FilterAdder'
 
-export default contexturify(FilterAdder)
+export default FilterAdder

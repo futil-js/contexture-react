@@ -1,16 +1,28 @@
 import React from 'react'
 import { observer } from 'mobx-react'
+// import F from 'futil-js'
 import _ from 'lodash/fp'
 import StripedLoader from './StripedLoader'
 
-export let withNode = Component => props => {
+// basically just for the Adder component, which sometimes uses the node to do filtering for `uniqueFields`
+export let withOptionalNode = Component => props => {
   let { tree, node, path } = props
   node = node || (tree && path && tree.getNode(path))
-
-  if (!node) throw Error(`Node not provided, and couldn't find node at ${path}`)
-
   return <Component {...props} node={node} />
 }
+
+/*
+let withEmptyNodeError = Component => props => {
+  if (!_.get('node', props))
+    throw Error(`Node not provided, and couldn't find node at ${props.path}`)
+  return <Component {...props} />
+}
+*/
+
+export let withNode = _.flow(
+  withOptionalNode,
+  // withEmptyNodeError
+)
 
 export let withLoader = Component =>
   observer(({ Loader = StripedLoader, node, ...props }) => (
@@ -29,7 +41,7 @@ export let withInlineLoader = Component =>
 
 export let contexturify = _.flow(
   observer,
-  withNode,
+  withOptionalNode,
   withLoader
 )
 

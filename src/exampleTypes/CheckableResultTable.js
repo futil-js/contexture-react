@@ -3,7 +3,9 @@ import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import F from 'futil-js'
 import { getResults, getRecord } from '../utils/schema'
-import { contexturify } from '../utils/hoc'
+import { contexturify, defaultTheme } from '../utils/hoc'
+import Checkbox from '../layout/Checkbox'
+import ResultTable from './ResultTable'
 
 let Label = observer(({ node, theme, selected, getValue }) => {
   let results = _.toArray(getResults(node))
@@ -22,11 +24,15 @@ let Label = observer(({ node, theme, selected, getValue }) => {
   )
   return <theme.Checkbox checked={allChecked} onChange={checkAll} />
 })
+Label.displayName = 'Label'
 
 // Extends ResultTable with a checkbox column
 // Writes to a lens called `selected`, using getValue to map the selected record to a value.
 // getValues uses _.iteratee, so it defaults to identity and supports things like strings to get props
-let CheckableResultTable = contexturify(
+let CheckableResultTable = _.flow(
+  defaultTheme({ Checkbox, ResultTable }),
+  contexturify
+)(
   ({ node, fields, selected, getValue, theme, ...props }) => (
     <theme.ResultTable
       fields={{

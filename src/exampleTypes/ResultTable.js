@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil-js'
 import { observer } from 'mobx-react'
 import { contexturify, defaultTheme } from '../utils/hoc'
-import { Popover as DefaultPopover, Dynamic } from '../layout'
+import { Popover, Dynamic, NestedPicker, Modal } from '../layout'
 import { withStateLens } from '../utils/mobx-react-utils'
 import { fieldsToOptions } from '../FilterAdder'
 import DefaultIcon from '../DefaultIcon'
@@ -14,6 +14,12 @@ import {
   inferSchema,
 } from '../utils/schema'
 import { newNodeFromField } from '../utils/search'
+
+let Tr = props => (
+  <tr
+    {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
+  />
+)
 
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
@@ -71,7 +77,7 @@ let HighlightedColumn = _.flow(
   defaultTheme({
     Cell: 'td',
     Table: 'table',
-    Modal: null,
+    Modal,
   }),
   withStateLens({ viewModal: false })
 )(
@@ -130,7 +136,10 @@ let Header = _.flow(
   observer,
   defaultTheme({
     HeaderCell: HeaderCellDefault,
-    Popover: DefaultPopover,
+    Popover,
+    FieldPicker: NestedPicker,
+    Icon: DefaultIcon,
+    Item: 'span',
   }),
   withStateLens({ popover: false, adding: false, filtering: false }),
 )(
@@ -191,7 +200,7 @@ let Header = _.flow(
                 mutate({ sortField: field, sortDir: 'asc' })
               }}
             >
-              <Icon icon="SortAscending" />
+              <theme.Icon icon="SortAscending" />
               Sort Ascending
             </theme.Item>
           )}
@@ -219,7 +228,7 @@ let Header = _.flow(
               moveColumn(mutate, i => i + 1, field, visibleFields, includes)
             }
           >
-            <Icon icon="MoveRight" />
+            <theme.Icon icon="MoveRight" />
             Move Right
           </theme.Item>
           <theme.Item
@@ -230,7 +239,7 @@ let Header = _.flow(
           </theme.Item>
           {theme.Modal && theme.FieldPicker && !!addOptions.length && (
             <theme.Item onClick={F.on(adding)}>
-              <Icon icon="AddColumn" />
+              <theme.Icon icon="AddColumn" />
               Add Column
             </theme.Item>
           )}
@@ -252,6 +261,7 @@ let Header = _.flow(
                 <Dynamic
                   component={typeComponents[filterNode.type]}
                   tree={tree}
+                  theme={theme}
                   path={_.toArray(filterNode.path)}
                   {...mapNodeToProps(filterNode, fields, typeComponents)}
                 />
@@ -267,6 +277,7 @@ let Header = _.flow(
                     mutate({ include: [...includes, field] })
                   F.off(adding)()
                 }}
+                theme={theme}
               />
             </theme.Modal>
           )}
@@ -279,7 +290,7 @@ Header.displayName = 'Header'
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = _.flow(
   observer,
-  defaultTheme({ Cell: 'td' })
+  defaultTheme({ Cell: 'td', Row: Tr })
 )(
   ({
     node,
@@ -325,18 +336,8 @@ let TableBody = _.flow(
 )
 TableBody.displayName = 'TableBody'
 
-let Tr = props => (
-  <tr
-    {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
-  />
-)
-
 let ResultTable = _.flow(
-  defaultTheme({
-    Table: 'table',
-    Icon: DefaultIcon,
-    Row: Tr,
-  }),
+  defaultTheme({ Table: 'table' }),
   contexturify
 )(
   ({
@@ -394,7 +395,7 @@ let ResultTable = _.flow(
               ),
               visibleFields
             )}
-            <HighlightedColumnHeader node={node} />
+            <HighlightedColumnHeader node={node} theme={theme} />
           </tr>
         </thead>
         <TableBody

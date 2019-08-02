@@ -2,9 +2,16 @@ import React from 'react'
 import _ from 'lodash/fp'
 import { round } from 'lodash'
 import { Flex } from '../layout/Flex'
-import { contexturify } from '../utils/hoc'
+import NumberInput from '../layout/NumberInput'
+import { contexturify, defaultTheme } from '../utils/hoc'
 
-let NumberComponent = contexturify(
+let NumberComponent = _.flow(
+  defaultTheme({
+    NumberInput,
+    Button: 'button'
+  }),
+  contexturify
+)(
   ({
     tree,
     node,

@@ -2,10 +2,10 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { contexturify, defaultTheme } from '../utils/hoc'
-import RadioListDefault from '../layout/RadioList'
+import RadioList from '../layout/RadioList'
 
 let Exists = _.flow(
-  defaultTheme({ RadioList: RadioListDefault }),
+  defaultTheme({ RadioList }),
   contexturify
 )(
   ({ tree, node, theme }) => (

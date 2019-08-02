@@ -3,22 +3,9 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer, Observer } from 'mobx-react'
 import { Flex } from '../layout/Flex'
+import Checkbox from '../layout/Checkbox'
+import RadioList from '../layout/RadioList'
 import { contexturify, defaultTheme } from '../utils/hoc'
-
-let CheckboxDefault = props => <input type="checkbox" {...props} />
-let RadioListDefault = ({ value, onChange, options }) => (
-  <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
-    {_.map(
-      x => (
-        <label key={x.value} onClick={() => onChange(x.value)}>
-          <input type="radio" checked={x.value === value} onChange={() => {}} />
-          {x.label}
-        </label>
-      ),
-      options
-    )}
-  </Flex>
-)
 
 let SelectAll = observer(({ node, tree, theme }) => {
   let missingOptions = _.difference(
@@ -52,6 +39,7 @@ let SelectAll = observer(({ node, tree, theme }) => {
     </label>
   )
 })
+SelectAll.displayName = 'SelectAll'
 
 let FacetOptionsFilter = ({ tree, node, theme }) => {
   let [val, setVal] = useState(node.optionsFilter)
@@ -85,11 +73,11 @@ let FacetOptionsFilter = ({ tree, node, theme }) => {
 
 let Facet = _.flow(
   defaultTheme({
-    TextInput: 'input',
     Button: 'button',
-    Checkbox: CheckboxDefault,
-    RadioList: RadioListDefault,
     ButtonGroup: 'div',
+    Checkbox,
+    RadioList,
+    TextInput: 'input',
   }),
   contexturify
 )(

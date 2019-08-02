@@ -4,8 +4,8 @@ import F from 'futil-js'
 import { contexturify, defaultTheme, withTreeLens } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
 
-import { TagsInput as DefaultTagsInput } from '../layout/TagsInput'
-import DefaultSelect from '../layout/Select'
+import { TagsInput } from '../layout/TagsInput'
+import Select from '../layout/Select'
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 
 let operatorOptions = F.autoLabelOptions([
@@ -23,10 +23,7 @@ let operatorOptions = F.autoLabelOptions([
 
 let Text = _.flow(
   withTreeLens,
-  defaultTheme({
-    TagsInput: DefaultTagsInput,
-    Select: DefaultSelect,
-  }),
+  defaultTheme({ TagsInput, Select }),
   contexturify
 )(
   ({

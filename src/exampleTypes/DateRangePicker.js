@@ -1,10 +1,10 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import DefaultSelect from '../layout/Select'
+import Select from '../layout/Select'
 import { contexturify, defaultTheme } from '../utils/hoc'
 
 let DateComponent = _.flow(
-  defaultTheme({ Select: DefaultSelect }),
+  defaultTheme({ Select }),
   contexturify
   )(
     ({ tree, node, ranges, theme }) => (

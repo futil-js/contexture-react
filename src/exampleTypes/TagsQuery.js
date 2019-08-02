@@ -4,19 +4,17 @@ import F from 'futil-js'
 import { observer } from 'mobx-react'
 import { contexturify, defaultTheme } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
-import { TagsInput as DefaultTagsInput } from '../layout/TagsInput'
-import DefaultRadioList from '../layout/RadioList'
-import DefaultSelect from '../layout/Select'
+import Checkbox from '../layout/Checkbox'
+import { TagsInput } from '../layout/TagsInput'
+import RadioList from '../layout/RadioList'
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
-let CheckboxDefault = props => <input type="checkbox" {...props} />
 
 let tagValueField = 'word'
 let TagsQuery = _.flow(
   defaultTheme({
-    TagsInput: DefaultTagsInput,
-    Checkbox: CheckboxDefault,
-    RadioList: DefaultRadioList,
-    Select: DefaultSelect,
+    TagsInput,
+    Checkbox,
+    RadioList,
     Button: 'button',
   }),
   contexturify

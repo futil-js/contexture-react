@@ -2,10 +2,14 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
 import { Column } from '../layout/ExpandableTable'
-import { contexturify } from '../utils/hoc'
+import { contexturify, defaultTheme } from '../utils/hoc'
 import TermsStatsTable from './TermsStatsTable'
+import Checkbox from '../layout/Checkbox'
 
-let CheckableTermsStatsTable = contexturify(
+let CheckableTermsStatsTable = _.flow(
+  defaultTheme({ TermsStatsTable, Checkbox, Column }),
+  contexturify
+)(
   ({ node, children, theme, getValue, selected, ...props }) => {
     let results = _.result('context.terms.slice', node)
     let allChecked = _.size(results) === _.size(F.view(selected))
@@ -14,11 +18,11 @@ let CheckableTermsStatsTable = contexturify(
       selected
     )
     return (
-      <TermsStatsTable
+      <theme.TermsStatsTable
         {...{
           ...props,
           children: [
-            <Column
+            <theme.Column
               label={<theme.Checkbox checked={allChecked} onChange={checkAll} />}
               display={(x, y) => (
                 <theme.Checkbox

@@ -1,9 +1,13 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import F from 'futil-js'
 import { contexturify, defaultTheme } from '../utils/hoc'
-import RadioListDefault from '../layout/RadioList'
+import RadioList from '../layout/RadioList'
 
-let Bool = defaultTheme({ RadioList: RadioListDefault })(({ tree, node, theme }) => (
+let Bool = _.flow(
+  defaultTheme({ RadioList }),
+  contexturify
+)(({ tree, node, theme }) => (
   <div className="contexture-bool">
     <theme.RadioList
       value={node.value ? 'yes' : 'no'}
@@ -14,5 +18,6 @@ let Bool = defaultTheme({ RadioList: RadioListDefault })(({ tree, node, theme })
     />
   </div>
 ))
+Bool.displayName = 'Bool'
 
-export default contexturify(Bool)
+export default Bool

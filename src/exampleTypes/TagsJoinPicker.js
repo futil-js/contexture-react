@@ -2,7 +2,7 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { defaultTheme } from '../utils/hoc'
-import DefaultSelect from '../layout/Select'
+import Select from '../layout/Select'
 
 export let tagToGroupJoin = (x = 'any') =>
   ({
@@ -19,7 +19,7 @@ let joinOptions = [
 
 let TagsJoinPicker = _.flow(
   observer,
-  defaultTheme({ Select: DefaultSelect })
+  defaultTheme({ Select })
 )(
   ({ node, tree, theme }) => (
     <theme.Select

@@ -78,11 +78,9 @@ export default ({
     Text: defaultTheme({ Input })(Text),
     TagsText: defaultTheme({ TagsInput, Select })(TagsText),
   }
-  Components.CheckableResultTable = defaultProps({
-    theme: {
-      ResultTable: Components.ResultTable,
-      Checkbox,
-    }
+  Components.CheckableResultTable = defaultTheme({
+    ResultTable: Components.ResultTable,
+    Checkbox,
   })(CheckableResultTable)
   let TypeMap = {
     facet: Components.Facet,

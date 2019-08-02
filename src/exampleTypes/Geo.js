@@ -20,13 +20,10 @@ const elementStyle = {
 
 const operatorOptions = ['within', 'not within']
 
-let DefaultSelectInput = 'select'
-let DefaultNumberInput = props => <input type="number" {...props} />
-
 let GeoComponent = _.flow(
   defaultTheme({
-    SelectInput: DefaultSelectInput,
-    NumberInput: DefaultNumberInput,
+    NumberInput: props => <input type="number" {...props} />,
+    SelectInput: 'select',
   }),
   contexturify
 )(

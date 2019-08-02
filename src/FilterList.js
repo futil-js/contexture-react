@@ -11,7 +11,7 @@ import {
 } from './layout'
 import { fieldsToOptions } from './FilterAdder'
 import { withStateLens } from './utils/mobx-react-utils'
-import { contexturify } from './utils/hoc'
+import { contexturify, defaultTheme } from './utils/hoc'
 import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
 import { bdJoin } from './styles/generic'
@@ -182,7 +182,18 @@ export let FieldLabel = contexturify(
 )
 FieldLabel.displayName = 'FieldLabel'
 
-export let FilterList = contexturify(
+export let FilterList = _.flow(
+  defaultTheme({
+    Icon: DefaultIcon,
+    ListItem: 'div',
+    Modal: BaseModal,
+    Picker: NestedPicker,
+    MissingTypeComponent: DefaultMissingTypeComponent,
+    Popover: BasePopover,
+    Item: 'li',
+  }),
+  contexturify
+)(
   ({
     tree,
     node,
@@ -190,14 +201,7 @@ export let FilterList = contexturify(
     fields,
     mapNodeToProps = _.noop,
     mapNodeToLabel = _.noop,
-    theme = {
-      Icon: DefaultIcon,
-      ListItem: 'div',
-      Modal: BaseModal,
-      Picker: NestedPicker,
-      MissingTypeComponent: DefaultMissingTypeComponent,
-      Popover: BasePopover,
-    },
+    theme,
     className,
     style,
   }) => (

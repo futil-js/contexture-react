@@ -15,21 +15,24 @@ let SimpleLabel = ({ text }) => (
 
 let SimpleFilter = _.flow(
   observer,
-  defaultTheme({Input: 'input'})
+  defaultTheme({ Input: 'input', SimpleLabel })
 )(
   ({ theme, ...props }) => (
     <Flex style={{ ...toolBarStyle, width: '75%' }}>
-      <SimpleLabel text="Filter:" />
+      <theme.SimpleLabel text="Filter:" />
       <theme.Input type="text" {...props} />
     </Flex>
   )
 )
 
-let SelectSize = observer(
-  ({ node, tree, options = [10, 25, 50, 100, 500, 1000] }) => (
+let SelectSize = _.flow(
+  observer,
+  defaultTheme({ Select, SimpleLabel })
+)(
+  ({ node, tree, options = [10, 25, 50, 100, 500, 1000], theme }) => (
     <Flex style={toolBarStyle}>
-      <SimpleLabel text="Size:" />
-      <Select
+      <theme.SimpleLabel text="Size:" />
+      <theme.Select
         onChange={e => {
           tree.mutate(node.path, { size: e.target.value })
         }}
@@ -44,9 +47,11 @@ let SelectSize = observer(
 
 let TermsStatsTable = _.flow(
   defaultTheme({
+    Button: 'button',
     MoreControls: 'div',
     Input: 'input',
-    Filter: SimpleFilter,
+    ExpandableTable,
+    Column,
   }),
   contexturify
 )(
@@ -64,19 +69,19 @@ let TermsStatsTable = _.flow(
   }) => (
     <div>
       <Flex style={{ ...toolBarStyle, margin: 40, marginBottom: 0 }}>
-        <Filter
+        <SimpleFilter
           theme={theme}
           {...F.domLens.value(tree.lens(node.path, 'filter'))}
         />
-        <SelectSize node={node} tree={tree} options={sizeOptions} />
+        <SelectSize node={node} tree={tree} options={sizeOptions} theme={theme} />
       </Flex>
-      <ExpandableTable
+      <theme.ExpandableTable
         {...{
           ...props,
           children: criteria
             ? [
                 ..._.compact(children),
-                <Column
+                <theme.Column
                   label={criteriaFieldLabel}
                   expand={{
                     display: (value, record) => (
