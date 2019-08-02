@@ -126,9 +126,9 @@ let TermsStatsTable = _.flow(
             tree.mutate(node.path, {
               order: column.field,
               sortDir:
-                node.order === column.field && node.sortDir === 'asc'
-                  ? 'desc'
-                  : 'asc',
+                node.order === column.field && node.sortDir === 'desc'
+                  ? 'asc'
+                  : 'desc',
             })
           }
         }}
