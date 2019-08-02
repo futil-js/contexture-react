@@ -1,9 +1,10 @@
 import React from 'react'
 import F from 'futil-js'
+import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
 import { withStateLens } from '../../utils/mobx-react-utils'
-import { withNode, contexturify } from '../../utils/hoc'
+import { withNode, contexturify, defaultTheme } from '../../utils/hoc'
 import {
   Flex,
   TextHighlight,
@@ -863,18 +864,38 @@ let FilterListItem = observer(
 )
 FilterListItem.displayName = 'FilterListItem'
 
-export let Adder = ModalFilterAdder({
+let gvTheme = {
   Button,
   Input,
   Highlight,
   Item: FilterListItem,
   label: AddLabel,
-})
+  Checkbox,
+  RadioList,
+  Table,
+  FieldPicker,
+  ListGroupItem,
+  TagsInput,
+  Icon,
+  DateInput,
+  ButtonGroup,
+  ListItem,
+  MissingTypeComponent,
+  Picker: FieldPicker,
+  Modal: DefaultModal,
+  Popover: DefaultPopover,
+  CheckButton,
+  AccordionStep,
+}
+
+let defaultGvTheme = defaultTheme(gvTheme)
+
+export let Adder = defaultGvTheme(ModalFilterAdder)
 
 let CheckButtonButton = props => (
   <Button className="gv-checkbutton" {...props} />
 )
-export let CheckButton = defaultProps({ Checkbox, Button: CheckButtonButton })(
+export let CheckButton = defaultTheme({ ...gvTheme, Button: CheckButtonButton })(
   DefaultCheckButton
 )
 
@@ -890,35 +911,19 @@ export let PagerItem = observer(({ active, disabled, ...x }) => (
 ))
 PagerItem.displayName = 'PagerItem'
 
-let TagComponent = defaultProps({
+let TagComponent = defaultTheme({
   RemoveIcon: props => (
     <span className="tags-input-tag-remove fa fa-times" {...props} />
   ),
 })(Tag)
-export let TagsInput = defaultProps({ TagComponent })(BaseTagsInput)
+export let TagsInput = defaultTheme({ TagComponent, Popover: DefaultPopover })(BaseTagsInput)
 
-let FieldPicker = defaultProps({
-  Input,
-  Highlight,
-  Item: FilterListItem,
-})(NestedPicker)
+let FieldPicker = defaultGvTheme(NestedPicker)
 
-export let ExampleTypes = ExampleTypeConstructor({
-  Button,
-  Input,
-  Checkbox,
-  RadioList,
-  Table,
-  FieldPicker,
-  ListGroupItem,
-  TagsInput,
-  Icon,
-  DateInput,
-  ButtonGroup,
-})
+export let ExampleTypes = ExampleTypeConstructor(gvTheme)
 export let Pager = props => (
   <ExampleTypes.ResultPager
-    Item={PagerItem}
+    theme={{ ...gvTheme, Item: PagerItem }}
     {...props}
     className="gv-pager gv-box"
   />
@@ -943,12 +948,7 @@ export let MissingTypeComponent = withNode(({ node = {} }) => (
   </Flex>
 ))
 
-export let FilterList = defaultProps({
-  Icon,
-  ListItem,
-  MissingTypeComponent,
-  Picker: FieldPicker,
-})(BaseFilterList)
+export let FilterList = defaultGvTheme(BaseFilterList)
 
 export let AddableFilterList = props => (
   <>
@@ -963,50 +963,24 @@ export let FiltersBox = props => (
   </div>
 )
 
-export let QueryBuilder = defaultProps({
-  theme: {
-    Button,
-    MissingTypeComponent,
-    Picker: FieldPicker,
-    Popover: DefaultPopover,
-    Modal: DefaultModal,
-  }
-})(QueryBuilderComponent)
+export let QueryBuilder = defaultGvTheme(QueryBuilderComponent)
 
-export let SearchFilters = defaultProps({ QueryBuilder, FiltersBox })(
+export let SearchFilters = defaultTheme({ ...gvTheme, QueryBuilder, FiltersBox })(
   BaseSearchFilters
 )
 
-export let FilterButtonList = defaultProps({
-  theme: {
-    Button,
-    CheckButton,
-    Icon,
-    Modal: DefaultModal,
-    Popover: DefaultPopover,
-    MissingTypeComponent,
-  },
-  className: 'gv-filter-button-list',
-})(BaseFilterButtonList)
+export let FilterButtonList = _.flow(
+  defaultProps({ className: 'gv-filter-button-list' }),
+  defaultGvTheme
+)(BaseFilterButtonList)
 
-export let StepsAccordion = defaultProps({
-  theme: {
-    Button,
-    Icon,
-  },
-  className: 'gv-steps-accordion',
-})(DefaultStepsAccordion)
+export let StepsAccordion = _.flow(
+  defaultProps({ className: 'gv-steps-accordion' }),
+  defaultGvTheme
+)(DefaultStepsAccordion)
 
-export let QueryWizard = defaultProps({
-  theme: {
-    StepsAccordion,
-    AccordionStep,
-    FilterButtonList,
-    CheckButton,
-    Modal: DefaultModal,
-    Popover: DefaultPopover,
-    Button,
-    Icon,
-    MissingTypeComponent,
-  }
+export let QueryWizard = defaultTheme({
+  ...gvTheme,
+  StepsAccordion,
+  FilterButtonList,
 })(QueryWizardComponent)

@@ -1,11 +1,12 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { withState, defaultProps } from 'recompose'
+import { withState } from 'recompose'
 import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { Flex } from './Flex'
-import Popover from './Popover'
+import DefaultPopover from './Popover'
+import { defaultTheme } from '../utils/hoc'
 import OutsideClickHandler from 'react-outside-click-handler'
 
 let isValidTag = (tag, tags) => {
@@ -13,7 +14,7 @@ let isValidTag = (tag, tags) => {
   return !_.isEmpty(cleanTag) && !_.includes(cleanTag, tags)
 }
 
-let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
+let Tag = observer(({ value, removeTag, theme, tagStyle, onClick }) => (
   <span
     className="tags-input-tag"
     style={{
@@ -31,13 +32,13 @@ let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
           paddingBottom: '0.15em',
           // Prefer padding on the remove icon so it has more area to receive
           // clicks
-          paddingRight: RemoveIcon ? '0em' : '0.45em',
+          paddingRight: theme.RemoveIcon ? '0em' : '0.45em',
         }}
       >
         {value}
       </span>
-      {RemoveIcon && (
-        <RemoveIcon
+      {theme.RemoveIcon && (
+        <theme.RemoveIcon
           onClick={e => {
             e.stopPropagation()
             removeTag(value)
@@ -49,12 +50,12 @@ let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
 ))
 Tag.displayName = 'Tag'
 
-let DefaultTagComponent = defaultProps({
+let DefaultTagComponent = defaultTheme({
   RemoveIcon: props => (
     <span className="tags-input-tag-remove" {...props}>
       x
     </span>
-  ),
+  )
 })(Tag)
 
 // We're only using withState to preserve the state between renders, since
@@ -75,10 +76,12 @@ let TagsInput = withState('state', 'setState', () =>
       removeTag,
       submit = _.noop,
       tagStyle,
-      TagComponent = DefaultTagComponent,
+      theme = {
+        TagComponent: DefaultTagComponent,
+        Popover: DefaultPopover
+      },
       placeholder = 'Search...',
       splitCommas,
-      PopoverContents,
       style,
       ...props
     }) => {
@@ -120,7 +123,7 @@ let TagsInput = withState('state', 'setState', () =>
             >
               {_.map(
                 t => (
-                  <TagComponent
+                  <theme.TagComponent
                     key={t}
                     value={t}
                     {...{ removeTag, tagStyle }}
@@ -179,10 +182,10 @@ let TagsInput = withState('state', 'setState', () =>
                 {...props}
               />
             </Flex>
-            {PopoverContents && (
-              <Popover isOpen={F.lensProp('popoverOpen', state)}>
-                <PopoverContents tag={state.selectedTag} />
-              </Popover>
+            {theme.PopoverContents && (
+              <theme.Popover isOpen={F.lensProp('popoverOpen', state)}>
+                <theme.PopoverContents tag={state.selectedTag} />
+              </theme.Popover>
             )}
           </div>
         </OutsideClickHandler>

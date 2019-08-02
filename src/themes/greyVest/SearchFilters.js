@@ -19,20 +19,20 @@ let LabelledList = ({ list, Component }) =>
     list
   )
 
-let BasicSearchFilters = ({ setMode, trees, children, FiltersBox }) => (
+let BasicSearchFilters = ({ setMode, trees, children, theme }) => (
   <div>
     <Flex style={{ alignItems: 'center' }}>
       <h1>Filters</h1>
       <TreePauseButton children={children} />
       <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
     </Flex>
-    <LabelledList list={trees} Component={FiltersBox} />
+    <LabelledList list={trees} Component={theme.FiltersBox} />
     <LinkButton onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
       Switch to Advanced Search Builder
     </LinkButton>
   </div>
 )
-let BuilderSearchFilters = ({ setMode, trees, QueryBuilder }) => (
+let BuilderSearchFilters = ({ setMode, trees, theme }) => (
   <div>
     <Flex style={{ alignItems: 'center' }}>
       <h1>Filters</h1>
@@ -40,20 +40,20 @@ let BuilderSearchFilters = ({ setMode, trees, QueryBuilder }) => (
         Back to Regular Search
       </LinkButton>
     </Flex>
-    <LabelledList list={trees} Component={QueryBuilder} />
+    <LabelledList list={trees} Component={theme.QueryBuilder} />
   </div>
 )
 
-let SearchFilters = ({ mode, setMode, children, QueryBuilder, FiltersBox }) => {
+let SearchFilters = ({ mode, setMode, children, theme }) => {
   let trees = _.flow(
     React.Children.toArray,
     _.map('props')
   )(children)
   if (mode === 'resultsOnly') return null
   if (mode === 'basic')
-    return <BasicSearchFilters {...{ trees, setMode, children, FiltersBox }} />
+    return <BasicSearchFilters {...{ trees, setMode, children, theme }} />
   if (mode === 'builder')
-    return <BuilderSearchFilters {...{ trees, setMode, QueryBuilder }} />
+    return <BuilderSearchFilters {...{ trees, setMode, theme }} />
 }
 
 SearchFilters.propTypes = {

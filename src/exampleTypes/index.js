@@ -41,43 +41,49 @@ export default ({
 } = {}) => {
   let Components = {
     Facet: defaultProps({
-      TextInput,
-      Button,
-      Checkbox,
-      RadioList,
-      ButtonGroup,
+      theme: {
+        TextInput,
+        Button,
+        Checkbox,
+        RadioList,
+        ButtonGroup,
+      }
     })(Facet),
-    Number: defaultProps({ NumberInput, Button })(Number),
-    Date: defaultProps({ DateInput, RadioList, Select })(Date),
+    Number: defaultProps({theme: { NumberInput, Button }})(Number),
+    Date: defaultProps({theme: { DateInput, RadioList, Select }})(Date),
     DateRangePicker,
-    Query: defaultProps({ TextInput })(Query),
-    TagsQuery: defaultProps({ TagsInput, Checkbox, RadioList, Button })(
+    Query: defaultProps({theme: { TextInput }})(Query),
+    TagsQuery: defaultProps({theme: { TagsInput, Checkbox, RadioList, Button }})(
       TagsQuery
     ),
-    Exists: defaultProps({ RadioList })(Exists),
-    Bool: defaultProps({ RadioList })(Bool),
+    Exists: defaultProps({theme: { RadioList }})(Exists),
+    Bool: defaultProps({theme: { RadioList }})(Bool),
     ResultTable: defaultProps({
-      Table,
-      Modal,
-      FieldPicker,
-      ListGroupItem,
-      Icon,
+      theme: {
+        Table,
+        Modal,
+        FieldPicker,
+        ListGroupItem,
+        Icon,
+      }
     })(ResultTable),
     ResultCount,
-    ResultPager: defaultProps({ Icon })(ResultPager),
+    ResultPager: defaultProps({theme: { Icon }})(ResultPager),
     DateHistogram,
     TermsStats,
-    TermsStatsTable: defaultProps({ Button })(TermsStatsTable),
-    CheckableTermsStatsTable: defaultProps({ Button })(
+    TermsStatsTable: defaultProps({theme: { Button }})(TermsStatsTable),
+    CheckableTermsStatsTable: defaultProps({theme: { Button }})(
       CheckableTermsStatsTable
     ),
-    Geo: defaultProps({ NumberInput })(Geo),
-    Text: defaultProps({ Input })(Text),
-    TagsText: defaultProps({ TagsInput, Select })(TagsText),
+    Geo: defaultProps({theme: { NumberInput }})(Geo),
+    Text: defaultProps({theme: { Input }})(Text),
+    TagsText: defaultProps({theme: { TagsInput, Select }})(TagsText),
   }
   Components.CheckableResultTable = defaultProps({
-    ResultTable: Components.ResultTable,
-    Checkbox,
+    theme: {
+      ResultTable: Components.ResultTable,
+      Checkbox,
+    }
   })(CheckableResultTable)
   let TypeMap = {
     facet: Components.Facet,

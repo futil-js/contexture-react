@@ -5,7 +5,7 @@ import { observer, inject } from 'mobx-react'
 import {
   Flex,
   Dynamic,
-  Popover,
+  Popover as BasePopover,
   Modal as BaseModal,
   NestedPicker,
 } from './layout'
@@ -24,7 +24,7 @@ import {
 
 export let FilterActions = withStateLens({ modal: false })(
   observer(
-    ({ node, tree, fields, Item, Popover, popover, Modal, Picker, modal }) => {
+    ({ node, tree, fields, theme, popover, modal }) => {
       let typeOptions = _.flow(
         _.getOr([], [node.field, 'typeOptions']),
         _.without([node.type])
@@ -32,8 +32,8 @@ export let FilterActions = withStateLens({ modal: false })(
 
       return (
         <>
-          <Modal isOpen={modal}>
-            <Picker
+          <theme.Modal isOpen={modal}>
+            <theme.Picker
               options={fieldsToOptions(fields)}
               onChange={field => {
                 tree.replace(
@@ -43,16 +43,16 @@ export let FilterActions = withStateLens({ modal: false })(
                 F.off(modal)()
               }}
             />
-          </Modal>
-          <Popover isOpen={popover} className="filter-actions-popover">
+          </theme.Modal>
+          <theme.Popover isOpen={popover} className="filter-actions-popover">
             {!_.isEmpty(typeOptions) && (
               <>
-                <Item className="filter-actions-selected-type">
+                <theme.Item className="filter-actions-selected-type">
                   Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
-                </Item>
+                </theme.Item>
                 {_.map(
                   x => (
-                    <Item
+                    <theme.Item
                       key={x.value}
                       onClick={() =>
                         tree.replace(
@@ -62,20 +62,20 @@ export let FilterActions = withStateLens({ modal: false })(
                       }
                     >
                       —Change to {x.label}
-                    </Item>
+                    </theme.Item>
                   ),
                   getTypeLabelOptions(tree, typeOptions)
                 )}
                 <div className="filter-actions-separator" />
               </>
             )}
-            <Item onClick={F.on(modal)}>Pick Field</Item>
+            <theme.Item onClick={F.on(modal)}>Pick Field</theme.Item>
             {/* If only contexture-client diffed the tree before sending a request... */}
             {(node.hasValue || false) && (
-              <Item onClick={() => tree.clear(node.path)}>Clear Filter</Item>
+              <theme.Item onClick={() => tree.clear(node.path)}>Clear Filter</theme.Item>
             )}
-            <Item onClick={() => tree.remove(node.path)}>Delete Filter</Item>
-          </Popover>
+            <theme.Item onClick={() => tree.remove(node.path)}>Delete Filter</theme.Item>
+          </theme.Popover>
         </>
       )
     }
@@ -89,13 +89,10 @@ export let Label = inject(_.pick('tree'))(
         tree,
         node,
         fields,
-        Icon,
-        ListItem: Item,
-        Modal,
-        Picker,
+        theme,
         popover,
         modal,
-        ...x
+        ...props
       }) => (
         <Flex
           className={`filter-field-label ${
@@ -110,7 +107,7 @@ export let Label = inject(_.pick('tree'))(
             tree && node && tree.mutate(node.path, { paused: !node.paused })
           }
         >
-          <span {...x} />
+          <span {...props} />
           {tree && node && (
             <React.Fragment>
               <span
@@ -119,17 +116,14 @@ export let Label = inject(_.pick('tree'))(
                   F.flip(popover)()
                 }}
               >
-                <Icon icon="TableColumnMenu" />
+                <theme.Icon icon="TableColumnMenu" />
                 <FilterActions
                   node={node}
                   tree={tree}
                   fields={fields}
-                  Item={Item}
-                  Popover={Popover}
                   popover={popover}
-                  Modal={Modal}
-                  Picker={Picker}
                   modal={modal}
+                  theme={theme}
                 />
               </span>
               {
@@ -150,11 +144,11 @@ export let Label = inject(_.pick('tree'))(
                       tree.triggerUpdate()
                     }}
                   >
-                    <Icon icon="Refresh" />
+                    <theme.Icon icon="Refresh" />
                   </div>
                 )}
               <div className="filter-field-label-icon">
-                <Icon
+                <theme.Icon
                   icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
                 />
               </div>
@@ -173,19 +167,13 @@ export let FieldLabel = contexturify(
     node,
     node: { field } = {},
     fields,
-    Icon,
-    ListItem,
-    Modal,
-    Picker,
+    theme,
     label,
   }) => (
     <Label
       tree={tree}
       node={node}
-      Icon={Icon}
-      ListItem={ListItem}
-      Modal={Modal}
-      Picker={Picker}
+      theme={theme}
       fields={fields}
     >
       {label || _.get([field, 'label'], fields) || field}
@@ -202,13 +190,16 @@ export let FilterList = contexturify(
     fields,
     mapNodeToProps = _.noop,
     mapNodeToLabel = _.noop,
-    Icon = DefaultIcon,
-    ListItem = 'div',
-    Modal = BaseModal,
-    Picker = NestedPicker,
+    theme = {
+      Icon: DefaultIcon,
+      ListItem: 'div',
+      Modal: BaseModal,
+      Picker: NestedPicker,
+      MissingTypeComponent: DefaultMissingTypeComponent,
+      Popover: BasePopover,
+    },
     className,
     style,
-    MissingTypeComponent = DefaultMissingTypeComponent,
   }) => (
     <div style={style} className={className}>
       {_.map(
@@ -222,12 +213,9 @@ export let FilterList = contexturify(
               fields={fields}
               mapNodeToProps={mapNodeToProps}
               mapNodeToLabel={mapNodeToLabel}
-              Icon={Icon}
+              theme={theme}
               className={'filter-list-group'}
               style={bdJoin(child)}
-              ListItem={ListItem}
-              Modal={Modal}
-              Picker={Picker}
             />
           ) : (
             <div key={child.path} className="filter-list-item">
@@ -235,16 +223,14 @@ export let FilterList = contexturify(
                 tree={tree}
                 node={child}
                 fields={fields}
-                Icon={Icon}
-                ListItem={ListItem}
-                Modal={Modal}
-                Picker={Picker}
+                theme={theme}
                 label={mapNodeToLabel(child, fields, types)}
               />
               {!child.paused && (
                 <div className="filter-list-item-contents">
                   <Dynamic
-                    component={types[child.type] || MissingTypeComponent}
+                    component={types[child.type] || theme.MissingTypeComponent}
+                    theme={theme}
                     tree={tree}
                     node={child}
                     path={_.toArray(child.path)}

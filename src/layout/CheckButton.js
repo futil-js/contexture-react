@@ -5,22 +5,24 @@ import { Flex } from './Flex'
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 
 let CheckButton = ({
-  Button = 'button',
-  Checkbox = CheckboxDefault,
+  theme = {
+    Button: 'button',
+    Checkbox: CheckboxDefault,
+  },
   checked = false,
   onClick,
   children,
   ...props
 }) => (
-  <Button onClick={onClick} {...props}>
+  <theme.Button onClick={onClick} {...props}>
     <Flex alignItems="center" justifyContent="center">
-      <Checkbox
+      <theme.Checkbox
         checked={!!checked} // prevent react "uncontrolled component" warning when `checked` prop is undefined
         onChange={_.noop} // prevent another react warning when `checked` is passed but `onChange` isn't
         disabled
       />
       {children}
     </Flex>
-  </Button>
+  </theme.Button>
 )
 export default CheckButton

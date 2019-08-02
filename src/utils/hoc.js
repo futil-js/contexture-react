@@ -37,3 +37,7 @@ export let contexturify = _.flow(
 export let withTreeLens = Component => ({ prop = 'value', ...props }) => (
   <Component {...{ lens: props.tree.lens(props.node.path, prop), ...props }} />
 )
+
+// quick n' dirty substitute for defaultProps to support theme objects (not production code!!)
+export let defaultTheme = defaultTheme => Component => ({ theme, ...props }) =>
+  <Component {...props} theme={_.merge(defaultTheme, theme)} />

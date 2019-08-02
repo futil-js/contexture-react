@@ -20,22 +20,24 @@ const elementStyle = {
 
 const operatorOptions = ['within', 'not within']
 
-let selectInput = 'select'
-let numberInput = props => <input type="number" {...props} />
+let DefaultSelectInput = 'select'
+let DefaultNumberInput = props => <input type="number" {...props} />
 
 let GeoComponent = contexturify(
   ({
     tree,
     node,
     loadOptions,
-    SelectInput = selectInput,
-    NumberInput = numberInput,
+    theme = {
+      SelectInput: DefaultSelectInput,
+      NumberInput: DefaultNumberInput,
+    },
     GeoCodeLocation = _.noop,
     AutoComplete = null,
     placeholder = 'Address ...',
   }) => (
     <Flex style={{ flexFlow: 'column' }}>
-      <SelectInput
+      <theme.SelectInput
         style={elementStyle}
         value={node.operator}
         onChange={e => tree.mutate(node.path, { operator: e.target.value })}
@@ -45,9 +47,9 @@ let GeoComponent = contexturify(
             {o}
           </option>
         ))}
-      </SelectInput>
+      </theme.SelectInput>
       <div style={elementStyle}>
-        <NumberInput
+        <theme.NumberInput
           min="1"
           value={node.radius}
           onChange={e => tree.mutate(node.path, { radius: e.target.value })}

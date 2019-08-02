@@ -20,7 +20,7 @@ let RadioListDefault = ({ value, onChange, options }) => (
   </Flex>
 )
 
-let SelectAll = observer(({ node, tree, Checkbox }) => {
+let SelectAll = observer(({ node, tree, theme }) => {
   let missingOptions = _.difference(
     _.map('name', _.get('context.options', node)),
     node.values
@@ -35,7 +35,7 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
         cursor: 'pointer',
       }}
     >
-      <Checkbox
+      <theme.Checkbox
         checked={allSelected}
         onChange={() => {
           if (allSelected)
@@ -53,7 +53,7 @@ let SelectAll = observer(({ node, tree, Checkbox }) => {
   )
 })
 
-let FacetOptionsFilter = ({ tree, node, TextInput, Button, ButtonGroup }) => {
+let FacetOptionsFilter = ({ tree, node, theme }) => {
   let [val, setVal] = useState(node.optionsFilter)
   let buttonEnabled = val !== node.optionsFilter
   let submit = () =>
@@ -61,8 +61,8 @@ let FacetOptionsFilter = ({ tree, node, TextInput, Button, ButtonGroup }) => {
   return (
     <Observer>
       {() => (
-        <ButtonGroup>
-          <TextInput
+        <theme.ButtonGroup>
+          <theme.TextInput
             value={val}
             onChange={e => {
               setVal(e.target.value)
@@ -71,13 +71,13 @@ let FacetOptionsFilter = ({ tree, node, TextInput, Button, ButtonGroup }) => {
             onBlur={submit}
             placeholder="Find..."
           />
-          <Button
+          <theme.Button
             style={{ display: buttonEnabled ? 'block' : 'none' }}
             onClick={submit}
           >
             Submit
-          </Button>
-        </ButtonGroup>
+          </theme.Button>
+        </theme.ButtonGroup>
       )}
     </Observer>
   )
@@ -88,17 +88,19 @@ let Facet = contexturify(
     tree,
     node,
     hide = {},
-    TextInput = 'input',
-    Button = 'button',
-    Checkbox = CheckboxDefault,
-    RadioList = RadioListDefault,
+    theme = {
+      TextInput: 'input',
+      Button: 'button',
+      Checkbox: CheckboxDefault,
+      RadioList: RadioListDefault,
+      ButtonGroup: 'div',
+    },
     display = x => x,
     displayBlank = () => <i>Not Specified</i>,
     formatCount = x => x,
-    ButtonGroup = 'div',
   }) => (
     <div className="contexture-facet">
-      <RadioList
+      <theme.RadioList
         value={node.mode || 'include'} // Fix by changing defaults in client example type
         onChange={mode => tree.mutate(node.path, { mode })}
         options={F.autoLabelOptions(['include', 'exclude'])}
@@ -107,12 +109,10 @@ let Facet = contexturify(
         <FacetOptionsFilter
           tree={tree}
           node={node}
-          TextInput={TextInput}
-          Button={Button}
-          ButtonGroup={ButtonGroup}
+          theme={theme}
         />
       )}
-      <SelectAll node={node} tree={tree} Checkbox={Checkbox} />
+      <SelectAll node={node} tree={tree} theme={theme} />
       {_.map(({ name, count }) => {
         let lens = tree.lens(node.path, 'values')
         return (
@@ -125,7 +125,7 @@ let Facet = contexturify(
               cursor: 'pointer',
             }}
           >
-            <Checkbox {...F.domLens.checkboxValues(name, lens)} />
+            <theme.Checkbox {...F.domLens.checkboxValues(name, lens)} />
             <div style={{ flex: 2, padding: '0 5px' }}>
               {display(name) || displayBlank()}
             </div>

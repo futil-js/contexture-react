@@ -25,6 +25,7 @@ export let ModalPicker = withStateLens({ isOpen: false })(
               onChange(x)
               F.off(isOpen)()
             }}
+            theme={theme}
           />
         </theme.Modal>
         <theme.Button onClick={F.on(isOpen)}>{label}</theme.Button>
