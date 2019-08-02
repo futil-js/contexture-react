@@ -6,7 +6,7 @@ import { contexturify } from '../utils/hoc'
 import TermsStatsTable from './TermsStatsTable'
 
 let CheckableTermsStatsTable = contexturify(
-  ({ node, children, Checkbox, getValue, selected, ...props }) => {
+  ({ node, children, theme, getValue, selected, ...props }) => {
     let results = _.result('context.terms.slice', node)
     let allChecked = _.size(results) === _.size(F.view(selected))
     let checkAll = F.sets(
@@ -19,9 +19,9 @@ let CheckableTermsStatsTable = contexturify(
           ...props,
           children: [
             <Column
-              label={<Checkbox checked={allChecked} onChange={checkAll} />}
+              label={<theme.Checkbox checked={allChecked} onChange={checkAll} />}
               display={(x, y) => (
-                <Checkbox
+                <theme.Checkbox
                   {...F.domLens.checkboxValues(
                     _.iteratee(getValue)(y),
                     selected

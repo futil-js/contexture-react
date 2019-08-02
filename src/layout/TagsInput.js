@@ -60,138 +60,140 @@ let DefaultTagComponent = defaultTheme({
 
 // We're only using withState to preserve the state between renders, since
 // inject doesn't do that for us.
-let TagsInput = withState('state', 'setState', () =>
-  observable({
-    currentInput: '',
-    selectedTag: null,
-    popoverOpen: false,
-    isOneLine: true,
-  })
+let TagsInput = _.flow(
+  observer,
+  defaultTheme({
+    TagComponent: DefaultTagComponent,
+    Popover: DefaultPopover
+  }),
+  withState('state', 'setState', () =>
+    observable({
+      currentInput: '',
+      selectedTag: null,
+      popoverOpen: false,
+      isOneLine: true,
+    })
+  )
 )(
-  observer(
-    ({
-      tags,
-      state,
-      addTag,
-      removeTag,
-      submit = _.noop,
-      tagStyle,
-      theme = {
-        TagComponent: DefaultTagComponent,
-        Popover: DefaultPopover
-      },
-      placeholder = 'Search...',
-      splitCommas,
-      style,
-      ...props
-    }) => {
-      let containerRef
-      let inputRef
-      if (splitCommas)
-        addTag = _.flow(
-          _.split(','),
-          _.map(addTag)
-        )
-      return (
-        <OutsideClickHandler
-          onOutsideClick={() => {
-            state.isOneLine = true
-            containerRef.scrollTop = 0
+  ({
+    tags,
+    state,
+    addTag,
+    removeTag,
+    submit = _.noop,
+    tagStyle,
+    theme,
+    placeholder = 'Search...',
+    splitCommas,
+    style,
+    ...props
+  }) => {
+    let containerRef
+    let inputRef
+    if (splitCommas)
+      addTag = _.flow(
+        _.split(','),
+        _.map(addTag)
+      )
+    return (
+      <OutsideClickHandler
+        onOutsideClick={() => {
+          state.isOneLine = true
+          containerRef.scrollTop = 0
+        }}
+      >
+        <div
+          className={`tags-input ${
+            state.isOneLine ? 'tags-input-one-line' : ''
+          }`}
+          ref={e => (containerRef = e ? e : containerRef)}
+          style={{ ...style }}
+          onClick={() => {
+            if (state.isOneLine) {
+              state.isOneLine = false
+              inputRef.focus()
+            }
           }}
         >
-          <div
-            className={`tags-input ${
-              state.isOneLine ? 'tags-input-one-line' : ''
-            }`}
-            ref={e => (containerRef = e ? e : containerRef)}
-            style={{ ...style }}
-            onClick={() => {
-              if (state.isOneLine) {
-                state.isOneLine = false
-                inputRef.focus()
-              }
+          <Flex
+            wrap
+            alignItems="center"
+            style={{
+              cursor: 'text',
+              height: '100%',
+              padding: 2,
             }}
           >
-            <Flex
-              wrap
-              alignItems="center"
-              style={{
-                cursor: 'text',
-                height: '100%',
-                padding: 2,
-              }}
-            >
-              {_.map(
-                t => (
-                  <theme.TagComponent
-                    key={t}
-                    value={t}
-                    {...{ removeTag, tagStyle }}
-                    onClick={() => {
-                      state.popoverOpen = true
-                      state.selectedTag = t
-                    }}
-                  />
-                ),
-                tags
-              )}
-              <input
-                style={{
-                  border: 'none',
-                  outline: 'none',
-                  flex: 1,
-                  margin: 3,
-                  minWidth: 120,
-                }}
-                ref={e => (inputRef = e)}
-                onChange={e => {
-                  state.currentInput = e.target.value
-                }}
-                onBlur={() => {
-                  if (isValidTag(state.currentInput, tags)) {
-                    addTag(state.currentInput)
-                    state.currentInput = ''
-                  }
-                }}
-                onKeyDown={e => {
-                  let currentInput = _.trim(state.currentInput)
-                  if (e.key === 'Enter' && !currentInput) submit()
-                  if (
-                    (e.key === 'Enter' ||
-                      e.key === 'Tab' ||
-                      (splitCommas && e.key === ',')) &&
-                    isValidTag(currentInput, tags)
-                  ) {
-                    addTag(currentInput)
-                    state.currentInput = ''
-                    e.preventDefault()
-                  }
-                  if (
-                    e.key === 'Backspace' &&
-                    !state.currentInput &&
-                    tags.length
-                  ) {
-                    let last = _.last(tags)
-                    removeTag(last)
-                    state.currentInput = last
-                    e.preventDefault()
-                  }
-                }}
-                value={state.currentInput}
-                placeholder={placeholder}
-                {...props}
-              />
-            </Flex>
-            {theme.PopoverContents && (
-              <theme.Popover isOpen={F.lensProp('popoverOpen', state)}>
-                <theme.PopoverContents tag={state.selectedTag} />
-              </theme.Popover>
+            {_.map(
+              t => (
+                <theme.TagComponent
+                  key={t}
+                  value={t}
+                  {...{ removeTag, tagStyle }}
+                  onClick={() => {
+                    state.popoverOpen = true
+                    state.selectedTag = t
+                  }}
+                />
+              ),
+              tags
             )}
-          </div>
-        </OutsideClickHandler>
-      )
-    }
-  )
+            <input
+              style={{
+                border: 'none',
+                outline: 'none',
+                flex: 1,
+                margin: 3,
+                minWidth: 120,
+              }}
+              ref={e => (inputRef = e)}
+              onChange={e => {
+                state.currentInput = e.target.value
+              }}
+              onBlur={() => {
+                if (isValidTag(state.currentInput, tags)) {
+                  addTag(state.currentInput)
+                  state.currentInput = ''
+                }
+              }}
+              onKeyDown={e => {
+                let currentInput = _.trim(state.currentInput)
+                if (e.key === 'Enter' && !currentInput) submit()
+                if (
+                  (e.key === 'Enter' ||
+                    e.key === 'Tab' ||
+                    (splitCommas && e.key === ',')) &&
+                  isValidTag(currentInput, tags)
+                ) {
+                  addTag(currentInput)
+                  state.currentInput = ''
+                  e.preventDefault()
+                }
+                if (
+                  e.key === 'Backspace' &&
+                  !state.currentInput &&
+                  tags.length
+                ) {
+                  let last = _.last(tags)
+                  removeTag(last)
+                  state.currentInput = last
+                  e.preventDefault()
+                }
+              }}
+              value={state.currentInput}
+              placeholder={placeholder}
+              {...props}
+            />
+          </Flex>
+          {theme.PopoverContents && (
+            <theme.Popover isOpen={F.lensProp('popoverOpen', state)}>
+              <theme.PopoverContents tag={state.selectedTag} />
+            </theme.Popover>
+          )}
+        </div>
+      </OutsideClickHandler>
+    )
+  }
 )
 TagsInput.displayName = 'TagsInput'
 

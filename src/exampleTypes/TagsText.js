@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { contexturify, withTreeLens } from '../utils/hoc'
+import { contexturify, defaultTheme, withTreeLens } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
 
 import { TagsInput as DefaultTagsInput } from '../layout/TagsInput'
@@ -23,29 +23,32 @@ let operatorOptions = F.autoLabelOptions([
 
 let Text = _.flow(
   withTreeLens,
+  defaultTheme({
+    TagsInput: DefaultTagsInput,
+    Select: DefaultSelect,
+  }),
   contexturify
 )(
   ({
     tree,
     node,
-    TagsInput = DefaultTagsInput,
-    Select = DefaultSelect,
+    theme,
     placeholder,
   }) => {
     let tagStyle = bgJoin(tagToGroupJoin(node.join))
     let TagPopover = () => (
       <div>
-        <TagsJoinPicker node={node} tree={tree} Select={Select} />
+        <TagsJoinPicker {...{ node, tree, theme }} />
       </div>
     )
     return (
       <div className="contexture-text">
-        <Select
+        <theme.Select
           value={node.operator}
           onChange={e => tree.mutate(node.path, { operator: e.target.value })}
           options={operatorOptions}
         />
-        <TagsInput
+        <theme.TagsInput
           splitCommas
           tags={node.values}
           addTag={tag => {
@@ -59,7 +62,7 @@ let Text = _.flow(
           tagStyle={tagStyle}
           submit={tree.triggerUpdate}
           placeholder={placeholder}
-          PopoverContents={TagPopover}
+          theme={{ ...theme, PopoverContents: TagPopover }}
         />
       </div>
     )

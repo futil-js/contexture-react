@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer } from 'mobx-react'
-import { contexturify } from '../utils/hoc'
+import { contexturify, defaultTheme } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
 import { TagsInput as DefaultTagsInput } from '../layout/TagsInput'
 import DefaultRadioList from '../layout/RadioList'
@@ -11,19 +11,25 @@ import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 
 let tagValueField = 'word'
-let TagsQuery = ({
+let TagsQuery = _.flow(
+  defaultTheme({
+    TagsInput: DefaultTagsInput,
+    Checkbox: CheckboxDefault,
+    RadioList: DefaultRadioList,
+    Select: DefaultSelect,
+    Button: 'button',
+  }),
+  contexturify
+)(
+  ({
   tree,
   node,
-  TagsInput = DefaultTagsInput,
-  Checkbox = CheckboxDefault,
-  RadioList = DefaultRadioList,
-  Select = DefaultSelect,
-  Button = 'button',
+  theme,
   placeholder,
   ...props
 }) => {
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)
-  let TagQueryPopever = observer(({ tag }) => {
+  let TagQueryPopover = observer(({ tag }) => {
     let tagInstance = getTag(tag)
     return (
       <div className="tags-input-popover">
@@ -34,7 +40,7 @@ let TagsQuery = ({
           {_.includes(' ', tag) && (
             <React.Fragment>
               <div className="popover-item">
-                <RadioList
+                <theme.RadioList
                   options={F.autoLabelOptions(['fuzzy', 'exact'])}
                   value={tagInstance.distance ? 'fuzzy' : 'exact'}
                   onChange={value => {
@@ -44,7 +50,7 @@ let TagsQuery = ({
                 />
               </div>
               <div className="popover-item">
-                <Button
+                <theme.Button
                   onClick={() => {
                     tree.mutate(node.path, {
                       tags: _.map(tag => {
@@ -56,12 +62,12 @@ let TagsQuery = ({
                   }}
                 >
                   Apply to all keywords
-                </Button>
+                </theme.Button>
               </div>
             </React.Fragment>
           )}
           <label className="popover-item labeled-checkbox">
-            <Checkbox
+            <theme.Checkbox
               checked={tagInstance.onlyShowTheseResults}
               onChange={e => {
                 tagInstance.onlyShowTheseResults = e.target.checked
@@ -78,7 +84,7 @@ let TagsQuery = ({
             </small>
           </div>
           <label className="popover-item labeled-checkbox">
-            <Checkbox
+            <theme.Checkbox
               checked={!node.exact}
               onChange={e =>
                 tree.mutate(node.path, { exact: !e.target.checked })
@@ -87,7 +93,7 @@ let TagsQuery = ({
             <span>Enable stemming</span>
           </label>
           <div className="popover-item">
-            <TagsJoinPicker node={node} tree={tree} Select={Select} />
+            <TagsJoinPicker {...{ node, tree, theme }} />
           </div>
         </div>
       </div>
@@ -106,7 +112,7 @@ let TagsQuery = ({
     }
   }
   return (
-    <TagsInput
+    <theme.TagsInput
       splitCommas
       tags={_.map(tagValueField, node.tags)}
       addTag={tag => {
@@ -122,10 +128,11 @@ let TagsQuery = ({
       tagStyle={tagStyle}
       submit={tree.triggerUpdate}
       placeholder={placeholder}
-      PopoverContents={TagQueryPopever}
+      theme={{ ...theme, PopoverContents: TagQueryPopover }}
       {...props}
     />
   )
-}
+})
+TagsQuery.displayName = 'TagsQuery'
 
-export default contexturify(TagsQuery)
+export default TagsQuery

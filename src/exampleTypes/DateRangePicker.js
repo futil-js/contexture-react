@@ -1,11 +1,14 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import DefaultSelect from '../layout/Select'
-import { contexturify } from '../utils/hoc'
+import { contexturify, defaultTheme } from '../utils/hoc'
 
-let DateComponent = contexturify(
-  ({ tree, node, ranges, Select = DefaultSelect }) => (
-    <Select
+let DateComponent = _.flow(
+  defaultTheme({ Select: DefaultSelect }),
+  contexturify
+  )(
+    ({ tree, node, ranges, theme }) => (
+    <theme.Select
       value={(_.find({ from: node.from, to: node.to }, ranges) || {}).label}
       onChange={event => {
         let value = _.get('target.value', event)

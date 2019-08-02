@@ -129,7 +129,7 @@ let rollingRangeFromString = _.flow(
 )
 
 let DateComponent = contexturify(
-  ({ tree, node, DateInput, RadioList, Select, excludeRollingRanges = [] }) => {
+  ({ tree, node, theme, excludeRollingRanges = [] }) => {
     let rollingOpts = _.reject(
       opt => _.includes(opt.type, excludeRollingRanges),
       allRollingOpts
@@ -137,7 +137,7 @@ let DateComponent = contexturify(
 
     return (
       <div>
-        <RadioList
+        <theme.RadioList
           options={F.autoLabelOptions(['exact', 'rolling'])}
           value={node.useDateMath ? 'rolling' : 'exact'}
           style={{ marginBottom: 10 }}
@@ -162,19 +162,19 @@ let DateComponent = contexturify(
           <Flex
             style={{ justifyContent: 'space-between', alignItems: 'center' }}
           >
-            <DateInput
+            <theme.DateInput
               value={node.from}
               onChange={date => tree.mutate(node.path, { from: date })}
             />
             <div>-</div>
-            <DateInput
+            <theme.DateInput
               value={node.to}
               onChange={date => tree.mutate(node.path, { to: date })}
             />
           </Flex>
         )}
         {node.useDateMath && (
-          <Select
+          <theme.Select
             value={rollingRangeToString(node)}
             onChange={e =>
               tree.mutate(node.path, rollingRangeFromString(e.target.value))

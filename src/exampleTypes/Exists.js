@@ -1,18 +1,25 @@
 import React from 'react'
+import _ from 'lodash/fp'
 import F from 'futil-js'
-import { contexturify } from '../utils/hoc'
+import { contexturify, defaultTheme } from '../utils/hoc'
 import RadioListDefault from '../layout/RadioList'
 
-let Exists = ({ tree, node, RadioList = RadioListDefault }) => (
-  <div className="contexture-exists">
-    <RadioList
-      value={node.value ? 'exists' : 'doesNotExist'}
-      onChange={value => {
-        tree.mutate(node.path, { value: value === 'exists' })
-      }}
-      options={F.autoLabelOptions(['exists', 'doesNotExist'])}
-    />
-  </div>
+let Exists = _.flow(
+  defaultTheme({ RadioList: RadioListDefault }),
+  contexturify
+)(
+  ({ tree, node, theme }) => (
+    <div className="contexture-exists">
+      <theme.RadioList
+        value={node.value ? 'exists' : 'doesNotExist'}
+        onChange={value => {
+          tree.mutate(node.path, { value: value === 'exists' })
+        }}
+        options={F.autoLabelOptions(['exists', 'doesNotExist'])}
+      />
+    </div>
+  )
 )
+Exists.displayName = 'Exists'
 
-export default contexturify(Exists, 'exists')
+export default Exists

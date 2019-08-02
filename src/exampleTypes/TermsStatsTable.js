@@ -2,21 +2,29 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { contexturify } from '../utils/hoc'
+import { contexturify, defaultTheme } from '../utils/hoc'
 import ExpandableTable, { Column } from '../layout/ExpandableTable'
 import { Flex } from '../layout/Flex'
 import Select from '../layout/Select'
 
 let toolBarStyle = { justifyContent: 'space-between', alignItems: 'center' }
+
 let SimpleLabel = ({ text }) => (
   <label style={{ paddingRight: '5px' }}>{text}</label>
 )
-let SimpleFilter = observer(({ Input = 'input', ...props }) => (
-  <Flex style={{ ...toolBarStyle, width: '75%' }}>
-    <SimpleLabel text="Filter:" />
-    <Input type="text" {...props} />
-  </Flex>
-))
+
+let SimpleFilter = _.flow(
+  observer,
+  defaultTheme({Input: 'input'})
+)(
+  ({ theme, ...props }) => (
+    <Flex style={{ ...toolBarStyle, width: '75%' }}>
+      <SimpleLabel text="Filter:" />
+      <theme.Input type="text" {...props} />
+    </Flex>
+  )
+)
+
 let SelectSize = observer(
   ({ node, tree, options = [10, 25, 50, 100, 500, 1000] }) => (
     <Flex style={toolBarStyle}>
@@ -33,7 +41,15 @@ let SelectSize = observer(
     </Flex>
   )
 )
-let TermsStatsTable = contexturify(
+
+let TermsStatsTable = _.flow(
+  defaultTheme({
+    MoreControls: 'div',
+    Input: 'input',
+    Filter: SimpleFilter,
+  }),
+  contexturify
+)(
   ({
     node,
     criteria,
@@ -42,17 +58,14 @@ let TermsStatsTable = contexturify(
     criteriaGetValue = _.identity,
     tree,
     children,
-    Button,
-    MoreControls = 'div',
-    Input = 'input',
-    Filter = SimpleFilter,
+    theme,
     sizeOptions,
     ...props
   }) => (
     <div>
       <Flex style={{ ...toolBarStyle, margin: 40, marginBottom: 0 }}>
         <Filter
-          Input={Input}
+          theme={theme}
           {...F.domLens.value(tree.lens(node.path, 'filter'))}
         />
         <SelectSize node={node} tree={tree} options={sizeOptions} />
@@ -68,7 +81,7 @@ let TermsStatsTable = contexturify(
                   expand={{
                     display: (value, record) => (
                       <div>
-                        <Button
+                        <theme.Button
                           onClick={async () => {
                             let field = criteriaField || node.key_field
                             let filter =
@@ -96,8 +109,8 @@ let TermsStatsTable = contexturify(
                           }}
                         >
                           Add as Filter
-                        </Button>
-                        <MoreControls />
+                        </theme.Button>
+                        <theme.MoreControls />
                       </div>
                     ),
                   }}

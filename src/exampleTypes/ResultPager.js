@@ -1,19 +1,24 @@
 import _ from 'lodash/fp'
 import React from 'react'
-import { contexturify } from '../utils/hoc'
+import { contexturify, defaultTheme } from '../utils/hoc'
 import DefaultIcon from '../DefaultIcon'
 
 // These are to prevent warning from `active`, `previous`, `next`
 let span = ({ children }) => <span>{children}</span>
 let a = ({ children, onClick }) => <a onClick={onClick}>{children}</a>
 
-let ResultPager = contexturify(
+let ResultPager = _.flow(
+  defaultTheme({
+    Item: span,
+    Link: a,
+    Icon: DefaultIcon,
+  }),
+  contexturify
+)(
   ({
     node,
     tree,
-    Item = span,
-    Link = a,
-    Icon = DefaultIcon,
+    theme,
     className = '',
   }) => {
     let pages = Math.ceil(
@@ -23,75 +28,75 @@ let ResultPager = contexturify(
     return (
       pages > 1 && (
         <div className={`${className} contexture-result-pager`}>
-          <Item disabled={!(page > 1)}>
-            <Link
+          <theme.Item disabled={!(page > 1)}>
+            <theme.Link
               previous
               onClick={() => tree.mutate(node.path, { page: page - 1 })}
             >
-              <Icon icon="PreviousPage" />
-            </Link>
-          </Item>
+              <theme.Icon icon="PreviousPage" />
+            </theme.Link>
+          </theme.Item>
           {page > 3 && (
-            <Item
+            <theme.Item
               onClick={() =>
                 tree.mutate(node.path, { page: _.max([0, page - 5]) })
               }
             >
-              <Icon icon="Previous5Pages" />
-            </Item>
+              <theme.Icon icon="Previous5Pages" />
+            </theme.Item>
           )}
           {_.reverse(
             _.times(
               n =>
                 page > n + 1 && (
-                  <Item key={`prev${n}`}>
-                    <Link
+                  <theme.Item key={`prev${n}`}>
+                    <theme.Link
                       onClick={() =>
                         tree.mutate(node.path, { page: page - (n + 1) })
                       }
                     >
                       {page - (n + 1)}
-                    </Link>
-                  </Item>
+                    </theme.Link>
+                  </theme.Item>
                 ),
               2
             )
           )}
-          <Item active>
-            <Link>{page}</Link>
-          </Item>
+          <theme.Item active>
+            <theme.Link>{page}</theme.Link>
+          </theme.Item>
           {_.times(
             n =>
               page + (n + 1) <= pages && (
-                <Item key={`next${n}`}>
-                  <Link
+                <theme.Item key={`next${n}`}>
+                  <theme.Link
                     onClick={() =>
                       tree.mutate(node.path, { page: page + (n + 1) })
                     }
                   >
                     {page + (n + 1)}
-                  </Link>
-                </Item>
+                  </theme.Link>
+                </theme.Item>
               ),
             2
           )}
           {page + 2 < pages && (
-            <Item
+            <theme.Item
               onClick={() =>
                 tree.mutate(node.path, { page: _.min([pages, page + 5]) })
               }
             >
-              <Icon icon="Next5Pages" />
-            </Item>
+              <theme.Icon icon="Next5Pages" />
+            </theme.Item>
           )}
-          <Item disabled={!(page < pages)}>
-            <Link
+          <theme.Item disabled={!(page < pages)}>
+            <theme.Link
               next
               onClick={() => tree.mutate(node.path, { page: page + 1 })}
             >
-              <Icon icon="NextPage" />
-            </Link>
-          </Item>
+              <theme.Icon icon="NextPage" />
+            </theme.Link>
+          </theme.Item>
         </div>
       )
     )

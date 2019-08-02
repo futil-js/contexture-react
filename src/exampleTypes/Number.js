@@ -8,15 +8,14 @@ let NumberComponent = contexturify(
   ({
     tree,
     node,
-    NumberInput,
-    Button,
+    theme,
     showBestRange = false,
     formatter = _.identity,
     significantDigits,
   }) => (
     <div className="contexture-number">
       <Flex style={{ alignItems: 'center' }}>
-        <NumberInput
+        <theme.NumberInput
           value={formatter(node.min) || ''}
           onChange={e =>
             tree.mutate(node.path, {
@@ -27,7 +26,7 @@ let NumberComponent = contexturify(
           }
         />
         <div className="contexture-number-separator">-</div>
-        <NumberInput
+        <theme.NumberInput
           value={formatter(node.max) || ''}
           onChange={e =>
             tree.mutate(node.path, {
@@ -40,7 +39,7 @@ let NumberComponent = contexturify(
       </Flex>
       {showBestRange && (
         <div className="contexture-number-best-range">
-          <Button
+          <theme.Button
             style={{ width: '100%' }}
             onClick={async () => {
               // Calculate best range
@@ -59,7 +58,7 @@ let NumberComponent = contexturify(
             }}
           >
             Find best range
-          </Button>
+          </theme.Button>
         </div>
       )}
     </div>

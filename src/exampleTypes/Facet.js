@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import { observer, Observer } from 'mobx-react'
 import { Flex } from '../layout/Flex'
-import { contexturify } from '../utils/hoc'
+import { contexturify, defaultTheme } from '../utils/hoc'
 
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 let RadioListDefault = ({ value, onChange, options }) => (
@@ -83,18 +83,21 @@ let FacetOptionsFilter = ({ tree, node, theme }) => {
   )
 }
 
-let Facet = contexturify(
+let Facet = _.flow(
+  defaultTheme({
+    TextInput: 'input',
+    Button: 'button',
+    Checkbox: CheckboxDefault,
+    RadioList: RadioListDefault,
+    ButtonGroup: 'div',
+  }),
+  contexturify
+)(
   ({
     tree,
     node,
     hide = {},
-    theme = {
-      TextInput: 'input',
-      Button: 'button',
-      Checkbox: CheckboxDefault,
-      RadioList: RadioListDefault,
-      ButtonGroup: 'div',
-    },
+    theme,
     display = x => x,
     displayBlank = () => <i>Not Specified</i>,
     formatCount = x => x,

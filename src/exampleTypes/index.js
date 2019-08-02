@@ -21,6 +21,7 @@ import { defaultProps } from 'recompose'
 import ModalDefault from '../layout/Modal'
 import DefaultSelect from '../layout/Select'
 import WrappedDateInput from '../layout/WrappedDateInput'
+import { defaultTheme } from '../utils/hoc'
 
 export default ({
   Input = 'input',
@@ -40,24 +41,22 @@ export default ({
   ButtonGroup,
 } = {}) => {
   let Components = {
-    Facet: defaultProps({
-      theme: {
-        TextInput,
-        Button,
-        Checkbox,
-        RadioList,
-        ButtonGroup,
-      }
+    Facet: defaultTheme({
+      TextInput,
+      Button,
+      Checkbox,
+      RadioList,
+      ButtonGroup,
     })(Facet),
-    Number: defaultProps({theme: { NumberInput, Button }})(Number),
-    Date: defaultProps({theme: { DateInput, RadioList, Select }})(Date),
+    Number: defaultTheme({ NumberInput, Button })(Number),
+    Date: defaultTheme({ DateInput, RadioList, Select })(Date),
     DateRangePicker,
-    Query: defaultProps({theme: { TextInput }})(Query),
-    TagsQuery: defaultProps({theme: { TagsInput, Checkbox, RadioList, Button }})(
+    Query: defaultTheme({ TextInput })(Query),
+    TagsQuery: defaultTheme({ TagsInput, Checkbox, RadioList, Button })(
       TagsQuery
     ),
-    Exists: defaultProps({theme: { RadioList }})(Exists),
-    Bool: defaultProps({theme: { RadioList }})(Bool),
+    Exists: defaultTheme({ RadioList })(Exists),
+    Bool: defaultTheme({ RadioList })(Bool),
     ResultTable: defaultProps({
       theme: {
         Table,
@@ -68,16 +67,16 @@ export default ({
       }
     })(ResultTable),
     ResultCount,
-    ResultPager: defaultProps({theme: { Icon }})(ResultPager),
+    ResultPager: defaultTheme({ Icon })(ResultPager),
     DateHistogram,
     TermsStats,
-    TermsStatsTable: defaultProps({theme: { Button }})(TermsStatsTable),
-    CheckableTermsStatsTable: defaultProps({theme: { Button }})(
+    TermsStatsTable: defaultTheme({ Button })(TermsStatsTable),
+    CheckableTermsStatsTable: defaultTheme({ Button })(
       CheckableTermsStatsTable
     ),
-    Geo: defaultProps({theme: { NumberInput }})(Geo),
-    Text: defaultProps({theme: { Input }})(Text),
-    TagsText: defaultProps({theme: { TagsInput, Select }})(TagsText),
+    Geo: defaultTheme({ NumberInput })(Geo),
+    Text: defaultTheme({ Input })(Text),
+    TagsText: defaultTheme({ TagsInput, Select })(TagsText),
   }
   Components.CheckableResultTable = defaultProps({
     theme: {

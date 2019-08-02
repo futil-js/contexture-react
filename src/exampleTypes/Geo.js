@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import { Flex } from '../layout/Flex'
-import { contexturify } from '../utils/hoc'
+import { contexturify, defaultTheme } from '../utils/hoc'
 
 const customStyles = {
   valueContainer: styles => ({
@@ -23,15 +23,18 @@ const operatorOptions = ['within', 'not within']
 let DefaultSelectInput = 'select'
 let DefaultNumberInput = props => <input type="number" {...props} />
 
-let GeoComponent = contexturify(
+let GeoComponent = _.flow(
+  defaultTheme({
+    SelectInput: DefaultSelectInput,
+    NumberInput: DefaultNumberInput,
+  }),
+  contexturify
+)(
   ({
     tree,
     node,
     loadOptions,
-    theme = {
-      SelectInput: DefaultSelectInput,
-      NumberInput: DefaultNumberInput,
-    },
+    theme,
     GeoCodeLocation = _.noop,
     AutoComplete = null,
     placeholder = 'Address ...',

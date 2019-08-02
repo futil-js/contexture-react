@@ -39,5 +39,16 @@ export let withTreeLens = Component => ({ prop = 'value', ...props }) => (
 )
 
 // quick n' dirty substitute for defaultProps to support theme objects (not production code!!)
-export let defaultTheme = defaultTheme => Component => ({ theme, ...props }) =>
-  <Component {...props} theme={_.merge(defaultTheme, theme)} />
+// two things to note:
+// 1. if a component is wrapped in multiple levels of defaultTheme, the _outermost_ level takes
+// precedence. eg, MyComponent will have blue buttons (unless superceded by a passed-in theme prop):
+// _.flow(
+//   defaultProps({ Button: RedButton }),
+//   defaultProps({ Button: BlueButton }),
+// )(MyComponent)
+// 
+// 2. don't even bother setting a default theme value in the component definition (eg.
+// ({ theme = { Button: DefaultButton }, ...props }) => ...), since it can't support merging -
+// just use this instead
+export let defaultTheme = defaults => Component => ({ theme, ...props }) =>
+  <Component {...props} theme={_.merge(defaults, theme)} />
