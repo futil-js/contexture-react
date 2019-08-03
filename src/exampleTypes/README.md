@@ -1,5 +1,6 @@
 # Example Types
 
+
 ## Bool
 
 ### Props
@@ -11,6 +12,7 @@
 | Component | Default |
 | --- | --- | --- |
 | `RadioList` | layout/RadioList |
+
 
 ## CheckableResultTable
 
@@ -29,6 +31,7 @@
 | --- | --- |
 | `Checkbox` | layout/Checkbox |
 | `ResultTable` | exampleTypes/ResultTable |
+
 
 ## CheckableTermsStatsTable
 
@@ -49,6 +52,7 @@
 | `Column` | layout/ExpandableTable > Column |
 | `TermsStatsTable` | exampleTypes/TermsStatsTable |
 
+
 ## Date
 
 ### Props
@@ -61,7 +65,8 @@
 
 | Component | Default |
 | --- | --- | --- |
-| RadioList | layout/RadioList |
+| `RadioList` | layout/RadioList |
+
 
 ## DateHistogram
 
@@ -75,7 +80,8 @@
 
 | Component | Default |
 | --- | --- | --- |
-| BarChart | layout/BarChart |
+| `BarChart` | layout/BarChart |
+
 
 ## DateRangePicker
 
@@ -89,7 +95,8 @@
 
 | Component | Default |
 | --- | --- | --- |
-| Select | layout/Select |
+| `Select` | layout/Select |
+
 
 ## Exists
 
@@ -102,7 +109,8 @@
 
 | Component | Default |
 | --- | --- | --- |
-| RadioList | layout/RadioList |
+| `RadioList` | layout/RadioList |
+
 
 ## Facet
 
@@ -125,6 +133,7 @@
 | `RadioList` | layout/RadioList |
 | `TextInput` | `'input'` |
 
+
 ## Geo
 
 ### Props
@@ -143,6 +152,7 @@
 | `NumberInput` | layout/NumberInput |
 | `SelectInput` | `'select'` |
 
+
 ## Number
 
 ### Props
@@ -160,6 +170,7 @@
 | `Button` | `'button'` |
 | `NumberInput` | layout/NumberInput |
 
+
 ## Query
 
 ### Props
@@ -172,6 +183,7 @@
 | Component | Default |
 | --- | --- | --- |
 | `TextInput` | `'input'` |
+
 
 ## ResultCount
 
@@ -186,6 +198,7 @@
 | --- | --- | --- |
 | n/a | n/a |
 
+
 ## ResultPager
 
 ### Props
@@ -199,8 +212,9 @@
 | Component | Default |
 | --- | --- | --- |
 | `Icon` | src/DefaultIcon |
-| `Item` | . |
-| `Link` | . |
+| `Item` | local to file |
+| `Link` | local to file |
+
 
 ## ResultTable
 
@@ -239,7 +253,7 @@
 | Component | Default |
 | --- | --- | --- |
 | `FieldPicker` | layout/NestedPicker |
-| `HeaderCell` | . |
+| `HeaderCell` | local to file |
 | `Icon` | src/DefaultIcon |
 | `Item` | `'span'` |
 | `Popover` | layout/Popover |
@@ -248,7 +262,7 @@
 | Component | Default |
 | --- | --- | --- |
 | `Cell` | `'td'` |
-| `Row` | . |
+| `Row` | local to file |
 
 
 ## TagsJoinPicker
@@ -262,6 +276,7 @@
 | Component | Default |
 | --- | --- | --- |
 | `Select` | layout/Select |
+
 
 ## TagsQuery
 
@@ -283,6 +298,7 @@
 | `Select` | layout/Select |
 | `TagsInput` | layout/TagsInput |
 
+
 ## TagsText
 
 ### Props
@@ -298,6 +314,7 @@
 | `Select` | layout/Select |
 | `TagsInput` | layout/TagsInput |
 
+
 ## TermsStats
 
 ### Props
@@ -311,6 +328,7 @@
 | Component | Default |
 | --- | --- | --- |
 | `BarChart` | layout/BarChart |
+
 
 ## TermsStatsTable
 
@@ -342,14 +360,15 @@
 | Component | Default |
 | --- | --- | --- |
 | `Input` | `'input'` |
-| `SimpleLabel` | . |
+| `SimpleLabel` | local to file |
 
 #### SelectSize
 
 | Component | Default |
 | --- | --- | --- |
 | `Select` | layout/Select |
-| `SimpleLabel` | . |
+| `SimpleLabel` | local to file |
+
 
 ## Text
 

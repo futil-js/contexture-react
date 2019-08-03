@@ -20,8 +20,11 @@ const DefaultItem = ({ children, onClick, disabled }) => (
   </div>
 )
 
-let FilteredSection = observer(
-  ({ options, onClick, highlight, theme }) => (
+let FilteredSection = defaultTheme({
+  Item: DefaultItem,
+  Highlight: TextHighlight,
+})(
+  observer(({ options, onClick, highlight, theme }) => (
     <div>
       {F.mapIndexed(
         (option, field) => (
@@ -32,34 +35,36 @@ let FilteredSection = observer(
         options
       )}
     </div>
-  )
+  ))
 )
 FilteredSection.displayName = 'FilteredSection'
 
 let getItemLabel = item =>
   isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
 
-let Section = observer(({ options, onClick, selected, theme }) => (
-  <div>
-    {_.map(
-      item => (
-        <theme.Item
-          key={item._key}
-          onClick={() => onClick(item.value || item._key, item)}
-          active={selected === item._key}
-          disabled={selected && selected !== item._key}
-          hasChildren={!isField(item)}
-        >
-          {getItemLabel(item)}
-        </theme.Item>
-      ),
-      _.flow(
-        F.unkeyBy('_key'),
-        _.sortBy(getItemLabel)
-      )(options)
-    )}
-  </div>
-))
+let Section = defaultTheme({ Item: DefaultItem })(
+  observer(({ options, onClick, selected, theme }) => (
+    <div>
+      {_.map(
+        item => (
+          <theme.Item
+            key={item._key}
+            onClick={() => onClick(item.value || item._key, item)}
+            active={selected === item._key}
+            disabled={selected && selected !== item._key}
+            hasChildren={!isField(item)}
+          >
+            {getItemLabel(item)}
+          </theme.Item>
+        ),
+        _.flow(
+          F.unkeyBy('_key'),
+          _.sortBy(getItemLabel)
+        )(options)
+      )}
+    </div>
+  ))
+)
 Section.displayName = 'Section'
 
 let toNested = _.flow(
@@ -111,8 +116,6 @@ let NestedPicker = _.flow(
   withStateLens({ filter: '' }),
   defaultTheme({
     Input: 'input',
-    Highlight: TextHighlight,
-    Item: DefaultItem,
   })
 )(
   ({
