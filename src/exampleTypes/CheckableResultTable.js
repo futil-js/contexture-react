@@ -10,25 +10,23 @@ import ResultTable from './ResultTable'
 let Label = _.flow(
   observer,
   defaultTheme({ Checkbox })
-)(
-  ({ node, theme, selected, getValue }) => {
-    let results = _.toArray(getResults(node))
-    let allChecked = _.size(results) === _.size(F.view(selected))
-    let checkAll = F.sets(
-      allChecked
-        ? []
-        : _.map(
-            _.flow(
-              getRecord,
-              _.iteratee(getValue)
-            ),
-            results
+)(({ node, theme, selected, getValue }) => {
+  let results = _.toArray(getResults(node))
+  let allChecked = _.size(results) === _.size(F.view(selected))
+  let checkAll = F.sets(
+    allChecked
+      ? []
+      : _.map(
+          _.flow(
+            getRecord,
+            _.iteratee(getValue)
           ),
-      selected
-    )
-    return <theme.Checkbox checked={allChecked} onChange={checkAll} />
-  }
-)
+          results
+        ),
+    selected
+  )
+  return <theme.Checkbox checked={allChecked} onChange={checkAll} />
+})
 Label.displayName = 'Label'
 
 // Extends ResultTable with a checkbox column
@@ -37,25 +35,23 @@ Label.displayName = 'Label'
 let CheckableResultTable = _.flow(
   defaultTheme({ Checkbox, ResultTable }),
   contexturify
-)(
-  ({ node, fields, selected, getValue, theme, ...props }) => (
-    <theme.ResultTable
-      fields={{
-        _checkbox: {
-          hideMenu: true,
-          label: () => <Label {...{ node, selected, getValue }} />,
-          display: (x, y) => (
-            <theme.Checkbox
-              {...F.domLens.checkboxValues(_.iteratee(getValue)(y), selected)}
-            />
-          ),
-        },
-        ...fields,
-      }}
-      {...props}
-    />
-  )
-)
+)(({ node, fields, selected, getValue, theme, ...props }) => (
+  <theme.ResultTable
+    fields={{
+      _checkbox: {
+        hideMenu: true,
+        label: () => <Label {...{ node, selected, getValue }} />,
+        display: (x, y) => (
+          <theme.Checkbox
+            {...F.domLens.checkboxValues(_.iteratee(getValue)(y), selected)}
+          />
+        ),
+      },
+      ...fields,
+    }}
+    {...props}
+  />
+))
 CheckableResultTable.displayName = 'CheckableResultTable'
 
 export default CheckableResultTable

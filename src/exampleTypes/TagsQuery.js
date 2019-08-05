@@ -18,14 +18,7 @@ let TagsQuery = _.flow(
     Button: 'button',
   }),
   contexturify
-)(
-  ({
-  tree,
-  node,
-  theme,
-  placeholder,
-  ...props
-}) => {
+)(({ tree, node, theme, placeholder, ...props }) => {
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)
   let TagQueryPopover = observer(({ tag }) => {
     let tagInstance = getTag(tag)

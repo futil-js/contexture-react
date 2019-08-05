@@ -27,14 +27,7 @@ export default DDContext(
           ...tree,
         }),
       }),
-      ({
-        state,
-        path,
-        fields,
-        types = {},
-        theme,
-        mapNodeToProps,
-      }) => (
+      ({ state, path, fields, types = {}, theme, mapNodeToProps }) => (
         <div style={{ background }}>
           {state.getNode(path) && (
             <Group
@@ -59,6 +52,7 @@ export default DDContext(
         </div>
       ),
       'QueryBuilder'
-    )),
-    { allowEmptyNode: true } // false alarm, this one's for DDContext
+    )
+  ),
+  { allowEmptyNode: true } // false alarm, this one's for DDContext
 )

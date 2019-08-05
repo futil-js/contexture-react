@@ -6,17 +6,15 @@ import BarChart from '../layout/BarChart'
 let TermsStats = _.flow(
   defaultTheme({ BarChart }),
   contexturify
-)(
-  ({ theme, node, ...props }) => (
-    <theme.BarChart
-      data={node.context.terms}
-      categoryField="key"
-      valueField={node.order}
-      yAxis
-      {...props}
-    />
-  )
-)
+)(({ theme, node, ...props }) => (
+  <theme.BarChart
+    data={node.context.terms}
+    categoryField="key"
+    valueField={node.order}
+    yAxis
+    {...props}
+  />
+))
 TermsStats.displayName = 'TermsStats'
 
 export default TermsStats

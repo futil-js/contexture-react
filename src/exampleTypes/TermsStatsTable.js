@@ -16,34 +16,30 @@ let SimpleLabel = ({ text }) => (
 let SimpleFilter = _.flow(
   observer,
   defaultTheme({ Input: 'input', SimpleLabel })
-)(
-  ({ theme, ...props }) => (
-    <Flex style={{ ...toolBarStyle, width: '75%' }}>
-      <theme.SimpleLabel text="Filter:" />
-      <theme.Input type="text" {...props} />
-    </Flex>
-  )
-)
+)(({ theme, ...props }) => (
+  <Flex style={{ ...toolBarStyle, width: '75%' }}>
+    <theme.SimpleLabel text="Filter:" />
+    <theme.Input type="text" {...props} />
+  </Flex>
+))
 
 let SelectSize = _.flow(
   observer,
   defaultTheme({ Select, SimpleLabel })
-)(
-  ({ node, tree, options = [10, 25, 50, 100, 500, 1000], theme }) => (
-    <Flex style={toolBarStyle}>
-      <theme.SimpleLabel text="Size:" />
-      <theme.Select
-        onChange={e => {
-          tree.mutate(node.path, { size: e.target.value })
-        }}
-        value={_.getOr(25, 'size', node)}
-        placeholder={null}
-        style={{ width: '100px' }}
-        options={_.map(x => ({ value: x, label: x }), options)}
-      />
-    </Flex>
-  )
-)
+)(({ node, tree, options = [10, 25, 50, 100, 500, 1000], theme }) => (
+  <Flex style={toolBarStyle}>
+    <theme.SimpleLabel text="Size:" />
+    <theme.Select
+      onChange={e => {
+        tree.mutate(node.path, { size: e.target.value })
+      }}
+      value={_.getOr(25, 'size', node)}
+      placeholder={null}
+      style={{ width: '100px' }}
+      options={_.map(x => ({ value: x, label: x }), options)}
+    />
+  </Flex>
+))
 
 let TermsStatsTable = _.flow(
   defaultTheme({
@@ -73,7 +69,12 @@ let TermsStatsTable = _.flow(
           theme={theme}
           {...F.domLens.value(tree.lens(node.path, 'filter'))}
         />
-        <SelectSize node={node} tree={tree} options={sizeOptions} theme={theme} />
+        <SelectSize
+          node={node}
+          tree={tree}
+          options={sizeOptions}
+          theme={theme}
+        />
       </Flex>
       <theme.ExpandableTable
         {...{

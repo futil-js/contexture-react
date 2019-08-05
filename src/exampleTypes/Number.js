@@ -8,7 +8,7 @@ import { contexturify, defaultTheme } from '../utils/hoc'
 let NumberComponent = _.flow(
   defaultTheme({
     NumberInput,
-    Button: 'button'
+    Button: 'button',
   }),
   contexturify
 )(

@@ -2,10 +2,7 @@ import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
 import DefaultFilterButtonList from '../FilterButtonList'
-import {
-  StepsAccordion,
-  AccordionStep,
-} from '../layout'
+import { StepsAccordion, AccordionStep } from '../layout'
 import { defaultTheme, withNode } from '../utils/hoc'
 
 let generateStepTitle = (node, title) => i => (

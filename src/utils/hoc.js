@@ -20,7 +20,7 @@ let withEmptyNodeError = Component => props => {
 */
 
 export let withNode = _.flow(
-  withOptionalNode,
+  withOptionalNode
   //withEmptyNodeError,
 )
 
@@ -58,9 +58,10 @@ export let withTreeLens = Component => ({ prop = 'value', ...props }) => (
 //   defaultProps({ Button: RedButton }),
 //   defaultProps({ Button: BlueButton }),
 // )(MyComponent)
-// 
+//
 // 2. don't even bother setting a default theme value in the component definition (eg.
 // ({ theme = { Button: DefaultButton }, ...props }) => ...), since it can't support merging -
 // just use this instead
-export let defaultTheme = defaults => Component => ({ theme, ...props }) =>
+export let defaultTheme = defaults => Component => ({ theme, ...props }) => (
   <Component {...props} theme={_.merge(defaults, theme)} />
+)

@@ -7,19 +7,17 @@ import RadioList from '../layout/RadioList'
 let Exists = _.flow(
   defaultTheme({ RadioList }),
   contexturify
-)(
-  ({ tree, node, theme }) => (
-    <div className="contexture-exists">
-      <theme.RadioList
-        value={node.value ? 'exists' : 'doesNotExist'}
-        onChange={value => {
-          tree.mutate(node.path, { value: value === 'exists' })
-        }}
-        options={F.autoLabelOptions(['exists', 'doesNotExist'])}
-      />
-    </div>
-  )
-)
+)(({ tree, node, theme }) => (
+  <div className="contexture-exists">
+    <theme.RadioList
+      value={node.value ? 'exists' : 'doesNotExist'}
+      onChange={value => {
+        tree.mutate(node.path, { value: value === 'exists' })
+      }}
+      options={F.autoLabelOptions(['exists', 'doesNotExist'])}
+    />
+  </div>
+))
 Exists.displayName = 'Exists'
 
 export default Exists

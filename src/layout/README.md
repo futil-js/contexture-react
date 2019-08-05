@@ -1,13 +1,11 @@
 # Layout
 
-
 ## Awaiter
 
 ### Props
 
 `children`,
 `promise`
-
 
 ## BarChart
 
@@ -22,13 +20,11 @@
 `valueField`,
 `yAxis`
 
-
 ## Checkbox
 
 ### Props
 
 `...props` recipient: `input`
-
 
 ## CheckButton
 
@@ -42,11 +38,10 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Button` | `'button'` |
+| Component  | Default         |
+| ---------- | --------------- |
+| `Button`   | `'button'`      |
 | `Checkbox` | layout/Checkbox |
-
 
 ## Dynamic
 
@@ -55,7 +50,6 @@
 `component`
 
 `...props` recipient: `component`
-
 
 ## ExpandableTable
 
@@ -69,7 +63,6 @@
 `sortField`
 
 `...props` recipient: `table`
-
 
 ## Flex
 
@@ -85,7 +78,6 @@
 
 `...props` recipient: `props.as`
 
-
 ## Grid
 
 ### Props
@@ -95,7 +87,6 @@
 `style`
 
 `...props` recipient: `div`
-
 
 ## LensInput
 
@@ -107,10 +98,9 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Input` | `'input'` |
-
+| Component | Default   |
+| --------- | --------- |
+| `Input`   | `'input'` |
 
 ## Modal
 
@@ -121,35 +111,32 @@
 `isOpen`,
 `style`
 
-
 ## NestedPicker
 
 ### Props
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Input` | `'input'` |
+| Component | Default   |
+| --------- | --------- |
+| `Input`   | `'input'` |
 
 #### FilteredSection
 
-| Component | Default |
-| --- | --- |
+| Component   | Default              |
+| ----------- | -------------------- |
 | `Highlight` | layout/TextHighlight |
-| `Item` | local to file |
+| `Item`      | local to file        |
 
 #### Section
 
-| Component | Default |
-| --- | --- |
-| `Item` | local to file |
-
+| Component | Default       |
+| --------- | ------------- |
+| `Item`    | local to file |
 
 ## NumberInput
 
 `...props` recipient: `input`
-
 
 ## Pickers
 
@@ -164,12 +151,11 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Button` | `'button'` |
-| `Modal` | layout/Modal |
-| `Picker` | layout/NestedPicker |
-
+| Component | Default             |
+| --------- | ------------------- |
+| `Button`  | `'button'`          |
+| `Modal`   | layout/Modal        |
+| `Picker`  | layout/NestedPicker |
 
 ## Popover
 
@@ -179,13 +165,11 @@
 `isOpen`,
 `style`
 
-
 ## Portal
 
 ### Props
 
 `children`, `node`
-
 
 ## RadioList
 
@@ -197,7 +181,6 @@
 
 `...props` recipient: `div`
 
-
 ## Select
 
 ### Props
@@ -207,14 +190,12 @@
 
 `...props` recipient: `select`
 
-
 ## SpacedList
 
 ### Props
 
 `children`,
 `style`
-
 
 ## StepsAccordion
 
@@ -240,17 +221,16 @@
 
 #### AccordionStep
 
-| Component | Default |
-| --- | --- |
-| `Icon` | src/DefaultIcon |
+| Component | Default         |
+| --------- | --------------- |
+| `Icon`    | src/DefaultIcon |
 
 #### Buttons
 
-| Component | Default |
-| --- | --- |
-|  `Button` | `'button'` |
- | `Icon` | src/DefaultIcon |
-
+| Component | Default         |
+| --------- | --------------- |
+| `Button`  | `'button'`      |
+| `Icon`    | src/DefaultIcon |
 
 ## TagsInput
 
@@ -271,16 +251,16 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Popover` | layout/Popover |
-| `PopoverContents` | `'div'` |
-| `TagComponent` | local to file |
+| Component         | Default        |
+| ----------------- | -------------- |
+| `Popover`         | layout/Popover |
+| `PopoverContents` | `'div'`        |
+| `TagComponent`    | local to file  |
 
 #### Tag
 
-| Component | Default |
-| --- | --- |
+| Component    | Default       |
+| ------------ | ------------- |
 | `RemoveIcon` | local to file |
 
 ## TextHighlight
@@ -293,9 +273,8 @@
 ### Theme
 
 | Component | Default |
-| --- | --- |
-| `Wrap` | `'i'` |
-
+| --------- | ------- |
+| `Wrap`    | `'i'`   |
 
 ## WrappedDateInput
 

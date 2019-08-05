@@ -64,7 +64,7 @@ export default ({
         FieldPicker,
         ListGroupItem,
         Icon,
-      }
+      },
     })(ResultTable),
     ResultCount,
     ResultPager: defaultTheme({ Icon })(ResultPager),

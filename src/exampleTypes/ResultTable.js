@@ -141,10 +141,26 @@ let Header = _.flow(
     Icon: DefaultIcon,
     Item: 'span',
   }),
-  withStateLens({ popover: false, adding: false, filtering: false }),
+  withStateLens({ popover: false, adding: false, filtering: false })
 )(
   ({
-    popover, adding, filtering, theme, typeComponents = {}, field: fieldSchema, includes, addOptions, addFilter, tree, node, mutate, criteria, mapNodeToProps, fields, visibleFields }) => {
+    popover,
+    adding,
+    filtering,
+    theme,
+    typeComponents = {},
+    field: fieldSchema,
+    includes,
+    addOptions,
+    addFilter,
+    tree,
+    node,
+    mutate,
+    criteria,
+    mapNodeToProps,
+    fields,
+    visibleFields,
+  }) => {
     // Components (providerable?) // Contextual
     let {
       disableFilter,
@@ -284,61 +300,53 @@ let Header = _.flow(
         </theme.Popover>
       </HeaderCell>
     )
-  })
+  }
+)
 Header.displayName = 'Header'
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
 let TableBody = _.flow(
   observer,
   defaultTheme({ Cell: 'td', Row: Tr })
-)(
-  ({
-    node,
-    visibleFields,
-    fields,
-    hiddenFields,
-    theme,
-    schema,
-  }) => (
-    <tbody>
-      {!!getResults(node).length &&
-        _.map(
-          x => (
-            <theme.Row
-              key={x._id}
-              record={getRecord(x)}
-              {...{ fields, visibleFields, hiddenFields }}
-            >
-              {_.map(
-                ({ field, display = x => x }) => (
-                  <theme.Cell key={field}>
-                    {display(_.get(field, getRecord(x)), getRecord(x))}
-                  </theme.Cell>
-                ),
-                visibleFields
-              )}
-              {node.showOtherMatches && (
-                <HighlightedColumn
-                  {...{
-                    node,
-                    additionalFields: _.result('additionalFields.slice', x),
-                    theme,
-                    schema,
-                  }}
-                />
-              )}
-            </theme.Row>
-          ),
-          getResults(node)
-        )}
-    </tbody>
-  )
-)
+)(({ node, visibleFields, fields, hiddenFields, theme, schema }) => (
+  <tbody>
+    {!!getResults(node).length &&
+      _.map(
+        x => (
+          <theme.Row
+            key={x._id}
+            record={getRecord(x)}
+            {...{ fields, visibleFields, hiddenFields }}
+          >
+            {_.map(
+              ({ field, display = x => x }) => (
+                <theme.Cell key={field}>
+                  {display(_.get(field, getRecord(x)), getRecord(x))}
+                </theme.Cell>
+              ),
+              visibleFields
+            )}
+            {node.showOtherMatches && (
+              <HighlightedColumn
+                {...{
+                  node,
+                  additionalFields: _.result('additionalFields.slice', x),
+                  theme,
+                  schema,
+                }}
+              />
+            )}
+          </theme.Row>
+        ),
+        getResults(node)
+      )}
+  </tbody>
+))
 TableBody.displayName = 'TableBody'
 
 let ResultTable = _.flow(
   defaultTheme({ Table: 'table' }),
-  contexturify,
+  contexturify
 )(
   ({
     fields,

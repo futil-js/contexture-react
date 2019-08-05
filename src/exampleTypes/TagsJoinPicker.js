@@ -20,15 +20,13 @@ let joinOptions = [
 let TagsJoinPicker = _.flow(
   observer,
   defaultTheme({ Select })
-)(
-  ({ node, tree, theme }) => (
-    <theme.Select
-      value={node.join}
-      onChange={e => tree.mutate(node.path, { join: e.target.value })}
-      options={joinOptions}
-    />
-  )
-)
+)(({ node, tree, theme }) => (
+  <theme.Select
+    value={node.join}
+    onChange={e => tree.mutate(node.path, { join: e.target.value })}
+    options={joinOptions}
+  />
+))
 TagsJoinPicker.displayName = 'TagsJoinPicker'
 
 export default observer(TagsJoinPicker)

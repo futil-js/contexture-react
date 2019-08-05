@@ -13,31 +13,32 @@ let Buttons = defaultTheme({
   Button: 'button',
   Icon: DefaultIcon,
 })(
-  observer(
-    ({ step, totalSteps, currentStep, theme, onSubmit }) => (
-      <>
-        {step > 0 && (
-          <theme.Button onClick={F.sets(step - 1, currentStep)} className="back-button">
-            <theme.Icon icon="PreviousPage" />
-            Back
-          </theme.Button>
-        )}
-        {step < totalSteps - 1 ? (
-          <theme.Button
-            primary
-            onClick={F.sets(step + 1, currentStep)}
-            disabled={false}
-          >
-            Continue
-          </theme.Button>
-        ) : (
-          <theme.Button primary onClick={onSubmit}>
-            View Results
-          </theme.Button>
-        )}
-      </>
-    )
-  )
+  observer(({ step, totalSteps, currentStep, theme, onSubmit }) => (
+    <>
+      {step > 0 && (
+        <theme.Button
+          onClick={F.sets(step - 1, currentStep)}
+          className="back-button"
+        >
+          <theme.Icon icon="PreviousPage" />
+          Back
+        </theme.Button>
+      )}
+      {step < totalSteps - 1 ? (
+        <theme.Button
+          primary
+          onClick={F.sets(step + 1, currentStep)}
+          disabled={false}
+        >
+          Continue
+        </theme.Button>
+      ) : (
+        <theme.Button primary onClick={onSubmit}>
+          View Results
+        </theme.Button>
+      )}
+    </>
+  ))
 )
 
 export let AccordionStep = defaultTheme({ Icon: DefaultIcon })(
@@ -72,15 +73,15 @@ export let AccordionStep = defaultTheme({ Icon: DefaultIcon })(
             {!isRequired && <em style={{ marginLeft: 6 }}>(Optional)</em>}
           </Flex>
           <div className="filter-field-label-icon">
-            <theme.Icon icon={isOpen ? 'FilterListCollapse' : 'FilterListExpand'} />
+            <theme.Icon
+              icon={isOpen ? 'FilterListCollapse' : 'FilterListExpand'}
+            />
           </div>
         </Flex>
         {isOpen && (
           <>
             <div className="step-contents">{children}</div>
-            <Buttons
-              {...{ step, totalSteps, currentStep, onSubmit, theme }}
-            />
+            <Buttons {...{ step, totalSteps, currentStep, onSubmit, theme }} />
           </>
         )}
       </div>
@@ -88,12 +89,7 @@ export let AccordionStep = defaultTheme({ Icon: DefaultIcon })(
   }
 )
 
-let StepsAccordion = ({
-  theme,
-  onSubmit = _.noop,
-  children,
-  ...props
-}) => {
+let StepsAccordion = ({ theme, onSubmit = _.noop, children, ...props }) => {
   let currentStep = F.stateLens(React.useState(0))
   return (
     <div {...props}>

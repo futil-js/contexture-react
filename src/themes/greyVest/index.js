@@ -223,9 +223,10 @@ export let Adder = defaultGvTheme(ModalFilterAdder)
 let CheckButtonButton = props => (
   <Button className="gv-checkbutton" {...props} />
 )
-export let CheckButton = defaultTheme({ ...gvTheme, Button: CheckButtonButton })(
-  DefaultCheckButton
-)
+export let CheckButton = defaultTheme({
+  ...gvTheme,
+  Button: CheckButtonButton,
+})(DefaultCheckButton)
 
 export let Modal = defaultProps({ className: 'gv-body' })(DefaultModal)
 Modal.displayName = 'Modal'
@@ -297,9 +298,11 @@ export let FiltersBox = props => (
 
 export let QueryBuilder = defaultGvTheme(QueryBuilderComponent)
 
-export let SearchFilters = defaultTheme({ ...gvTheme, QueryBuilder, FiltersBox })(
-  BaseSearchFilters
-)
+export let SearchFilters = defaultTheme({
+  ...gvTheme,
+  QueryBuilder,
+  FiltersBox,
+})(BaseSearchFilters)
 
 export let FilterButtonList = _.flow(
   defaultProps({ className: 'gv-filter-button-list' }),

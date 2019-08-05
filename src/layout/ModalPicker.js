@@ -14,30 +14,22 @@ let ModalPicker = _.flow(
     Button: 'button',
     Picker: NestedPicker,
     Modal,
-  }),
-)(
-  ({
-    options,
-    isOpen,
-    theme,
-    onChange,
-    label,
-  }) => (
-    <div>
-      <theme.Modal isOpen={isOpen}>
-        <theme.Picker
-          options={options}
-          onChange={x => {
-            onChange(x)
-            F.off(isOpen)()
-          }}
-          theme={theme}
-        />
-      </theme.Modal>
-      <theme.Button onClick={F.on(isOpen)}>{label}</theme.Button>
-    </div>
-  )
-)
+  })
+)(({ options, isOpen, theme, onChange, label }) => (
+  <div>
+    <theme.Modal isOpen={isOpen}>
+      <theme.Picker
+        options={options}
+        onChange={x => {
+          onChange(x)
+          F.off(isOpen)()
+        }}
+        theme={theme}
+      />
+    </theme.Modal>
+    <theme.Button onClick={F.on(isOpen)}>{label}</theme.Button>
+  </div>
+))
 ModalPicker.displayName = 'ModalPicker'
 
 export default ModalPicker

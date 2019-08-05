@@ -1,6 +1,5 @@
 # Example Types
 
-
 ## Bool
 
 ### Props
@@ -9,49 +8,46 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
+| Component   | Default          |
+| ----------- | ---------------- |
 | `RadioList` | layout/RadioList |
-
 
 ## CheckableResultTable
 
 ### Props
 
-`fields`, 
+`fields`,
 `getValue`,
-`node`, 
+`node`,
 `selected`
 
 `...props` recipient: `theme.ResultTable`
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Checkbox` | layout/Checkbox |
+| Component     | Default                  |
+| ------------- | ------------------------ |
+| `Checkbox`    | layout/Checkbox          |
 | `ResultTable` | exampleTypes/ResultTable |
-
 
 ## CheckableTermsStatsTable
 
 ### Props
 
-`children`, 
-`getValue`, 
-`node`, 
+`children`,
+`getValue`,
+`node`,
 `selected`
 
 `...props` recipient: `theme.TermsStatsTable`
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Checkbox` | layout/Checkbox |
-| `Column` | layout/ExpandableTable > Column |
-| `TermsStatsTable` | exampleTypes/TermsStatsTable |
-
+| Component         | Default                         |
+| ----------------- | ------------------------------- |
+| `Checkbox`        | layout/Checkbox                 |
+| `Column`          | layout/ExpandableTable > Column |
+| `TermsStatsTable` | exampleTypes/TermsStatsTable    |
 
 ## Date
 
@@ -63,10 +59,9 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
+| Component   | Default          |
+| ----------- | ---------------- |
 | `RadioList` | layout/RadioList |
-
 
 ## DateHistogram
 
@@ -78,25 +73,23 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
+| Component  | Default         |
+| ---------- | --------------- |
 | `BarChart` | layout/BarChart |
-
 
 ## DateRangePicker
 
 ### Props
 
-`node`, 
+`node`,
 `ranges`,
 `tree`
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Select` | layout/Select |
-
+| Component | Default       |
+| --------- | ------------- |
+| `Select`  | layout/Select |
 
 ## Exists
 
@@ -107,10 +100,9 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
+| Component   | Default          |
+| ----------- | ---------------- |
 | `RadioList` | layout/RadioList |
-
 
 ## Facet
 
@@ -125,14 +117,13 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Button` | `'button'` |
-| `ButtonGroup` | `'div'` |
-| `Checkbox` | layout/Checkbox |
-| `RadioList` | layout/RadioList |
-| `TextInput` | `'input'` |
-
+| Component     | Default          |
+| ------------- | ---------------- |
+| `Button`      | `'button'`       |
+| `ButtonGroup` | `'div'`          |
+| `Checkbox`    | layout/Checkbox  |
+| `RadioList`   | layout/RadioList |
+| `TextInput`   | `'input'`        |
 
 ## Geo
 
@@ -147,11 +138,10 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
+| Component     | Default            |
+| ------------- | ------------------ |
 | `NumberInput` | layout/NumberInput |
-| `SelectInput` | `'select'` |
-
+| `SelectInput` | `'select'`         |
 
 ## Number
 
@@ -165,11 +155,10 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Button` | `'button'` |
+| Component     | Default            |
+| ------------- | ------------------ |
+| `Button`      | `'button'`         |
 | `NumberInput` | layout/NumberInput |
-
 
 ## Query
 
@@ -180,10 +169,9 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
+| Component   | Default   |
+| ----------- | --------- |
 | `TextInput` | `'input'` |
-
 
 ## ResultCount
 
@@ -191,7 +179,6 @@
 
 `display`,
 `node`
-
 
 ## ResultPager
 
@@ -203,12 +190,11 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Icon` | src/DefaultIcon |
-| `Item` | local to file |
-| `Link` | local to file |
-
+| Component | Default         |
+| --------- | --------------- |
+| `Icon`    | src/DefaultIcon |
+| `Item`    | local to file   |
+| `Link`    | local to file   |
 
 ## ResultTable
 
@@ -225,39 +211,40 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Table` | `'table'` |
+| Component | Default   |
+| --------- | --------- |
+| `Table`   | `'table'` |
 
 #### HighlightedColumnHeader
+
 | Component | Default |
-| --- | --- |
-| `Cell` | `'th'` |
+| --------- | ------- |
+| `Cell`    | `'th'`  |
 
 #### HighlightedColumn
 
-| Component | Default |
-| --- | --- |
-| `Cell` | `'td'` |
-| `Modal` | layout/Modal |
-| `Table` | `'table'` |
+| Component | Default      |
+| --------- | ------------ |
+| `Cell`    | `'td'`       |
+| `Modal`   | layout/Modal |
+| `Table`   | `'table'`    |
 
 #### Header
 
-| Component | Default |
-| --- | --- |
+| Component     | Default             |
+| ------------- | ------------------- |
 | `FieldPicker` | layout/NestedPicker |
-| `HeaderCell` | local to file |
-| `Icon` | src/DefaultIcon |
-| `Item` | `'span'` |
-| `Popover` | layout/Popover |
+| `HeaderCell`  | local to file       |
+| `Icon`        | src/DefaultIcon     |
+| `Item`        | `'span'`            |
+| `Popover`     | layout/Popover      |
 
 #### TableBody
-| Component | Default |
-| --- | --- |
-| `Cell` | `'td'` |
-| `Row` | local to file |
 
+| Component | Default       |
+| --------- | ------------- |
+| `Cell`    | `'td'`        |
+| `Row`     | local to file |
 
 ## TagsJoinPicker
 
@@ -267,10 +254,9 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Select` | layout/Select |
-
+| Component | Default       |
+| --------- | ------------- |
+| `Select`  | layout/Select |
 
 ## TagsQuery
 
@@ -284,14 +270,13 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Button` | `'button'` |
-| `Checkbox` | layout/Checkbox |
+| Component   | Default          |
+| ----------- | ---------------- |
+| `Button`    | `'button'`       |
+| `Checkbox`  | layout/Checkbox  |
 | `RadioList` | layout/RadioList |
-| `Select` | layout/Select |
+| `Select`    | layout/Select    |
 | `TagsInput` | layout/TagsInput |
-
 
 ## TagsText
 
@@ -303,11 +288,10 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Select` | layout/Select |
+| Component   | Default          |
+| ----------- | ---------------- |
+| `Select`    | layout/Select    |
 | `TagsInput` | layout/TagsInput |
-
 
 ## TermsStats
 
@@ -319,10 +303,9 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
+| Component  | Default         |
+| ---------- | --------------- |
 | `BarChart` | layout/BarChart |
-
 
 ## TermsStatsTable
 
@@ -341,28 +324,27 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Button` | `'button'` |
-| `Column` | layout/ExpandableTable > Column |
-| `ExpandableTable` | layout/ExpandableTable |
-| `Input` | `'input'` |
-| `MoreControls` | `'div'` |
+| Component         | Default                         |
+| ----------------- | ------------------------------- |
+| `Button`          | `'button'`                      |
+| `Column`          | layout/ExpandableTable > Column |
+| `ExpandableTable` | layout/ExpandableTable          |
+| `Input`           | `'input'`                       |
+| `MoreControls`    | `'div'`                         |
 
 #### SimpleFilter
 
-| Component | Default |
-| --- | --- |
-| `Input` | `'input'` |
+| Component     | Default       |
+| ------------- | ------------- |
+| `Input`       | `'input'`     |
 | `SimpleLabel` | local to file |
 
 #### SelectSize
 
-| Component | Default |
-| --- | --- |
-| `Select` | layout/Select |
+| Component     | Default       |
+| ------------- | ------------- |
+| `Select`      | layout/Select |
 | `SimpleLabel` | local to file |
-
 
 ## Text
 
@@ -376,6 +358,6 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Input` | `'input'` |
+| Component | Default   |
+| --------- | --------- |
+| `Input`   | `'input'` |

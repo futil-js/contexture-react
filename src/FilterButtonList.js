@@ -1,12 +1,7 @@
 import F from 'futil-js'
 import _ from 'lodash/fp'
 import React from 'react'
-import {
-  Dynamic,
-  Flex,
-  CheckButton,
-  Modal,
-} from './layout'
+import { Dynamic, Flex, CheckButton, Modal } from './layout'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
 import { defaultTheme, withNode, withLoader } from './utils/hoc'
 import styles from './styles'
@@ -19,53 +14,47 @@ let FilterButtonItem = _.flow(
     Modal,
     MissingTypeComponent: DefaultMissingTypeComponent,
   })
-)(
-  ({
-    node,
-    tree,
-    fields,
-    mapNodeToProps,
-    theme,
-  }) => {
-    let mappedProps = mapNodeToProps(node, fields)
-    let modal = F.stateLens(React.useState(false))
-    let title = // we really need a title, so here's every possible fallback
-      _.get('label', mappedProps) ||
-      _.get([node.field, 'label'], fields) ||
-      node.field ||
-      node.key
-    let description = _.get('description', mappedProps)
-    return (
-      <>
-        <theme.CheckButton checked={node.hasValue} onClick={F.on(modal)}>
-          {title}
-        </theme.CheckButton>
-        <theme.Modal isOpen={modal}>
-          <div className="filter-button-modal">
-            <h1>{title}</h1>
-            {description && (
-              <div className="filter-description">{description}</div>
-            )}
-            <div className="filter-component">
-              <Dynamic
-                theme={theme}
-                Component={theme.MissingTypeComponent}
-                tree={tree}
-                node={node}
-                path={_.toArray(node.path)}
-                {...mappedProps}
-              />
-            </div>
-            <theme.Button onClick={() => tree.clear(node.path)}>Clear</theme.Button>
-            <theme.Button primary onClick={F.off(modal)}>
-              Done
-            </theme.Button>
+)(({ node, tree, fields, mapNodeToProps, theme }) => {
+  let mappedProps = mapNodeToProps(node, fields)
+  let modal = F.stateLens(React.useState(false))
+  let title = // we really need a title, so here's every possible fallback
+    _.get('label', mappedProps) ||
+    _.get([node.field, 'label'], fields) ||
+    node.field ||
+    node.key
+  let description = _.get('description', mappedProps)
+  return (
+    <>
+      <theme.CheckButton checked={node.hasValue} onClick={F.on(modal)}>
+        {title}
+      </theme.CheckButton>
+      <theme.Modal isOpen={modal}>
+        <div className="filter-button-modal">
+          <h1>{title}</h1>
+          {description && (
+            <div className="filter-description">{description}</div>
+          )}
+          <div className="filter-component">
+            <Dynamic
+              theme={theme}
+              Component={theme.MissingTypeComponent}
+              tree={tree}
+              node={node}
+              path={_.toArray(node.path)}
+              {...mappedProps}
+            />
           </div>
-        </theme.Modal>
-      </>
-    )
-  }
-)
+          <theme.Button onClick={() => tree.clear(node.path)}>
+            Clear
+          </theme.Button>
+          <theme.Button primary onClick={F.off(modal)}>
+            Done
+          </theme.Button>
+        </div>
+      </theme.Modal>
+    </>
+  )
+})
 
 let GroupBox = ({ nodeJoinColor, children, nested, className }) => (
   <Flex

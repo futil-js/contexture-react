@@ -117,28 +117,24 @@ let NestedPicker = _.flow(
   defaultTheme({
     Input: 'input',
   })
-)(
-  ({
-    options,
-    onChange,
-    filter,
-    theme
-  }) => (
-    <div>
-      <theme.Input {...F.domLens.value(filter)} placeholder="Enter filter keyword..." />
-      {F.view(filter) ? (
-        <FilteredSection
-          options={matchLabel(F.view(filter))(options)}
-          onClick={onChange}
-          highlight={F.view(filter)}
-          theme={theme}
-        />
-      ) : (
-        <PanelTreePicker options={options} onChange={onChange} theme={theme} />
-      )}
-    </div>
-  )
-)
+)(({ options, onChange, filter, theme }) => (
+  <div>
+    <theme.Input
+      {...F.domLens.value(filter)}
+      placeholder="Enter filter keyword..."
+    />
+    {F.view(filter) ? (
+      <FilteredSection
+        options={matchLabel(F.view(filter))(options)}
+        onClick={onChange}
+        highlight={F.view(filter)}
+        theme={theme}
+      />
+    ) : (
+      <PanelTreePicker options={options} onChange={onChange} theme={theme} />
+    )}
+  </div>
+))
 NestedPicker.displayName = 'NestedPicker'
 
 export default NestedPicker

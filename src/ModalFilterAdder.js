@@ -5,7 +5,7 @@ import { defaultProps } from 'recompose'
 import { defaultTheme } from './utils/hoc'
 
 export default ({ label = 'Add Custom Filter', theme }) => {
-  let PickerForModalPicker = theme && theme.Picker || NestedPicker
+  let PickerForModalPicker = (theme && theme.Picker) || NestedPicker
   let LabelledModalPicker = _.flow(
     defaultTheme({ Picker: PickerForModalPicker }),
     defaultProps({ label })

@@ -68,33 +68,35 @@ let JoinOperator = ({ state, parentState, node, child }) => (
 )
 JoinOperator.displayName = 'JoinOperator'
 
-let Operator = defaultTheme({ Popover })(Component(
-  () => ({
-    state: lenservable({
-      isOpen: false,
+let Operator = defaultTheme({ Popover })(
+  Component(
+    () => ({
+      state: lenservable({
+        isOpen: false,
+      }),
     }),
-  }),
-  ({ theme, state, parentState, node, child, parent, tree, index }) => (
-    <div>
-      {!(index !== 0 || node.join === 'not') ? (
-        <BlankOperator {...{ state, node, child }} />
-      ) : (
-        <JoinOperator {...{ state, node, child, parentState }} />
-      )}
-      <OperatorMoveTarget {...{ node, tree, index }} />
-      <theme.Popover
-        isOpen={state.lens.isOpen}
-        style={{
-          ...styles.operatorPopover,
-          ...styles.bdJoin(node),
-          ...(parentState.wrapHover && { marginLeft: 0 }),
-        }}
-      >
-        <OperatorMenu {...{ node, parentState, tree, parent }} />
-      </theme.Popover>
-    </div>
-  ),
-  'Operator'
-))
+    ({ theme, state, parentState, node, child, parent, tree, index }) => (
+      <div>
+        {!(index !== 0 || node.join === 'not') ? (
+          <BlankOperator {...{ state, node, child }} />
+        ) : (
+          <JoinOperator {...{ state, node, child, parentState }} />
+        )}
+        <OperatorMoveTarget {...{ node, tree, index }} />
+        <theme.Popover
+          isOpen={state.lens.isOpen}
+          style={{
+            ...styles.operatorPopover,
+            ...styles.bdJoin(node),
+            ...(parentState.wrapHover && { marginLeft: 0 }),
+          }}
+        >
+          <OperatorMenu {...{ node, parentState, tree, parent }} />
+        </theme.Popover>
+      </div>
+    ),
+    'Operator'
+  )
+)
 
 export default Operator

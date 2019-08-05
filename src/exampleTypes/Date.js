@@ -132,71 +132,67 @@ let rollingRangeFromString = _.flow(
 let DateComponent = _.flow(
   defaultTheme({ RadioList }),
   contexturify
-)(
-  ({ tree, node, theme, excludeRollingRanges = [] }) => {
-    let rollingOpts = _.reject(
-      opt => _.includes(opt.type, excludeRollingRanges),
-      allRollingOpts
-    )
+)(({ tree, node, theme, excludeRollingRanges = [] }) => {
+  let rollingOpts = _.reject(
+    opt => _.includes(opt.type, excludeRollingRanges),
+    allRollingOpts
+  )
 
-    return (
-      <div>
-        <theme.RadioList
-          options={F.autoLabelOptions(['exact', 'rolling'])}
-          value={node.useDateMath ? 'rolling' : 'exact'}
-          style={{ marginBottom: 10 }}
-          onChange={mode => {
-            tree.mutate(
-              node.path,
-              mode === 'rolling'
-                ? {
-                    useDateMath: true,
-                    from: '',
-                    to: '',
-                  }
-                : {
-                    useDateMath: false,
-                    from: null,
-                    to: null,
-                  }
-            )
-          }}
-        />
-        {!node.useDateMath && (
-          <Flex
-            style={{ justifyContent: 'space-between', alignItems: 'center' }}
-          >
-            <theme.DateInput
-              value={node.from}
-              onChange={date => tree.mutate(node.path, { from: date })}
-            />
-            <div>-</div>
-            <theme.DateInput
-              value={node.to}
-              onChange={date => tree.mutate(node.path, { to: date })}
-            />
-          </Flex>
-        )}
-        {node.useDateMath && (
-          <theme.Select
-            value={rollingRangeToString(node)}
-            onChange={e =>
-              tree.mutate(node.path, rollingRangeFromString(e.target.value))
-            }
-            options={F.map(
-              opt => ({
-                label: opt.label,
-                value: rollingRangeToString(opt.range),
-                selected: rollingOptIsSelected(node, opt),
-              }),
-              rollingOpts
-            )}
+  return (
+    <div>
+      <theme.RadioList
+        options={F.autoLabelOptions(['exact', 'rolling'])}
+        value={node.useDateMath ? 'rolling' : 'exact'}
+        style={{ marginBottom: 10 }}
+        onChange={mode => {
+          tree.mutate(
+            node.path,
+            mode === 'rolling'
+              ? {
+                  useDateMath: true,
+                  from: '',
+                  to: '',
+                }
+              : {
+                  useDateMath: false,
+                  from: null,
+                  to: null,
+                }
+          )
+        }}
+      />
+      {!node.useDateMath && (
+        <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+          <theme.DateInput
+            value={node.from}
+            onChange={date => tree.mutate(node.path, { from: date })}
           />
-        )}
-      </div>
-    )
-  }
-)
+          <div>-</div>
+          <theme.DateInput
+            value={node.to}
+            onChange={date => tree.mutate(node.path, { to: date })}
+          />
+        </Flex>
+      )}
+      {node.useDateMath && (
+        <theme.Select
+          value={rollingRangeToString(node)}
+          onChange={e =>
+            tree.mutate(node.path, rollingRangeFromString(e.target.value))
+          }
+          options={F.map(
+            opt => ({
+              label: opt.label,
+              value: rollingRangeToString(opt.range),
+              selected: rollingOptIsSelected(node, opt),
+            }),
+            rollingOpts
+          )}
+        />
+      )}
+    </div>
+  )
+})
 DateComponent.displayName = 'Date'
 
 export default DateComponent

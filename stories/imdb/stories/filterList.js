@@ -5,7 +5,13 @@ import { observable, autorun } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer, inject } from 'mobx-react'
 import Contexture, { updateSchemas } from '../utils/contexture'
-import { FilterList, Flex, Awaiter, SpacedList, ModalFilterAdder } from '../../../src'
+import {
+  FilterList,
+  Flex,
+  Awaiter,
+  SpacedList,
+  ModalFilterAdder,
+} from '../../../src'
 import { DarkBox, Pager, ExampleTypes } from '../../DemoControls'
 let {
   Query,

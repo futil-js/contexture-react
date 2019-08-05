@@ -25,44 +25,37 @@ let Text = _.flow(
   withTreeLens,
   defaultTheme({ TagsInput, Select }),
   contexturify
-)(
-  ({
-    tree,
-    node,
-    theme,
-    placeholder,
-  }) => {
-    let tagStyle = bgJoin(tagToGroupJoin(node.join))
-    let TagPopover = () => (
-      <div>
-        <TagsJoinPicker {...{ node, tree, theme }} />
-      </div>
-    )
-    return (
-      <div className="contexture-text">
-        <theme.Select
-          value={node.operator}
-          onChange={e => tree.mutate(node.path, { operator: e.target.value })}
-          options={operatorOptions}
-        />
-        <theme.TagsInput
-          splitCommas
-          tags={node.values}
-          addTag={tag => {
-            tree.mutate(node.path, { values: [...node.values, tag] })
-          }}
-          removeTag={tag => {
-            tree.mutate(node.path, {
-              values: _.without([tag], node.values),
-            })
-          }}
-          tagStyle={tagStyle}
-          submit={tree.triggerUpdate}
-          placeholder={placeholder}
-          theme={{ ...theme, PopoverContents: TagPopover }}
-        />
-      </div>
-    )
-  }
-)
+)(({ tree, node, theme, placeholder }) => {
+  let tagStyle = bgJoin(tagToGroupJoin(node.join))
+  let TagPopover = () => (
+    <div>
+      <TagsJoinPicker {...{ node, tree, theme }} />
+    </div>
+  )
+  return (
+    <div className="contexture-text">
+      <theme.Select
+        value={node.operator}
+        onChange={e => tree.mutate(node.path, { operator: e.target.value })}
+        options={operatorOptions}
+      />
+      <theme.TagsInput
+        splitCommas
+        tags={node.values}
+        addTag={tag => {
+          tree.mutate(node.path, { values: [...node.values, tag] })
+        }}
+        removeTag={tag => {
+          tree.mutate(node.path, {
+            values: _.without([tag], node.values),
+          })
+        }}
+        tagStyle={tagStyle}
+        submit={tree.triggerUpdate}
+        placeholder={placeholder}
+        theme={{ ...theme, PopoverContents: TagPopover }}
+      />
+    </div>
+  )
+})
 export default Text

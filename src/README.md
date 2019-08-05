@@ -4,10 +4,9 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Button` | 'button' |
-
+| Component | Default  |
+| --------- | -------- |
+| `Button`  | 'button' |
 
 ## Group
 
@@ -31,7 +30,6 @@
 `theme`
 `tree`
 
-
 ## Rule
 
 ## Props
@@ -44,7 +42,6 @@
 `tree`,
 
 `...props` recipient: `FilterContents`
-
 
 ## Operator
 
@@ -67,8 +64,8 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
+| Component | Default        |
+| --------- | -------------- |
 | `Popover` | layout/Popover |
 
 ## FilterContents
@@ -83,13 +80,13 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
-| `Button` | 'button' |
+| Component              | Default                         |
+| ---------------------- | ------------------------------- |
+| `Button`               | 'button'                        |
 | `MissingTypeComponent` | src/DefaultMissingTypeComponent |
-| `Modal` | layout/Modal |
-| `Picker` | layout/NestedPicker |
-| `Popover` | layout/Popover |
+| `Modal`                | layout/Modal                    |
+| `Picker`               | layout/NestedPicker             |
+| `Popover`              | layout/Popover                  |
 
 # FilterList
 
@@ -99,13 +96,13 @@
 
 #### FilterActions
 
-`fields`, 
+`fields`,
 `modal`,
 `node`,
-`popover`, 
+`popover`,
 `tree`
 
-#### Label 
+#### Label
 
 `fields`,
 `modal`,
@@ -117,21 +114,21 @@
 
 ### Theme
 
-| Component | Default |
-| --- | --- |
+| Component              | Default                         |
+| ---------------------- | ------------------------------- |
 | `MissingTypeComponent` | src/DefaultMissingTypeComponent |
 
 #### FilterActions
 
-| Component | Default |
-| --- | --- |
-| `Item` | `'li'` |
-| `Modal` | layout/Modal |
-| `Picker` | layout/NestedPicker |
-| `Popover` | layout/Popover |
+| Component | Default             |
+| --------- | ------------------- |
+| `Item`    | `'li'`              |
+| `Modal`   | layout/Modal        |
+| `Picker`  | layout/NestedPicker |
+| `Popover` | layout/Popover      |
 
 #### Label
 
-| Component | Default |
-| --- | --- |
-| `Icon` | src/DefaultIcon |
+| Component | Default         |
+| --------- | --------------- |
+| `Icon`    | src/DefaultIcon |

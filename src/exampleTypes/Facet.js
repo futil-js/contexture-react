@@ -97,11 +97,7 @@ let Facet = _.flow(
         options={F.autoLabelOptions(['include', 'exclude'])}
       />
       {!hide.facetFilter && (
-        <FacetOptionsFilter
-          tree={tree}
-          node={node}
-          theme={theme}
-        />
+        <FacetOptionsFilter tree={tree} node={node} theme={theme} />
       )}
       <SelectAll node={node} tree={tree} theme={theme} />
       {_.map(({ name, count }) => {

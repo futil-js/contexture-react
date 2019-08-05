@@ -3,8 +3,7 @@ import * as F from 'futil-js'
 import { defaultTheme } from '../utils/hoc'
 
 // Since start and end are the same token, splitting on it means every even element was a match
-let TextHighlight = defaultTheme({ Wrap: 'i' })(
-  ({ pattern, text, theme }) =>
+let TextHighlight = defaultTheme({ Wrap: 'i' })(({ pattern, text, theme }) =>
   pattern
     ? F.highlight('<>', '<>', pattern, text)
         .split('<>')

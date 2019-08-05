@@ -13,7 +13,7 @@ let FilterAdder = _.flow(
   observer,
   defaultTheme({ Picker }),
   withOptionalNode,
-  withLoader,
+  withLoader
 )(({ tree, node, path, fields, theme, uniqueFields }) => {
   let options = fieldsToOptions(fields)
   if (uniqueFields) {
@@ -21,11 +21,11 @@ let FilterAdder = _.flow(
   }
   return (
     <>
-    TEST
-    <theme.Picker
-      options={options}
-      onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
-    />
+      TEST
+      <theme.Picker
+        options={options}
+        onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
+      />
     </>
   )
 })
