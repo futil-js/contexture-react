@@ -6,7 +6,7 @@ import FilterAdder from '../src/FilterAdder'
 import { applyDefaults } from '../src/utils/schema'
 import { defaultProps } from 'recompose'
 import Modal from '../src/layout/Modal'
-import { ModalPicker, NestedPicker } from '../src'
+import { ModalPicker, NestedPicker } from '../src/layout'
 
 let Select = ({ options, onChange }) => (
   <select onChange={e => onChange(e.target.value)}>

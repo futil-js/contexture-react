@@ -1,16 +1,12 @@
 import _ from 'lodash/fp'
 import F from 'futil-js'
 import React from 'react'
-import DefaultIcon from '../DefaultIcon'
 import DefaultFilterButtonList from '../FilterButtonList'
-import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
 import {
-  CheckButton as DefaultCheckButton,
-  Modal as DefaultModal,
-  StepsAccordion as DefaultStepsAccordion,
-  AccordionStep as DefaultAccordionStep,
+  StepsAccordion,
+  AccordionStep,
 } from '../layout'
-import { withNode } from '../utils/hoc'
+import { defaultTheme, withNode } from '../utils/hoc'
 
 let generateStepTitle = (node, title) => i => (
   <h1>
@@ -23,18 +19,16 @@ let generateStepTitle = (node, title) => i => (
   </h1>
 )
 
-let QueryWizard = withNode(
+let QueryWizard = _.flow(
+  withNode,
+  defaultTheme({
+    StepsAccordion,
+    AccordionStep,
+    FilterButtonList: DefaultFilterButtonList,
+  })
+)(
   ({
-    theme = {
-      StepsAccordion: DefaultStepsAccordion,
-      AccordionStep: DefaultAccordionStep,
-      FilterButtonList: DefaultFilterButtonList,
-      CheckButton: DefaultCheckButton,
-      Button: 'button',
-      Modal: DefaultModal,
-      MissingTypeComponent: DefaultMissingTypeComponent,
-      Icon: DefaultIcon,
-    },
+    theme,
     tree,
     node,
     fields = {},

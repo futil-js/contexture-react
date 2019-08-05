@@ -1,8 +1,9 @@
 import React from 'react'
 import * as F from 'futil-js'
 import { Component, lenservable } from '../utils/mobx-react-utils'
+import { defaultTheme } from '../utils/hoc'
 import styles from '../styles'
-import DefaultPopover from '../layout/Popover'
+import Popover from '../layout/Popover'
 import OperatorMenu from './OperatorMenu'
 import { OperatorMoveTarget } from './DragDrop/MoveTargets'
 
@@ -67,13 +68,13 @@ let JoinOperator = ({ state, parentState, node, child }) => (
 )
 JoinOperator.displayName = 'JoinOperator'
 
-let Operator = Component(
+let Operator = defaultTheme({ Popover })(Component(
   () => ({
     state: lenservable({
       isOpen: false,
     }),
   }),
-  ({ theme = { Popover: DefaultPopover }, state, parentState, node, child, parent, tree, index }) => (
+  ({ theme, state, parentState, node, child, parent, tree, index }) => (
     <div>
       {!(index !== 0 || node.join === 'not') ? (
         <BlankOperator {...{ state, node, child }} />
@@ -94,6 +95,6 @@ let Operator = Component(
     </div>
   ),
   'Operator'
-)
+))
 
 export default Operator

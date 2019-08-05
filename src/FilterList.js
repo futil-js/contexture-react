@@ -5,8 +5,8 @@ import { observer, inject } from 'mobx-react'
 import {
   Flex,
   Dynamic,
-  Popover as BasePopover,
-  Modal as BaseModal,
+  Popover,
+  Modal,
   NestedPicker,
 } from './layout'
 import { fieldsToOptions } from './FilterAdder'
@@ -22,141 +22,144 @@ import {
   getTypeLabelOptions,
 } from './utils/search'
 
-export let FilterActions = withStateLens({ modal: false })(
-  observer(
-    ({ node, tree, fields, theme, popover, modal }) => {
-      let typeOptions = _.flow(
-        _.getOr([], [node.field, 'typeOptions']),
-        _.without([node.type])
-      )(fields)
+export let FilterActions = _.flow(
+  observer,
+  withStateLens({ modal: false }),
+  defaultTheme({
+    Modal,
+    Picker: NestedPicker,
+    Popover,
+    Item: 'li'
+  })
+)(
+  ({ node, tree, fields, theme, popover, modal }) => {
+    let typeOptions = _.flow(
+      _.getOr([], [node.field, 'typeOptions']),
+      _.without([node.type])
+    )(fields)
 
-      return (
-        <>
-          <theme.Modal isOpen={modal}>
-            <theme.Picker
-              options={fieldsToOptions(fields)}
-              onChange={field => {
-                tree.replace(
-                  node.path,
-                  transformNodeFromField({ field, fields })
-                )
-                F.off(modal)()
-              }}
-            />
-          </theme.Modal>
-          <theme.Popover isOpen={popover} className="filter-actions-popover">
-            {!_.isEmpty(typeOptions) && (
-              <>
-                <theme.Item className="filter-actions-selected-type">
-                  Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
-                </theme.Item>
-                {_.map(
-                  x => (
-                    <theme.Item
-                      key={x.value}
-                      onClick={() =>
-                        tree.replace(
-                          node.path,
-                          newNodeFromType(x.value, fields, node)
-                        )
-                      }
-                    >
-                      —Change to {x.label}
-                    </theme.Item>
-                  ),
-                  getTypeLabelOptions(tree, typeOptions)
-                )}
-                <div className="filter-actions-separator" />
-              </>
-            )}
-            <theme.Item onClick={F.on(modal)}>Pick Field</theme.Item>
-            {/* If only contexture-client diffed the tree before sending a request... */}
-            {(node.hasValue || false) && (
-              <theme.Item onClick={() => tree.clear(node.path)}>Clear Filter</theme.Item>
-            )}
-            <theme.Item onClick={() => tree.remove(node.path)}>Delete Filter</theme.Item>
-          </theme.Popover>
-        </>
-      )
-    }
-  )
+    return (
+      <>
+        Filter actions
+        <theme.Modal isOpen={modal}>
+          <theme.Picker
+            options={fieldsToOptions(fields)}
+            onChange={field => {
+              tree.replace(
+                node.path,
+                transformNodeFromField({ field, fields })
+              )
+              F.off(modal)()
+            }}
+          />
+        </theme.Modal>
+        <theme.Popover isOpen={popover} className="filter-actions-popover">
+          {!_.isEmpty(typeOptions) && (
+            <>
+              <theme.Item className="filter-actions-selected-type">
+                Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
+              </theme.Item>
+              {_.map(
+                x => (
+                  <theme.Item
+                    key={x.value}
+                    onClick={() =>
+                      tree.replace(
+                        node.path,
+                        newNodeFromType(x.value, fields, node)
+                      )
+                    }
+                  >
+                    —Change to {x.label}
+                  </theme.Item>
+                ),
+                getTypeLabelOptions(tree, typeOptions)
+              )}
+              <div className="filter-actions-separator" />
+            </>
+          )}
+          <theme.Item onClick={F.on(modal)}>Pick Field</theme.Item>
+          {/* If only contexture-client diffed the tree before sending a request... */}
+          {(node.hasValue || false) && (
+            <theme.Item onClick={() => tree.clear(node.path)}>Clear Filter</theme.Item>
+          )}
+          <theme.Item onClick={() => tree.remove(node.path)}>Delete Filter</theme.Item>
+        </theme.Popover>
+      </>
+    )
+  }
 )
+FilterActions.displayName = 'FilterActions'
 
-export let Label = inject(_.pick('tree'))(
-  withStateLens({ popover: false, modal: false })(
-    observer(
-      ({
-        tree,
-        node,
-        fields,
-        theme,
-        popover,
-        modal,
-        ...props
-      }) => (
-        <Flex
-          className={`filter-field-label ${
-            _.get('hasValue', node) ? 'filter-field-has-value' : ''
-          }`.trim()}
-          style={{
-            cursor: 'pointer',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-          onClick={() =>
-            tree && node && tree.mutate(node.path, { paused: !node.paused })
+export let Label = _.flow(
+  defaultTheme({ Icon: DefaultIcon }),
+  observer,
+  withStateLens({ popover: false, modal: false }),
+  inject(_.pick('tree')),
+)(
+  ({
+    tree,
+    node,
+    fields,
+    theme,
+    popover,
+    modal,
+    ...props
+  }) => (
+    <Flex
+      className={`filter-field-label ${
+        _.get('hasValue', node) ? 'filter-field-has-value' : ''
+      }`.trim()}
+      style={{
+        cursor: 'pointer',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+      onClick={() =>
+        tree && node && tree.mutate(node.path, { paused: !node.paused })
+      }
+    >
+      <span {...props} />
+      {tree && node && (
+        <React.Fragment>
+          <span
+            onClick={e => {
+              e.stopPropagation()
+              F.flip(popover)()
+            }}
+          >
+            <DefaultIcon icon="TableColumnMenu" />
+            <FilterActions {...{ node, tree, fields, popover, modal, theme }} />
+          </span>
+          {
+            // Whitespace separator
+            <div style={{ flexGrow: 1 }} />
           }
-        >
-          <span {...props} />
-          {tree && node && (
-            <React.Fragment>
-              <span
+          {!node.updating &&
+            tree.disableAutoUpdate &&
+            // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
+            _.some(
+              treeNode => treeNode !== node && treeNode.markedForUpdate,
+              F.treeToArray(_.get('children'))(tree.tree)
+            ) && (
+              <div
+                className="filter-field-icon-refresh"
                 onClick={e => {
                   e.stopPropagation()
-                  F.flip(popover)()
+                  tree.triggerUpdate()
                 }}
               >
-                <theme.Icon icon="TableColumnMenu" />
-                <FilterActions
-                  node={node}
-                  tree={tree}
-                  fields={fields}
-                  popover={popover}
-                  modal={modal}
-                  theme={theme}
-                />
-              </span>
-              {
-                // Whitespace separator
-                <div style={{ flexGrow: 1 }} />
-              }
-              {!node.updating &&
-                tree.disableAutoUpdate &&
-                // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-                _.some(
-                  treeNode => treeNode !== node && treeNode.markedForUpdate,
-                  F.treeToArray(_.get('children'))(tree.tree)
-                ) && (
-                  <div
-                    className="filter-field-icon-refresh"
-                    onClick={e => {
-                      e.stopPropagation()
-                      tree.triggerUpdate()
-                    }}
-                  >
-                    <theme.Icon icon="Refresh" />
-                  </div>
-                )}
-              <div className="filter-field-label-icon">
-                <theme.Icon
-                  icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
-                />
+                <DefaultIcon icon="Refresh" />
               </div>
-            </React.Fragment>
-          )}
-        </Flex>
-      )
-    )
+            )}
+          <div className="filter-field-label-icon">
+            <DefaultIcon
+              icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
+            />
+          </div>
+        </React.Fragment>
+      )}
+    </Flex>
   )
 )
 Label.displayName = 'Label'
@@ -170,12 +173,7 @@ export let FieldLabel = contexturify(
     theme,
     label,
   }) => (
-    <Label
-      tree={tree}
-      node={node}
-      theme={theme}
-      fields={fields}
-    >
+    <Label {...{ tree, node, theme, fields }} >
       {label || _.get([field, 'label'], fields) || field}
     </Label>
   )
@@ -184,13 +182,7 @@ FieldLabel.displayName = 'FieldLabel'
 
 export let FilterList = _.flow(
   defaultTheme({
-    Icon: DefaultIcon,
-    ListItem: 'div',
-    Modal: BaseModal,
-    Picker: NestedPicker,
     MissingTypeComponent: DefaultMissingTypeComponent,
-    Popover: BasePopover,
-    Item: 'li',
   }),
   contexturify
 )(

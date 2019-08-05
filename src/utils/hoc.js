@@ -13,7 +13,7 @@ export let withOptionalNode = Component => props => {
 
 /*
 let withEmptyNodeError = Component => props => {
-  if (!_.get('node', props))
+  if (!_.has('node', props))
     throw Error(`Node not provided, and couldn't find node at ${props.path}`)
   return <Component {...props} />
 }
@@ -21,7 +21,7 @@ let withEmptyNodeError = Component => props => {
 
 export let withNode = _.flow(
   withOptionalNode,
-  // withEmptyNodeError
+  //withEmptyNodeError,
 )
 
 export let withLoader = Component =>

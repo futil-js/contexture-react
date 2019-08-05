@@ -4,16 +4,22 @@ import React from 'react'
 import {
   Dynamic,
   Flex,
-  CheckButton as DefaultCheckButton,
-  Modal as DefaultModal,
-  Popover as DefaultPopover,
+  CheckButton,
+  Modal,
 } from './layout'
-import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
 import { defaultTheme, withNode, withLoader } from './utils/hoc'
 import styles from './styles'
 
-let FilterButtonItem = withLoader(
+let FilterButtonItem = _.flow(
+  withLoader,
+  defaultTheme({
+    Button: 'button',
+    CheckButton,
+    Modal,
+    MissingTypeComponent: DefaultMissingTypeComponent,
+  })
+)(
   ({
     node,
     tree,
@@ -72,17 +78,7 @@ let GroupBox = ({ nodeJoinColor, children, nested, className }) => (
   </Flex>
 )
 
-let FilterButtonList = _.flow(
-  defaultTheme({
-    Button: 'button',
-    CheckButton: DefaultCheckButton,
-    Icon: DefaultIcon,
-    MissingTypeComponent: DefaultMissingTypeComponent,
-    Modal: DefaultModal,
-    Popover: DefaultPopover,
-  }),
-  withNode
-)(
+let FilterButtonList = withNode(
   ({
     node,
     tree,

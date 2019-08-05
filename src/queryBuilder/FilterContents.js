@@ -4,9 +4,6 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import {
   ModalPicker,
-  Modal as DefaultModal,
-  NestedPicker,
-  Popover as DefaultPopover,
   Dynamic,
   Grid,
 } from '../layout/'
@@ -18,21 +15,20 @@ import {
   transformNodeFromField,
   getTypeLabelOptions,
 } from '../utils/search'
+import { defaultTheme } from '../utils/hoc'
 
 let FilterContents = inject(_.defaults)(
+  defaultTheme({
+    Picker: ModalPicker,
+    MissingTypeComponent: DefaultMissingTypeComponent,
+  })(
   observer(
     ({
       node,
       tree,
       fields,
       types = {},
-      theme = {
-        Button: 'button',
-        Modal: DefaultModal,
-        Picker: NestedPicker,
-        Popover: DefaultPopover,
-        MissingTypeComponent: DefaultMissingTypeComponent,
-      },
+      theme,
       mapNodeToProps = _.noop,
     }) => {
       // `get` allows us to create a dependency on field before we know it
@@ -45,7 +41,7 @@ let FilterContents = inject(_.defaults)(
       let nodeLabel = _.get([nodeField, 'label'], fields) || nodeField
       return (
         <Grid columns="auto auto 1fr" style={{ width: '100%' }}>
-          <ModalPicker
+          <theme.Picker
             theme={theme}
             label={nodeField ? nodeLabel : 'Pick a Field'}
             options={fieldsToOptions(fields)}
@@ -100,7 +96,7 @@ let FilterContents = inject(_.defaults)(
         </Grid>
       )
     }
-  )
+  ))
 )
 FilterContents.displayName = 'FilterContents'
 

@@ -2,71 +2,63 @@ import React from 'react'
 import { observable } from 'mobx'
 import DDContext from './DragDrop/DDContext'
 import { Component } from '../utils/mobx-react-utils'
-import {
-  Modal as DefaultModal,
-  NestedPicker, 
-  Popover as DefaultPopover, 
-} from '../layout/'
 import Group from './Group'
 import styles from '../styles'
-import DefaultMissingTypeComponent from '../DefaultMissingTypeComponent'
+import { defaultTheme } from '../utils/hoc'
 
 let { background } = styles
 
 export default DDContext(
-  Component(
-    (
-      { tree: iTree, types: iTypes, typeComponents: iTypeComponents },
-      {
-        typeComponents = iTypeComponents,
-        types = iTypes || typeComponents,
-        tree = iTree,
-      }
-    ) => ({
-      types,
-      state: observable({
-        adding: false,
-        ...tree,
+  defaultTheme({
+    Button: 'button',
+  })(
+    Component(
+      (
+        { tree: iTree, types: iTypes, typeComponents: iTypeComponents },
+        {
+          typeComponents = iTypeComponents,
+          types = iTypes || typeComponents,
+          tree = iTree,
+        }
+      ) => ({
+        types,
+        state: observable({
+          adding: false,
+          ...tree,
+        }),
       }),
-    }),
-    ({
-      state,
-      path,
-      fields,
-      types = {},
-      theme = {
-        Button: 'button',
-        Modal: DefaultModal,
-        Picker: NestedPicker,
-        Popover: DefaultPopover,
-        MissingTypeComponent: DefaultMissingTypeComponent,
-      },
-      mapNodeToProps,
-    }) => (
-      <div style={{ background }}>
-        {state.getNode(path) && (
-          <Group
-            node={state.getNode(path)}
-            tree={state}
-            isRoot={true}
-            {...{
-              theme,
-              fields,
-              types,
-              mapNodeToProps,
+      ({
+        state,
+        path,
+        fields,
+        types = {},
+        theme,
+        mapNodeToProps,
+      }) => (
+        <div style={{ background }}>
+          {state.getNode(path) && (
+            <Group
+              node={state.getNode(path)}
+              tree={state}
+              isRoot={true}
+              {...{
+                theme,
+                fields,
+                types,
+                mapNodeToProps,
+              }}
+            />
+          )}
+          <theme.Button
+            onClick={() => {
+              state.adding = !state.adding
             }}
-          />
-        )}
-        <theme.Button
-          onClick={() => {
-            state.adding = !state.adding
-          }}
-        >
-          {state.adding ? 'Cancel' : 'Add Filter'}
-        </theme.Button>
-      </div>
-    ),
-    'QueryBuilder'
-  ),
-  { allowEmptyNode: true } // false alarm, this one's for DDContext
+          >
+            {state.adding ? 'Cancel' : 'Add Filter'}
+          </theme.Button>
+        </div>
+      ),
+      'QueryBuilder'
+    )),
+    { allowEmptyNode: true } // false alarm, this one's for DDContext
 )
