@@ -20,13 +20,10 @@ let FilterAdder = _.flow(
     options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
   }
   return (
-    <>
-      TEST
-      <theme.Picker
-        options={options}
-        onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
-      />
-    </>
+    <theme.Picker
+      options={options}
+      onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
+    />
   )
 })
 FilterAdder.displayName = 'FilterAdder'
