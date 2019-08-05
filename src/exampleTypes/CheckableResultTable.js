@@ -7,23 +7,28 @@ import { contexturify, defaultTheme } from '../utils/hoc'
 import Checkbox from '../layout/Checkbox'
 import ResultTable from './ResultTable'
 
-let Label = observer(({ node, theme, selected, getValue }) => {
-  let results = _.toArray(getResults(node))
-  let allChecked = _.size(results) === _.size(F.view(selected))
-  let checkAll = F.sets(
-    allChecked
-      ? []
-      : _.map(
-          _.flow(
-            getRecord,
-            _.iteratee(getValue)
+let Label = _.flow(
+  observer,
+  defaultTheme({ Checkbox })
+)(
+  ({ node, theme, selected, getValue }) => {
+    let results = _.toArray(getResults(node))
+    let allChecked = _.size(results) === _.size(F.view(selected))
+    let checkAll = F.sets(
+      allChecked
+        ? []
+        : _.map(
+            _.flow(
+              getRecord,
+              _.iteratee(getValue)
+            ),
+            results
           ),
-          results
-        ),
-    selected
-  )
-  return <theme.Checkbox checked={allChecked} onChange={checkAll} />
-})
+      selected
+    )
+    return <theme.Checkbox checked={allChecked} onChange={checkAll} />
+  }
+)
 Label.displayName = 'Label'
 
 // Extends ResultTable with a checkbox column

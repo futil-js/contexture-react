@@ -1,4 +1,4 @@
-import { ModalPicker } from './Pickers'
+import ModalPicker from './ModalPicker'
 import { Tag, TagsInput } from './TagsInput'
 import Awaiter from './Awaiter'
 import BarChart from './BarChart'

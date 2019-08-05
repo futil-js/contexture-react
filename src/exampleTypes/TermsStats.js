@@ -7,7 +7,7 @@ let TermsStats = _.flow(
   defaultTheme({ BarChart }),
   contexturify
 )(
-  ({ node, ...props }) => (
+  ({ theme, node, ...props }) => (
     <theme.BarChart
       data={node.context.terms}
       categoryField="key"

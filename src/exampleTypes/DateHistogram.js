@@ -7,7 +7,7 @@ let DateHistogram = _.flow(
   defaultTheme({ BarChart }),
   contexturify
 )(
-  ({ node, ...props }) => (
+  ({ node, theme, ...props }) => (
     <theme.BarChart
       data={node.context.entries}
       categoryField="key"

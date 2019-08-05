@@ -3,7 +3,7 @@ import F from 'futil-js'
 import { observer } from 'mobx-react'
 import React from 'react'
 import DefaultIcon from '../DefaultIcon'
-import { defaultTheme } from '../utils/theme'
+import { defaultTheme } from '../utils/hoc'
 import { Flex } from './Flex'
 
 // Observes node, so we can activate the Continue button if it (or any child) has a value.

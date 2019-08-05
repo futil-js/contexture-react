@@ -3,17 +3,18 @@ import _ from 'lodash/fp'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { withStateLens } from '../utils/mobx-react-utils'
-import { NestedPicker, Modal } from './'
+import NestedPicker from './NestedPicker'
+import Modal from './Modal'
 import { defaultTheme } from '../utils/hoc'
 
-export let ModalPicker = _.flow(
+let ModalPicker = _.flow(
+  withStateLens({ isOpen: false }),
   observer,
   defaultTheme({
     Button: 'button',
     Picker: NestedPicker,
     Modal,
   }),
-  withStateLens({ isOpen: false })
 )(
   ({
     options,
@@ -38,3 +39,5 @@ export let ModalPicker = _.flow(
   )
 )
 ModalPicker.displayName = 'ModalPicker'
+
+export default ModalPicker
