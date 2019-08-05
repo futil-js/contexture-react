@@ -112,7 +112,7 @@ export let Label = _.flow(
             F.flip(popover)()
           }}
         >
-          <DefaultIcon icon="TableColumnMenu" />
+          <theme.Icon icon="TableColumnMenu" />
           <FilterActions {...{ node, tree, fields, popover, modal, theme }} />
         </span>
         {
@@ -133,11 +133,11 @@ export let Label = _.flow(
                 tree.triggerUpdate()
               }}
             >
-              <DefaultIcon icon="Refresh" />
+              <theme.Icon icon="Refresh" />
             </div>
           )}
         <div className="filter-field-label-icon">
-          <DefaultIcon
+          <theme.Icon
             icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
           />
         </div>
