@@ -119,11 +119,21 @@
 
 | Component     | Default          |
 | ------------- | ---------------- |
+| `Checkbox`    | layout/Checkbox  |
+| `RadioList`   | local to file    |
+
+#### FacetOptionsFilter
+
+| ------------- | ---------------- |
 | `Button`      | `'button'`       |
 | `ButtonGroup` | `'div'`          |
-| `Checkbox`    | layout/Checkbox  |
-| `RadioList`   | layout/RadioList |
 | `TextInput`   | `'input'`        |
+
+#### SelectAll
+
+| Component     | Default          |
+| ------------- | ---------------- |
+| `Checkbox`    | layout/Checkbox  |
 
 ## Geo
 

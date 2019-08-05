@@ -4,10 +4,26 @@ import F from 'futil-js'
 import { observer, Observer } from 'mobx-react'
 import { Flex } from '../layout/Flex'
 import Checkbox from '../layout/Checkbox'
-import RadioList from '../layout/RadioList'
 import { contexturify, defaultTheme } from '../utils/hoc'
 
-let SelectAll = observer(({ node, tree, theme }) => {
+let RadioList = ({ value, onChange, options }) => (
+  <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
+    {_.map(
+      x => (
+        <label key={x.value} onClick={() => onChange(x.value)}>
+          <input type="radio" checked={x.value === value} onChange={() => {}} />
+          {x.label}
+        </label>
+      ),
+      options
+    )}
+  </Flex>
+)
+
+let SelectAll = _.flow(
+  observer,
+  defaultTheme({ Checkbox })
+)(({ node, tree, theme }) => {
   let missingOptions = _.difference(
     _.map('name', _.get('context.options', node)),
     node.values
@@ -41,7 +57,12 @@ let SelectAll = observer(({ node, tree, theme }) => {
 })
 SelectAll.displayName = 'SelectAll'
 
-let FacetOptionsFilter = ({ tree, node, theme }) => {
+let FacetOptionsFilter = defaultTheme({
+  Button: 'button',
+  ButtonGroup: 'div',
+  TextInput: 'input',
+})(
+  ({ tree, node, theme }) => {
   let [val, setVal] = useState(node.optionsFilter)
   let buttonEnabled = val !== node.optionsFilter
   let submit = () =>
@@ -69,15 +90,12 @@ let FacetOptionsFilter = ({ tree, node, theme }) => {
       )}
     </Observer>
   )
-}
+})
 
 let Facet = _.flow(
   defaultTheme({
-    Button: 'button',
-    ButtonGroup: 'div',
     Checkbox,
     RadioList,
-    TextInput: 'input',
   }),
   contexturify
 )(
@@ -97,9 +115,9 @@ let Facet = _.flow(
         options={F.autoLabelOptions(['include', 'exclude'])}
       />
       {!hide.facetFilter && (
-        <FacetOptionsFilter tree={tree} node={node} theme={theme} />
+        <FacetOptionsFilter {...{ tree, node, theme }} />
       )}
-      <SelectAll node={node} tree={tree} theme={theme} />
+      <SelectAll {...{ tree, node, theme }} />
       {_.map(({ name, count }) => {
         let lens = tree.lens(node.path, 'values')
         return (
