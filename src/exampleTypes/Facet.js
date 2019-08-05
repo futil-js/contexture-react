@@ -61,8 +61,7 @@ let FacetOptionsFilter = defaultTheme({
   Button: 'button',
   ButtonGroup: 'div',
   TextInput: 'input',
-})(
-  ({ tree, node, theme }) => {
+})(({ tree, node, theme }) => {
   let [val, setVal] = useState(node.optionsFilter)
   let buttonEnabled = val !== node.optionsFilter
   let submit = () =>
@@ -114,9 +113,7 @@ let Facet = _.flow(
         onChange={mode => tree.mutate(node.path, { mode })}
         options={F.autoLabelOptions(['include', 'exclude'])}
       />
-      {!hide.facetFilter && (
-        <FacetOptionsFilter {...{ tree, node, theme }} />
-      )}
+      {!hide.facetFilter && <FacetOptionsFilter {...{ tree, node, theme }} />}
       <SelectAll {...{ tree, node, theme }} />
       {_.map(({ name, count }) => {
         let lens = tree.lens(node.path, 'values')

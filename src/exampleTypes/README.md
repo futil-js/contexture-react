@@ -117,23 +117,23 @@
 
 ### Theme
 
-| Component     | Default          |
-| ------------- | ---------------- |
-| `Checkbox`    | layout/Checkbox  |
-| `RadioList`   | local to file    |
+| Component   | Default         |
+| ----------- | --------------- |
+| `Checkbox`  | layout/Checkbox |
+| `RadioList` | local to file   |
 
 #### FacetOptionsFilter
 
 | ------------- | ---------------- |
-| `Button`      | `'button'`       |
-| `ButtonGroup` | `'div'`          |
-| `TextInput`   | `'input'`        |
+| `Button` | `'button'` |
+| `ButtonGroup` | `'div'` |
+| `TextInput` | `'input'` |
 
 #### SelectAll
 
-| Component     | Default          |
-| ------------- | ---------------- |
-| `Checkbox`    | layout/Checkbox  |
+| Component  | Default         |
+| ---------- | --------------- |
+| `Checkbox` | layout/Checkbox |
 
 ## Geo
 
