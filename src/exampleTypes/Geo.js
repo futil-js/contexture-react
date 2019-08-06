@@ -22,11 +22,11 @@ const elementStyle = {
 const operatorOptions = ['within', 'not within']
 
 let GeoComponent = _.flow(
+  contexturify,
   defaultTheme({
     NumberInput,
     SelectInput: 'select',
   }),
-  contexturify
 )(
   ({
     tree,

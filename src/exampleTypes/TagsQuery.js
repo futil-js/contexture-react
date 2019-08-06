@@ -11,13 +11,13 @@ import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 
 let tagValueField = 'word'
 let TagsQuery = _.flow(
+  contexturify,
   defaultTheme({
     TagsInput,
     Checkbox,
     RadioList,
     Button: 'button',
   }),
-  contexturify
 )(({ tree, node, theme, placeholder, ...props }) => {
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)
   let TagQueryPopover = observer(({ tag }) => {

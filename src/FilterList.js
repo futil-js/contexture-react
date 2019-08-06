@@ -24,7 +24,7 @@ export let FilterActions = _.flow(
     Picker: NestedPicker,
     Popover,
     Item: 'li',
-  })
+  }),
 )(({ node, tree, fields, theme, popover, modal }) => {
   let typeOptions = _.flow(
     _.getOr([], [node.field, 'typeOptions']),
@@ -33,7 +33,6 @@ export let FilterActions = _.flow(
 
   return (
     <>
-      Filter actions
       <theme.Modal isOpen={modal}>
         <theme.Picker
           options={fieldsToOptions(fields)}
@@ -85,10 +84,9 @@ export let FilterActions = _.flow(
 FilterActions.displayName = 'FilterActions'
 
 export let Label = _.flow(
+  contexturify,
   defaultTheme({ Icon: DefaultIcon }),
-  observer,
   withStateLens({ popover: false, modal: false }),
-  inject(_.pick('tree'))
 )(({ tree, node, fields, theme, popover, modal, ...props }) => (
   <Flex
     className={`filter-field-label ${
@@ -157,10 +155,10 @@ export let FieldLabel = contexturify(
 FieldLabel.displayName = 'FieldLabel'
 
 export let FilterList = _.flow(
+  contexturify,
   defaultTheme({
     MissingTypeComponent: DefaultMissingTypeComponent,
   }),
-  contexturify
 )(
   ({
     tree,

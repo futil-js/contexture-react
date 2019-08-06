@@ -4,8 +4,8 @@ import Select from '../layout/Select'
 import { contexturify, defaultTheme } from '../utils/hoc'
 
 let DateComponent = _.flow(
+  contexturify,
   defaultTheme({ Select }),
-  contexturify
 )(({ tree, node, ranges, theme }) => (
   <theme.Select
     value={(_.find({ from: node.from, to: node.to }, ranges) || {}).label}

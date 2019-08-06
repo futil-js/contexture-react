@@ -9,11 +9,14 @@ import { Flex } from './Flex'
 // Observes node, so we can activate the Continue button if it (or any child) has a value.
 // We don't observe on Step because then it would rerender its children when `node`
 // changes, which unfocuses query inputs as soon as the first character is entered.
-let Buttons = defaultTheme({
-  Button: 'button',
-  Icon: DefaultIcon,
-})(
-  observer(({ step, totalSteps, currentStep, theme, onSubmit }) => (
+let Buttons = _.flow(
+  observer,
+  defaultTheme({
+    Button: 'button',
+    Icon: DefaultIcon,
+  })
+)(
+  ({ step, totalSteps, currentStep, theme, onSubmit }) => (
     <>
       {step > 0 && (
         <theme.Button
@@ -38,7 +41,7 @@ let Buttons = defaultTheme({
         </theme.Button>
       )}
     </>
-  ))
+  )
 )
 
 export let AccordionStep = defaultTheme({ Icon: DefaultIcon })(

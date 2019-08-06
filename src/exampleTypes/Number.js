@@ -6,11 +6,11 @@ import NumberInput from '../layout/NumberInput'
 import { contexturify, defaultTheme } from '../utils/hoc'
 
 let NumberComponent = _.flow(
+  contexturify,
   defaultTheme({
     NumberInput,
     Button: 'button',
   }),
-  contexturify
 )(
   ({
     tree,

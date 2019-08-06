@@ -4,8 +4,8 @@ import { contexturify, defaultTheme } from '../utils/hoc'
 import BarChart from '../layout/BarChart'
 
 let TermsStats = _.flow(
+  contexturify,
   defaultTheme({ BarChart }),
-  contexturify
 )(({ theme, node, ...props }) => (
   <theme.BarChart
     data={node.context.terms}

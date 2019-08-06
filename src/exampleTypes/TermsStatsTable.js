@@ -42,6 +42,7 @@ let SelectSize = _.flow(
 ))
 
 let TermsStatsTable = _.flow(
+  contexturify,
   defaultTheme({
     Button: 'button',
     MoreControls: 'div',
@@ -49,7 +50,6 @@ let TermsStatsTable = _.flow(
     ExpandableTable,
     Column,
   }),
-  contexturify
 )(
   ({
     node,

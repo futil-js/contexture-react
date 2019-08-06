@@ -92,11 +92,11 @@ let FacetOptionsFilter = defaultTheme({
 })
 
 let Facet = _.flow(
+  contexturify,
   defaultTheme({
     Checkbox,
     RadioList,
   }),
-  contexturify
 )(
   ({
     tree,

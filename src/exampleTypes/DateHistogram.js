@@ -4,8 +4,8 @@ import { contexturify, defaultTheme } from '../utils/hoc'
 import BarChart from '../layout/BarChart'
 
 let DateHistogram = _.flow(
+  contexturify,
   defaultTheme({ BarChart }),
-  contexturify
 )(({ node, theme, ...props }) => (
   <theme.BarChart
     data={node.context.entries}

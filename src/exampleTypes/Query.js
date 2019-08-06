@@ -3,8 +3,8 @@ import _ from 'lodash/fp'
 import { contexturify, defaultTheme } from '../utils/hoc'
 
 let Query = _.flow(
+  contexturify,
   defaultTheme({ TextInput: 'input' }),
-  contexturify
 )(({ tree, node, theme }) => (
   <theme.TextInput
     value={node.query || ''}

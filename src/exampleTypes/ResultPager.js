@@ -8,12 +8,12 @@ let span = ({ children }) => <span>{children}</span>
 let a = ({ children, onClick }) => <a onClick={onClick}>{children}</a>
 
 let ResultPager = _.flow(
+  contexturify,
   defaultTheme({
     Item: span,
     Link: a,
     Icon: DefaultIcon,
   }),
-  contexturify
 )(({ node, tree, theme, className = '' }) => {
   let pages = Math.ceil(
     (node.context.response.totalRecords || 1) / node.pageSize

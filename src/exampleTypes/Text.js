@@ -4,8 +4,8 @@ import LensInput from '../layout/LensInput'
 
 let Text = _.flow(
   withTreeLens,
+  contexturify,
   defaultTheme({ Input: 'input' }),
-  contexturify
 )(LensInput)
 Text.displayName = 'Text'
 

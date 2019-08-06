@@ -345,8 +345,8 @@ let TableBody = _.flow(
 TableBody.displayName = 'TableBody'
 
 let ResultTable = _.flow(
+  contexturify,
   defaultTheme({ Table: 'table' }),
-  contexturify
 )(
   ({
     fields,

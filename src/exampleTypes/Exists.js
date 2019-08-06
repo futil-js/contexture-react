@@ -5,8 +5,8 @@ import { contexturify, defaultTheme } from '../utils/hoc'
 import RadioList from '../layout/RadioList'
 
 let Exists = _.flow(
+  contexturify,
   defaultTheme({ RadioList }),
-  contexturify
 )(({ tree, node, theme }) => (
   <div className="contexture-exists">
     <theme.RadioList

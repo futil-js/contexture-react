@@ -33,8 +33,8 @@ Label.displayName = 'Label'
 // Writes to a lens called `selected`, using getValue to map the selected record to a value.
 // getValues uses _.iteratee, so it defaults to identity and supports things like strings to get props
 let CheckableResultTable = _.flow(
+  contexturify,
   defaultTheme({ Checkbox, ResultTable }),
-  contexturify
 )(({ node, fields, selected, getValue, theme, ...props }) => (
   <theme.ResultTable
     fields={{
