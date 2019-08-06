@@ -1,6 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import { Flex } from '../layout/Flex'
+import NumberInput from '../layout/NumberInput'
 import { contexturify, defaultTheme } from '../utils/hoc'
 
 const customStyles = {
@@ -22,7 +23,7 @@ const operatorOptions = ['within', 'not within']
 
 let GeoComponent = _.flow(
   defaultTheme({
-    NumberInput: props => <input type="number" {...props} />,
+    NumberInput,
     SelectInput: 'select',
   }),
   contexturify
