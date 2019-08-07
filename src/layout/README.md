@@ -111,6 +111,24 @@
 `isOpen`,
 `style`
 
+
+## ModalPicker
+
+### Props
+
+`label`,
+`onChange`,
+`options`
+
+### Theme
+
+| Component | Default             |
+| --------- | ------------------- |
+| `Button`  | `'button'`          |
+| `Modal`   | layout/Modal        |
+| `Picker`  | layout/NestedPicker |
+
+
 ## NestedPicker
 
 ### Props
@@ -138,24 +156,6 @@
 
 `...props` recipient: `input`
 
-## Pickers
-
-> Note: this should really be `ModalPicker`
-
-### Props
-
-`isOpen`,
-`label`,
-`onChange`,
-`options`
-
-### Theme
-
-| Component | Default             |
-| --------- | ------------------- |
-| `Button`  | `'button'`          |
-| `Modal`   | layout/Modal        |
-| `Picker`  | layout/NestedPicker |
 
 ## Popover
 
