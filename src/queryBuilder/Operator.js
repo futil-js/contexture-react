@@ -94,4 +94,7 @@ let Operator = ({ hover, node, child, parent, tree, index }) => {
   )
 }
 
-export default _.flow(observer, withTheme({ Popover }))(Operator)
+export default _.flow(
+  observer,
+  withTheme({ Popover })
+)(Operator)

@@ -5,7 +5,7 @@ import BarChart from '../layout/BarChart'
 
 let DateHistogram = _.flow(
   contexturify,
-  defaultTheme({ BarChart }),
+  defaultTheme({ BarChart })
 )(({ node, theme, ...props }) => (
   <theme.BarChart
     data={node.context.entries}

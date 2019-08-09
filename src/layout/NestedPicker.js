@@ -22,24 +22,25 @@ let DefaultItem = ({ children, onClick, disabled }) => (
 
 let FilteredSection = _.flow(
   observer,
-  withTheme({
-    Item: DefaultItem,
-    Highlight: TextHighlight,
-  }, 'FilteredSection')
-)(
-  ({ options, onClick, highlight, theme }) => (
-    <div>
-      {F.mapIndexed(
-        (option, field) => (
-          <theme.Item key={field} onClick={() => onClick(option.value)}>
-            <theme.Highlight text={option.label} pattern={highlight} />
-          </theme.Item>
-        ),
-        options
-      )}
-    </div>
+  withTheme(
+    {
+      Item: DefaultItem,
+      Highlight: TextHighlight,
+    },
+    'FilteredSection'
   )
-)
+)(({ options, onClick, highlight, theme }) => (
+  <div>
+    {F.mapIndexed(
+      (option, field) => (
+        <theme.Item key={field} onClick={() => onClick(option.value)}>
+          <theme.Highlight text={option.label} pattern={highlight} />
+        </theme.Item>
+      ),
+      options
+    )}
+  </div>
+))
 FilteredSection.displayName = 'FilteredSection'
 
 let getItemLabel = item =>
@@ -48,29 +49,27 @@ let getItemLabel = item =>
 let Section = _.flow(
   observer,
   withTheme({ Item: DefaultItem }, 'Section')
-)(
-  ({ options, onClick, selected, theme }) => (
-    <div>
-      {_.map(
-        item => (
-          <theme.Item
-            key={item._key}
-            onClick={() => onClick(item.value || item._key, item)}
-            active={selected === item._key}
-            disabled={selected && selected !== item._key}
-            hasChildren={!isField(item)}
-          >
-            {getItemLabel(item)}
-          </theme.Item>
-        ),
-        _.flow(
-          F.unkeyBy('_key'),
-          _.sortBy(getItemLabel)
-        )(options)
-      )}
-    </div>
-  )
-)
+)(({ options, onClick, selected, theme }) => (
+  <div>
+    {_.map(
+      item => (
+        <theme.Item
+          key={item._key}
+          onClick={() => onClick(item.value || item._key, item)}
+          active={selected === item._key}
+          disabled={selected && selected !== item._key}
+          hasChildren={!isField(item)}
+        >
+          {getItemLabel(item)}
+        </theme.Item>
+      ),
+      _.flow(
+        F.unkeyBy('_key'),
+        _.sortBy(getItemLabel)
+      )(options)
+    )}
+  </div>
+))
 Section.displayName = 'Section'
 
 let toNested = _.flow(
@@ -119,29 +118,33 @@ PanelTreePicker.displayName = 'PanelTreePicker'
 let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
 let NestedPicker = _.flow(
   observer,
-  withTheme({
-    Input: 'input',
-  }, 'NestedPicker')
+  withTheme(
+    {
+      Input: 'input',
+    },
+    'NestedPicker'
+  )
 )(({ options, onChange, theme }) => {
   let filter = useLens('')
   return (
-  <div>
-    <theme.Input
-      {...F.domLens.value(filter)}
-      placeholder="Enter filter keyword..."
-    />
-    {F.view(filter) ? (
-      <FilteredSection
-        options={matchLabel(F.view(filter))(options)}
-        onClick={onChange}
-        highlight={F.view(filter)}
-        theme={theme}
+    <div>
+      <theme.Input
+        {...F.domLens.value(filter)}
+        placeholder="Enter filter keyword..."
       />
-    ) : (
-      <PanelTreePicker options={options} onChange={onChange} theme={theme} />
-    )}
-  </div>
-)})
+      {F.view(filter) ? (
+        <FilteredSection
+          options={matchLabel(F.view(filter))(options)}
+          onClick={onChange}
+          highlight={F.view(filter)}
+          theme={theme}
+        />
+      ) : (
+        <PanelTreePicker options={options} onChange={onChange} theme={theme} />
+      )}
+    </div>
+  )
+})
 NestedPicker.displayName = 'NestedPicker'
 
 export default NestedPicker

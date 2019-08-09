@@ -96,7 +96,7 @@ let Facet = _.flow(
   defaultTheme({
     Checkbox,
     RadioList,
-  }),
+  })
 )(
   ({
     tree,

@@ -4,7 +4,7 @@ import { contexturify, defaultTheme } from '../utils/hoc'
 
 let Query = _.flow(
   contexturify,
-  defaultTheme({ TextInput: 'input' }),
+  defaultTheme({ TextInput: 'input' })
 )(({ tree, node, theme }) => (
   <theme.TextInput
     value={node.query || ''}

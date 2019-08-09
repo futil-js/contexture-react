@@ -24,7 +24,7 @@ let operatorOptions = F.autoLabelOptions([
 let Text = _.flow(
   withTreeLens,
   contexturify,
-  defaultTheme({ TagsInput, Select }),
+  defaultTheme({ TagsInput, Select })
 )(({ tree, node, theme, placeholder }) => {
   let tagStyle = bgJoin(tagToGroupJoin(node.join))
   let TagPopover = () => (

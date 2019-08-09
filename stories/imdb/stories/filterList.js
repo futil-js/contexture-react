@@ -12,7 +12,12 @@ import {
   SpacedList,
   componentForType,
 } from '../../../src'
-import { DarkBox, ModalFilterAdder, Pager, ExampleTypes } from '../../DemoControls'
+import {
+  DarkBox,
+  ModalFilterAdder,
+  Pager,
+  ExampleTypes,
+} from '../../DemoControls'
 let {
   Query,
   ResultCount,

@@ -19,12 +19,15 @@ import {
 
 export let FilterActions = _.flow(
   observer,
-  withTheme({
-    Modal,
-    Picker: NestedPicker,
-    Popover,
-    Item: 'li',
-  }, 'FilterActions'),
+  withTheme(
+    {
+      Modal,
+      Picker: NestedPicker,
+      Popover,
+      Item: 'li',
+    },
+    'FilterActions'
+  )
 )(({ node, tree, fields, theme, popover }) => {
   let modal = useLens(false)
   let typeOptions = _.flow(
@@ -86,66 +89,67 @@ FilterActions.displayName = 'FilterActions'
 
 export let Label = _.flow(
   observer,
-  withTheme({ Icon: DefaultIcon }, 'Label'),
+  withTheme({ Icon: DefaultIcon }, 'Label')
 )(({ tree, node, fields, theme, ...props }) => {
   let popover = useLens(false)
   let modal = useLens(false)
   return (
-  <Flex
-    className={`filter-field-label ${
-      _.get('hasValue', node) ? 'filter-field-has-value' : ''
-    }`.trim()}
-    style={{
-      cursor: 'pointer',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    }}
-    onClick={() =>
-      tree && node && tree.mutate(node.path, { paused: !node.paused })
-    }
-  >
-    <span {...props} />
-    {tree && node && (
-      <React.Fragment>
-        <span
-          onClick={e => {
-            e.stopPropagation()
-            F.flip(popover)()
-          }}
-        >
-          <theme.Icon icon="TableColumnMenu" />
-          <FilterActions {...{ node, tree, fields, popover, modal, theme }} />
-        </span>
-        {
-          // Whitespace separator
-          <div style={{ flexGrow: 1 }} />
-        }
-        {!node.updating &&
-          tree.disableAutoUpdate &&
-          // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-          _.some(
-            treeNode => treeNode !== node && treeNode.markedForUpdate,
-            F.treeToArray(_.get('children'))(tree.tree)
-          ) && (
-            <div
-              className="filter-field-icon-refresh"
-              onClick={e => {
-                e.stopPropagation()
-                tree.triggerUpdate()
-              }}
-            >
-              <theme.Icon icon="Refresh" />
-            </div>
-          )}
-        <div className="filter-field-label-icon">
-          <theme.Icon
-            icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
-          />
-        </div>
-      </React.Fragment>
-    )}
-  </Flex>
-)})
+    <Flex
+      className={`filter-field-label ${
+        _.get('hasValue', node) ? 'filter-field-has-value' : ''
+      }`.trim()}
+      style={{
+        cursor: 'pointer',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+      onClick={() =>
+        tree && node && tree.mutate(node.path, { paused: !node.paused })
+      }
+    >
+      <span {...props} />
+      {tree && node && (
+        <React.Fragment>
+          <span
+            onClick={e => {
+              e.stopPropagation()
+              F.flip(popover)()
+            }}
+          >
+            <theme.Icon icon="TableColumnMenu" />
+            <FilterActions {...{ node, tree, fields, popover, modal, theme }} />
+          </span>
+          {
+            // Whitespace separator
+            <div style={{ flexGrow: 1 }} />
+          }
+          {!node.updating &&
+            tree.disableAutoUpdate &&
+            // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
+            _.some(
+              treeNode => treeNode !== node && treeNode.markedForUpdate,
+              F.treeToArray(_.get('children'))(tree.tree)
+            ) && (
+              <div
+                className="filter-field-icon-refresh"
+                onClick={e => {
+                  e.stopPropagation()
+                  tree.triggerUpdate()
+                }}
+              >
+                <theme.Icon icon="Refresh" />
+              </div>
+            )}
+          <div className="filter-field-label-icon">
+            <theme.Icon
+              icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
+            />
+          </div>
+        </React.Fragment>
+      )}
+    </Flex>
+  )
+})
 Label.displayName = 'Label'
 
 export let FieldLabel = contexturify(
@@ -159,9 +163,12 @@ FieldLabel.displayName = 'FieldLabel'
 
 export let FilterList = _.flow(
   contexturify,
-  withTheme({
-    MissingTypeComponent: DefaultMissingTypeComponent,
-  }, 'FilterList'),
+  withTheme(
+    {
+      MissingTypeComponent: DefaultMissingTypeComponent,
+    },
+    'FilterList'
+  )
 )(
   ({
     tree,

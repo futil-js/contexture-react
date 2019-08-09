@@ -6,7 +6,7 @@ import RadioList from '../layout/RadioList'
 
 let Bool = _.flow(
   contexturify,
-  defaultTheme({ RadioList }),
+  defaultTheme({ RadioList })
 )(({ tree, node, theme }) => (
   <div className="contexture-bool">
     <theme.RadioList

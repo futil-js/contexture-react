@@ -10,7 +10,7 @@ let NumberComponent = _.flow(
   defaultTheme({
     NumberInput,
     Button: 'button',
-  }),
+  })
 )(
   ({
     tree,

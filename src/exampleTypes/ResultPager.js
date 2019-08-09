@@ -13,7 +13,7 @@ let ResultPager = _.flow(
     Item: span,
     Link: a,
     Icon: DefaultIcon,
-  }),
+  })
 )(({ node, tree, theme, className = '' }) => {
   let pages = Math.ceil(
     (node.context.response.totalRecords || 1) / node.pageSize

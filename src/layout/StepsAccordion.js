@@ -15,34 +15,32 @@ let Buttons = _.flow(
     Button: 'button',
     Icon: DefaultIcon,
   })
-)(
-  ({ step, totalSteps, currentStep, theme, onSubmit }) => (
-    <>
-      {step > 0 && (
-        <theme.Button
-          onClick={F.sets(step - 1, currentStep)}
-          className="back-button"
-        >
-          <theme.Icon icon="PreviousPage" />
-          Back
-        </theme.Button>
-      )}
-      {step < totalSteps - 1 ? (
-        <theme.Button
-          primary
-          onClick={F.sets(step + 1, currentStep)}
-          disabled={false}
-        >
-          Continue
-        </theme.Button>
-      ) : (
-        <theme.Button primary onClick={onSubmit}>
-          View Results
-        </theme.Button>
-      )}
-    </>
-  )
-)
+)(({ step, totalSteps, currentStep, theme, onSubmit }) => (
+  <>
+    {step > 0 && (
+      <theme.Button
+        onClick={F.sets(step - 1, currentStep)}
+        className="back-button"
+      >
+        <theme.Icon icon="PreviousPage" />
+        Back
+      </theme.Button>
+    )}
+    {step < totalSteps - 1 ? (
+      <theme.Button
+        primary
+        onClick={F.sets(step + 1, currentStep)}
+        disabled={false}
+      >
+        Continue
+      </theme.Button>
+    ) : (
+      <theme.Button primary onClick={onSubmit}>
+        View Results
+      </theme.Button>
+    )}
+  </>
+))
 
 export let AccordionStep = defaultTheme({ Icon: DefaultIcon })(
   ({

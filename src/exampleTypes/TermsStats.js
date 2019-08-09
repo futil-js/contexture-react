@@ -5,7 +5,7 @@ import BarChart from '../layout/BarChart'
 
 let TermsStats = _.flow(
   contexturify,
-  defaultTheme({ BarChart }),
+  defaultTheme({ BarChart })
 )(({ theme, node, ...props }) => (
   <theme.BarChart
     data={node.context.terms}

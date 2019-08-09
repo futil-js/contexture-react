@@ -26,7 +26,7 @@ let GeoComponent = _.flow(
   defaultTheme({
     NumberInput,
     SelectInput: 'select',
-  }),
+  })
 )(
   ({
     tree,

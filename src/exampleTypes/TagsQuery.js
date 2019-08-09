@@ -17,7 +17,7 @@ let TagsQuery = _.flow(
     Checkbox,
     RadioList,
     Button: 'button',
-  }),
+  })
 )(({ tree, node, theme, placeholder, ...props }) => {
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)
   let TagQueryPopover = observer(({ tag }) => {

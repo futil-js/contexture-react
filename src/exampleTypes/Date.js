@@ -131,7 +131,7 @@ let rollingRangeFromString = _.flow(
 
 let DateComponent = _.flow(
   contexturify,
-  defaultTheme({ RadioList }),
+  defaultTheme({ RadioList })
 )(({ tree, node, theme, excludeRollingRanges = [] }) => {
   let rollingOpts = _.reject(
     opt => _.includes(opt.type, excludeRollingRanges),

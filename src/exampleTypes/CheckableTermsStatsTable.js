@@ -8,7 +8,7 @@ import Checkbox from '../layout/Checkbox'
 
 let CheckableTermsStatsTable = _.flow(
   contexturify,
-  defaultTheme({ TermsStatsTable, Checkbox, Column }),
+  defaultTheme({ TermsStatsTable, Checkbox, Column })
 )(({ node, children, theme, getValue, selected, ...props }) => {
   let results = _.result('context.terms.slice', node)
   let allChecked = _.size(results) === _.size(F.view(selected))

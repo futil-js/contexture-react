@@ -10,35 +10,28 @@ import { withTheme } from '../utils/theme'
 
 let { background } = styles
 
-let QueryBuilder = 
-  ({
-    tree,
-    node,
-    fields,
-    theme,
-    mapNodeToProps,
-  }) => {
-    let adding = useLens(false)
-    return (
-      <div style={{ background }}>
-        {node && (
-          <Group
-            isRoot={true}
-            {...{
-              node,
-              tree,
-              adding,
-              fields,
-              mapNodeToProps,
-            }}
-          />
-        )}
-        <theme.Button onClick={F.flip(adding)}>
-          {F.view(adding) ? 'Cancel' : 'Add Filter'}
-        </theme.Button>
-      </div>
-    )
-  }
+let QueryBuilder = ({ tree, node, fields, theme, mapNodeToProps }) => {
+  let adding = useLens(false)
+  return (
+    <div style={{ background }}>
+      {node && (
+        <Group
+          isRoot={true}
+          {...{
+            node,
+            tree,
+            adding,
+            fields,
+            mapNodeToProps,
+          }}
+        />
+      )}
+      <theme.Button onClick={F.flip(adding)}>
+        {F.view(adding) ? 'Cancel' : 'Add Filter'}
+      </theme.Button>
+    </div>
+  )
+}
 
 export default DDContext(
   _.flow(

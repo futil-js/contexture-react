@@ -5,7 +5,7 @@ import { contexturify, defaultTheme } from '../utils/hoc'
 
 let DateComponent = _.flow(
   contexturify,
-  defaultTheme({ Select }),
+  defaultTheme({ Select })
 )(({ tree, node, ranges, theme }) => (
   <theme.Select
     value={(_.find({ from: node.from, to: node.to }, ranges) || {}).label}

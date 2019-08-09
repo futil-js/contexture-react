@@ -34,7 +34,7 @@ Label.displayName = 'Label'
 // getValues uses _.iteratee, so it defaults to identity and supports things like strings to get props
 let CheckableResultTable = _.flow(
   contexturify,
-  defaultTheme({ Checkbox, ResultTable }),
+  defaultTheme({ Checkbox, ResultTable })
 )(({ node, fields, selected, getValue, theme, ...props }) => (
   <theme.ResultTable
     fields={{

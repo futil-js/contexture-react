@@ -49,7 +49,7 @@ let TermsStatsTable = _.flow(
     Input: 'input',
     ExpandableTable,
     Column,
-  }),
+  })
 )(
   ({
     node,
