@@ -10,9 +10,9 @@ import {
   Flex,
   Awaiter,
   SpacedList,
-  ModalFilterAdder,
+  componentForType,
 } from '../../../src'
-import { DarkBox, Pager, ExampleTypes } from '../../DemoControls'
+import { DarkBox, ModalFilterAdder, Pager, ExampleTypes } from '../../DemoControls'
 let {
   Query,
   ResultCount,
@@ -137,7 +137,7 @@ const Story = inject(() => {
                   tree={tree}
                   path={['searchRoot', 'criteria']}
                   fields={schemas.movies.fields}
-                  typeComponents={TypeMap}
+                  mapNodeToProps={componentForType(TypeMap)}
                 />
                 <ModalFilterAdder
                   tree={tree}

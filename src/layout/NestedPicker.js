@@ -3,9 +3,9 @@ import F from 'futil-js'
 import _ from 'lodash/fp'
 import { inject, observer } from 'mobx-react'
 import { observable } from 'mobx'
-import { withStateLens } from '../utils/mobx-react-utils'
+import { useLens } from '../utils/react'
 import TextHighlight from './TextHighlight'
-import { defaultTheme } from '../utils/hoc'
+import { withTheme } from '../utils/theme'
 
 // Unflatten by with support for arrays (allow dots in paths) and not needing a _.keyBy first
 let unflattenObjectBy = _.curry((iteratee, x) =>
@@ -14,17 +14,20 @@ let unflattenObjectBy = _.curry((iteratee, x) =>
 
 let isField = x => x.typeDefault
 
-const DefaultItem = ({ children, onClick, disabled }) => (
+let DefaultItem = ({ children, onClick, disabled }) => (
   <div onClick={onClick} disabled={disabled}>
     {children}
   </div>
 )
 
-let FilteredSection = defaultTheme({
-  Item: DefaultItem,
-  Highlight: TextHighlight,
-})(
-  observer(({ options, onClick, highlight, theme }) => (
+let FilteredSection = _.flow(
+  observer,
+  withTheme({
+    Item: DefaultItem,
+    Highlight: TextHighlight,
+  }, 'FilteredSection')
+)(
+  ({ options, onClick, highlight, theme }) => (
     <div>
       {F.mapIndexed(
         (option, field) => (
@@ -35,15 +38,18 @@ let FilteredSection = defaultTheme({
         options
       )}
     </div>
-  ))
+  )
 )
 FilteredSection.displayName = 'FilteredSection'
 
 let getItemLabel = item =>
   isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
 
-let Section = defaultTheme({ Item: DefaultItem })(
-  observer(({ options, onClick, selected, theme }) => (
+let Section = _.flow(
+  observer,
+  withTheme({ Item: DefaultItem }, 'Section')
+)(
+  ({ options, onClick, selected, theme }) => (
     <div>
       {_.map(
         item => (
@@ -63,7 +69,7 @@ let Section = defaultTheme({ Item: DefaultItem })(
         )(options)
       )}
     </div>
-  ))
+  )
 )
 Section.displayName = 'Section'
 
@@ -113,11 +119,12 @@ PanelTreePicker.displayName = 'PanelTreePicker'
 let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
 let NestedPicker = _.flow(
   observer,
-  withStateLens({ filter: '' }),
-  defaultTheme({
+  withTheme({
     Input: 'input',
-  })
-)(({ options, onChange, filter, theme }) => (
+  }, 'NestedPicker')
+)(({ options, onChange, theme }) => {
+  let filter = useLens('')
+  return (
   <div>
     <theme.Input
       {...F.domLens.value(filter)}
@@ -134,7 +141,7 @@ let NestedPicker = _.flow(
       <PanelTreePicker options={options} onChange={onChange} theme={theme} />
     )}
   </div>
-))
+)})
 NestedPicker.displayName = 'NestedPicker'
 
 export default NestedPicker

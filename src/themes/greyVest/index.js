@@ -3,8 +3,9 @@ import F from 'futil-js'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
-import { withStateLens } from '../../utils/mobx-react-utils'
-import { withNode, defaultTheme } from '../../utils/hoc'
+import { useLens } from '../../utils/react'
+import { withNode } from '../../utils/hoc'
+import { withTheme } from '../../utils/theme'
 import {
   Flex,
   TextHighlight,
@@ -78,15 +79,16 @@ export {
 export let SearchTree = () => {}
 
 // Lifted from demo theme to prevent codependency
-export let Highlight = ({ style = {}, ...x }) => (
+export let Highlight = ({ style = {}, ...props }) => (
   <TextHighlight
     Wrap={x => <b style={{ backgroundColor: 'yellow', ...style }} {...x} />}
-    {...x}
+    {...props}
   />
 )
 
-export let ListItem = withStateLens({ hovering: false })(
-  observer(({ hovering, style = {}, ...x }) => (
+export let ListItem = observer(({ style = {}, ...props }) => {
+  let hovering = useLens(false)
+  return (
     <div
       style={{
         cursor: 'pointer',
@@ -98,10 +100,10 @@ export let ListItem = withStateLens({ hovering: false })(
         ...style,
       }}
       {...F.domLens.hover(hovering)}
-      {...x}
+      {...props}
     />
-  ))
-)
+  )
+})
 ListItem.displayName = 'ListItem'
 
 export let ListGroupItem = props => (
@@ -115,7 +117,6 @@ export let ListGroupItem = props => (
     {...props}
   />
 )
-ListGroupItem.displayName = 'ListGroupItem'
 
 let SmallIcon = ({ icon }) => (
   <i className="material-icons" style={{ fontSize: 20 }}>
@@ -216,14 +217,14 @@ let gvTheme = {
   AccordionStep,
 }
 
-let defaultGvTheme = defaultTheme(gvTheme)
+let defaultGvTheme = withTheme(gvTheme)
 
 export let Adder = defaultGvTheme(ModalFilterAdder)
 
 let CheckButtonButton = props => (
   <Button className="gv-checkbutton" {...props} />
 )
-export let CheckButton = defaultTheme({
+export let CheckButton = withTheme({
   ...gvTheme,
   Button: CheckButtonButton,
 })(DefaultCheckButton)
@@ -244,12 +245,12 @@ export let PagerItem = observer(({ active, disabled, ...x }) => (
 ))
 PagerItem.displayName = 'PagerItem'
 
-let TagComponent = defaultTheme({
+let TagComponent = withTheme({
   RemoveIcon: props => (
     <span className="tags-input-tag-remove fa fa-times" {...props} />
   ),
 })(Tag)
-export let TagsInput = defaultTheme({ ...gvTheme, TagComponent })(BaseTagsInput)
+export let TagsInput = withTheme({ ...gvTheme, TagComponent })(BaseTagsInput)
 
 let FieldPicker = defaultGvTheme(NestedPicker)
 
@@ -262,11 +263,11 @@ export let Pager = props => (
   />
 )
 
-export let PagedResultTable = ({ tree, node, ...props }) => (
+export let PagedResultTable = ({ tree, node, path, ...props }) => (
   <>
-    <ExampleTypes.ResultTable tree={tree} node={node} {...props} />
+    <ExampleTypes.ResultTable {...{ tree, node, path, ...props }} />
     <Flex style={{ justifyContent: 'space-around', padding: '10px' }}>
-      <Pager tree={tree} node={node} />
+      <Pager {...{ tree, node, path }} />
     </Flex>
   </>
 )
@@ -298,7 +299,7 @@ export let FiltersBox = props => (
 
 export let QueryBuilder = defaultGvTheme(QueryBuilderComponent)
 
-export let SearchFilters = defaultTheme({
+export let SearchFilters = withTheme({
   ...gvTheme,
   QueryBuilder,
   FiltersBox,
@@ -314,7 +315,7 @@ export let StepsAccordion = _.flow(
   defaultGvTheme
 )(DefaultStepsAccordion)
 
-export let QueryWizard = defaultTheme({
+export let QueryWizard = withTheme({
   ...gvTheme,
   StepsAccordion,
   FilterButtonList,

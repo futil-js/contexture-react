@@ -1,11 +1,12 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil-js'
-import { observer, inject } from 'mobx-react'
+import { observer } from 'mobx-react'
 import { Flex, Dynamic, Popover, Modal, NestedPicker } from './layout'
 import { fieldsToOptions } from './FilterAdder'
-import { withStateLens } from './utils/mobx-react-utils'
-import { contexturify, defaultTheme } from './utils/hoc'
+import { useLens } from './utils/react'
+import { contexturify } from './utils/hoc'
+import { withTheme } from './utils/theme'
 import DefaultIcon from './DefaultIcon'
 import DefaultMissingTypeComponent from './DefaultMissingTypeComponent'
 import { bdJoin } from './styles/generic'
@@ -18,14 +19,14 @@ import {
 
 export let FilterActions = _.flow(
   observer,
-  withStateLens({ modal: false }),
-  defaultTheme({
+  withTheme({
     Modal,
     Picker: NestedPicker,
     Popover,
     Item: 'li',
-  }),
-)(({ node, tree, fields, theme, popover, modal }) => {
+  }, 'FilterActions'),
+)(({ node, tree, fields, theme, popover }) => {
+  let modal = useLens(false)
   let typeOptions = _.flow(
     _.getOr([], [node.field, 'typeOptions']),
     _.without([node.type])
@@ -84,10 +85,12 @@ export let FilterActions = _.flow(
 FilterActions.displayName = 'FilterActions'
 
 export let Label = _.flow(
-  contexturify,
-  defaultTheme({ Icon: DefaultIcon }),
-  withStateLens({ popover: false, modal: false }),
-)(({ tree, node, fields, theme, popover, modal, ...props }) => (
+  observer,
+  withTheme({ Icon: DefaultIcon }, 'Label'),
+)(({ tree, node, fields, theme, ...props }) => {
+  let popover = useLens(false)
+  let modal = useLens(false)
+  return (
   <Flex
     className={`filter-field-label ${
       _.get('hasValue', node) ? 'filter-field-has-value' : ''
@@ -142,7 +145,7 @@ export let Label = _.flow(
       </React.Fragment>
     )}
   </Flex>
-))
+)})
 Label.displayName = 'Label'
 
 export let FieldLabel = contexturify(
@@ -156,14 +159,13 @@ FieldLabel.displayName = 'FieldLabel'
 
 export let FilterList = _.flow(
   contexturify,
-  defaultTheme({
+  withTheme({
     MissingTypeComponent: DefaultMissingTypeComponent,
-  }),
+  }, 'FilterList'),
 )(
   ({
     tree,
     node,
-    typeComponents: types = {},
     fields,
     mapNodeToProps = _.noop,
     mapNodeToLabel = _.noop,
@@ -179,7 +181,6 @@ export let FilterList = _.flow(
               key={child.path}
               tree={tree}
               node={child}
-              typeComponents={types}
               fields={fields}
               mapNodeToProps={mapNodeToProps}
               mapNodeToLabel={mapNodeToLabel}
@@ -193,18 +194,16 @@ export let FilterList = _.flow(
                 tree={tree}
                 node={child}
                 fields={fields}
-                theme={theme}
-                label={mapNodeToLabel(child, fields, types)}
+                label={mapNodeToLabel(child, fields)}
               />
               {!child.paused && (
                 <div className="filter-list-item-contents">
                   <Dynamic
-                    component={types[child.type] || theme.MissingTypeComponent}
-                    theme={theme}
+                    component={theme.MissingTypeComponent}
                     tree={tree}
                     node={child}
                     path={_.toArray(child.path)}
-                    {...mapNodeToProps(child, fields, types)}
+                    {...mapNodeToProps(child, fields)}
                   />
                 </div>
               )}

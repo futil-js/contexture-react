@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 // import F from 'futil-js'
 import _ from 'lodash/fp'
-import StripedLoader from './StripedLoader'
+import StripedLoader from '../layout/StripedLoader'
 
 // basically just for the Adder component, which sometimes uses the node to do filtering for `uniqueFields`
 export let withOptionalNode = Component => props => {
