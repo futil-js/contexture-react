@@ -79,10 +79,14 @@ export let GVStyle = () => (
       /* MEDIA 1024 min/max */
       @media (min-width: 1024px) {
         .gv-search-bar {
+          display: flex;
           flex-direction: row;
         }
         .gv-search-bar > .gv-button-group {
           margin-left: 30px;
+        }
+        .gv-search-bar .gv-box {
+          flex: 1;
         }
         .gv-button-group {
           max-height: 60px;
@@ -90,11 +94,13 @@ export let GVStyle = () => (
       }
       @media (max-width: 1024px) {
         .gv-search-bar {
+          display: flex;
           flex-direction: column;
         }
         .gv-search-bar > .gv-button-group {
           margin-top: 30px;
           margin-left: 0;
+          align-self: auto;
         }
         .gv-search-toolbar {
           flex: 1;
