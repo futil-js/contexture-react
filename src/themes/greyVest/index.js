@@ -432,8 +432,6 @@ export let GVStyle = () => (
       /* Search Bar + Button */
       .gv-search-bar {
         display: flex;
-        grid-template-columns: 1fr auto;
-        grid-gap: 30px;
         top: 5px;
         z-index: 1;
         /*background: #f6f6f6;*/
