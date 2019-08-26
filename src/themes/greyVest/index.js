@@ -76,6 +76,31 @@ export let SearchTree = () => {}
 export let GVStyle = () => (
   <style>
     {`
+      /* MEDIA 1024 min/max */
+      @media (min-width: 1024px) {
+        .gv-search-bar {
+          flex-direction: row;
+        }
+        .gv-search-bar > .gv-button-group {
+          margin-left: 30px;
+        }
+        .gv-button-group {
+          max-height: 60px;
+        }
+      }
+      @media (max-width: 1024px) {
+        .gv-search-bar {
+          flex-direction: column;
+        }
+        .gv-search-bar > .gv-button-group {
+          margin-top: 30px;
+          margin-left: 0;
+        }
+        .gv-search-toolbar {
+          flex: 1;
+        }
+      }
+
       h1 {
         font-family: Lato;
         font-size: 18px;
@@ -393,6 +418,7 @@ export let GVStyle = () => (
         border-radius: 3px;
         display: flex;
         overflow: hidden;
+
       }
       .gv-button-group > :first-child {
         border-top-right-radius: 0px;
@@ -403,19 +429,20 @@ export let GVStyle = () => (
         border-bottom-left-radius: 0px;
       }
 
-
       /* Search Bar + Button */
       .gv-search-bar {
-        display: grid;
+        display: flex;
         grid-template-columns: 1fr auto;
         grid-gap: 30px;
         top: 5px;
         z-index: 1;
         /*background: #f6f6f6;*/
       }
+
       .gv-search-bar .gv-box {
         padding: 8px 10px;
         display: flex;
+        flex: 1;
         flex-direction: column;
         justify-content: center;
         align-items: stretch;

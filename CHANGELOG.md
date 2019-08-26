@@ -1,3 +1,6 @@
+# 1.56.1
+* Update search bar css to be more responsive
+
 # 1.56.0
 * ResultsTable: Ability to sort column by subfield
 
