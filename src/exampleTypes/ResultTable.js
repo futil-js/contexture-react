@@ -337,7 +337,7 @@ let ResultTable = InjectTreeNode(
       mapNodeToProps = () => ({}),
       Icon = DefaultIcon,
       Row = Tr,
-      tableClassName,
+      className,
     }) => {
       // From Provider // Theme/Components
       let mutate = tree.mutate(path)
@@ -378,7 +378,7 @@ let ResultTable = InjectTreeNode(
       }
 
       return (
-        <Table className={tableClassName}>
+        <Table className={className}>
           <thead>
             <tr>
               {F.mapIndexed(
