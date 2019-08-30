@@ -1,3 +1,6 @@
+# 1.56.4
+* ResultTable: Add support for passing tableClassName
+
 # 1.56.3
 * Cleanup dist directory before starting babel
 
