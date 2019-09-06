@@ -14,6 +14,7 @@ let Tag = observer(({ value, removeTag, tagStyle, RemoveIcon, onClick }) => (
   <span
     className="tags-input-tag"
     style={{
+      display: 'inline-block',
       cursor: 'pointer',
       margin: 3,
       borderRadius: '3px',
@@ -61,7 +62,9 @@ let TagsInput = withState('state', 'setState', () =>
     currentInput: '',
     selectedTag: null,
     popoverOpen: false,
-    isOneLine: true,
+    itemPopoverOpen: false,
+    isOneLine: false,
+    isInputVisible: true
   })
 )(
   observer(
@@ -76,11 +79,14 @@ let TagsInput = withState('state', 'setState', () =>
       placeholder = 'Search...',
       splitCommas,
       PopoverContents,
+      ItemPopoverContents,
       style,
       ...props
     }) => {
+      const LINE_HEIGHT = 72
       let containerRef
       let inputRef
+      let isOpen = F.lensProp('popoverOpen', state)
       addTag = splitCommas
         ? _.flow(
             _.split(','),
@@ -95,100 +101,116 @@ let TagsInput = withState('state', 'setState', () =>
             addTag
           )
       return (
-        <OutsideClickHandler
-          onOutsideClick={() => {
-            state.isOneLine = true
-            containerRef.scrollTop = 0
-          }}
-        >
-          <div
-            className={`tags-input ${
-              state.isOneLine ? 'tags-input-one-line' : ''
-            }`}
-            ref={e => (containerRef = e ? e : containerRef)}
-            style={{ ...style }}
-            onClick={() => {
-              if (state.isOneLine) {
-                state.isOneLine = false
-                inputRef.focus()
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              if(!state.isOneLine) {
+                state.isOneLine = containerRef.clientHeight > LINE_HEIGHT
               }
+              state.isInputVisible = false
+              containerRef.scrollTop = 0
             }}
           >
-            <Flex
-              wrap
-              alignItems="center"
-              style={{
-                cursor: 'text',
-                height: '100%',
-                padding: 2,
+            <div
+              className={`tags-input ${
+                state.isOneLine ? 'tags-input-one-line' : ''
+              }`}
+              ref={e => { if(e) {
+                containerRef = e
+              } }}
+              style={{ ...style }}
+            >
+              <span className="tags-input-container"
+                onClick={() => {
+                  state.isInputVisible = true
+                  state.isOneLine = false
+                  inputRef && inputRef.focus()}
+                }
+              >
+              { (state.isInputVisible || !tags.length) && <input
+                  ref={e => (inputRef = e)}
+                  onChange={e => { state.currentInput = e.target.value }}
+                  onBlur={() => {
+                    if (isValidInput(state.currentInput, tags)) {
+                      addTag(state.currentInput)
+                      state.currentInput = ''
+                    }
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' && !state.currentInput) submit()
+                    if (
+                      (_.includes(e.key, ['Enter', 'Tab']) ||
+                        (splitCommas && e.key === ',')) &&
+                      isValidInput(state.currentInput, tags)
+                    ) {
+                      addTag(state.currentInput)
+                      state.currentInput = ''
+                      e.preventDefault()
+                    }
+                    if (
+                      e.key === 'Backspace' &&
+                      !state.currentInput &&
+                      tags.length
+                    ) {
+                      let last = _.last(tags)
+                      removeTag(last)
+                      state.currentInput = last
+                      e.preventDefault()
+                    }
+                  }}
+                  value={state.currentInput}
+                  placeholder={placeholder}
+                  {...props}
+                />}
+                {_.map(
+                  t => (
+                    <TagComponent
+                      key={t}
+                      value={t}
+                      {...{ removeTag, tagStyle }}
+                      onClick={() => {
+                        state.itemPopoverOpen = true
+                        state.selectedTag = t
+                      }}
+                    />
+                  ),
+                  tags
+                )}
+                </span>
+                {PopoverContents && (<span
+                  className="popover-actions"
+                  onClick={() => {
+                    state.popoverOpen = true
+                  }}
+                >
+                  <i className="material-icons">more_vert</i>
+                </span>)}
+              {ItemPopoverContents && (
+                <Popover isOpen={F.lensProp('itemPopoverOpen', state)}>
+                  <ItemPopoverContents tag={state.selectedTag} />
+                </Popover>
+              )}
+            </div>
+            { !!(state.isOneLine && tags.length) && <div
+              className="down-arrow-shape-container"
+              onClick={() => {
+                if (state.isOneLine) {
+                  state.isOneLine = false
+                  state.isInputVisible = true
+                  console.log(inputRef)
+                  inputRef && inputRef.focus()
+                }
               }}
             >
-              {_.map(
-                t => (
-                  <TagComponent
-                    key={t}
-                    value={t}
-                    {...{ removeTag, tagStyle }}
-                    onClick={() => {
-                      state.popoverOpen = true
-                      state.selectedTag = t
-                    }}
-                  />
-                ),
-                tags
-              )}
-              <input
-                style={{
-                  border: 'none',
-                  outline: 'none',
-                  flex: 1,
-                  margin: 3,
-                  minWidth: 120,
-                }}
-                ref={e => (inputRef = e)}
-                onChange={e => {
-                  state.currentInput = e.target.value
-                }}
-                onBlur={() => {
-                  if (isValidInput(state.currentInput, tags)) {
-                    addTag(state.currentInput)
-                    state.currentInput = ''
-                  }
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' && !state.currentInput) submit()
-                  if (
-                    (_.includes(e.key, ['Enter', 'Tab']) ||
-                      (splitCommas && e.key === ',')) &&
-                    isValidInput(state.currentInput, tags)
-                  ) {
-                    addTag(state.currentInput)
-                    state.currentInput = ''
-                    e.preventDefault()
-                  }
-                  if (
-                    e.key === 'Backspace' &&
-                    !state.currentInput &&
-                    tags.length
-                  ) {
-                    let last = _.last(tags)
-                    removeTag(last)
-                    state.currentInput = last
-                    e.preventDefault()
-                  }
-                }}
-                value={state.currentInput}
-                placeholder={placeholder}
-                {...props}
-              />
-            </Flex>
+              <div className="down-arrow-shape" title="Expand to see all keywords">
+                <i className="material-icons" style={{zIndex: 10, position: 'relative'}}>keyboard_arrow_down</i>
+              </div>
+            </div>}
             {PopoverContents && (
-              <Popover isOpen={F.lensProp('popoverOpen', state)}>
-                <PopoverContents tag={state.selectedTag} />
+              <Popover isOpen={isOpen}>
+                <PopoverContents isOpen={isOpen} isOneLine={F.lensProp('isOneLine', state)}/>
               </Popover>
             )}
-          </div>
-        </OutsideClickHandler>
+          </OutsideClickHandler>
       )
     }
   )

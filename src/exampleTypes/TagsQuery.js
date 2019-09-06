@@ -11,6 +11,17 @@ import DefaultSelect from '../layout/Select'
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 
+let copyTags = node => {
+  if(node.tags) {
+    let words = _.flow(
+      _.map('word'),
+      _.reverse,
+      _.join(',')
+    )(node.tags)
+    navigator.clipboard.writeText(words)
+  }
+}
+
 let tagValueField = 'word'
 let TagsQuery = ({
   tree,
@@ -24,7 +35,39 @@ let TagsQuery = ({
   ...props
 }) => {
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)
-  let TagQueryPopever = observer(({ tag }) => {
+  let TagQueryPopever = observer(({ isOpen, isOneLine }) => (
+    <div className="tags-popover">
+      {!!node.tags.length &&
+        <>
+          <Button className="popover-item" onClick={() => {
+            copyTags(node)
+            F.off(isOpen)()
+          }}>Copy Keywords</Button>
+          <Button className="popover-item" style={{marginTop: 15}} onClick={() => {
+            tree.mutate(node.path, {
+              tags: [],
+            })
+            F.off(isOneLine)()
+            F.off(isOpen)()
+          }}>Clear Keywords</Button>
+          <div className="line-separator" />
+        </>
+      }
+      <label className="labeled-checkbox">
+        <Checkbox
+          checked={!node.exact}
+          onChange={e =>
+            tree.mutate(node.path, { exact: !e.target.checked })
+          }
+        />
+        <span>Enable stemming</span>
+      </label>
+      <div className="popover-item">
+        <TagsJoinPicker node={node} tree={tree} Select={Select} />
+      </div>
+    </div>
+  ))
+  let TagQueryItemPopever = observer(({ tag }) => {
     let tagInstance = getTag(tag)
     return (
       <div className="tags-input-popover">
@@ -72,25 +115,6 @@ let TagsQuery = ({
             <span>Only view this keyword</span>
           </label>
         </div>
-        <div>
-          <div style={{ paddingBottom: '15px' }}>
-            <small>
-              <b>Applies to all keywords:</b>
-            </small>
-          </div>
-          <label className="popover-item labeled-checkbox">
-            <Checkbox
-              checked={!node.exact}
-              onChange={e =>
-                tree.mutate(node.path, { exact: !e.target.checked })
-              }
-            />
-            <span>Enable stemming</span>
-          </label>
-          <div className="popover-item">
-            <TagsJoinPicker node={node} tree={tree} Select={Select} />
-          </div>
-        </div>
       </div>
     )
   })
@@ -112,7 +136,7 @@ let TagsQuery = ({
       tags={_.map(tagValueField, node.tags)}
       addTag={tag => {
         tree.mutate(node.path, {
-          tags: [...node.tags, { [tagValueField]: tag, distance: 3 }],
+          tags: [{ [tagValueField]: tag, distance: 3 },...node.tags],
         })
       }}
       removeTag={tag => {
@@ -124,6 +148,7 @@ let TagsQuery = ({
       submit={tree.triggerUpdate}
       placeholder={placeholder}
       PopoverContents={TagQueryPopever}
+      ItemPopoverContents={TagQueryItemPopever}
       {...props}
     />
   )

@@ -269,22 +269,8 @@ export let GVStyle = () => (
 
       /* Tags Input */
       .tags-input-one-line {
-        max-height: 40px;
-        overflow-y: auto;
-      }
-      .tags-input-one-line::-webkit-scrollbar {
-        -webkit-appearance: none;
-      }
-      .tags-input-one-line::-webkit-scrollbar-thumb {
-        border-radius: 8px;
-        border: 2.5px solid #f1f1f1; /* should match background, can't be transparent */
-        background-color: #c2c2c2;
-      }
-      .tags-input-one-line::-webkit-scrollbar-track {
-        background-color: #f1f1f1;
-        border-radius: 5px;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
+        max-height: 36px;
+        overflow: hidden;
       }
       .gv-body .tags-input > * {
         box-sizing: border-box;
@@ -293,13 +279,29 @@ export let GVStyle = () => (
         border: 2px solid #EBEBEB;
         border-radius: 4px;
         background: #fff;
+        position: relative;
+      }
+      .gv-body .tags-input .popover-actions {
+        position: absolute;
+        cursor: pointer;
+        top: 6px;
       }
       .gv-body .tags-input input {
         height: 30px;
+        border: none;
+        outline: none;
+        display: inline-block;
+        margin: 3px;
+        width: 100%;
       }
       .gv-body .tags-input-tag-remove {
         font-size: 12px;
         padding: 8px;
+      }
+      .gv-body .tags-input .tags-input-container {
+        width: calc(100% - 25px);
+        display: inline-block;
+        cursor: pointer;
       }
 
       /* Tags Popover */
@@ -311,10 +313,26 @@ export let GVStyle = () => (
         border-bottom: solid 1px rgba(216, 216, 216, 0.3);
         padding: 15px;
       }
-      .gv-body .tags-input-popover .popover-item:first-child {
+      .gv-body .line-separator {
+        background: rgba(216, 216, 216, 0.3);
+        height: 1px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+      .gv-body .tags-popover {
+        padding: 15px;
+        width: 250px;
+        font-size: 15px;
+      }
+      .gv-body .tags-popover button {
+        width: 100%;
+      }
+      .gv-body .tags-input-popover .popover-item:first-child,
+      .gv-body .tags-popover .popover-item {
         padding-top: 0;
       }
-      .gv-body .tags-input-popover .popover-item {
+      .gv-body .tags-input-popover .popover-item,
+      .gv-body .tags-popover .popover-item  {
         padding-top: 10px;
       }
 
@@ -589,6 +607,79 @@ export let GVStyle = () => (
       .gv-search-layout-builder,
       .gv-search-layout-resultsOnly {
         grid-template-columns: minmax(0, 1fr);
+      }
+      .gv-search-layout-builder .down-arrow-shape {
+        display: inline-block;
+        position: relative;
+        background: white;
+        padding: 0;
+        width: 30px;
+        text-align: center;
+        height: 0;
+        top: -7px;
+        z-index: 1;
+      }
+      .gv-search-layout-builder .down-arrow-shape i {
+        top: -3px;
+        color: #cccccc;
+      }
+      .gv-search-layout-builder .down-arrow-shape:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width: 0;
+        height: 0;
+        border-top: 17px solid white;
+        border-right: 25px solid transparent;
+        border-bottom: 0px solid transparent;
+        border-left: 11px solid transparent;
+      }
+      .gv-search-layout-basic .down-arrow-shape {
+        display: inline-block;
+        position: relative;
+        background: white;
+        padding: 0;
+        text-align: center;
+        height: 10px;
+        top: -5px;
+      }
+      .gv-search-layout-basic .down-arrow-shape i {
+        top: -4px;
+        color: #cccccc;
+      }
+      .gv-search-bar .down-arrow-shape i {
+        top: auto;
+        color: inherit;
+      }
+      .gv-body .down-arrow-shape-container {
+        height: 1px;
+        cursor: pointer;
+        text-align: center;
+      }
+      .gv-search-bar .down-arrow-shape {
+        display: inline-block;
+        position: relative;
+        background: white;
+        padding: 0;
+        width: 40px;
+        text-align: center;
+        height: 10px;
+        top: auto;
+      }
+      .gv-search-bar .down-arrow-shape:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width: 0;
+        height: 0;
+        border-top: 20px solid white;
+        border-right: 20px solid transparent;
+        border-bottom: 0 solid transparent;
+        border-left: 20px solid transparent;
       }
 
       .popover {
