@@ -1,3 +1,6 @@
+# 1.59.0
+* TagsQuery & TagsInput: Various changes and UI improvements
+
 # 1.58.0
 * DateInput: new component
 
