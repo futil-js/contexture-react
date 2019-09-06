@@ -12,7 +12,7 @@ import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 let CheckboxDefault = props => <input type="checkbox" {...props} />
 
 let copyTags = node => {
-  if(node.tags) {
+  if (node.tags) {
     let words = _.flow(
       _.map('word'),
       _.reverse,
@@ -37,28 +37,37 @@ let TagsQuery = ({
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)
   let TagQueryPopever = observer(({ isOpen, isOneLine }) => (
     <div className="tags-popover">
-      {!!_.get('tags.length', node) &&
+      {!!_.get('tags.length', node) && (
         <>
-          <Button className="popover-item" onClick={() => {
-            copyTags(node)
-            F.off(isOpen)()
-          }}>Copy Keywords</Button>
-          <Button className="popover-item" style={{marginTop: 15}} onClick={() => {
-            tree.mutate(node.path, {
-              tags: [],
-            })
-            F.off(isOneLine)()
-            F.off(isOpen)()
-          }}>Clear Keywords</Button>
+          <Button
+            className="popover-item"
+            onClick={() => {
+              copyTags(node)
+              F.off(isOpen)()
+            }}
+          >
+            Copy Keywords
+          </Button>
+          <Button
+            className="popover-item"
+            style={{ marginTop: 15 }}
+            onClick={() => {
+              tree.mutate(node.path, {
+                tags: [],
+              })
+              F.off(isOneLine)()
+              F.off(isOpen)()
+            }}
+          >
+            Clear Keywords
+          </Button>
           <div className="line-separator" />
         </>
-      }
+      )}
       <label className="labeled-checkbox">
         <Checkbox
           checked={!node.exact}
-          onChange={e =>
-            tree.mutate(node.path, { exact: !e.target.checked })
-          }
+          onChange={e => tree.mutate(node.path, { exact: !e.target.checked })}
         />
         <span>Enable stemming</span>
       </label>
@@ -136,7 +145,7 @@ let TagsQuery = ({
       tags={_.map(tagValueField, node.tags)}
       addTag={tag => {
         tree.mutate(node.path, {
-          tags: [{ [tagValueField]: tag, distance: 3 },...node.tags],
+          tags: [{ [tagValueField]: tag, distance: 3 }, ...node.tags],
         })
       }}
       removeTag={tag => {

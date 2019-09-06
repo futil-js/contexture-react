@@ -64,7 +64,7 @@ let TagsInput = withState('state', 'setState', () =>
     popoverOpen: false,
     itemPopoverOpen: false,
     isOneLine: false,
-    isInputVisible: true
+    isInputVisible: true,
   })
 )(
   observer(
@@ -101,34 +101,40 @@ let TagsInput = withState('state', 'setState', () =>
             addTag
           )
       return (
-          <OutsideClickHandler
-            onOutsideClick={() => {
-              if(!state.isOneLine) {
-                state.isOneLine = containerRef.clientHeight > LINE_HEIGHT
-              }
-              state.isInputVisible = false
-              containerRef.scrollTop = 0
-            }}
-          >
-            <div
-              className={`tags-input ${
-                state.isOneLine ? 'tags-input-one-line' : ''
-              }`}
-              ref={e => { if(e) {
+        <OutsideClickHandler
+          onOutsideClick={() => {
+            if (!state.isOneLine) {
+              state.isOneLine = containerRef.clientHeight > LINE_HEIGHT
+            }
+            state.isInputVisible = false
+            containerRef.scrollTop = 0
+          }}
+        >
+          <div
+            className={`tags-input ${
+              state.isOneLine ? 'tags-input-one-line' : ''
+            }`}
+            ref={e => {
+              if (e) {
                 containerRef = e
-              } }}
-              style={{ ...style }}
+              }
+            }}
+            style={{ ...style }}
+          >
+            <span
+              className="tags-input-container"
+              onClick={() => {
+                state.isInputVisible = true
+                state.isOneLine = false
+                inputRef && inputRef.focus()
+              }}
             >
-              <span className="tags-input-container"
-                onClick={() => {
-                  state.isInputVisible = true
-                  state.isOneLine = false
-                  inputRef && inputRef.focus()}
-                }
-              >
-              { (state.isInputVisible || !tags.length) && <input
+              {(state.isInputVisible || !tags.length) && (
+                <input
                   ref={e => (inputRef = e)}
-                  onChange={e => { state.currentInput = e.target.value }}
+                  onChange={e => {
+                    state.currentInput = e.target.value
+                  }}
                   onBlur={() => {
                     if (isValidInput(state.currentInput, tags)) {
                       addTag(state.currentInput)
@@ -161,35 +167,41 @@ let TagsInput = withState('state', 'setState', () =>
                   value={state.currentInput}
                   placeholder={placeholder}
                   {...props}
-                />}
-                {_.map(
-                  t => (
-                    <TagComponent
-                      key={t}
-                      value={t}
-                      {...{ removeTag, tagStyle }}
-                      onClick={() => {
-                        state.itemPopoverOpen = true
-                        state.selectedTag = t
-                      }}
-                    />
-                  ),
-                  tags
-                )}
-                </span>
-                {PopoverContents && (<span
-                  className="popover-actions"
-                  onClick={() => { state.popoverOpen = true }}
-                >
-                  <i className="material-icons">more_vert</i>
-                </span>)}
-              {ItemPopoverContents && (
-                <Popover isOpen={F.lensProp('itemPopoverOpen', state)}>
-                  <ItemPopoverContents tag={state.selectedTag} />
-                </Popover>
+                />
               )}
-            </div>
-            { !!(state.isOneLine && tags.length) && <div
+              {_.map(
+                t => (
+                  <TagComponent
+                    key={t}
+                    value={t}
+                    {...{ removeTag, tagStyle }}
+                    onClick={() => {
+                      state.itemPopoverOpen = true
+                      state.selectedTag = t
+                    }}
+                  />
+                ),
+                tags
+              )}
+            </span>
+            {PopoverContents && (
+              <span
+                className="popover-actions"
+                onClick={() => {
+                  state.popoverOpen = true
+                }}
+              >
+                <i className="material-icons">more_vert</i>
+              </span>
+            )}
+            {ItemPopoverContents && (
+              <Popover isOpen={F.lensProp('itemPopoverOpen', state)}>
+                <ItemPopoverContents tag={state.selectedTag} />
+              </Popover>
+            )}
+          </div>
+          {!!(state.isOneLine && tags.length) && (
+            <div
               className="down-arrow-shape-container"
               onClick={() => {
                 if (state.isOneLine) {
@@ -198,16 +210,28 @@ let TagsInput = withState('state', 'setState', () =>
                 }
               }}
             >
-              <div className="down-arrow-shape" title="Expand to see all keywords">
-                <i className="material-icons" style={{zIndex: 10, position: 'relative'}}>keyboard_arrow_down</i>
+              <div
+                className="down-arrow-shape"
+                title="Expand to see all keywords"
+              >
+                <i
+                  className="material-icons"
+                  style={{ zIndex: 10, position: 'relative' }}
+                >
+                  keyboard_arrow_down
+                </i>
               </div>
-            </div>}
-            {PopoverContents && (
-              <Popover isOpen={isOpen}>
-                <PopoverContents isOpen={isOpen} isOneLine={F.lensProp('isOneLine', state)}/>
-              </Popover>
-            )}
-          </OutsideClickHandler>
+            </div>
+          )}
+          {PopoverContents && (
+            <Popover isOpen={isOpen}>
+              <PopoverContents
+                isOpen={isOpen}
+                isOneLine={F.lensProp('isOneLine', state)}
+              />
+            </Popover>
+          )}
+        </OutsideClickHandler>
       )
     }
   )
