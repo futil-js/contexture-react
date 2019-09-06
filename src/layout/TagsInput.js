@@ -144,6 +144,7 @@ let TagsInput = withState('state', 'setState', () =>
                     ) {
                       addTag(state.currentInput)
                       state.currentInput = ''
+                      state.isInputVisible = true
                       e.preventDefault()
                     }
                     if (
