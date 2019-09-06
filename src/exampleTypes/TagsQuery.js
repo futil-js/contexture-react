@@ -37,7 +37,7 @@ let TagsQuery = ({
   let getTag = tag => _.find({ [tagValueField]: tag }, node.tags)
   let TagQueryPopever = observer(({ isOpen, isOneLine }) => (
     <div className="tags-popover">
-      {!!node.tags.length &&
+      {!!_.get('tags.length', node) &&
         <>
           <Button className="popover-item" onClick={() => {
             copyTags(node)

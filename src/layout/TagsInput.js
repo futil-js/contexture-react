@@ -178,9 +178,7 @@ let TagsInput = withState('state', 'setState', () =>
                 </span>
                 {PopoverContents && (<span
                   className="popover-actions"
-                  onClick={() => {
-                    state.popoverOpen = true
-                  }}
+                  onClick={() => { state.popoverOpen = true }}
                 >
                   <i className="material-icons">more_vert</i>
                 </span>)}
@@ -196,8 +194,6 @@ let TagsInput = withState('state', 'setState', () =>
                 if (state.isOneLine) {
                   state.isOneLine = false
                   state.isInputVisible = true
-                  console.log(inputRef)
-                  inputRef && inputRef.focus()
                 }
               }}
             >
