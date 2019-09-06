@@ -1,3 +1,9 @@
+# 1.58.0
+* DateInput: new component
+
+# 1.57.0
+* WrappedDateInput: Forward props
+
 # 1.56.3
 * Cleanup dist directory before starting babel
 
