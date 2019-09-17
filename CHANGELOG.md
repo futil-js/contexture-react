@@ -1,3 +1,9 @@
+# 2.1.0
+* SearchLayout: add new `setMode` prop
+* SearchLayout: `mode` and `setMode` props are optional. If not passed, `SearchLayout` will maintain its own internal state.
+* SearchFilters: remove `mode` and `setMode` props
+* ToggleFiltersHeader: remove `mode` and `setMode` props
+
 # 2.0.0
 
 ## Changes

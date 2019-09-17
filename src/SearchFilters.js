@@ -7,6 +7,7 @@ import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
 import { ToggleFiltersButton, TreePauseButton } from './purgatory'
 import { LinkButton } from './greyVest'
 import { withTheme } from './utils/theme'
+import { useSearchLayout } from './SearchLayout'
 
 export let SearchTree = () => {}
 
@@ -35,41 +36,48 @@ export let FiltersBox = withTheme(({ theme: { Box }, ...props }) => (
 ))
 FiltersBox.displayName = 'FiltersBox'
 
-let BasicSearchFilters = ({ setMode, trees, children }) => (
-  <div>
-    <Flex style={{ alignItems: 'center' }}>
-      <h1>Filters</h1>
-      <TreePauseButton children={children} />
-      <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
-    </Flex>
-    <LabelledList list={trees} Component={FiltersBox} />
-    <LinkButton onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
-      Switch to Advanced Search Builder
-    </LinkButton>
-  </div>
-)
-
-let BuilderSearchFilters = ({ setMode, trees }) => (
-  <div>
-    <Flex style={{ alignItems: 'center' }}>
-      <h1>Filters</h1>
-      <LinkButton onClick={() => setMode('basic')}>
-        Back to Regular Search
+let BasicSearchFilters = ({ trees, children }) => {
+  let layout = useSearchLayout()
+  return (
+    <div>
+      <Flex style={{ alignItems: 'center' }}>
+        <h1>Filters</h1>
+        <TreePauseButton children={children} />
+        <ToggleFiltersButton onClick={F.sets('resultsOnly', layout)} />
+      </Flex>
+      <LabelledList list={trees} Component={FiltersBox} />
+      <LinkButton onClick={F.sets('builder', layout)} style={{ marginTop: 15 }}>
+        Switch to Advanced Search Builder
       </LinkButton>
-    </Flex>
-    <LabelledList list={trees} Component={QueryBuilder} />
-  </div>
-)
+    </div>
+  )
+}
 
-let SearchFilters = ({ mode, setMode, children }) => {
+let BuilderSearchFilters = ({ trees }) => {
+  let layout = useSearchLayout()
+  return (
+    <div>
+      <Flex style={{ alignItems: 'center' }}>
+        <h1>Filters</h1>
+        <LinkButton onClick={F.sets('basic', layout)}>
+          Back to Regular Search
+        </LinkButton>
+      </Flex>
+      <LabelledList list={trees} Component={QueryBuilder} />
+    </div>
+  )
+}
+
+let SearchFilters = ({ children }) => {
+  let layout = useSearchLayout()
   let trees = _.flow(
     React.Children.toArray,
     _.map('props')
   )(children)
-  return mode === 'basic' ? (
-    <BasicSearchFilters {...{ trees, setMode, children }} />
-  ) : mode === 'builder' ? (
-    <BuilderSearchFilters {...{ trees, setMode }} />
+  return F.view(layout) === 'basic' ? (
+    <BasicSearchFilters {...{ trees, children }} />
+  ) : F.view(layout) === 'builder' ? (
+    <BuilderSearchFilters {...{ trees }} />
   ) : null
 }
 

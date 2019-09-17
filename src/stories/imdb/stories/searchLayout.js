@@ -152,7 +152,6 @@ tree.disableAutoUpdate = true
 
 let state = observable({
   autoUpdate: false,
-  mode: 'basic',
 })
 
 let termDetailsTree = _.memoize(term => {
@@ -230,8 +229,8 @@ let mapNodeToProps = mergeOverAll([
 let GreyVestStory = theme => (
   <Awaiter promise={schemas}>
     {schemas => (
-      <SearchLayout mode={state.mode}>
-        <SearchFilters mode={state.mode} setMode={x => (state.mode = x)}>
+      <SearchLayout>
+        <SearchFilters>
           <SearchTree
             tree={tree}
             path={['root', 'criteria']}
@@ -246,12 +245,7 @@ let GreyVestStory = theme => (
           />
         </SearchFilters>
         <div>
-          <ToggleFiltersHeader
-            mode={state.mode}
-            setMode={x => (state.mode = x)}
-          >
-            Search Movies
-          </ToggleFiltersHeader>
+          <ToggleFiltersHeader>Search Movies</ToggleFiltersHeader>
           <div className="gv-search-bar">
             <theme.Box>
               <TagsQuery tree={tree} path={['root', 'bar']} autoFocus />
