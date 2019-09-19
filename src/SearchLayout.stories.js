@@ -1,13 +1,12 @@
 import React from 'react'
 import F from 'futil-js'
-import { observer } from 'mobx-react'
 import { storiesOf } from '@storybook/react'
 import ThemePicker from './stories/themePicker'
 import { SearchLayout } from '.'
 import { useTheme } from './utils/theme'
 import { useSearchLayout } from './SearchLayout'
 
-let Filters = observer(() => {
+let Filters = () => {
   let { Box, Button } = useTheme()
   let layout = useSearchLayout()
   let toggle = F.view(layout) === 'builder' ? 'basic' : 'builder'
@@ -19,9 +18,9 @@ let Filters = observer(() => {
       </Button>
     </Box>
   )
-})
+}
 
-let Results = observer(() => {
+let Results = () => {
   let { Box, Button } = useTheme()
   let layout = useSearchLayout()
   let toggle = F.view(layout) === 'resultsOnly' ? 'basic' : 'resultsOnly'
@@ -33,7 +32,7 @@ let Results = observer(() => {
       </Button>
     </Box>
   )
-})
+}
 
 storiesOf('Components|Search Components/SearchLayout', module)
   .addDecorator(ThemePicker('greyVest'))

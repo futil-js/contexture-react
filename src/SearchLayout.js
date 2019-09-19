@@ -1,8 +1,6 @@
 import React from 'react'
 import F from 'futil-js'
-import { observable } from 'mobx'
 import PropTypes from 'prop-types'
-import { observer } from 'mobx-react'
 
 let Context = React.createContext()
 
@@ -18,8 +16,8 @@ let styles = mode => ({
 })
 
 let SearchLayout = ({ style, mode, setMode, ...props }) => {
-  let [stateLayout] = React.useState(observable.box('basic'))
-  let layout = mode ? F.stateLens([mode, setMode]) : stateLayout
+  let stateLayout = React.useState('basic')
+  let layout = F.stateLens(mode ? [mode, setMode] : stateLayout)
   return (
     <Context.Provider value={layout}>
       <div style={{ ...styles(F.view(layout)), ...style }} {...props} />
@@ -31,4 +29,4 @@ SearchLayout.propTypes = {
   mode: PropTypes.oneOf(['basic', 'builder', 'resultsOnly']),
 }
 
-export default observer(SearchLayout)
+export default SearchLayout

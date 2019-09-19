@@ -1,6 +1,5 @@
 import React from 'react'
 import F from 'futil-js'
-import { observer } from 'mobx-react'
 import ToggleFiltersButton from './purgatory/ToggleFiltersButton'
 import { Flex } from './greyVest'
 import { useSearchLayout } from './SearchLayout'
@@ -19,4 +18,4 @@ let ToggleFiltersHeader = ({ children }) => {
   )
 }
 
-export default observer(ToggleFiltersHeader)
+export default ToggleFiltersHeader
