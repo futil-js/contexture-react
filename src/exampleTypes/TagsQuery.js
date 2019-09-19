@@ -30,7 +30,7 @@ let TagQueryItemPopover = _.flow(
   setDisplayName('TagQueryItemPopover'),
   observer,
   withTheme
-)(({ tag, node, tree, theme: { Button, Checkbox, RadioList, Select } }) => {
+)(({ tag, node, tree, theme: { Button, Checkbox, RadioList } }) => {
   let tagInstance = getTag(tag, node)
   return (
     <div className="tags-input-popover">
@@ -77,23 +77,6 @@ let TagQueryItemPopover = _.flow(
           />
           <span>Only view this keyword</span>
         </label>
-      </div>
-      <div>
-        <div style={{ paddingBottom: '15px' }}>
-          <small>
-            <b>Applies to all keywords:</b>
-          </small>
-        </div>
-        <label className="popover-item labeled-checkbox">
-          <Checkbox
-            checked={!node.exact}
-            onChange={e => tree.mutate(node.path, { exact: !e.target.checked })}
-          />
-          <span>Enable stemming</span>
-        </label>
-        <div className="popover-item">
-          <TagsJoinPicker node={node} tree={tree} Select={Select} />
-        </div>
       </div>
     </div>
   )
@@ -177,7 +160,7 @@ let TagsQuery = ({
         }}
         addTag={tag => {
           tree.mutate(node.path, {
-            tags: [...node.tags, { [tagValueField]: tag, distance: 3 }],
+            tags: [{ [tagValueField]: tag, distance: 3 }, ...node.tags],
           })
         }}
         removeTag={tag => {
@@ -195,7 +178,7 @@ let TagsQuery = ({
       </Popover>
       <span className="popover-actions" onClick={F.on(open)}>
         <i className="material-icons">more_vert</i>
-        <Popover>
+        <Popover open={open}>
           <TagQueryPopover open={open} node={node} tree={tree} />
         </Popover>
       </span>

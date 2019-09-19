@@ -18,14 +18,29 @@ export default () => (
         border-bottom: solid 1px rgba(216, 216, 216, 0.3);
         padding: 15px;
       }
-      .tags-input-popover .popover-item:first-child {
+      .line-separator {
+        background: rgba(216, 216, 216, 0.3);
+        height: 1px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+      .tags-popover {
+        padding: 15px;
+        width: 250px;
+        font-size: 15px;
+      }
+      .tags-popover button {
+        width: 100%;
+      }
+      .tags-input-popover .popover-item:first-child,
+      .tags-popover .popover-item {
         padding-top: 0;
       }
-      .tags-input-popover .popover-item {
+      .tags-input-popover .popover-item,
+      .tags-popover .popover-item {
         padding-top: 10px;
       }
   
-
       /* ResultPager */
 
       .contexture-result-pager {
@@ -205,6 +220,81 @@ export default () => (
         margin-left: 0;
         margin-top: 5px;
         margin-bottom: 5px;
+      }
+
+      /* Search Layout ?? */
+      .gv-search-layout-builder .down-arrow-shape {
+        display: inline-block;
+        position: relative;
+        background: white;
+        padding: 0;
+        width: 30px;
+        text-align: center;
+        height: 0;
+        top: -7px;
+        z-index: 1;
+      }
+      .gv-search-layout-builder .down-arrow-shape i {
+        top: -3px;
+        color: #cccccc;
+      }
+      .gv-search-layout-builder .down-arrow-shape:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width: 0;
+        height: 0;
+        border-top: 17px solid white;
+        border-right: 25px solid transparent;
+        border-bottom: 0px solid transparent;
+        border-left: 11px solid transparent;
+      }
+      .gv-search-layout-basic .down-arrow-shape {
+        display: inline-block;
+        position: relative;
+        background: white;
+        padding: 0;
+        text-align: center;
+        height: 10px;
+        top: -5px;
+      }
+      .gv-search-layout-basic .down-arrow-shape i {
+        top: -4px;
+        color: #cccccc;
+      }
+      .gv-search-bar .down-arrow-shape i {
+        top: auto;
+        color: inherit;
+      }
+      .gv-body .down-arrow-shape-container {
+        height: 1px;
+        cursor: pointer;
+        text-align: center;
+      }
+      .gv-search-bar .down-arrow-shape {
+        display: inline-block;
+        position: relative;
+        background: white;
+        padding: 0;
+        width: 40px;
+        text-align: center;
+        height: 10px;
+        top: auto;
+      }
+      .gv-search-bar .down-arrow-shape:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width: 0;
+        height: 0;
+        border-top: 20px solid white;
+        border-right: 20px solid transparent;
+        border-bottom: 0 solid transparent;
+        border-left: 20px solid transparent;
       }
     `}
   </style>

@@ -2,7 +2,6 @@ import React from 'react'
 import _ from 'lodash/fp'
 import { observable } from 'mobx'
 import { observer, inject, useLocalStore } from 'mobx-react'
-import Flex from './Flex'
 import DefaultTag from './Tag'
 import OutsideClickHandler from 'react-outside-click-handler'
 
@@ -50,24 +49,63 @@ let TagsInput = ({
     >
       <div
         className={`tags-input ${state.isOneLine ? 'tags-input-one-line' : ''}`}
-        ref={e => (containerRef = e ? e : containerRef)}
-        style={{ ...style }}
-        onClick={() => {
-          if (state.isOneLine) {
-            state.isOneLine = false
-            inputRef.focus()
+        ref={e => {
+          if (e) {
+            containerRef = e
           }
         }}
+        style={{ ...style }}
       >
-        <Flex
-          wrap
-          alignItems="center"
-          style={{
-            cursor: 'text',
-            height: '100%',
-            padding: 2,
+        <span
+          className="tags-input-container"
+          onClick={() => {
+            state.isInputVisible = true
+            state.isOneLine = false
+            inputRef && inputRef.focus()
           }}
         >
+          {(state.isInputVisible || !tags.length) && (
+            <input
+              ref={e => (inputRef = e)}
+              onChange={e => {
+                state.currentInput = e.target.value
+                onInputChange()
+              }}
+              onBlur={() => {
+                if (isValidInput(state.currentInput, tags)) {
+                  addTag(state.currentInput)
+                  state.currentInput = ''
+                  onBlur()
+                }
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && !state.currentInput) submit()
+                if (
+                  (_.includes(e.key, ['Enter', 'Tab']) ||
+                    (splitCommas && e.key === ',')) &&
+                  isValidInput(state.currentInput, tags)
+                ) {
+                  addTag(state.currentInput)
+                  state.currentInput = ''
+                  state.isInputVisible = true
+                  e.preventDefault()
+                }
+                if (
+                  e.key === 'Backspace' &&
+                  !state.currentInput &&
+                  tags.length
+                ) {
+                  let last = _.last(tags)
+                  removeTag(last)
+                  state.currentInput = last
+                  e.preventDefault()
+                }
+              }}
+              value={state.currentInput}
+              placeholder={placeholder}
+              {...props}
+            />
+          )}
           {_.map(
             t => (
               <Tag
@@ -79,50 +117,28 @@ let TagsInput = ({
             ),
             tags
           )}
-          <input
-            style={{
-              border: 'none',
-              outline: 'none',
-              flex: 1,
-              margin: 3,
-              minWidth: 120,
-            }}
-            ref={e => (inputRef = e)}
-            onChange={e => {
-              state.currentInput = e.target.value
-              onInputChange()
-            }}
-            onBlur={() => {
-              if (isValidInput(state.currentInput, tags)) {
-                addTag(state.currentInput)
-                state.currentInput = ''
-                onBlur()
-              }
-            }}
-            onKeyDown={e => {
-              if (e.key === 'Enter' && !state.currentInput) submit()
-              if (
-                (_.includes(e.key, ['Enter', 'Tab']) ||
-                  (splitCommas && e.key === ',')) &&
-                isValidInput(state.currentInput, tags)
-              ) {
-                addTag(state.currentInput)
-                state.currentInput = ''
-                e.preventDefault()
-              }
-              if (e.key === 'Backspace' && !state.currentInput && tags.length) {
-                let last = _.last(tags)
-                removeTag(last)
-                state.currentInput = last
-                e.preventDefault()
-              }
-            }}
-            value={state.currentInput}
-            placeholder={placeholder}
-            {...props}
-          />
-        </Flex>
+        </span>
       </div>
+      {!!(state.isOneLine && tags.length) && (
+        <div
+          className="down-arrow-shape-container"
+          onClick={() => {
+            if (state.isOneLine) {
+              state.isOneLine = false
+              state.isInputVisible = true
+            }
+          }}
+        >
+          <div className="down-arrow-shape" title="Expand to see all keywords">
+            <i
+              className="material-icons"
+              style={{ zIndex: 10, position: 'relative' }}
+            >
+              keyboard_arrow_down
+            </i>
+          </div>
+        </div>
+      )}
     </OutsideClickHandler>
   )
 }

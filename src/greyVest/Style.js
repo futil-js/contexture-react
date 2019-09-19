@@ -206,22 +206,8 @@ export default () => (
 
       /* Tags Input */
       .tags-input-one-line {
-        max-height: 40px;
-        overflow-y: auto;
-      }
-      .tags-input-one-line::-webkit-scrollbar {
-        -webkit-appearance: none;
-      }
-      .tags-input-one-line::-webkit-scrollbar-thumb {
-        border-radius: 8px;
-        border: 2.5px solid #f1f1f1; /* should match background, can't be transparent */
-        background-color: #c2c2c2;
-      }
-      .tags-input-one-line::-webkit-scrollbar-track {
-        background-color: #f1f1f1;
-        border-radius: 5px;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
+        max-height: 36px;
+        overflow: hidden;
       }
       .tags-input > * {
         box-sizing: border-box;
@@ -230,13 +216,29 @@ export default () => (
         border: 2px solid #EBEBEB;
         border-radius: 4px;
         background: #fff;
+        position: relative;
+      }
+      .tags-input .popover-actions {
+        position: absolute;
+        cursor: pointer;
+        top: 6px;
       }
       .tags-input input {
         height: 30px;
+        border: none;
+        outline: none;
+        display: inline-block;
+        margin: 3px;
+        width: 100%;
       }
       .tags-input-tag-remove {
         font-size: 12px;
         padding: 8px;
+      }
+      .tags-input .tags-input-container {
+        width: calc(100% - 25px);
+        display: inline-block;
+        cursor: pointer;
       }
 
       /* PagerItem */
