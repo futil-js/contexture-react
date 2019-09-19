@@ -217,6 +217,7 @@ export default () => (
         border-radius: 4px;
         background: #fff;
         position: relative;
+        max-height: auto;
       }
       .tags-input .popover-actions {
         position: absolute;
@@ -230,6 +231,9 @@ export default () => (
         display: inline-block;
         margin: 3px;
         width: 100%;
+      }
+      .tags-input-tag {
+        display: inline-block;
       }
       .tags-input-tag-remove {
         font-size: 12px;
@@ -320,7 +324,7 @@ export default () => (
 
 
       /* Search Bar + Button */
-      .gv-search-bar {
+      .search-bar {
         display: grid;
         grid-template-columns: 1fr auto;
         grid-gap: 30px;
@@ -328,33 +332,33 @@ export default () => (
         z-index: 1;
         /*background: #f6f6f6;*/
       }
-      .gv-search-bar .gv-box {
+      .search-bar .gv-box {
         padding: 8px 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: stretch;
       }
-      .gv-search-bar > .gv-button-group {
+      .search-bar > .gv-button-group {
         box-shadow: 0 2px 10px 0 rgba(39, 44, 65, 0.1);
       }
-      .gv-search-bar .gv-box .tags-input {
+      .search-bar .gv-box .tags-input {
         margin: 0;
         border: none;
       }
-      .gv-search-button {
+      .search-button {
         font-size: 18px;
       }
-      .gv-search-toolbar {
+      .search-toolbar {
         display: flex;
         align-items: center;
         padding: 15px;
         background-color: #fff;
       }
-      .gv-search-toolbar .gv-text-button {
+      .search-toolbar .gv-text-button {
         margin-right: 5px;
       }
-      .gv-search-toolbar .gv-text-button:last-child {
+      .search-toolbar .gv-text-button:last-child {
         margin-right: 0;
       }
 

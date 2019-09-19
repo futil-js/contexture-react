@@ -22,6 +22,7 @@ let TagsInput = ({
   onInputChange = _.noop,
   onTagClick = _.noop,
   Tag = DefaultTag,
+  children,
   ...props
 }) => {
   let containerRef
@@ -118,6 +119,7 @@ let TagsInput = ({
             tags
           )}
         </span>
+        {children}
       </div>
       {!!(state.isOneLine && tags.length) && (
         <div

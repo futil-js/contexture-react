@@ -252,19 +252,24 @@ let GreyVestStory = theme => (
           >
             Search Movies
           </ToggleFiltersHeader>
-          <div className="gv-search-bar">
+          <div className="search-bar">
             <theme.Box>
-              <TagsQuery tree={tree} path={['root', 'bar']} expandIcon autoFocus />
+              <TagsQuery
+                tree={tree}
+                path={['root', 'bar']}
+                expandIcon
+                autoFocus
+              />
             </theme.Box>
             <theme.ButtonGroup>
               <theme.Button
-                className="gv-search-button"
+                className="search-button"
                 onClick={tree.triggerUpdate}
                 primary
               >
                 Search
               </theme.Button>
-              <div className="gv-search-toolbar">
+              <div className="search-toolbar">
                 <theme.AlternateButton
                   title="Auto Update"
                   primary={state.autoUpdate}

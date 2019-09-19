@@ -122,16 +122,16 @@ export default () => (
         box-shadow: none;
       }
 
-      .gv-search-bar .gv-box {
+      .search-bar .gv-box {
         padding: 0;
         box-shadow: none;
       }
 
-      .gv-search-bar .tags-input {
+      .search-bar .tags-input {
         margin: 0;
       }
 
-      .gv-search-bar {
+      .search-bar {
         display: grid;
         grid-template-columns: 1fr auto;
         grid-gap: 5px;
@@ -140,7 +140,7 @@ export default () => (
         /* background: #f6f6f6; */
       }
 
-      .gv-search-toolbar {
+      .search-toolbar {
         display: flex;
         align-items: center;
         flex: 1;

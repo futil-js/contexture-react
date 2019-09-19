@@ -223,7 +223,7 @@ export default () => (
       }
 
       /* Search Layout ?? */
-      .gv-search-layout-builder .down-arrow-shape {
+      .search-layout-builder .down-arrow-shape {
         display: inline-block;
         position: relative;
         background: white;
@@ -234,11 +234,11 @@ export default () => (
         top: -7px;
         z-index: 1;
       }
-      .gv-search-layout-builder .down-arrow-shape i {
+      .search-layout-builder .down-arrow-shape i {
         top: -3px;
         color: #cccccc;
       }
-      .gv-search-layout-builder .down-arrow-shape:after {
+      .search-layout-builder .down-arrow-shape:after {
         content: '';
         display: block;
         position: absolute;
@@ -251,7 +251,7 @@ export default () => (
         border-bottom: 0px solid transparent;
         border-left: 11px solid transparent;
       }
-      .gv-search-layout-basic .down-arrow-shape {
+      .search-layout-basic .down-arrow-shape {
         display: inline-block;
         position: relative;
         background: white;
@@ -260,20 +260,20 @@ export default () => (
         height: 10px;
         top: -5px;
       }
-      .gv-search-layout-basic .down-arrow-shape i {
+      .search-layout-basic .down-arrow-shape i {
         top: -4px;
         color: #cccccc;
       }
-      .gv-search-bar .down-arrow-shape i {
+      .search-bar .down-arrow-shape i {
         top: auto;
         color: inherit;
       }
-      .gv-body .down-arrow-shape-container {
+      .down-arrow-shape-container {
         height: 1px;
         cursor: pointer;
         text-align: center;
       }
-      .gv-search-bar .down-arrow-shape {
+      .search-bar .down-arrow-shape {
         display: inline-block;
         position: relative;
         background: white;
@@ -283,7 +283,7 @@ export default () => (
         height: 10px;
         top: auto;
       }
-      .gv-search-bar .down-arrow-shape:after {
+      .search-bar .down-arrow-shape:after {
         content: '';
         display: block;
         position: absolute;

@@ -150,29 +150,28 @@ let TagsQuery = ({
   let tagOpen = useLens(false)
   let [selectedTag, setSelectedTag] = React.useState(null)
   return (
-    <>
-      <TagsInput
-        splitCommas
-        tags={_.map(tagValueField, node.tags)}
-        onTagClick={tag => {
-          F.on(tagOpen)()
-          setSelectedTag(tag)
-        }}
-        addTag={tag => {
-          tree.mutate(node.path, {
-            tags: [{ [tagValueField]: tag, distance: 3 }, ...node.tags],
-          })
-        }}
-        removeTag={tag => {
-          tree.mutate(node.path, {
-            tags: _.reject({ [tagValueField]: tag }, node.tags),
-          })
-        }}
-        tagStyle={getTagStyle(node)}
-        submit={tree.triggerUpdate}
-        placeholder={placeholder}
-        {...props}
-      />
+    <TagsInput
+      splitCommas
+      tags={_.map(tagValueField, node.tags)}
+      onTagClick={tag => {
+        F.on(tagOpen)()
+        setSelectedTag(tag)
+      }}
+      addTag={tag => {
+        tree.mutate(node.path, {
+          tags: [{ [tagValueField]: tag, distance: 3 }, ...node.tags],
+        })
+      }}
+      removeTag={tag => {
+        tree.mutate(node.path, {
+          tags: _.reject({ [tagValueField]: tag }, node.tags),
+        })
+      }}
+      tagStyle={getTagStyle(node)}
+      submit={tree.triggerUpdate}
+      placeholder={placeholder}
+      {...props}
+    >
       <Popover open={tagOpen}>
         <TagQueryItemPopover tag={selectedTag} node={node} tree={tree} />
       </Popover>
@@ -182,7 +181,7 @@ let TagsQuery = ({
           <TagQueryPopover open={open} node={node} tree={tree} />
         </Popover>
       </span>
-    </>
+    </TagsInput>
   )
 }
 
