@@ -4,6 +4,9 @@
 * SearchFilters: remove `mode` and `setMode` props
 * ToggleFiltersHeader: remove `mode` and `setMode` props
 
+# 2.0.1
+* Don't export the material theme
+
 # 2.0.0
 
 ## Changes
