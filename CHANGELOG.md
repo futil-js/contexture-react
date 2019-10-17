@@ -1,5 +1,45 @@
-# 2.1.0
+# 2.4.0
 * TagsQuery & TagsInput: Various changes and UI improvements
+
+# 2.3.1
+* GreyVest: Change the TreePause and TreeUnpause icons to use material's `unfold_less` and `unfold_more` (formerly the circled plus/minus icons)
+* SearchFilters: Swap the order of TreePauseButton and ToggleFiltersButton in the BasicFilters header
+
+# 2.3.0
+* Add theme support to contexturify's `withLoader`: it now uses `theme.Loader` for the Loader component if it exists, and if a Loader component hasn't been passed as a prop
+
+# 2.2.2
+* Fixes facets search box by making it more intuitive to the user when filtering the facet checkboxes
+
+# 2.2.1
+* Fixes the tags with no space breaking the UI
+* Fixes the tag popover where the refresh facet icon was showing over it
+* Fixes the tag popover keyword breaking the UI
+
+# 2.2.0
+* Add 'counts' to the facet hide config in order to hide the facet counts
+
+# 2.1.1
+* Add `search-layout` and `search-layout-{mode}` classNames to SearchLayout
+
+# 2.1.0
+* Add `BasicFilters` and `BuilderFilters` props to SearchFilters for overriding/customizing filter components in the layout
+
+# 2.0.6
+* camelCase `defaultNodeProps` schema util
+* Be explicit about utility function exports in `src/index.js`
+
+# 2.0.5
+* Ensure components using `openBinding` observe the correct things
+
+# 2.0.4
+* Fix nested groups not updating in QueryBuilder
+
+# 2.0.3
+* Fix "within"/"not within" dropdown in Geo component
+
+# 2.0.2
+* Fix order of Text HOCs
 
 # 2.0.1
 * Don't export the material theme
