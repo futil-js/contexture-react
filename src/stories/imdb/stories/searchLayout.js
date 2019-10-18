@@ -13,15 +13,15 @@ import {
   SearchTree,
   ToggleFiltersHeader,
 } from '../../..'
-import { Tab, TabContent, TabLabel, Tabs } from '../../../greyVest'
+import { Flex, Tab, TabContent, TabLabel, Tabs } from '../../../greyVest'
 import {
   DateRangePicker,
   TypeMap,
   TermsStatsTable,
-  TagsQuery,
   ResultCount,
   PagedResultTable,
 } from '../../../exampleTypes'
+import SearchBar from '../../../purgatory/SearchBar'
 import { Column } from '../../../greyVest/ExpandableTable'
 import { ThemeConsumer } from '../../../utils/theme'
 
@@ -246,51 +246,39 @@ let GreyVestStory = theme => (
           />
         </SearchFilters>
         <div>
-          <ToggleFiltersHeader
-            mode={state.mode}
-            setMode={x => (state.mode = x)}
-          >
-            Search Movies
-          </ToggleFiltersHeader>
-          <div className="search-bar">
-            <theme.Box>
-              <TagsQuery
-                tree={tree}
-                path={['root', 'bar']}
-                expandIcon
-                autoFocus
-              />
-            </theme.Box>
-            <theme.ButtonGroup>
-              <theme.Button
-                className="search-button"
-                onClick={tree.triggerUpdate}
-                primary
+          <Flex justifyContent="space-between" alignItems="center">
+            <ToggleFiltersHeader
+              mode={state.mode}
+              setMode={x => (state.mode = x)}
+            >
+              Search Movies
+            </ToggleFiltersHeader>
+            <div className="search-toolbar">
+              <theme.AlternateButton
+                title="Auto Update"
+                primary={state.autoUpdate}
+                onClick={() => {
+                  state.autoUpdate = !state.autoUpdate
+                  tree.disableAutoUpdate = !state.autoUpdate
+                }}
               >
-                Search
-              </theme.Button>
-              <div className="search-toolbar">
-                <theme.AlternateButton
-                  title="Auto Update"
-                  primary={state.autoUpdate}
-                  onClick={() => {
-                    state.autoUpdate = !state.autoUpdate
-                    tree.disableAutoUpdate = !state.autoUpdate
-                  }}
-                >
-                  <theme.Icon icon="AutoUpdate" />
-                </theme.AlternateButton>
-                <theme.AlternateButton
-                  onClick={() => {
-                    window.location.reload()
-                  }}
-                  title="New Search"
-                >
-                  <theme.Icon icon="New" />
-                </theme.AlternateButton>
-              </div>
-            </theme.ButtonGroup>
-          </div>
+                <theme.Icon icon="AutoUpdate" />
+              </theme.AlternateButton>
+              <theme.AlternateButton
+                onClick={() => {
+                  window.location.reload()
+                }}
+                title="New Search"
+              >
+                <theme.Icon icon="New" />
+              </theme.AlternateButton>
+            </div>
+          </Flex>
+          <SearchBar
+            criteriaPath={['root', 'bar']}
+            tree={tree}
+            resultsPath={['root', 'results']}
+          />
           <h1>Search Results</h1>
           <Tabs defaultValue="results" TabPanel={theme.Box}>
             <TabLabel value="results">

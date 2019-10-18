@@ -7,8 +7,6 @@ import OutsideClickHandler from 'react-outside-click-handler'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
-// We're only using withState to preserve the state between renders, since
-// inject doesn't do that for us.
 let TagsInput = ({
   tags,
   addTag,
