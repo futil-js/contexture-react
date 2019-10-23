@@ -15,12 +15,16 @@ let styles = mode => ({
     mode === 'basic' ? 'minmax(250px, 400px) minmax(0, 1fr)' : 'minmax(0, 1fr)',
 })
 
-let SearchLayout = ({ style, mode, setMode, ...props }) => {
+let SearchLayout = ({ mode, setMode, style, className, ...props }) => {
   let stateLayout = React.useState('basic')
   let layout = F.stateLens(mode ? [mode, setMode] : stateLayout)
   return (
     <Context.Provider value={layout}>
-      <div style={{ ...styles(F.view(layout)), ...style }} {...props} />
+      <div
+        className={`search-layout search-layout-${F.view(layout)} ${className}`}
+        style={{ ...styles(F.view(layout)), ...style }}
+        {...props}
+      />
     </Context.Provider>
   )
 }

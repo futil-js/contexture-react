@@ -35,16 +35,16 @@ export let FiltersBox = withTheme(({ theme: { Box }, ...props }) => (
 ))
 FiltersBox.displayName = 'FiltersBox'
 
-let BasicSearchFilters = ({ trees, children }) => {
+let BasicSearchFilters = ({ trees, children, BasicFilters }) => {
   let layout = useSearchLayout()
   return (
     <div>
       <Flex style={{ alignItems: 'center' }}>
         <h1>Filters</h1>
-        <TreePauseButton children={children} />
         <ToggleFiltersButton onClick={F.sets('resultsOnly', layout)} />
+        <TreePauseButton children={children} />
       </Flex>
-      <LabelledList list={trees} Component={FiltersBox} />
+      <LabelledList list={trees} Component={BasicFilters} />
       <LinkButton onClick={F.sets('builder', layout)} style={{ marginTop: 15 }}>
         Switch to Advanced Search Builder
       </LinkButton>
@@ -52,7 +52,7 @@ let BasicSearchFilters = ({ trees, children }) => {
   )
 }
 
-let BuilderSearchFilters = ({ trees }) => {
+let BuilderSearchFilters = ({ trees, BuilderFilters }) => {
   let layout = useSearchLayout()
   return (
     <div>
@@ -62,21 +62,25 @@ let BuilderSearchFilters = ({ trees }) => {
           Back to Regular Search
         </LinkButton>
       </Flex>
-      <LabelledList list={trees} Component={QueryBuilder} />
+      <LabelledList list={trees} Component={BuilderFilters} />
     </div>
   )
 }
 
-let SearchFilters = ({ children }) => {
+let SearchFilters = ({
+  children,
+  BasicFilters = FiltersBox,
+  BuilderFilters = QueryBuilder,
+}) => {
   let layout = useSearchLayout()
   let trees = _.flow(
     React.Children.toArray,
     _.map('props')
   )(children)
   return F.view(layout) === 'basic' ? (
-    <BasicSearchFilters {...{ trees, children }} />
+    <BasicSearchFilters {...{ trees, children, BasicFilters }} />
   ) : F.view(layout) === 'builder' ? (
-    <BuilderSearchFilters {...{ trees }} />
+    <BuilderSearchFilters {...{ trees, BuilderFilters }} />
   ) : null
 }
 
