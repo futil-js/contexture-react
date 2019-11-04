@@ -1,8 +1,31 @@
-# 2.5.0
+# 2.6.0
 * SearchLayout: add new `setMode` prop
 * SearchLayout: `mode` and `setMode` props are optional. If not passed, `SearchLayout` will maintain its own internal state.
 * SearchFilters: remove `mode` and `setMode` props
 * ToggleFiltersHeader: remove `mode` and `setMode` props
+
+# 2.5.4
+* TagsQuery: slightly reduce the inner height
+
+# 2.5.3
+* ExampleTypes: Remove loader from Date
+* FilterList: hide overflow menu & update button on paused filters
+* GreyVest: reduce margins/padding on FilterList, Table & SearchLayout
+
+# 2.5.2
+* Remove loader from FilterAdder
+* TagsQuery: add a constant for "tags"/"keywords" terminology
+
+# 2.5.1
+* FilterList/SearchFilters: update pause icon styling
+* ExampleTypes: Remove loader from TagsQuery
+* Add `contexturifyWithoutLoader` HOC
+
+# 2.5.0
+* ExampleTypes: Add an expanding/collapsing TagsQuerySearchBar component
+
+# 2.4.1
+* Adds the latest version of Moment to the dependencies
 
 # 2.4.0
 * GreyVest: Add GridItem component

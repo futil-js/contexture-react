@@ -39,10 +39,14 @@ let BasicSearchFilters = ({ trees, children, BasicFilters }) => {
   let layout = useSearchLayout()
   return (
     <div>
-      <Flex style={{ alignItems: 'center' }}>
-        <h1>Filters</h1>
-        <ToggleFiltersButton onClick={F.sets('resultsOnly', layout)} />
-        <TreePauseButton children={children} />
+      <Flex alignItems="center" justifyContent="space-between">
+        <Flex alignItems="center">
+          <h1>Filters</h1>
+          <ToggleFiltersButton onClick={F.sets('resultsOnly', layout)} />
+        </Flex>
+        <div>
+          <TreePauseButton children={children} />
+        </div>
       </Flex>
       <LabelledList list={trees} Component={BasicFilters} />
       <LinkButton onClick={F.sets('builder', layout)} style={{ marginTop: 15 }}>

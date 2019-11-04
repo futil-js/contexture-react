@@ -6,7 +6,7 @@ import { observer } from 'mobx-react'
 import { Flex, Dynamic } from './greyVest'
 import { fieldsToOptions } from './FilterAdder'
 import { useLens } from './utils/react'
-import { withNode } from './utils/hoc'
+import { contexturifyWithoutLoader } from './utils/hoc'
 import { bdJoin } from './styles/generic'
 import {
   newNodeFromType,
@@ -119,7 +119,7 @@ export let Label = _.flow(
               F.flip(popover)()
             }}
           >
-            <Icon icon="TableColumnMenu" />
+            {!node.paused && <Icon icon="TableColumnMenu" />}
             <FilterActions
               node={node}
               tree={tree}
@@ -132,7 +132,8 @@ export let Label = _.flow(
             // Whitespace separator
             <div style={{ flexGrow: 1 }} />
           }
-          {!node.updating &&
+          {!node.paused &&
+            !node.updating &&
             tree.disableAutoUpdate &&
             // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
             _.some(
@@ -160,11 +161,10 @@ export let Label = _.flow(
   )
 })
 
-export let FilterList = _.flow(
+// we can't do this on export because FilterList is used internally
+let FilterList = _.flow(
   setDisplayName('FilterList'),
-  observer,
-  withNode,
-  withTheme
+  contexturifyWithoutLoader
 )(
   ({
     tree,
@@ -215,3 +215,5 @@ export let FilterList = _.flow(
     </div>
   )
 )
+
+export default FilterList

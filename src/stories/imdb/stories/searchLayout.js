@@ -13,12 +13,12 @@ import {
   SearchTree,
   ToggleFiltersHeader,
 } from '../../..'
-import { Tab, TabContent, TabLabel, Tabs } from '../../../greyVest'
+import { Grid, Tab, TabContent, TabLabel, Tabs } from '../../../greyVest'
 import {
   DateRangePicker,
   TypeMap,
   TermsStatsTable,
-  TagsQuery,
+  TagsQuerySearchBar,
   ResultCount,
   PagedResultTable,
 } from '../../../exampleTypes'
@@ -226,7 +226,7 @@ let mapNodeToProps = mergeOverAll([
     },
 ])
 
-let GreyVestStory = theme => (
+let GreyVestSearchBarStory = theme => (
   <Awaiter promise={schemas}>
     {schemas => (
       <SearchLayout>
@@ -246,40 +246,34 @@ let GreyVestStory = theme => (
         </SearchFilters>
         <div>
           <ToggleFiltersHeader>Search Movies</ToggleFiltersHeader>
-          <div className="gv-search-bar">
-            <theme.Box>
-              <TagsQuery tree={tree} path={['root', 'bar']} autoFocus />
-            </theme.Box>
+          <Grid columns="1fr auto" gap={10} placeItems="center stretch">
+            <TagsQuerySearchBar
+              tree={tree}
+              path={['root', 'bar']}
+              resultsPath={['root', 'results']}
+              autoFocus
+            />
             <theme.ButtonGroup>
-              <theme.Button
-                className="gv-search-button"
-                onClick={tree.triggerUpdate}
-                primary
+              <theme.AlternateButton
+                title="Auto Update"
+                primary={state.autoUpdate}
+                onClick={() => {
+                  state.autoUpdate = !state.autoUpdate
+                  tree.disableAutoUpdate = !state.autoUpdate
+                }}
               >
-                Search
-              </theme.Button>
-              <div className="gv-search-toolbar">
-                <theme.AlternateButton
-                  title="Auto Update"
-                  primary={state.autoUpdate}
-                  onClick={() => {
-                    state.autoUpdate = !state.autoUpdate
-                    tree.disableAutoUpdate = !state.autoUpdate
-                  }}
-                >
-                  <theme.Icon icon="AutoUpdate" />
-                </theme.AlternateButton>
-                <theme.AlternateButton
-                  onClick={() => {
-                    window.location.reload()
-                  }}
-                  title="New Search"
-                >
-                  <theme.Icon icon="New" />
-                </theme.AlternateButton>
-              </div>
+                <theme.Icon icon="AutoUpdate" />
+              </theme.AlternateButton>
+              <theme.AlternateButton
+                onClick={() => {
+                  window.location.reload()
+                }}
+                title="New Search"
+              >
+                <theme.Icon icon="New" />
+              </theme.AlternateButton>
             </theme.ButtonGroup>
-          </div>
+          </Grid>
           <h1>Search Results</h1>
           <Tabs defaultValue="results" TabPanel={theme.Box}>
             <TabLabel value="results">
@@ -338,4 +332,4 @@ let GreyVestStory = theme => (
   </Awaiter>
 )
 
-export default () => <ThemeConsumer>{GreyVestStory}</ThemeConsumer>
+export default () => <ThemeConsumer>{GreyVestSearchBarStory}</ThemeConsumer>
