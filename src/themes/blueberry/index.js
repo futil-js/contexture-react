@@ -18,7 +18,7 @@ import {
   TextButton,
   NestedPicker,
   TagsInput,
-} from '../../greyVest'
+} from 'grey-vest'
 
 export default {
   AlternateButton: TextButton,

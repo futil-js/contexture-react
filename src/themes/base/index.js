@@ -14,7 +14,7 @@ import {
   Tag,
   TextHighlight,
   DateInput,
-} from '../../greyVest'
+} from 'grey-vest'
 
 // components used only for base theme
 import Icon from './Icon'

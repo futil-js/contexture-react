@@ -1,6 +1,6 @@
 import React from 'react'
 import { withNode } from '../../utils/hoc'
-import { Flex, ErrorList } from '../../greyVest'
+import { Flex, ErrorList } from 'grey-vest'
 
 let UnmappedNodeComponent = ({ node = {} }) => (
   // Min Height here is to align better in QueryBuilder

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex } from '../greyVest'
+import { Flex } from 'grey-vest'
 import { contexturifyWithoutLoader } from '../utils/hoc'
 import F from 'futil'
 import _ from 'lodash/fp'

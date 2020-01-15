@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil'
-import { Flex } from '../greyVest'
+import { Flex } from 'grey-vest'
 import { contexturify } from '../utils/hoc'
 
 const customStyles = {

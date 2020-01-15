@@ -5,7 +5,7 @@ import F from 'futil'
 import { observer } from 'mobx-react'
 import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
 import { ToggleFiltersButton, TreePauseButton } from './purgatory'
-import { LinkButton } from './greyVest'
+import { LinkButton } from 'grey-vest'
 import { withTheme } from './utils/theme'
 
 export let SearchTree = () => {}

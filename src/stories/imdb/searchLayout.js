@@ -13,7 +13,7 @@ import {
   SearchTree,
   ToggleFiltersHeader,
 } from '../..'
-import { Tab, TabContent, TabLabel, Tabs } from '../../greyVest'
+import { Tab, TabContent, TabLabel, Tabs, Column } from 'grey-vest'
 import {
   DateRangePicker,
   TypeMap,
@@ -22,7 +22,6 @@ import {
   ResultCount,
   PagedResultTable,
 } from '../../exampleTypes'
-import { Column } from '../../greyVest/ExpandableTable'
 import { ThemeConsumer } from '../../utils/theme'
 import { aspectWrapper } from '../../utils/futil'
 

@@ -5,8 +5,8 @@ import { observer } from 'mobx-react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { useLensObject } from '../utils/react'
 import { withNode } from '../utils/hoc'
-import { Box, ButtonGroup, Button } from '../greyVest'
-import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput'
+import { Box, ButtonGroup, Button } from 'grey-vest'
+import { TagsInput as ExpandableTagsInput, Tags } from 'grey-vest'
 import ExpandableTagsQuery from './ExpandableTagsQuery'
 
 let searchBarStyle = {

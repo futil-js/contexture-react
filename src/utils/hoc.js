@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
-import { StripedLoader } from '../greyVest'
+import { StripedLoader } from 'grey-vest'
 import { wrapDisplayName } from './react'
 import { withTheme } from './theme'
 

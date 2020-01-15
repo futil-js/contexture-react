@@ -23,7 +23,7 @@ import {
   TypeMap,
 } from '../../exampleTypes'
 import { ThemeProvider } from '../../utils/theme'
-import { Column } from '../../greyVest/ExpandableTable'
+import { Column } from 'grey-vest'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 

@@ -18,7 +18,7 @@ import {
   TextButton,
   TextHighlight,
   TextInput,
-} from '../../greyVest'
+} from 'grey-vest'
 
 //components used only for theme
 import PickerItem from './PickerItem'

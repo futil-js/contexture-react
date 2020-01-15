@@ -1,5 +1,5 @@
 import React from 'react'
-import GVStyle from '../greyVest/Style'
+import { Style as GVStyle } from 'grey-vest'
 
 export default () => (
   <>

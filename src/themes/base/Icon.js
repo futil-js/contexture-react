@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dynamic } from '../../greyVest'
+import { Dynamic } from 'grey-vest'
 
 let toIcon = symbol => props => <span {...props}>{symbol}</span>
 
