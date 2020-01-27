@@ -1,4 +1,5 @@
 import _ from 'lodash/fp'
+import F from 'futil'
 import React from 'react'
 import { contexturifyWithoutLoader } from './utils/hoc'
 import { newNodeFromField } from './utils/search'
@@ -15,13 +16,15 @@ let FilterAdder = ({
   path,
   fields,
   uniqueFields,
+  allowedDuplicateFields = [],
   Picker = ModalPicker,
   theme: { Icon },
 }) => {
+  let duplicateFields = _.without(allowedDuplicateFields, getGroupFields(node))
   let options = fieldsToOptions(fields)
-  if (uniqueFields) {
-    options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
-  }
+  if (uniqueFields)
+    options = _.reject(x => F.includes(x.field, duplicateFields))
+
   let Label = (
     <Flex justifyContent="center" alignItems="center">
       Add Custom Filter
