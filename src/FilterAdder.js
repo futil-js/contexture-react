@@ -1,5 +1,4 @@
 import _ from 'lodash/fp'
-import F from 'futil'
 import React from 'react'
 import { contexturifyWithoutLoader } from './utils/hoc'
 import { newNodeFromField } from './utils/search'
@@ -23,7 +22,7 @@ let FilterAdder = ({
   let duplicateFields = _.without(allowedDuplicateFields, getGroupFields(node))
   let options = fieldsToOptions(fields)
   if (uniqueFields)
-    options = _.reject(x => F.includes(x.field, duplicateFields))
+    options = _.reject(x => _.includes(x.field, duplicateFields), options)
 
   let Label = (
     <Flex justifyContent="center" alignItems="center">
