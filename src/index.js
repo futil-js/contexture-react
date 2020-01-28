@@ -26,7 +26,7 @@ export SearchLayout from './SearchLayout'
 export ToggleFiltersHeader from './ToggleFiltersHeader'
 
 // component library
-export * from 'grey-vest'
+export * from './greyVest'
 
 // themes
 export * as themes from './themes'
