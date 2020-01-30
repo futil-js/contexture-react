@@ -4,17 +4,10 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
-import Contexture, { updateSchemas } from '../utils/contexture'
-import { useTheme } from '../../../utils/theme'
-import {
-  FilterList,
-  Flex,
-  Awaiter,
-  SpacedList,
-  Grid,
-  componentForType,
-  FilterAdder,
-} from '../..'
+import Contexture, { updateSchemas } from './utils/contexture'
+import { useTheme } from '../../utils/theme'
+import { FilterList, componentForType, FilterAdder } from '../..'
+import { Flex, Awaiter, SpacedList, Grid } from 'grey-vest'
 import {
   ResultCount,
   CheckableResultTable,

@@ -3,9 +3,8 @@ import F from 'futil-js'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
-import Contexture, { updateSchemas } from '../utils/contexture'
+import Contexture, { updateSchemas } from './utils/contexture'
 import {
-  Awaiter,
   schemaFieldProps,
   componentForType,
   SearchLayout,
@@ -13,7 +12,15 @@ import {
   SearchTree,
   ToggleFiltersHeader,
 } from '../..'
-import { Tab, TabContent, TabLabel, Tabs, Column } from 'grey-vest'
+import {
+  Awaiter,
+  Tab,
+  TabContent,
+  TabLabel,
+  Tabs,
+  Column,
+  Grid,
+} from 'grey-vest'
 import {
   DateRangePicker,
   TypeMap,
