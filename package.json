@@ -114,7 +114,7 @@
   },
   "dependencies": {
     "futil": "^1.64.3",
-    "grey-vest": "^3.0.0-alpha.7",
+    "grey-vest": "^3.0.0-alpha.11",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
