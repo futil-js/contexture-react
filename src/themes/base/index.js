@@ -1,7 +1,6 @@
 import F from 'futil'
 import React from 'react'
 import { defaultProps } from 'recompose'
-
 // components exported from base component library
 import {
   BarChart,
@@ -22,6 +21,8 @@ import UnmappedNodeComponent from './UnmappedNodeComponent'
 
 import { defaultTheme } from '../../utils/theme'
 
+let native = defaultProps({ native: true })
+
 let theme = {
   AlternateButton: 'button',
   BarChart,
@@ -29,7 +30,7 @@ let theme = {
   Button: 'button',
   ButtonGroup: 'div',
   Checkbox: props => <input type="checkbox" {...props} />,
-  DateInput: defaultProps({ native: true })(DateInput),
+  DateInput: native(DateInput),
   UnmappedNodeComponent,
   Icon,
   Input: 'input',
@@ -39,8 +40,8 @@ let theme = {
   NestedPicker,
   PagerItem: ({ children }) => <span>{children}</span>,
   Popover,
-  RadioList: defaultProps({ native: true })(RadioList),
-  Select,
+  RadioList: native(RadioList),
+  Select: native(Select),
   Table: 'table',
   Tag,
   TagsInput,
