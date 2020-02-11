@@ -1,6 +1,5 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil'
 import { Grid, GridItem } from 'grey-vest'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { useLensObject } from '../../utils/react'
@@ -17,21 +16,15 @@ let TagsQuery = ({
   popoverState,
   actionWrapper,
   onAddTag = _.noop,
-  theme: { TagsInput, Icon, Tag, Popover },
+  theme: { TagsInput, Tag, AlternateButton, Popover },
   ...props
 }) => {
-  let newPopoverState = useLensObject({ open: false, tagOpen: '' })
+  let newPopoverState = useLensObject({ open: false })
   popoverState = popoverState || newPopoverState
 
-  let TagWithPopover = props => (
-    <Popover
-      Trigger={Tag}
-      isOpen={F.view(popoverState.tagOpen) === props.value}
-      onClose={F.sets('', popoverState.tagOpen)}
-      style={{ left: 0, top: 20 }}
-      {...props}
-    >
-      <TagActionsMenu tag={props.value} {...{ node, tree }} />
+  let TagWithPopover = tagProps => (
+    <Popover Trigger={Tag} triggerProps={tagProps}>
+      <TagActionsMenu tag={tagProps.value} {...{ node, tree }} />
     </Popover>
   )
 
@@ -52,7 +45,6 @@ let TagsQuery = ({
             })
             onAddTag(tag)
           }}
-          onTagClick={tag => F.set(tag, popoverState.tagOpen)}
           removeTag={tag => {
             tree.mutate(node.path, {
               tags: _.reject({ [tagValueField]: tag }, node.tags),
@@ -67,9 +59,9 @@ let TagsQuery = ({
       </GridItem>
       <GridItem place="center">
         <Popover
-          trigger={Icon}
+          side="right"
+          Trigger={AlternateButton}
           triggerProps={{ icon: 'TableColumnMenu' }}
-          open={popoverState.open}
         >
           <ActionsMenu
             {...{
