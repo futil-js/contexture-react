@@ -15,13 +15,13 @@ import {
   Box,
   ButtonGroup,
   Table,
-  TextButton,
+  IconButton,
   NestedPicker,
   TagsInput,
 } from 'grey-vest'
 
 export default {
-  AlternateButton: TextButton,
+  AlternateButton: IconButton,
   Box,
   Button,
   ButtonGroup,

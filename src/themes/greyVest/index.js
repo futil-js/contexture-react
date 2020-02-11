@@ -15,7 +15,7 @@ import {
   RadioList,
   Select,
   Table,
-  TextButton,
+  IconButton,
   TextHighlight,
   TextInput,
 } from 'grey-vest'
@@ -26,7 +26,7 @@ import TagsInput, { Tag } from './TagsInput'
 import Root from './Root'
 
 export default {
-  AlternateButton: TextButton,
+  AlternateButton: IconButton,
   Box,
   Button,
   ButtonGroup,

@@ -10,7 +10,7 @@ let ButtonRadio = ({
   style = {},
   theme: { Button },
 }) => (
-  <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
+  <Flex justifyContent="space-between" alignItems="baseline">
     {_.map(
       x => (
         <Button

@@ -1,13 +1,13 @@
 import React from 'react'
 import { withNode } from '../../utils/hoc'
-import { Flex, ErrorList } from 'grey-vest'
+import { Flex, ErrorText } from 'grey-vest'
 
 let UnmappedNodeComponent = ({ node = {} }) => (
   // Min Height here is to align better in QueryBuilder
   <Flex style={{ minHeight: '40px', alignItems: 'center' }}>
-    <ErrorList>
+    <ErrorText>
       Type <b>{node.type}</b> is not supported (for key <i>{node.key}</i>)
-    </ErrorList>
+    </ErrorText>
   </Flex>
 )
 
