@@ -5,7 +5,7 @@ import F from 'futil'
 import { observer } from 'mobx-react'
 import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
 import { ToggleFiltersButton, TreePauseButton } from './purgatory'
-import { LinkButton } from 'grey-vest'
+import { Link } from 'grey-vest'
 import { withTheme } from './utils/theme'
 
 export let SearchTree = () => {}
@@ -47,9 +47,9 @@ let BasicSearchFilters = ({ setMode, trees, children, BasicFilters }) => (
       </div>
     </Flex>
     <LabelledList list={trees} Component={BasicFilters} />
-    <LinkButton onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
+    <Link onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
       Switch to Advanced Search Builder
-    </LinkButton>
+    </Link>
   </div>
 )
 
@@ -57,9 +57,9 @@ let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
   <div>
     <Flex style={{ alignItems: 'center' }}>
       <h1>Filters</h1>
-      <LinkButton onClick={() => setMode('basic')}>
+      <Link onClick={() => setMode('basic')}>
         Back to Regular Search
-      </LinkButton>
+      </Link>
     </Flex>
     <LabelledList list={trees} Component={BuilderFilters} />
   </div>
