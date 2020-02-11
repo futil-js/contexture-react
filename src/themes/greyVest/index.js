@@ -7,7 +7,6 @@ import {
   ButtonGroup,
   Checkbox,
   DateInput,
-  Icon,
   DropdownItem,
   NestedPicker,
   Modal,
@@ -21,6 +20,7 @@ import {
 } from 'grey-vest'
 
 //components used only for theme
+import Icon from './Icon'
 import PickerItem from './PickerItem'
 import TagsInput, { Tag } from './TagsInput'
 import Root from './Root'
