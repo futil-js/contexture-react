@@ -9,7 +9,7 @@ import theme from '../stories/DemoControls'
 import TestTree from './stories/testTree'
 
 let formatYear = x => new Date(x).getUTCFullYear()
-import { Flex, SpacedList } from 'grey-vest'
+import { Flex, ColumnList } from 'grey-vest'
 import {
   Facet,
   Number,
@@ -34,11 +34,11 @@ storiesOf('ExampleTypes|Full Demo', module).add('Full Demo', () => {
           borderRadius: '10px',
         }}
       >
-        <SpacedList>
+        <ColumnList>
           <Query tree={tree} path={['query']} />
           <Flex>
             <div style={{ flex: 1 }}>
-              <SpacedList>
+              <ColumnList>
                 <TagsQuery tree={tree} path={['tagsQuery']} />
                 <Text tree={tree} path={['titleText']} />
                 <Facet
@@ -56,10 +56,10 @@ storiesOf('ExampleTypes|Full Demo', module).add('Full Demo', () => {
                   AutoComplete={AsyncSelect}
                   GeoCodeLocation={geoCodeLocation}
                 />
-              </SpacedList>
+              </ColumnList>
             </div>
             <div style={{ flex: 4 }}>
-              <SpacedList>
+              <ColumnList>
                 <DateHistogram
                   tree={tree}
                   path={['dateHistogram']}
@@ -74,10 +74,10 @@ storiesOf('ExampleTypes|Full Demo', module).add('Full Demo', () => {
                 >
                   <ResultTable tree={tree} path={['results']} infer />
                 </Flex>
-              </SpacedList>
+              </ColumnList>
             </div>
           </Flex>
-        </SpacedList>
+        </ColumnList>
       </div>
     </ThemeProvider>
   )

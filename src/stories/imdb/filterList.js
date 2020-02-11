@@ -9,7 +9,7 @@ import {
   FilterList,
   Flex,
   Awaiter,
-  SpacedList,
+  ColumnList,
   componentForType,
   FilterAdder,
 } from '../..'
@@ -130,7 +130,7 @@ const Story = inject(() => {
     <DarkBox>
       <Awaiter promise={schemas}>
         {schemas => (
-          <SpacedList>
+          <ColumnList>
             <Query tree={tree} path={['searchRoot', 'searchQuery']} />
             <Flex>
               <div style={{ flex: 1 }}>
@@ -220,7 +220,7 @@ const Story = inject(() => {
                 </div>
               </div>
             </Flex>
-          </SpacedList>
+          </ColumnList>
         )}
       </Awaiter>
     </DarkBox>

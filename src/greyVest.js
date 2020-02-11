@@ -32,7 +32,7 @@ export {
   Portal,
   RadioList,
   Select,
-  SpacedList,
+  ColumnList,
   StripedLoader,
   Tab,
   TabContent,
