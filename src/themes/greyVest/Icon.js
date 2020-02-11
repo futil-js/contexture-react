@@ -14,7 +14,7 @@ let iconMap = {
   FilterAdd: 'filter_list',
   FilterListExpand: 'keyboard_arrow_down',
   FilterListCollapse: 'keyboard_arrow_up',
-  TableColumnMenu: () => <IconButton icon="more_vert" />,
+  TableColumnMenu: "more_vert" ,
   TreePause: 'unfold_less',
   TreeUnpause: 'unfold_more',
   PreviousPage: 'chevron_left',

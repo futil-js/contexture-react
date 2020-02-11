@@ -1,4 +1,4 @@
-import { defaultProps } from 'recompose'
+import { defaultProps } from '../../utils/react'
 
 // components exported from component library
 import {
@@ -14,6 +14,8 @@ import {
   RadioList,
   Select,
   Table,
+  Tag,
+  TagsInput,
   IconButton,
   TextHighlight,
   TextInput,
@@ -22,13 +24,12 @@ import {
 //components used only for theme
 import Icon from './Icon'
 import PickerItem from './PickerItem'
-import TagsInput, { Tag } from './TagsInput'
 import Root from './Root'
 
 export default {
-  AlternateButton: IconButton,
+  AlternateButton: defaultProps({ Icon })(IconButton),
   Box,
-  Button,
+  Button: defaultProps({ Icon })(Button),
   ButtonGroup,
   Checkbox,
   DateInput,
