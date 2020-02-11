@@ -1,4 +1,5 @@
 import React from 'react'
+import { theme } from 'grey-vest'
 
 let filterListMargin = 12
 
@@ -10,6 +11,10 @@ theme.
 export default () => (
   <style>
     {`
+      body {
+        background-color: ${theme.colors.pageBackground};
+      }
+
       /* Tags Query */
 
       .tags-query {

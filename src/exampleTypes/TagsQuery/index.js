@@ -17,23 +17,22 @@ let TagsQuery = ({
   popoverState,
   actionWrapper,
   onAddTag = _.noop,
-  theme: { Icon, TagsInput, Tag, Popover },
+  theme: { TagsInput, Icon, Tag, Popover },
   ...props
 }) => {
   let newPopoverState = useLensObject({ open: false, tagOpen: '' })
   popoverState = popoverState || newPopoverState
 
   let TagWithPopover = props => (
-    <>
-      <Popover
-        isOpen={F.view(popoverState.tagOpen) === props.value}
-        onClose={F.sets('', popoverState.tagOpen)}
-        style={{ left: 0, top: 20 }}
-      >
-        <TagActionsMenu tag={props.value} {...{ node, tree }} />
-      </Popover>
-      <Tag {...props} />
-    </>
+    <Popover
+      Trigger={Tag}
+      isOpen={F.view(popoverState.tagOpen) === props.value}
+      onClose={F.sets('', popoverState.tagOpen)}
+      style={{ left: 0, top: 20 }}
+      {...props}
+    >
+      <TagActionsMenu tag={props.value} {...{ node, tree }} />
+    </Popover>
   )
 
   return (
@@ -67,10 +66,11 @@ let TagsQuery = ({
         />
       </GridItem>
       <GridItem place="center">
-        <div onClick={F.on(popoverState.open)}>
-          <Icon icon="TableColumnMenu" />
-        </div>
-        <Popover open={popoverState.open} style={{ right: 0 }}>
+        <Popover
+          trigger={Icon}
+          triggerProps={{ icon: 'TableColumnMenu' }}
+          open={popoverState.open}
+        >
           <ActionsMenu
             {...{
               node,
