@@ -47,14 +47,14 @@ export let ThemeConsumer = ({ name, children, theme }) => {
 }
 
 export let withNamedTheme = name => Component => {
-  let themed = ({ theme, ...props }) => {
+  let themed = React.forwardRef(({ theme, ...props }, ref) => {
     let newTheme = useTheme(name, theme)
     return (
       <ThemeContext.Provider value={newTheme}>
-        <Component {...props} theme={newTheme} />
+        <Component {...props} theme={newTheme} ref={ref} />
       </ThemeContext.Provider>
     )
-  }
+  })
   themed.displayName = `withTheme${name ? `("${name}")` : ''}(${getDisplayName(
     Component
   )})`
