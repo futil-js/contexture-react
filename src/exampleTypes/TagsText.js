@@ -1,19 +1,20 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil'
+import { Flex } from 'grey-vest'
 import { contexturify } from '../utils/hoc'
 import { bgJoin } from '../styles/generic'
 
 import TagsJoinPicker, { tagToGroupJoin } from './TagsJoinPicker'
 
 let operatorOptions = F.autoLabelOptions([
-  { value: 'containsWord', label: 'Field Contains' },
-  { value: 'wordStartsWith', label: 'Word Starts With' },
-  { value: 'wordEndsWith', label: 'Word Ends With' },
-  { value: 'containsExact', label: 'Word Is Exactly' },
-  { value: 'startsWith', label: 'Field Starts With' },
-  { value: 'endsWith', label: 'Field Ends With' },
-  { value: 'is', label: 'Field Is Exactly' },
+  { value: 'containsWord', label: 'Field contains' },
+  { value: 'wordStartsWith', label: 'Word starts with' },
+  { value: 'wordEndsWith', label: 'Word ends with' },
+  { value: 'containsExact', label: 'Word is exactly' },
+  { value: 'startsWith', label: 'Field starts with' },
+  { value: 'endsWith', label: 'Field ends with' },
+  { value: 'is', label: 'Field is exactly' },
   // { value: 'isNot', label: 'Is Not' },
   // { value: 'contains', label: 'Contains'},
   // { value: 'doesNotContain', label: 'Does Not Contain'}
@@ -22,16 +23,15 @@ let operatorOptions = F.autoLabelOptions([
 let Text = ({
   tree,
   node,
-  placeholder,
+  placeholder = 'Search...',
   theme: { Select, TagsInput, Popover },
 }) => {
   let open = React.useState(false)
   let [selectedTag, setSelectedTag] = React.useState(null)
   return (
-    <div className="contexture-text">
+    <Flex className="contexture-text" column gap={1}>
       <Select
-        value={node.operator}
-        onChange={e => tree.mutate(node.path, { operator: e.target.value })}
+        {...F.domLens.value(tree.lens(node.path, 'operator'))}
         options={operatorOptions}
       />
       <TagsInput
@@ -56,7 +56,7 @@ let Text = ({
       <Popover open={open}>
         <TagsJoinPicker tag={selectedTag} node={node} tree={tree} />
       </Popover>
-    </div>
+    </Flex>
   )
 }
 
