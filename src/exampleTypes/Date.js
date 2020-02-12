@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex } from 'grey-vest'
+import { ColumnList, FormField, Flex } from 'grey-vest'
 import { contexturifyWithoutLoader } from '../utils/hoc'
 import F from 'futil'
 import _ from 'lodash/fp'
@@ -140,11 +140,11 @@ let DateComponent = ({
   )
 
   return (
-    <div>
+    <ColumnList gap={1}>
       <RadioList
+        columnCount={2}
         options={F.autoLabelOptions(['exact', 'rolling'])}
         value={node.useDateMath ? 'rolling' : 'exact'}
-        style={{ marginBottom: 10 }}
         onChange={mode => {
           tree.mutate(
             node.path,
@@ -162,20 +162,7 @@ let DateComponent = ({
           )
         }}
       />
-      {!node.useDateMath && (
-        <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-          <DateInput
-            value={node.from}
-            onChange={date => tree.mutate(node.path, { from: date })}
-          />
-          <div>-</div>
-          <DateInput
-            value={node.to}
-            onChange={date => tree.mutate(node.path, { to: date })}
-          />
-        </Flex>
-      )}
-      {node.useDateMath && (
+      {node.useDateMath ? (
         <Select
           value={rollingRangeToString(node)}
           onChange={e =>
@@ -190,8 +177,25 @@ let DateComponent = ({
             rollingOpts
           )}
         />
+      ) : (
+        <Flex wrap gap={1}>
+          <FormField
+            style={{ flex: 1 }}
+            component={DateInput}
+            label="Start date"
+            value={node.from}
+            onChange={date => tree.mutate(node.path, { from: date })}
+          />
+          <FormField
+            style={{ flex: 1 }}
+            component={DateInput}
+            label="End date"
+            value={node.to}
+            onChange={date => tree.mutate(node.path, { to: date })}
+          />
+        </Flex>
       )}
-    </div>
+    </ColumnList>
   )
 }
 

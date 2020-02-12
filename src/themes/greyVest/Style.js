@@ -76,11 +76,6 @@ export default () => (
       .contexture-facet-cardinality {
         margin-top: 10px;
       }
-      .contexture-facet > label > div {
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
 
       /* Number ExampleType */
 
