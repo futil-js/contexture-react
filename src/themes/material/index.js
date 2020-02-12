@@ -24,7 +24,7 @@ import Box from './Box'
 export default {
   Box,
   Button: defaultProps({ variant: 'contained' })(Button),
-  AlternateButton: Button,
+  AlternateButton: Icon,
   Checkbox,
   DateInput: defaultProps({ variant: 'inline', disableToolbar: true })(
     KeyboardDatePicker

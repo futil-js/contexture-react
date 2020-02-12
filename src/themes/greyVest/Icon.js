@@ -14,7 +14,7 @@ let iconMap = {
   FilterAdd: 'filter_list',
   FilterListExpand: 'keyboard_arrow_down',
   FilterListCollapse: 'keyboard_arrow_up',
-  TableColumnMenu: "more_vert" ,
+  TableColumnMenu: 'more_vert',
   TreePause: 'unfold_less',
   TreeUnpause: 'unfold_more',
   PreviousPage: 'chevron_left',
@@ -33,8 +33,8 @@ let iconMap = {
   Expand: 'keyboard_arrow_down',
 }
 
-let Icon = ({ icon, ...props }) => (
-  <GVIcon icon={F.alias(icon, iconMap)} {...props} />
-)
+let Icon = React.forwardRef(({ icon, ...props }, ref) => (
+  <GVIcon icon={F.alias(icon, iconMap)} {...{ ref, ...props }} />
+))
 
 export default Icon
