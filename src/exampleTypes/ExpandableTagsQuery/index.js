@@ -16,7 +16,7 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
     <div style={F.view(collapse) ? collapsedStyle : {}}>
       <div ref={measureRef}>
         <TagsQuery
-          flip
+          flipped
           hideInput={F.view(collapse) && !_.isEmpty(props.node.tags)}
           {...props}
         />
