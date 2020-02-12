@@ -100,6 +100,13 @@ let FacetOptionsFilter = _.flow(
   )
 })
 
+let getOptions = node =>
+  _.flow(
+    _.get('context.options'),
+    _.partition(x => _.includes(x.name, node.values)),
+    _.flatten
+  )(node)
+
 let Facet = ({
   tree,
   node,
@@ -110,43 +117,38 @@ let Facet = ({
   display = x => x,
   displayBlank = () => <i>Not Specified</i>,
   formatCount = x => x,
-  theme: { Checkbox, RadioList },
-}) => (
-  <div className="contexture-facet">
-    <RadioList
-      value={node.mode || 'include'} // Fix by changing defaults in client example type
-      onChange={mode => tree.mutate(node.path, { mode })}
-      options={F.autoLabelOptions(['include', 'exclude'])}
-    />
-    {!hide.facetFilter && <FacetOptionsFilter tree={tree} node={node} />}
-    <SelectAll node={node} tree={tree} />
-    {_.flow(
-      _.partition(x => _.includes(x.name, node.values)),
-      _.flatten,
-      _.map(({ name, count }) => {
-        let lens = tree.lens(node.path, 'values')
-        return (
-          <label
-            key={name}
-            style={{
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              display: 'flex',
-              cursor: 'pointer',
-            }}
-            title={`${display(name)} : ${formatCount(count)}`}
-          >
-            <Checkbox {...F.domLens.checkboxValues(name, lens)} />
-            <div style={{ flex: 2, padding: '0 5px' }}>
-              {display(name) || displayBlank()}
-            </div>
-            {!hide.counts && <div>{formatCount(count)}</div>}
-          </label>
-        )
-      })
-    )(_.get('context.options', node))}
-    <Cardinality {...{ node, tree }} />
-  </div>
-)
+  theme: { CheckboxList, RadioList },
+}) => {
+  let lens = tree.lens(node.path, 'values')
+  let options = getOptions(node)
+  return (
+    <div className="contexture-facet">
+      <RadioList
+        value={node.mode || 'include'} // Fix by changing defaults in client example type
+        onChange={mode => tree.mutate(node.path, { mode })}
+        options={F.autoLabelOptions(['include', 'exclude'])}
+        columnCount={2}
+      />
+      {!hide.facetFilter && <FacetOptionsFilter tree={tree} node={node} />}
+      <SelectAll node={node} tree={tree} />
+      <CheckboxList
+        options={_.map(
+          ({ name, count }) => ({
+            label: (
+              <Flex justifyContent="space-between" gap="xs">
+                <span>{display(name) || displayBlank()}</span>
+                <span>{!hide.counts && formatCount(count)}</span>
+              </Flex>
+            ),
+            value: name,
+          }),
+          options
+        )}
+        {...F.domLens.value(lens)}
+      />
+      <Cardinality {...{ node, tree }} />
+    </div>
+  )
+}
 
 export default contexturify(Facet)

@@ -1,9 +1,9 @@
 import F from 'futil'
 import React from 'react'
-import { defaultProps } from 'recompose'
 // components exported from base component library
 import {
   BarChart,
+  CheckboxList,
   Modal,
   NestedPicker,
   Popover,
@@ -19,9 +19,12 @@ import {
 import Icon from './Icon'
 import UnmappedNodeComponent from './UnmappedNodeComponent'
 
+import { defaultProps } from '../../utils/react'
 import { defaultTheme } from '../../utils/theme'
 
 let native = defaultProps({ native: true })
+
+let Checkbox = props => <input type="checkbox" {...props} />
 
 let theme = {
   AlternateButton: 'button',
@@ -29,11 +32,13 @@ let theme = {
   Box: 'div',
   Button: 'button',
   ButtonGroup: 'div',
-  Checkbox: props => <input type="checkbox" {...props} />,
+  Checkbox,
+  CheckboxList: defaultProps({ Checkbox })(CheckboxList),
   DateInput: native(DateInput),
   UnmappedNodeComponent,
   Icon,
   Input: 'input',
+  Dropdown: Popover,
   DropdownItem: 'li',
   Modal,
   NumberInput: props => <input type="number" {...props} />,

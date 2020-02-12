@@ -39,15 +39,8 @@ export default () => (
         outline: none;
         font-size: 16px;
         font-family: Lato;
-        
         border: solid 2px #EDEDED;
         background: #fff;
-        
-        display: block;
-        width: 100%;
-        
-        box-sizing: border-box;
-        height: 40px;
       }
       
       select, input {
