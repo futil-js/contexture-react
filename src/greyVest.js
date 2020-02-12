@@ -21,7 +21,7 @@ export {
   Grid,
   GridItem,
   Icon,
-  Link,
+  LinkText,
   Modal,
   NestedPicker,
   Pager,
