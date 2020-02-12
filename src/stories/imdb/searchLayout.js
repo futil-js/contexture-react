@@ -309,12 +309,11 @@ let GreyVestSearchBarStory = theme => (
                 criteria={['root', 'criteria']}
                 criteriaField="genres"
                 path={['root', 'genreScores']}
-                tableAttrs={{ className: 'gv-table' }}
                 sizeOptions={[10, 25, 50]}
                 getValue="key"
               >
-                <Column field="key" label="Genre" />
-                <Column field="count" label="Found" />
+                <Column field="key" label="Genre" enableSort />
+                <Column field="count" label="Found" enableSort />
                 <Column
                   field="key"
                   label=""
@@ -322,7 +321,7 @@ let GreyVestSearchBarStory = theme => (
                   collapse={{ display: x => `Hide results for ${x} -` }}
                 >
                   {x => (
-                    <div style={{ marginBottom: 25 }}>
+                    <div>
                       <PagedResultTable
                         tree={termDetailsTree(x)}
                         path={['detailRoot', 'results']}

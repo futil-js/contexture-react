@@ -18,7 +18,7 @@ let SimpleFilter = _.flow(
 )(({ theme: { TextInput }, ...props }) => (
   <Flex style={{ ...toolBarStyle, width: '75%' }}>
     <SimpleLabel text="Filter:" />
-    <TextInput {...props} />
+    <TextInput style={{ flex: 1 }} {...props} />
   </Flex>
 ))
 
@@ -61,7 +61,7 @@ let TermsStatsTable = ({
   ...props
 }) => (
   <div>
-    <Flex style={{ ...toolBarStyle, margin: 40, marginBottom: 0 }}>
+    <Flex alignItems="center" justifyContent="space-between">
       <SimpleFilter {...F.domLens.value(tree.lens(node.path, 'filter'))} />
       <SelectSize node={node} tree={tree} options={sizeOptions} />
     </Flex>
