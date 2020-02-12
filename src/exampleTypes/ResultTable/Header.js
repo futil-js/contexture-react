@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
-import { Dynamic, Flex } from 'grey-vest'
+import { Dynamic, Flex, Popover } from 'grey-vest'
 import { withTheme } from '../../utils/theme'
 
 const moveColumn = (
@@ -25,10 +25,6 @@ const moveColumn = (
       includes
     ),
   })
-}
-
-let popoverStyle = {
-  userSelect: 'none',
 }
 
 let HeaderCellDefault = _.flow(
@@ -55,7 +51,7 @@ let Header = ({
   theme: {
     DropdownItem,
     Icon,
-    Dropdown,
+    AlternateButton,
     Modal,
     NestedPicker,
     UnmappedNodeComponent,
@@ -86,117 +82,126 @@ let Header = ({
     F.flip(filtering)()
   }
   let Label = label
+
+  let triggerChildren = (
+    <Flex alignItems="center" gap="xs">
+      <span
+        onClick={F.flip(popover)}
+        style={{ cursor: hideMenu ? 'default' : 'pointer' }}
+      >
+        {_.isFunction(label) ? <Label /> : label}
+      </span>
+      {field === node.sortField && (
+        <Icon
+          icon={node.sortDir === 'asc' ? 'SortAscending' : 'SortDescending'}
+        />
+      )}
+      {!hideMenu && <AlternateButton small icon="TableColumnMenu" />}
+    </Flex>
+  )
+
   return (
-    <HeaderCell
-      style={{ cursor: 'pointer' }}
-      activeFilter={_.get('hasValue', filterNode)}
-    >
-      <Flex alignItems="center">
-        <span onClick={F.flip(popover)}>
-          {_.isFunction(label) ? <Label /> : label}
-        </span>
-        {field === node.sortField && (
-          <Icon
-            icon={node.sortDir === 'asc' ? 'SortAscending' : 'SortDescending'}
-          />
-        )}
-        {hideMenu ? null : (
-          <Dropdown
-            trigger="icon"
-            open={{
-              get: () => F.view(popover),
-              set(x) {
-                // Only turn off the popover if adding is not true
-                if (!F.view(adding) && _.isBoolean(x)) F.set(x)(popover)
-              },
-            }}
-            style={popoverStyle}
+    <HeaderCell activeFilter={_.get('hasValue', filterNode)}>
+      {hideMenu ? (
+        triggerChildren
+      ) : (
+        <Popover
+          Trigger="div"
+          label={triggerChildren}
+          popupProps={{ padding: 0 }}
+          open={{
+            get: () => F.view(popover),
+            set(x) {
+              // Only turn off the popover if adding is not true
+              if (!F.view(adding) && _.isBoolean(x)) F.set(x)(popover)
+            },
+          }}
+          style={{ userSelect: 'none' }}
+        >
+          {!disableSort && (
+            <DropdownItem
+              onClick={() => {
+                F.off(popover)()
+                mutate({ sortField, sortDir: 'asc' })
+              }}
+              icon={<Icon icon="SortAscending" />}
+            >
+              Sort Ascending
+            </DropdownItem>
+          )}
+          {!disableSort && (
+            <DropdownItem
+              onClick={() => {
+                F.off(popover)()
+                mutate({ sortField, sortDir: 'desc' })
+              }}
+              icon={<Icon icon="SortDescending" />}
+            >
+              Sort Descending
+            </DropdownItem>
+          )}
+          <DropdownItem
+            onClick={() =>
+              moveColumn(mutate, i => i - 1, field, visibleFields, includes)
+            }
+            icon={<Icon icon="MoveLeft" />}
           >
-            {!disableSort && (
-              <DropdownItem
-                onClick={() => {
-                  F.off(popover)()
-                  mutate({ sortField, sortDir: 'asc' })
-                }}
-                icon={<Icon icon="SortAscending" />}
-              >
-                Sort Ascending
-              </DropdownItem>
-            )}
-            {!disableSort && (
-              <DropdownItem
-                onClick={() => {
-                  F.off(popover)()
-                  mutate({ sortField, sortDir: 'desc' })
-                }}
-                icon={<Icon icon="SortDescending" />}
-              >
-                Sort Descending
-              </DropdownItem>
-            )}
+            Move Left
+          </DropdownItem>
+          <DropdownItem
+            onClick={() =>
+              moveColumn(mutate, i => i + 1, field, visibleFields, includes)
+            }
+            icon={<Icon icon="MoveRight" />}
+          >
+            Move Right
+          </DropdownItem>
+          <DropdownItem
+            onClick={() => mutate({ include: _.without([field], includes) })}
+            icon={<Icon icon="RemoveColumn" />}
+          >
+            Remove Column
+          </DropdownItem>
+          {!!addOptions.length && (
             <DropdownItem
-              onClick={() =>
-                moveColumn(mutate, i => i - 1, field, visibleFields, includes)
-              }
-              icon={<Icon icon="MoveLeft" />}
+              onClick={F.on(adding)}
+              icon={<Icon icon="AddColumn" />}
             >
-              Move Left
+              Add Column
             </DropdownItem>
-            <DropdownItem
-              onClick={() =>
-                moveColumn(mutate, i => i + 1, field, visibleFields, includes)
-              }
-              icon={<Icon icon="MoveRight" />}
-            >
-              Move Right
-            </DropdownItem>
-            <DropdownItem
-              onClick={() => mutate({ include: _.without([field], includes) })}
-              icon={<Icon icon="RemoveColumn" />}
-            >
-              Remove Column
-            </DropdownItem>
-            {!!addOptions.length && (
+          )}
+          {criteria && (typeDefault || filterNode) && !disableFilter && (
+            <div>
               <DropdownItem
-                onClick={F.on(adding)}
-                icon={<Icon icon="AddColumn" />}
-              >
-                Add Column
-              </DropdownItem>
-            )}
-            {criteria && (typeDefault || filterNode) && !disableFilter && (
-              <div>
-                <DropdownItem
-                  onClick={filter}
-                  icon={
-                    <Icon
-                      icon={
-                        filterNode
-                          ? F.view(filtering)
-                            ? 'FilterCollapse'
-                            : 'FilterExpand'
-                          : 'FilterAdd'
-                      }
-                    />
-                  }
-                >
-                  Filter
-                </DropdownItem>
-                {F.view(filtering) && filterNode && !filterNode.paused && (
-                  <Dynamic
-                    {...{
-                      component: UnmappedNodeComponent,
-                      tree,
-                      path: _.toArray(filterNode.path),
-                      ...mapNodeToProps(filterNode, fields),
-                    }}
+                onClick={filter}
+                icon={
+                  <Icon
+                    icon={
+                      filterNode
+                        ? F.view(filtering)
+                          ? 'FilterCollapse'
+                          : 'FilterExpand'
+                        : 'FilterAdd'
+                    }
                   />
-                )}
-              </div>
-            )}
-          </Dropdown>
-        )}
-      </Flex>
+                }
+              >
+                Filter
+              </DropdownItem>
+              {F.view(filtering) && filterNode && !filterNode.paused && (
+                <Dynamic
+                  {...{
+                    component: UnmappedNodeComponent,
+                    tree,
+                    path: _.toArray(filterNode.path),
+                    ...mapNodeToProps(filterNode, fields),
+                  }}
+                />
+              )}
+            </div>
+          )}
+        </Popover>
+      )}
       <Modal open={adding}>
         <NestedPicker
           options={addOptions}
