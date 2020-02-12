@@ -5,8 +5,8 @@ import F from 'futil'
 let iconMap = {
   SortAscending: 'expand_less',
   SortDescending: 'expand_more',
-  MoveLeft: 'chevron_left',
-  MoveRight: 'chevron_right',
+  MoveLeft: 'arrow_back',
+  MoveRight: 'arrow_forward',
   RemoveColumn: 'remove',
   AddColumn: 'add',
   FilterExpand: 'filter_list',
