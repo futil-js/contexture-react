@@ -3,8 +3,9 @@ import _ from 'lodash/fp'
 import * as F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
-import { Dynamic, Flex, Popover } from 'grey-vest'
+import { Dynamic, Flex, Popover, Divider } from 'grey-vest'
 import { withTheme } from '../../utils/theme'
+import { useLensObject } from '../../utils/react'
 
 const moveColumn = (
   mutate,
@@ -57,9 +58,7 @@ let Header = ({
     UnmappedNodeComponent,
   },
 }) => {
-  let popover = React.useState(false)
-  let adding = React.useState(false)
-  let filtering = React.useState(false)
+  let state = useLensObject({ popup: true, adding: false, filtering: false })
   let {
     disableFilter,
     disableSort,
@@ -79,18 +78,17 @@ let Header = ({
       criteria &&
       _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
     tree.mutate(filterNode.path, { paused: false })
-    F.flip(filtering)()
+    F.flip(state.filtering)()
   }
   let Label = label
 
   let triggerChildren = (
-    <Flex alignItems="center" gap="xs">
-      <span
-        onClick={F.flip(popover)}
-        style={{ cursor: hideMenu ? 'default' : 'pointer' }}
-      >
-        {_.isFunction(label) ? <Label /> : label}
-      </span>
+    <Flex
+      alignItems="center"
+      gap="xs"
+      style={{ cursor: hideMenu ? 'default' : 'pointer' }}
+    >
+      <span style={{ flex: 0 }}>{_.isFunction(label) ? <Label /> : label}</span>
       {field === node.sortField && (
         <Icon
           icon={node.sortDir === 'asc' ? 'SortAscending' : 'SortDescending'}
@@ -109,36 +107,28 @@ let Header = ({
           Trigger="div"
           label={triggerChildren}
           popupProps={{ padding: 0 }}
-          open={{
-            get: () => F.view(popover),
-            set(x) {
-              // Only turn off the popover if adding is not true
-              if (!F.view(adding) && _.isBoolean(x)) F.set(x)(popover)
-            },
-          }}
           style={{ userSelect: 'none' }}
         >
           {!disableSort && (
-            <DropdownItem
-              onClick={() => {
-                F.off(popover)()
-                mutate({ sortField, sortDir: 'asc' })
-              }}
-              icon={<Icon icon="SortAscending" />}
-            >
-              Sort Ascending
-            </DropdownItem>
-          )}
-          {!disableSort && (
-            <DropdownItem
-              onClick={() => {
-                F.off(popover)()
-                mutate({ sortField, sortDir: 'desc' })
-              }}
-              icon={<Icon icon="SortDescending" />}
-            >
-              Sort Descending
-            </DropdownItem>
+            <>
+              <DropdownItem
+                onClick={() => {
+                  mutate({ sortField, sortDir: 'asc' })
+                }}
+                icon={<Icon icon="SortAscending" />}
+              >
+                Sort ascending
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => {
+                  mutate({ sortField, sortDir: 'desc' })
+                }}
+                icon={<Icon icon="SortDescending" />}
+              >
+                Sort descending
+              </DropdownItem>
+              <Divider />
+            </>
           )}
           <DropdownItem
             onClick={() =>
@@ -146,7 +136,7 @@ let Header = ({
             }
             icon={<Icon icon="MoveLeft" />}
           >
-            Move Left
+            Move left
           </DropdownItem>
           <DropdownItem
             onClick={() =>
@@ -154,31 +144,32 @@ let Header = ({
             }
             icon={<Icon icon="MoveRight" />}
           >
-            Move Right
+            Move right
           </DropdownItem>
           <DropdownItem
             onClick={() => mutate({ include: _.without([field], includes) })}
             icon={<Icon icon="RemoveColumn" />}
           >
-            Remove Column
+            Remove column
           </DropdownItem>
           {!!addOptions.length && (
             <DropdownItem
-              onClick={F.on(adding)}
+              onClick={F.on(state.adding)}
               icon={<Icon icon="AddColumn" />}
             >
-              Add Column
+              Add column
             </DropdownItem>
           )}
           {criteria && (typeDefault || filterNode) && !disableFilter && (
-            <div>
+            <>
+              <Divider />
               <DropdownItem
                 onClick={filter}
                 icon={
                   <Icon
                     icon={
                       filterNode
-                        ? F.view(filtering)
+                        ? F.view(state.filtering)
                           ? 'FilterCollapse'
                           : 'FilterExpand'
                         : 'FilterAdd'
@@ -186,29 +177,31 @@ let Header = ({
                   />
                 }
               >
-                Filter
+                Filter column
               </DropdownItem>
-              {F.view(filtering) && filterNode && !filterNode.paused && (
-                <Dynamic
-                  {...{
-                    component: UnmappedNodeComponent,
-                    tree,
-                    path: _.toArray(filterNode.path),
-                    ...mapNodeToProps(filterNode, fields),
-                  }}
-                />
+              {F.view(state.filtering) && filterNode && !filterNode.paused && (
+                <div style={{ padding: '4px 12px' }}>
+                  <Dynamic
+                    {...{
+                      component: UnmappedNodeComponent,
+                      tree,
+                      path: _.toArray(filterNode.path),
+                      ...mapNodeToProps(filterNode, fields),
+                    }}
+                  />
+                </div>
               )}
-            </div>
+            </>
           )}
         </Popover>
       )}
-      <Modal open={adding}>
+      <Modal open={state.adding}>
         <NestedPicker
           options={addOptions}
           onChange={field => {
             if (!_.contains(field, includes))
               mutate({ include: [...includes, field] })
-            F.off(adding)()
+            F.off(state.adding)()
           }}
         />
       </Modal>
