@@ -1,5 +1,5 @@
 import React from 'react'
-import { ColumnList, FormField, Flex } from 'grey-vest'
+import { ColumnList, FormField } from 'grey-vest'
 import { contexturifyWithoutLoader } from '../utils/hoc'
 import F from 'futil'
 import _ from 'lodash/fp'
@@ -178,7 +178,7 @@ let DateComponent = ({
           )}
         />
       ) : (
-        <Flex wrap gap={1}>
+        <ColumnList columnCount={2} columnGap={1} gap={1}>
           <FormField
             style={{ flex: 1 }}
             component={DateInput}
@@ -193,7 +193,7 @@ let DateComponent = ({
             value={node.to}
             onChange={date => tree.mutate(node.path, { to: date })}
           />
-        </Flex>
+        </ColumnList>
       )}
     </ColumnList>
   )
