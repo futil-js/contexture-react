@@ -3,7 +3,6 @@ import React from 'react'
 // components exported from base component library
 import {
   BarChart,
-  CheckboxList,
   Modal,
   NestedPicker,
   Popover,
@@ -16,6 +15,7 @@ import {
 } from 'grey-vest'
 
 // components used only for base theme
+import CheckboxList from './CheckboxList'
 import Icon from './Icon'
 import UnmappedNodeComponent from './UnmappedNodeComponent'
 
@@ -33,7 +33,7 @@ let theme = {
   Button: 'button',
   ButtonGroup: 'div',
   Checkbox,
-  CheckboxList: defaultProps({ Checkbox })(CheckboxList),
+  CheckboxList,
   DateInput: native(DateInput),
   UnmappedNodeComponent,
   Icon,
