@@ -52,6 +52,9 @@ let theme = {
   TagsInput,
   TextHighlight,
   TextInput: 'input',
+  Text: 'span',
+  Title: 'h1',
+  Subtitle: 'h2',
 }
 // To add `withTheme` components to the default theme, we have to mutate them onto
 // the theme object after it's declared, because importing them into `utils/theme`

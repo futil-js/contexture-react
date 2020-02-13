@@ -21,6 +21,9 @@ import {
   IconButton,
   TextHighlight,
   TextInput,
+  Text,
+  Title,
+  Subtitle
 } from 'grey-vest'
 
 //components used only for theme
@@ -51,4 +54,7 @@ export default {
   Select,
   Table,
   TextHighlight,
+  Text,
+  Title,
+  Subtitle
 }
