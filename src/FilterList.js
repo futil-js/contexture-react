@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
-import { Flex, Dynamic } from 'grey-vest'
+import { Flex, Dynamic, Popover, Divider } from 'grey-vest'
 import { fieldsToOptions } from './FilterAdder'
 import { contexturifyWithoutLoader } from './utils/hoc'
 import { bdJoin } from './styles/generic'
@@ -24,15 +24,13 @@ export let FilterActions = _.flow(
     node,
     tree,
     fields,
-    popover,
-    theme: { DropdownItem, Popover, Modal, NestedPicker },
+    theme: { DropdownItem, AlternateButton, Modal, NestedPicker },
   }) => {
     let modal = React.useState(false)
     let typeOptions = _.flow(
       _.getOr([], [node.field, 'typeOptions']),
       _.without([node.type])
     )(fields)
-
     return (
       <>
         <Modal open={modal}>
@@ -44,10 +42,14 @@ export let FilterActions = _.flow(
             }}
           />
         </Modal>
-        <Popover open={popover} className="filter-actions-popover">
+        <Popover
+          Trigger={AlternateButton}
+          popupProps={{ padding: 0 }}
+          triggerProps={{ small: true, icon: 'TableColumnMenu', onClick: e => e.stopPropagation() }}
+        >
           {!_.isEmpty(typeOptions) && (
             <>
-              <DropdownItem className="filter-actions-selected-type">
+              <DropdownItem>
                 Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
               </DropdownItem>
               {_.map(
@@ -66,12 +68,12 @@ export let FilterActions = _.flow(
                 ),
                 getTypeLabelOptions(tree, typeOptions)
               )}
-              <div className="filter-actions-separator" />
+              <Divider />
             </>
           )}
           <DropdownItem onClick={F.on(modal)}>Pick Field</DropdownItem>
           {/* If only contexture-client diffed the tree before sending a request... */}
-          {(node.hasValue || false) && (
+          {!!node.hasValue && (
             <DropdownItem onClick={() => tree.clear(node.path)}>
               Clear Filter
             </DropdownItem>
@@ -89,55 +91,29 @@ export let Label = _.flow(
   setDisplayName('Label'),
   observer,
   withTheme
-)(({ tree, node, fields, children, theme: { Icon }, ...props }) => {
-  let popover = React.useState(false)
-  let modal = React.useState(false)
+)(({ tree, node, fields, children, theme: { Icon, Text }, ...props }) => {
   let field = _.get('field', node)
   return (
     <Flex
-      className={`filter-field-label ${
-        _.get('hasValue', node) ? 'filter-field-has-value' : ''
-      }`.trim()}
-      style={{
-        cursor: 'pointer',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}
+      className={F.compactJoin(' ', [
+        'filter-field-label',
+        node.hasValue && 'filter-field-has-value',
+      ])}
+      style={{ padding: 8, cursor: 'pointer' }}
       onClick={() =>
         tree && node && tree.mutate(node.path, { paused: !node.paused })
       }
+      justifyContent="space-between"
+      alignItems="center"
     >
-      <span {...props}>
-        {children || _.get([field, 'label'], fields) || field || ''}
-      </span>
+      <Flex alignItems="center" gap="xs">
+        <Text small bold {...props}>
+          {children || _.get([field, 'label'], fields) || field || ''}
+        </Text>
+        <FilterActions {...{ node, tree, fields }} />
+      </Flex>
       {tree && node && (
-        <React.Fragment>
-          <span
-            onClick={e => {
-              e.stopPropagation()
-              F.flip(popover)()
-            }}
-          >
-            {!node.paused && <Icon icon="TableColumnMenu" />}
-            <FilterActions
-              node={node}
-              tree={tree}
-              fields={fields}
-              popover={popover}
-              modal={modal}
-            />
-          </span>
-          {
-            // Whitespace separator
-            <div style={{ flexGrow: 1 }} />
-          }
-
-          <div className="filter-field-label-icon">
-            <Icon
-              icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'}
-            />
-          </div>
-        </React.Fragment>
+        <Icon icon={node.paused ? 'FilterListExpand' : 'FilterListCollapse'} />
       )}
     </Flex>
   )
@@ -154,11 +130,11 @@ let FilterList = _.flow(
     fields,
     mapNodeToProps = _.noop,
     mapNodeToLabel = _.noop,
-    className,
-    style,
     theme: { UnmappedNodeComponent, Button },
+    style,
+    ...props
   }) => (
-    <div style={style} className={className}>
+    <div style={{ ...style }} {...props}>
       {_.map(
         child =>
           child.children ? (
@@ -169,16 +145,23 @@ let FilterList = _.flow(
               fields={fields}
               mapNodeToProps={mapNodeToProps}
               mapNodeToLabel={mapNodeToLabel}
-              className={'filter-list-group'}
-              style={bdJoin(child)}
+              style={{
+                borderLeft: '2px solid',
+                ...bdJoin(child),
+                paddingLeft: 4,
+              }}
             />
           ) : (
-            <div key={child.path} className="filter-list-item">
+            <div key={child.path}>
               <Label tree={tree} node={child} fields={fields}>
                 {mapNodeToLabel(child, fields)}
               </Label>
               {!child.paused && (
-                <div className="filter-list-item-contents">
+                <Flex
+                  column
+                  gap={1}
+                  style={{ padding: 8, paddingTop: 0, marginLeft: -4 }}
+                >
                   <Dynamic
                     {...{
                       component: UnmappedNodeComponent,
@@ -195,18 +178,20 @@ let FilterList = _.flow(
                       treeNode => treeNode !== node && treeNode.markedForUpdate,
                       F.treeToArray(_.get('children'))(tree.tree)
                     ) && (
-                      <div
-                        className="apply-filter-button"
+                      <Button
                         onClick={e => {
                           e.stopPropagation()
                           tree.triggerUpdate()
                         }}
+                        compact
+                        primary
                       >
-                        <Button primary>Apply Filter</Button>
-                      </div>
+                        Apply Filter
+                      </Button>
                     )}
-                </div>
+                </Flex>
               )}
+              <Divider margin={0} />
             </div>
           ),
         _.get('children', node)
