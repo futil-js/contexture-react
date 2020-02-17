@@ -4,7 +4,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
-import { ExpandableTable, Column, Flex } from '../greyVest/'
+import { ExpandableTable, Column, Flex } from 'grey-vest'
 import { setDisplayName } from 'recompose'
 
 let toolBarStyle = { justifyContent: 'space-between', alignItems: 'center' }

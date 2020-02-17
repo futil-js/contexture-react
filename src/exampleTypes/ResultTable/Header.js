@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import * as F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
-import { Dynamic } from '../../greyVest'
+import { Dynamic } from 'grey-vest'
 import { withTheme } from '../../utils/theme'
 
 const moveColumn = (

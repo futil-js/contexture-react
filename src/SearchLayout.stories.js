@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { storiesOf } from '@storybook/react'
-import { Box } from './greyVest'
+import { Box } from 'grey-vest'
 import { default as ThemePicker } from './stories/themePicker'
 import { SearchLayout } from '.'
 

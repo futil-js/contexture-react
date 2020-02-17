@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import AsyncSelect from 'react-select/lib/Async'
 import { loadHereOptions, geoCodeLocation } from '../utils/geo'
 import ThemePicker from '../stories/themePicker'
-import { Flex } from '../greyVest'
+import { Flex } from 'grey-vest'
 import TestTree from './stories/testTree'
 import { Geo } from '.'
 

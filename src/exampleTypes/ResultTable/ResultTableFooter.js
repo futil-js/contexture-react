@@ -1,7 +1,7 @@
 import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp'
-import { Grid, GridItem, PagerItem } from '../../greyVest'
+import { Grid, GridItem, PagerItem } from 'grey-vest'
 import ResultPager from '../ResultPager'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import { Flex } from '../../greyVest'
+import { Flex } from 'grey-vest'
 import { withTheme } from '../../utils/theme'
 
 let ButtonRadio = ({
@@ -10,7 +10,7 @@ let ButtonRadio = ({
   style = {},
   theme: { Button },
 }) => (
-  <Flex style={{ justifyContent: 'space-between', alignItems: 'baseline' }}>
+  <Flex justifyContent="space-between" alignItems="baseline">
     {_.map(
       x => (
         <Button

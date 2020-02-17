@@ -3,7 +3,7 @@ import F from 'futil'
 import { observer } from 'mobx-react'
 import React from 'react'
 import { setDisplayName } from 'recompose'
-import { Flex } from '../greyVest'
+import { Flex } from 'grey-vest'
 import { withTheme } from '../utils/theme'
 
 // Observes node, so we can activate the Continue button if it (or any child) has a value.

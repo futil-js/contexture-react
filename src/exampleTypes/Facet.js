@@ -3,7 +3,7 @@ import _ from 'lodash/fp'
 import F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
-import { Flex } from '../greyVest'
+import { Flex } from 'grey-vest'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 

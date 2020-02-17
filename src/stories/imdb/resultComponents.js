@@ -4,17 +4,10 @@ import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
-import Contexture, { updateSchemas } from '../utils/contexture'
-import { useTheme } from '../../../utils/theme'
-import {
-  FilterList,
-  Flex,
-  Awaiter,
-  SpacedList,
-  Grid,
-  componentForType,
-  FilterAdder,
-} from '../..'
+import Contexture, { updateSchemas } from './utils/contexture'
+import { useTheme } from '../../utils/theme'
+import { FilterList, componentForType, FilterAdder } from '../..'
+import { Flex, Awaiter, ColumnList, Grid } from 'grey-vest'
 import {
   ResultCount,
   CheckableResultTable,
@@ -121,7 +114,7 @@ export default () => {
         <Grid gap="22px" columns="1fr 4fr" style={{ margin: '22px' }}>
           <div>
             <h1>Filters</h1>
-            <SpacedList>
+            <ColumnList>
               <FilterList
                 tree={tree}
                 path={['root', 'criteria']}
@@ -138,7 +131,7 @@ export default () => {
                 fields={schemas.movies.fields}
                 uniqueFields
               />
-            </SpacedList>
+            </ColumnList>
           </div>
           <div>
             <Grid columns="1fr auto" style={{ alignItems: 'center' }}>

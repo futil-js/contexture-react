@@ -4,7 +4,7 @@ import F from 'futil'
 import { observer } from 'mobx-react'
 import TagsJoinPicker from '../TagsJoinPicker'
 import { withTheme } from '../../utils/theme'
-import { Flex } from '../../greyVest'
+import { Flex } from 'grey-vest'
 import { copyTags, tagTerm } from './utils'
 
 let ActionsMenu = ({

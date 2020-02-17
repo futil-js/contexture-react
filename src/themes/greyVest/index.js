@@ -7,7 +7,6 @@ import {
   ButtonGroup,
   Checkbox,
   DateInput,
-  Icon,
   DropdownItem,
   NestedPicker,
   Modal,
@@ -15,18 +14,19 @@ import {
   RadioList,
   Select,
   Table,
-  TextButton,
+  IconButton,
   TextHighlight,
   TextInput,
-} from '../../greyVest'
+} from 'grey-vest'
 
 //components used only for theme
+import Icon from './Icon'
 import PickerItem from './PickerItem'
 import TagsInput, { Tag } from './TagsInput'
 import Root from './Root'
 
 export default {
-  AlternateButton: TextButton,
+  AlternateButton: IconButton,
   Box,
   Button,
   ButtonGroup,

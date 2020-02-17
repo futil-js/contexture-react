@@ -6,7 +6,7 @@ import Contexture, { updateSchemas } from './utils/contexture'
 import {
   Flex,
   Awaiter,
-  SpacedList,
+  ColumnList,
   FilterList,
   componentForType,
   FilterAdder,
@@ -111,7 +111,7 @@ let Story = () => (
   <Awaiter promise={schemas}>
     {schemas => (
       <div style={{ background: '#f4f4f4' }}>
-        <SpacedList>
+        <ColumnList>
           <Flex style={{ alignItems: 'center', ...blueBar }}>
             <div style={{ flex: 4 }}>
               <Query tree={tree} path={['searchRoot', 'searchQuery']} />
@@ -159,7 +159,7 @@ let Story = () => (
               </div>
             </div>
           </Flex>
-        </SpacedList>
+        </ColumnList>
       </div>
     )}
   </Awaiter>

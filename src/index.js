@@ -25,8 +25,4 @@ export SearchFilters, { SearchTree } from './SearchFilters'
 export SearchLayout from './SearchLayout'
 export ToggleFiltersHeader from './ToggleFiltersHeader'
 
-// component library
-export * from './greyVest'
-
-// themes
-export * as themes from './themes'
+export { greyVest } from './themes'

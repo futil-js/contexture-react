@@ -1,12 +1,12 @@
 import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp'
+import { Flex } from 'grey-vest'
 import greyVest from '../themes/greyVest'
 import blueberry from '../themes/blueberry'
 import base from '../themes/base'
 import material from '../themes/material'
 import { ThemeProvider, ThemeConsumer } from '../utils/theme'
-import { Flex } from '../greyVest'
 
 let themes = { base, blueberry, greyVest, material }
 

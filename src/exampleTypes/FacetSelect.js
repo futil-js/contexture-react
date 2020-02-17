@@ -3,7 +3,7 @@ import F from 'futil-js'
 import _ from 'lodash/fp'
 import Async from 'react-select/lib/Async'
 import { components } from 'react-select'
-import { Flex } from '../greyVest'
+import { Flex } from 'grey-vest'
 import { contexturify } from '../utils/hoc'
 import { Cardinality } from './Facet'
 

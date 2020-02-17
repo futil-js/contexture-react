@@ -3,7 +3,7 @@ import * as F from 'futil'
 import { observer } from 'mobx-react'
 
 import styles from '../styles'
-import { Popover } from '../greyVest'
+import { Popover } from 'grey-vest'
 import OperatorMenu from './OperatorMenu'
 import { OperatorMoveTarget } from './DragDrop/MoveTargets'
 

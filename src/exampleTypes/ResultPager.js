@@ -1,7 +1,7 @@
 import F from 'futil'
 import React from 'react'
 import { contexturifyWithoutLoader } from '../utils/hoc'
-import { Pager } from '../greyVest'
+import { Pager } from 'grey-vest'
 
 let ResultPager = ({ node, tree, theme: { PagerItem, Icon } }) => {
   let pages = Math.ceil(
