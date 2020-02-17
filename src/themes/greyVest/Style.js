@@ -146,27 +146,6 @@ export default () => (
       }
 
 
-      /* CheckButton */
-
-      .gv-button.check-button {
-        padding: 5px 23px 5px 10px;
-      }
-      .gv-button.check-button .gv-checkbox {
-        height: 30px;
-        width: 30px;
-        font-size: 20px;
-        margin-right: 8px;
-      }
-      .gv-button.check-button .gv-checkbox i {
-        font-size: 20px;
-      }
-      .gv-button.check-button .gv-checkbox.checked {
-        color: #0076de;
-        background-color: transparent;
-        border-color: transparent;
-      }
-
-
       /* Filter Button List */
 
       .filter-button-list.nested {
