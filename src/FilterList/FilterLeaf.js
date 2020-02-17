@@ -34,7 +34,13 @@ let FilterLeaf = ({
             treeNode => treeNode !== parent && treeNode.markedForUpdate,
             F.treeToArray(_.get('children'))(tree.tree)
           ) && (
-            <Button onClick={() => tree.triggerUpdate()} compact primary>
+            <Button
+              small
+              onClick={() => tree.triggerUpdate()}
+              compact
+              primary
+              style={{ alignSelf: 'flex-start' }}
+            >
               Apply Filter
             </Button>
           )}
