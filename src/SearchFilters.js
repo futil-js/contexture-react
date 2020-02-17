@@ -3,9 +3,9 @@ import _ from 'lodash/fp'
 import PropTypes from 'prop-types'
 import F from 'futil'
 import { observer } from 'mobx-react'
-import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
+import { QueryBuilder, FilterAdder, FilterList } from '.'
 import { ToggleFiltersButton, TreePauseButton } from './purgatory'
-import { LinkText } from 'grey-vest'
+import { Flex, LinkText } from 'grey-vest'
 import { withTheme } from './utils/theme'
 
 export let SearchTree = () => {}
