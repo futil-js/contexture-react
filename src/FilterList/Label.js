@@ -36,7 +36,11 @@ let Label = ({
         <Text small bold {...props}>
           {children || _.get([field, 'label'], fields) || field || ''}
         </Text>
-        {!node.paused && <FilterActions {...{ node, tree, fields }} />}
+        {!node.paused && (
+          <span onClick={e => e.stopPropagation()} style={{ display: 'contents' }}>
+            <FilterActions {...{ node, tree, fields }} />
+          </span>
+        )}
       </Flex>
       {tree && node && (
         <Icon

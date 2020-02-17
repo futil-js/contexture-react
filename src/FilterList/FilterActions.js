@@ -37,11 +37,7 @@ let FilterActions = ({
       <Popover
         Trigger={AlternateButton}
         popupProps={{ padding: 0 }}
-        triggerProps={{
-          small: true,
-          icon: 'TableColumnMenu',
-          onClick: e => e.stopPropagation(),
-        }}
+        triggerProps={{ small: true, icon: 'TableColumnMenu' }}
       >
         {!_.isEmpty(typeOptions) && (
           <>
