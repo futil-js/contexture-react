@@ -29,7 +29,7 @@ let Text = ({
   let open = React.useState(false)
   let [selectedTag, setSelectedTag] = React.useState(null)
   return (
-    <Flex className="contexture-text" column gap={1}>
+    <Flex className="contexture-text" column gap="sm">
       <Select
         {...F.domLens.value(tree.lens(node.path, 'operator'))}
         options={operatorOptions}

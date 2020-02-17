@@ -4,7 +4,7 @@ import _ from 'lodash/fp'
 import { ColumnList, Flex } from 'grey-vest'
 
 let CheckboxList = ({ options, value, onChange, ...props }) => (
-  <ColumnList gap={1} {...props}>
+  <ColumnList gap="sm" {...props}>
     {_.map(
       option => (
         <Flex

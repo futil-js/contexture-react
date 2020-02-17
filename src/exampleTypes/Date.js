@@ -140,7 +140,7 @@ let DateComponent = ({
   )
 
   return (
-    <ColumnList gap={1}>
+    <ColumnList gap="sm">
       <RadioList
         columnCount={2}
         options={F.autoLabelOptions(['exact', 'rolling'])}
@@ -178,7 +178,7 @@ let DateComponent = ({
           )}
         />
       ) : (
-        <ColumnList columnCount={2} columnGap={1} gap={1}>
+        <ColumnList columnCount={2} columnGap="sm" gap="sm">
           <FormField
             style={{ flex: 1 }}
             component={DateInput}

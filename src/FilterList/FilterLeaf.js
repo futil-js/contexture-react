@@ -21,7 +21,7 @@ let FilterLeaf = ({
       {mapNodeToLabel(node, fields)}
     </Label>
     {!node.paused && (
-      <Flex column gap={1} style={{ padding, paddingTop: 0 }}>
+      <Flex column gap="sm" style={{ padding, paddingTop: 0 }}>
         <Dynamic
           {...{ tree, node, path: _.toArray(node.path) }}
           component={UnmappedNodeComponent}
