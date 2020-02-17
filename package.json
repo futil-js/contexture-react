@@ -104,7 +104,6 @@
     "mobx": "^4.3.1",
     "mobx-react": "^6.1.1",
     "mobx-utils": "^5.0.0",
-    "moment": "^2.24.0",
     "prettier": "^1.8.2",
     "raw-loader": "^2.0.0",
     "react": "^16.8.0",
@@ -114,9 +113,8 @@
   },
   "dependencies": {
     "futil": "^1.64.3",
-    "grey-vest": "^3.0.0-alpha.11",
+    "grey-vest": "^3.0.0-alpha.21",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
