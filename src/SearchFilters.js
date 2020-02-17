@@ -71,7 +71,6 @@ let BuilderSearchFilters = withTheme(
 )
 BuilderSearchFilters.displayName = 'BuilderSearchFilters'
 
-
 let SearchFilters = ({
   mode,
   setMode,

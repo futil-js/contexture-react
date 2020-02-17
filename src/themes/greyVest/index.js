@@ -23,7 +23,7 @@ import {
   TextInput,
   Text,
   Title,
-  Subtitle
+  Subtitle,
 } from 'grey-vest'
 
 //components used only for theme
@@ -56,5 +56,5 @@ export default {
   TextHighlight,
   Text,
   Title,
-  Subtitle
+  Subtitle,
 }

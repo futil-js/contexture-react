@@ -194,7 +194,7 @@ let overrides = {
       poster: {
         display: x => <img src={x} width="180" height="270" />,
         order: 2,
-        hideMenu: true
+        hideMenu: true,
       },
       title: {
         order: 1,

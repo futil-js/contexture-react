@@ -20,7 +20,8 @@ let buttonStyle = {
 }
 
 let AnimatedButton = ({ disabled, style, className, ...props }) => (
-  <Button large
+  <Button
+    large
     className={`${
       disabled ? 'disabled' : 'animated pulse infinite'
     } ${className || ''}`}
@@ -64,7 +65,7 @@ let SearchBar = ({
         F.set('', popoverState.tagOpen)
       }}
     >
-      <ButtonGroup style={{overflow: 'visible' }}>
+      <ButtonGroup style={{ overflow: 'visible' }}>
         <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
           <ExpandableTagsQuery
             {...{ tree, node, collapse, popoverState, actionWrapper }}

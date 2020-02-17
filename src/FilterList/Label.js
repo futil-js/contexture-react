@@ -37,7 +37,10 @@ let Label = ({
           {children || _.get([field, 'label'], fields) || field || ''}
         </Text>
         {!node.paused && (
-          <span onClick={e => e.stopPropagation()} style={{ display: 'contents' }}>
+          <span
+            onClick={e => e.stopPropagation()}
+            style={{ display: 'contents' }}
+          >
             <FilterActions {...{ node, tree, fields }} />
           </span>
         )}
