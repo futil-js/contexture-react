@@ -29,41 +29,48 @@ export let AddableFilterList = props => (
 )
 
 export let FiltersBox = withTheme(({ theme: { Box }, ...props }) => (
-  <Box className="filter-list" padding={0}>
+  <Box padding={0}>
     <AddableFilterList {...props} />
   </Box>
 ))
 FiltersBox.displayName = 'FiltersBox'
 
-let BasicSearchFilters = ({ setMode, trees, children, BasicFilters }) => (
-  <div>
-    <Flex alignItems="center" justifyContent="space-between">
-      <Flex alignItems="center">
-        <h1>Filters</h1>
-        <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
+let BasicSearchFilters = withTheme(
+  ({ setMode, trees, children, BasicFilters, theme: { Title } }) => (
+    <div>
+      <Flex alignItems="center" justifyContent="space-between">
+        <Flex alignItems="center">
+          <Title>Filters</Title>
+          <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
+        </Flex>
+        <div>
+          <TreePauseButton children={children} />
+        </div>
       </Flex>
-      <div>
-        <TreePauseButton children={children} />
-      </div>
-    </Flex>
-    <LabelledList list={trees} Component={BasicFilters} />
-    <LinkText onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
-      Switch to Advanced Search Builder
-    </LinkText>
-  </div>
-)
-
-let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
-  <div>
-    <Flex style={{ alignItems: 'center' }}>
-      <h1>Filters</h1>
-      <LinkText onClick={() => setMode('basic')}>
-        Back to Regular Search
+      <LabelledList list={trees} Component={BasicFilters} />
+      <LinkText onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
+        Switch to Advanced Search Builder
       </LinkText>
-    </Flex>
-    <LabelledList list={trees} Component={BuilderFilters} />
-  </div>
+    </div>
+  )
 )
+BasicSearchFilters.displayName = 'BasicSearchFilters'
+
+let BuilderSearchFilters = withTheme(
+  ({ setMode, trees, BuilderFilters, theme: { Title } }) => (
+    <div>
+      <Flex style={{ alignItems: 'center' }}>
+        <Title>Filters</Title>
+        <LinkText onClick={() => setMode('basic')}>
+          Back to Regular Search
+        </LinkText>
+      </Flex>
+      <LabelledList list={trees} Component={BuilderFilters} />
+    </div>
+  )
+)
+BuilderSearchFilters.displayName = 'BuilderSearchFilters'
+
 
 let SearchFilters = ({
   mode,
