@@ -104,6 +104,7 @@ let Header = ({
         triggerChildren
       ) : (
         <Popover
+          keepOpen
           Trigger="div"
           label={triggerChildren}
           popupProps={{ padding: 0 }}
@@ -112,6 +113,7 @@ let Header = ({
           {!disableSort && (
             <>
               <DropdownItem
+                closePopup
                 onClick={() => {
                   mutate({ sortField, sortDir: 'asc' })
                 }}
@@ -120,6 +122,7 @@ let Header = ({
                 Sort ascending
               </DropdownItem>
               <DropdownItem
+                closePopup
                 onClick={() => {
                   mutate({ sortField, sortDir: 'desc' })
                 }}
@@ -131,6 +134,7 @@ let Header = ({
             </>
           )}
           <DropdownItem
+            closePopup
             onClick={() =>
               moveColumn(mutate, i => i - 1, field, visibleFields, includes)
             }
@@ -139,6 +143,7 @@ let Header = ({
             Move left
           </DropdownItem>
           <DropdownItem
+            closePopup
             onClick={() =>
               moveColumn(mutate, i => i + 1, field, visibleFields, includes)
             }
@@ -147,6 +152,7 @@ let Header = ({
             Move right
           </DropdownItem>
           <DropdownItem
+            closePopup
             onClick={() => mutate({ include: _.without([field], includes) })}
             icon={<Icon icon="RemoveColumn" />}
           >
