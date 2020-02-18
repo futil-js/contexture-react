@@ -1,16 +1,15 @@
 import React from 'react'
 import ToggleFiltersButton from './purgatory/ToggleFiltersButton'
 import { Flex } from 'grey-vest'
+import { withTheme } from './utils/theme'
 
 let ToggleFiltersHeader = ({ mode, setMode, children }) => (
-  <Flex style={{ alignItems: 'center' }}>
+  <Flex alignItems="center" gap="xs">
     {mode === 'resultsOnly' && (
-      <span style={{ marginRight: 5 }}>
-        <ToggleFiltersButton onClick={() => setMode('basic')} />
-      </span>
+      <ToggleFiltersButton onClick={() => setMode('basic')} />
     )}
-    <h1>{children}</h1>
+    <>{children}</>
   </Flex>
 )
 
-export default ToggleFiltersHeader
+export default withTheme(ToggleFiltersHeader)
