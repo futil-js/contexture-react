@@ -4,18 +4,10 @@ import * as F from 'futil'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
-
-import {
-  QueryBuilder,
-  FilterList,
-  Awaiter,
-  Flex,
-  componentForType,
-  FilterAdder,
-} from '../../'
+import { Awaiter, Flex } from 'grey-vest'
+import { QueryBuilder, FilterList, componentForType, FilterAdder } from '../../'
 import { TextInput, ClampedHTML } from '../DemoControls'
 import { ResultCount, PagedResultTable, TypeMap } from '../../exampleTypes'
-
 import Contexture, { updateClient } from './contexture'
 
 let state = observable({

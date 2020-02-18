@@ -3,14 +3,8 @@ import F from 'futil'
 import React from 'react'
 import { fromPromise } from 'mobx-utils'
 import Contexture, { updateSchemas } from './utils/contexture'
-import {
-  Flex,
-  Awaiter,
-  ColumnList,
-  FilterList,
-  componentForType,
-  FilterAdder,
-} from '../..'
+import { Flex, Awaiter, ColumnList } from 'grey-vest'
+import { FilterList, componentForType, FilterAdder } from '../..'
 import theme, { Button } from '../DemoControls'
 import {
   Query,

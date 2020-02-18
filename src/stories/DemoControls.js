@@ -2,8 +2,7 @@ import F from 'futil'
 import React from 'react'
 import { observer } from 'mobx-react'
 import { defaultProps } from 'recompose'
-
-import { TextHighlight } from '..'
+import { TextHighlight } from 'grey-vest'
 
 export let Button = x => (
   <button
