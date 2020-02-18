@@ -22,7 +22,6 @@ import {
   TextHighlight,
   TextInput,
   Text,
-  Title,
   Subtitle,
 } from 'grey-vest'
 
@@ -55,6 +54,5 @@ export default {
   Table,
   TextHighlight,
   Text,
-  Title,
-  Subtitle,
+  Title: defaultProps({ large: true })(Subtitle),
 }
