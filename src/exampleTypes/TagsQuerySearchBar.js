@@ -65,7 +65,7 @@ let SearchBar = ({
         F.set('', popoverState.tagOpen)
       }}
     >
-      <ButtonGroup style={{ overflow: 'visible' }}>
+      <ButtonGroup inline={false} style={{ overflow: 'visible' }}>
         <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
           <ExpandableTagsQuery
             {...{ tree, node, collapse, popoverState, actionWrapper }}
