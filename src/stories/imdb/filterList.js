@@ -18,7 +18,6 @@ import {
 } from '../../exampleTypes'
 import { ThemeProvider } from '../../utils/theme'
 
-
 let formatYear = x => new Date(x).getUTCFullYear()
 
 let tree = Contexture({

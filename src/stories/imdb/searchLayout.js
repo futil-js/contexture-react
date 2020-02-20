@@ -237,7 +237,7 @@ let mapNodeToProps = F.mergeOverAll([
 let GreyVestSearchBarStory = theme => (
   <Awaiter promise={schemas}>
     {schemas => (
-      <SearchLayout mode={state.mode}  style={{ marginTop: 12 }}>
+      <SearchLayout mode={state.mode} style={{ marginTop: 12 }}>
         <SearchFilters mode={state.mode} setMode={x => (state.mode = x)}>
           <SearchTree
             tree={tree}
