@@ -113,7 +113,7 @@
   },
   "dependencies": {
     "futil": "^1.64.3",
-    "grey-vest": "^3.0.0-alpha.21",
+    "grey-vest": "^3.0.0-alpha.24",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react-dnd": "^2.5.4",
