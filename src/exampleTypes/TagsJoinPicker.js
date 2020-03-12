@@ -1,6 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
+import F from 'futil'
 import { withTheme } from '../utils/theme'
 
 export let tagToGroupJoin = (x = 'any') =>
@@ -18,8 +19,7 @@ let joinOptions = [
 
 let TagsJoinPicker = ({ node, tree, theme: { Select } }) => (
   <Select
-    value={node.join}
-    onChange={e => tree.mutate(node.path, { join: e.target.value })}
+    {...F.domLens(tree.lens(node.path, 'join'))}
     options={joinOptions}
     placeholder={false}
   />

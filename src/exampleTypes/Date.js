@@ -165,9 +165,7 @@ let DateComponent = ({
       {node.useDateMath ? (
         <Select
           value={rollingRangeToString(node)}
-          onChange={e =>
-            tree.mutate(node.path, rollingRangeFromString(e.target.value))
-          }
+          onChange={x => tree.mutate(node.path, rollingRangeFromString(x))}
           options={F.map(
             opt => ({
               label: opt.label,

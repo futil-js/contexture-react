@@ -36,9 +36,7 @@ let SelectSize = _.flow(
     <Flex style={toolBarStyle}>
       <SimpleLabel text="Size:" />
       <Select
-        onChange={e => {
-          tree.mutate(node.path, { size: e.target.value })
-        }}
+        onChange={size => tree.mutate(node.path, { size })}
         value={_.getOr(25, 'size', node)}
         placeholder={null}
         style={{ width: '100px' }}

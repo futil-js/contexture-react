@@ -86,9 +86,7 @@ let FacetOptionsFilter = _.flow(
     <ButtonGroup>
       <TextInput
         value={val}
-        onChange={e => {
-          setVal(e.target.value)
-        }}
+        onChange={setVal}
         onKeyPress={e => e.key === 'Enter' && submit()}
         onBlur={submit}
         placeholder="Search..."
