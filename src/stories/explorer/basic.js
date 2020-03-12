@@ -95,7 +95,7 @@ let Story = observer(() => {
   let { tree, schemas } = state
   return (
     <div style={{ background: '#f4f4f4' }}>
-      <TextInput value={state.url} onChange={e => updateEs(e.target.value)} />
+      <TextInput value={state.url} onChange={updateEs} />
       {schemas && (
         <Awaiter promise={schemas}>
           {schemas =>

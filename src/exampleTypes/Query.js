@@ -1,14 +1,10 @@
 import React from 'react'
+import F from 'futil'
 import { contexturify } from '../utils/hoc'
 
 let Query = ({ tree, node, theme: { TextInput } }) => (
   <TextInput
-    value={node.query || ''}
-    onChange={e =>
-      tree.mutate(node.path, {
-        query: e.target.value,
-      })
-    }
+    {...F.domLens.value(tree.lens(node.path, 'query'))}
     placeholder="Search"
   />
 )
