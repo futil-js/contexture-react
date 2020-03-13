@@ -45,15 +45,19 @@ let BasicSearchFilters = withTheme(
     <div>
       <Flex alignItems="center" justifyContent="space-between">
         <Flex alignItems="center">
-          <Title>Filters</Title>
           <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
+          <Title>Filters</Title>
         </Flex>
         <div>
           <TreePauseButton children={children} />
         </div>
       </Flex>
       <LabelledList list={trees} Component={BasicFilters} />
-      <LinkText onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
+      <LinkText
+        as="button"
+        onClick={() => setMode('builder')}
+        style={{ marginTop: 16 }}
+      >
         Switch to Advanced Search Builder
       </LinkText>
     </div>
@@ -66,7 +70,7 @@ let BuilderSearchFilters = withTheme(
     <div>
       <Flex style={{ alignItems: 'center' }}>
         <Title>Filters</Title>
-        <LinkText onClick={() => setMode('basic')}>
+        <LinkText as="button" onClick={() => setMode('basic')}>
           Back to Regular Search
         </LinkText>
       </Flex>
