@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import { Grid, GridItem } from 'grey-vest'
+import { Grid, GridItem, Popover } from 'grey-vest'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { useLensObject } from '../../utils/react'
 import { getTagStyle, tagValueField } from './utils'
@@ -16,7 +16,7 @@ let TagsQuery = ({
   popoverState,
   actionWrapper,
   onAddTag = _.noop,
-  theme: { TagsInput, Tag, AlternateButton, Popover },
+  theme: { TagsInput, Tag },
   ...props
 }) => {
   let newPopoverState = useLensObject({ open: false })
@@ -58,20 +58,14 @@ let TagsQuery = ({
         />
       </GridItem>
       <GridItem place="center">
-        <Popover
-          side="right"
-          Trigger={AlternateButton}
-          triggerProps={{ icon: 'TableColumnMenu' }}
-        >
-          <ActionsMenu
-            {...{
-              node,
-              tree,
-              actionWrapper,
-              open: popoverState.open,
-            }}
-          />
-        </Popover>
+        <ActionsMenu
+          {...{
+            node,
+            tree,
+            actionWrapper,
+            open: popoverState.open,
+          }}
+        />
       </GridItem>
     </Grid>
   )
