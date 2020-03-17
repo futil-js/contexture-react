@@ -37,7 +37,6 @@ let FilterLeaf = ({
             <Button
               small
               onClick={() => tree.triggerUpdate()}
-              compact
               primary
               style={{ alignSelf: 'flex-start' }}
             >
