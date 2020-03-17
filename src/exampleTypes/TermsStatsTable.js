@@ -59,7 +59,11 @@ let TermsStatsTable = ({
   ...props
 }) => (
   <div>
-    <Flex alignItems="center" justifyContent="space-between">
+    <Flex
+      alignItems="center"
+      justifyContent="space-between"
+      style={{ padding: '16px 16px 8px' }}
+    >
       <SimpleFilter {...F.domLens.value(tree.lens(node.path, 'filter'))} />
       <SelectSize node={node} tree={tree} options={sizeOptions} />
     </Flex>
