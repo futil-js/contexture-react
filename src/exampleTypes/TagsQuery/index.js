@@ -8,6 +8,8 @@ import ActionsMenu from './ActionsMenu'
 
 export let innerHeight = 40
 
+let stopPropagation = e => e.stopPropagation()
+
 let TagsQuery = ({
   tree,
   node,
@@ -19,9 +21,16 @@ let TagsQuery = ({
 }) => {
   let open = React.useState(false)
   let TagWithPopover = tagProps => (
-    <Popover Trigger={Tag} triggerProps={tagProps}>
-      <TagActionsMenu tag={tagProps.value} {...{ node, tree }} />
-    </Popover>
+    <div onClick={stopPropagation}>
+      <Popover
+        Trigger={Tag}
+        triggerProps={tagProps}
+        keepOpen
+        popupProps={{ onClick: stopPropagation }}
+      >
+        <TagActionsMenu tag={tagProps.value} {...{ node, tree }} />
+      </Popover>
+    </div>
   )
   return (
     <Grid
