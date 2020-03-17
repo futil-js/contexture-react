@@ -3,6 +3,7 @@ import F from 'futil'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
+import { defaultProps } from 'recompose'
 import Contexture, { updateSchemas } from './utils/contexture'
 import {
   schemaFieldProps,
@@ -288,7 +289,7 @@ let GreyVestSearchBarStory = theme => (
           </div>
           <div>
             <theme.Title>Search Results</theme.Title>
-            <Tabs defaultValue="results" TabPanel={theme.Box}>
+            <Tabs defaultValue="results" TabPanel={defaultProps({ padding: 0 })(theme.Box)}>
               <TabLabel value="results">
                 Movies (
                 <ResultCount tree={tree} path={['root', 'results']} />)
