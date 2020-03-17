@@ -4,7 +4,7 @@ import F from 'futil'
 import { observer } from 'mobx-react'
 import TagsJoinPicker from '../TagsJoinPicker'
 import { withTheme } from '../../utils/theme'
-import { Flex, Popover } from 'grey-vest'
+import { Flex, Grid, Popover, Divider } from 'grey-vest'
 import { copyTags, tagTerm } from './utils'
 
 let ActionsMenu = ({
@@ -21,12 +21,10 @@ let ActionsMenu = ({
     triggerProps={{ icon: 'TableColumnMenu' }}
     open={open}
   >
-    <Flex
-      style={{ minWidth: 240, padding: 10 }}
+    <Grid
       className="tags-query-actions-menu"
-      column
-      justifyContent="stretch"
-      alignItems="stretch"
+      gap="sm"
+      style={{ minWidth: 240 }}
     >
       {!!_.get('tags.length', node) && (
         <>
@@ -36,28 +34,25 @@ let ActionsMenu = ({
             Copy {_.startCase(tagTerm)}s
           </Button>
           <Button
-            style={{ margin: '10px 0' }}
             onClick={actionWrapper(
               () => F.off(open)() || tree.mutate(node.path, { tags: [] })
             )}
           >
             Clear {_.startCase(tagTerm)}s
           </Button>
-          <div className="line-separator" />
+          <Divider margin={0} style={{ marginLeft: -16, marginRight: -16 }} />
         </>
       )}
-      <label className="labeled-checkbox" style={{ margin: '10px 0' }}>
+      <Flex as="label" gap="sm" alignItems="center">
         <Checkbox
           htmlId="stemming"
           checked={!node.exact}
-          onChange={e => tree.mutate(node.path, { exact: !e.target.checked })}
+          onChange={checked => tree.mutate(node.path, { exact: !checked })}
         />
         <span>Include word variations</span>
-      </label>
-      <div>
-        <TagsJoinPicker node={node} tree={tree} />
-      </div>
-    </Flex>
+      </Flex>
+      <TagsJoinPicker node={node} tree={tree} />
+    </Grid>
   </Popover>
 )
 
