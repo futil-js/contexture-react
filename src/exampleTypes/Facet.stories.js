@@ -30,7 +30,7 @@ export let emojiDataset = () => {
   let { Box } = useTheme()
   return (
     <Grid columns="1fr 3fr" gap="md">
-        <Facet tree={tree} path={['root', 'category-facet']} />
+      <Facet tree={tree} path={['root', 'category-facet']} />
       <Box style={{ overflow: 'auto' }} padding={0}>
         <ResultTable
           infer

@@ -289,7 +289,10 @@ let GreyVestSearchBarStory = theme => (
           </div>
           <div>
             <theme.Title>Search Results</theme.Title>
-            <Tabs defaultValue="results" TabPanel={defaultProps({ padding: 0 })(theme.Box)}>
+            <Tabs
+              defaultValue="results"
+              TabPanel={defaultProps({ padding: 0 })(theme.Box)}
+            >
               <TabLabel value="results">
                 Movies (
                 <ResultCount tree={tree} path={['root', 'results']} />)
