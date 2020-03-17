@@ -19,7 +19,7 @@ let joinOptions = [
 
 let TagsJoinPicker = ({ node, tree, theme: { Select } }) => (
   <Select
-    {...F.domLens(tree.lens(node.path, 'join'))}
+    {...F.domLens.value(tree.lens(node.path, 'join'))}
     options={joinOptions}
     placeholder={false}
   />
