@@ -1,9 +1,10 @@
 import React from 'react'
-import TestTree from './stories/testTree'
-import ThemePicker from '../stories/themePicker'
+import { Grid } from 'grey-vest'
+import { useTheme } from '..'
 import { memoryService } from '../MemoryTable'
+import ThemePicker from '../stories/themePicker'
 import ContextureMobx from '../utils/contexture-mobx'
-import { Grid, Box } from '../greyVest'
+import TestTree from './stories/testTree'
 import { Facet, FacetSelect, ResultTable } from '.'
 
 export default {
@@ -26,12 +27,11 @@ export let emojiDataset = () => {
     children: [{ type: 'facet', field: 'category' }, { type: 'results' }],
   })
   tree.refresh(['root'])
+  let { Box } = useTheme()
   return (
-    <Grid columns="1fr 3fr" gap={8}>
-      <Box>
+    <Grid columns="1fr 3fr" gap="md">
         <Facet tree={tree} path={['root', 'category-facet']} />
-      </Box>
-      <Box style={{ overflow: 'auto' }}>
+      <Box style={{ overflow: 'auto' }} padding={0}>
         <ResultTable
           infer
           tree={tree}
