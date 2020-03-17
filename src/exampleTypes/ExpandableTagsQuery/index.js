@@ -17,7 +17,7 @@ let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
       <div ref={measureRef}>
         <TagsQuery
           flipped
-          hideInput={F.view(collapse) && !_.isEmpty(props.node.tags)}
+          readOnly={F.view(collapse) && !_.isEmpty(props.node.tags)}
           {...props}
         />
       </div>
