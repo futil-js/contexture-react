@@ -57,7 +57,15 @@ let TagsQuery = ({
           {...props}
         />
       </GridItem>
-      <GridItem place="center">
+      <GridItem
+        place="center"
+        onClick={e => {
+          // This is to prevent clicks on the button or inside the popup from
+          // bubbling up to TagsQuerySearchBar and triggering an uncollapse,
+          // which would rerender the component and reset the popover state.
+          e.stopPropagation()
+        }}
+      >
         <ActionsMenu
           {...{
             node,
