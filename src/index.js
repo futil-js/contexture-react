@@ -25,4 +25,8 @@ export SearchFilters, { SearchTree } from './SearchFilters'
 export SearchLayout from './SearchLayout'
 export ToggleFiltersHeader from './ToggleFiltersHeader'
 
+export MemoryTable from './MemoryTable'
+
+// themes
+export * as themes from './themes'
 export { greyVest } from './themes'
