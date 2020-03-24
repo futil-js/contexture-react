@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil'
 import { setDisplayName } from 'recompose'
 import { observer } from 'mobx-react'
-import { Flex } from 'grey-vest'
+import { Flex, Grid } from 'grey-vest'
 import { contexturify } from '../utils/hoc'
 import { withTheme } from '../utils/theme'
 
@@ -78,7 +78,7 @@ let FacetOptionsFilter = _.flow(
   observer,
   withTheme
 )(({ tree, node, theme: { TextInput, Button, ButtonGroup } }) => {
-  let [val, setVal] = useState(node.optionsFilter)
+  let [val, setVal] = React.useState(node.optionsFilter)
   let buttonEnabled = val !== node.optionsFilter
   let submit = () =>
     buttonEnabled && tree.mutate(node.path, { optionsFilter: val })
@@ -120,7 +120,7 @@ let Facet = ({
   let lens = tree.lens(node.path, 'values')
   let options = getOptions(node)
   return (
-    <div className="contexture-facet">
+    <Grid className="contexture-facet" gap="sm">
       <RadioList
         value={node.mode || 'include'} // Fix by changing defaults in client example type
         onChange={mode => tree.mutate(node.path, { mode })}
@@ -145,7 +145,7 @@ let Facet = ({
         {...F.domLens.value(lens)}
       />
       <Cardinality {...{ node, tree }} />
-    </div>
+    </Grid>
   )
 }
 
