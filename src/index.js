@@ -28,5 +28,4 @@ export ToggleFiltersHeader from './ToggleFiltersHeader'
 export MemoryTable from './MemoryTable'
 
 // themes
-export * as themes from './themes'
 export { greyVest } from './themes'
