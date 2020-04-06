@@ -1,7 +1,8 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import { fromPromise } from 'mobx-utils'
-import { QueryBuilder, Awaiter, componentForType } from '../..'
+import { Awaiter } from 'grey-vest'
+import { QueryBuilder, componentForType } from '../..'
 import Contexture, { updateSchemas } from './utils/contexture'
 import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes'
 

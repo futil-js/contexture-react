@@ -4,15 +4,9 @@ import React from 'react'
 import { observable, autorun } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer, inject } from 'mobx-react'
+import { Column, Flex, Awaiter, ColumnList } from 'grey-vest'
 import Contexture, { updateSchemas } from './utils/contexture'
-import {
-  FilterList,
-  Flex,
-  Awaiter,
-  ColumnList,
-  componentForType,
-  FilterAdder,
-} from '../..'
+import { FilterList, componentForType, FilterAdder } from '../..'
 import theme, { DarkBox } from '../DemoControls'
 import {
   Query,
@@ -23,7 +17,6 @@ import {
   TypeMap,
 } from '../../exampleTypes'
 import { ThemeProvider } from '../../utils/theme'
-import { Column } from 'grey-vest'
 
 let formatYear = x => new Date(x).getUTCFullYear()
 

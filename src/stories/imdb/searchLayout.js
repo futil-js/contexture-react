@@ -3,6 +3,7 @@ import F from 'futil'
 import React from 'react'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
+import { defaultProps } from 'recompose'
 import Contexture, { updateSchemas } from './utils/contexture'
 import {
   schemaFieldProps,
@@ -19,7 +20,7 @@ import {
   TabLabel,
   Tabs,
   Column,
-  Grid,
+  Flex,
 } from 'grey-vest'
 import {
   DateRangePicker,
@@ -194,6 +195,7 @@ let overrides = {
       poster: {
         display: x => <img src={x} width="180" height="270" />,
         order: 2,
+        hideMenu: true,
       },
       title: {
         order: 1,
@@ -236,7 +238,7 @@ let mapNodeToProps = F.mergeOverAll([
 let GreyVestSearchBarStory = theme => (
   <Awaiter promise={schemas}>
     {schemas => (
-      <SearchLayout mode={state.mode}>
+      <SearchLayout mode={state.mode} style={{ marginTop: 12 }}>
         <SearchFilters mode={state.mode} setMode={x => (state.mode = x)}>
           <SearchTree
             tree={tree}
@@ -251,14 +253,31 @@ let GreyVestSearchBarStory = theme => (
             mapNodeToProps={mapNodeToProps}
           />
         </SearchFilters>
-        <div>
-          <ToggleFiltersHeader
-            mode={state.mode}
-            setMode={x => (state.mode = x)}
-          >
-            Search Movies
-          </ToggleFiltersHeader>
-          <Grid columns="1fr auto" gap={10} placeItems="center stretch">
+        <Flex column gap={24}>
+          <div>
+            <Flex alignItems="center" justifyContent="space-between">
+              <ToggleFiltersHeader
+                mode={state.mode}
+                setMode={x => (state.mode = x)}
+              >
+                <theme.Title>Search Movies</theme.Title>
+              </ToggleFiltersHeader>
+              <Flex alignItems="center">
+                <theme.AlternateButton
+                  title="Auto Update"
+                  primary={!tree.disableAutoUpdate}
+                  onClick={F.flip('disableAutoUpdate', tree)}
+                  icon="AutoUpdate"
+                />
+                <theme.AlternateButton
+                  onClick={() => {
+                    window.location.reload()
+                  }}
+                  title="New Search"
+                  icon="New"
+                />
+              </Flex>
+            </Flex>
             <TagsQuerySearchBar
               tree={tree}
               path={['root', 'bar']}
@@ -267,77 +286,64 @@ let GreyVestSearchBarStory = theme => (
               actionWrapper={aspectWrapper}
               searchButtonProps={{ ['data-attribute']: 'attribute1' }}
             />
-            <theme.ButtonGroup>
-              <theme.AlternateButton
-                title="Auto Update"
-                primary={!tree.disableAutoUpdate}
-                onClick={F.flip('disableAutoUpdate', tree)}
-              >
-                <theme.Icon icon="AutoUpdate" />
-              </theme.AlternateButton>
-              <theme.AlternateButton
-                onClick={() => {
-                  window.location.reload()
-                }}
-                title="New Search"
-              >
-                <theme.Icon icon="New" />
-              </theme.AlternateButton>
-            </theme.ButtonGroup>
-          </Grid>
-          <h1>Search Results</h1>
-          <Tabs defaultValue="results" TabPanel={theme.Box}>
-            <TabLabel value="results">
-              Movies (
-              <ResultCount tree={tree} path={['root', 'results']} />)
-            </TabLabel>
-            <TabContent value="results">
-              <PagedResultTable
-                tree={tree}
-                path={['root', 'results']}
-                fields={_.omit(
-                  ['imdbId', 'runtimeMinutes'],
-                  schemas[tree.tree.schema].fields
-                )}
-                criteria={['root', 'criteria']}
-                mapNodeToProps={componentForType(TypeMap)}
-              />
-            </TabContent>
-            <Tab value="analytics" label="Analytics">
-              <TermsStatsTable
-                tree={tree}
-                criteria={['root', 'criteria']}
-                criteriaField="genres"
-                path={['root', 'genreScores']}
-                tableAttrs={{ className: 'gv-table' }}
-                sizeOptions={[10, 25, 50]}
-                getValue="key"
-              >
-                <Column field="key" label="Genre" />
-                <Column field="count" label="Found" />
-                <Column
-                  field="key"
-                  label=""
-                  expand={{ display: x => `Show results for ${x} +` }}
-                  collapse={{ display: x => `Hide results for ${x} -` }}
-                >
-                  {x => (
-                    <div style={{ marginBottom: 25 }}>
-                      <PagedResultTable
-                        tree={termDetailsTree(x)}
-                        path={['detailRoot', 'results']}
-                        fields={_.pick(
-                          ['title', 'year', 'genres'],
-                          schemas.movies.fields
-                        )}
-                      />
-                    </div>
+          </div>
+          <div>
+            <theme.Title>Search Results</theme.Title>
+            <Tabs
+              defaultValue="results"
+              TabPanel={defaultProps({ padding: 0 })(theme.Box)}
+            >
+              <TabLabel value="results">
+                Movies (
+                <ResultCount tree={tree} path={['root', 'results']} />)
+              </TabLabel>
+              <TabContent value="results">
+                <PagedResultTable
+                  tree={tree}
+                  path={['root', 'results']}
+                  fields={_.omit(
+                    ['imdbId', 'runtimeMinutes'],
+                    schemas[tree.tree.schema].fields
                   )}
-                </Column>
-              </TermsStatsTable>
-            </Tab>
-          </Tabs>
-        </div>
+                  criteria={['root', 'criteria']}
+                  mapNodeToProps={componentForType(TypeMap)}
+                />
+              </TabContent>
+              <Tab value="analytics" label="Analytics">
+                <TermsStatsTable
+                  tree={tree}
+                  criteria={['root', 'criteria']}
+                  criteriaField="genres"
+                  path={['root', 'genreScores']}
+                  sizeOptions={[10, 25, 50]}
+                  getValue="key"
+                >
+                  <Column field="key" label="Genre" enableSort />
+                  <Column field="count" label="Found" enableSort />
+                  <Column
+                    field="key"
+                    label=""
+                    expand={{ display: x => `Show results for ${x} +` }}
+                    collapse={{ display: x => `Hide results for ${x} -` }}
+                  >
+                    {x => (
+                      <div>
+                        <PagedResultTable
+                          tree={termDetailsTree(x)}
+                          path={['detailRoot', 'results']}
+                          fields={_.pick(
+                            ['title', 'year', 'genres'],
+                            schemas.movies.fields
+                          )}
+                        />
+                      </div>
+                    )}
+                  </Column>
+                </TermsStatsTable>
+              </Tab>
+            </Tabs>
+          </div>
+        </Flex>
       </SearchLayout>
     )}
   </Awaiter>

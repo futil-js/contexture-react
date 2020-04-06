@@ -5,8 +5,8 @@ import F from 'futil'
 let iconMap = {
   SortAscending: 'expand_less',
   SortDescending: 'expand_more',
-  MoveLeft: 'chevron_left',
-  MoveRight: 'chevron_right',
+  MoveLeft: 'arrow_back',
+  MoveRight: 'arrow_forward',
   RemoveColumn: 'remove',
   AddColumn: 'add',
   FilterExpand: 'filter_list',
@@ -14,7 +14,7 @@ let iconMap = {
   FilterAdd: 'filter_list',
   FilterListExpand: 'keyboard_arrow_down',
   FilterListCollapse: 'keyboard_arrow_up',
-  TableColumnMenu: () => <IconButton icon="more_vert" />,
+  TableColumnMenu: 'more_vert',
   TreePause: 'unfold_less',
   TreeUnpause: 'unfold_more',
   PreviousPage: 'chevron_left',
@@ -33,8 +33,8 @@ let iconMap = {
   Expand: 'keyboard_arrow_down',
 }
 
-let Icon = ({ icon, ...props }) => (
-  <GVIcon icon={F.alias(icon, iconMap)} {...props} />
-)
+let Icon = React.forwardRef(({ icon, ...props }, ref) => (
+  <GVIcon icon={F.alias(icon, iconMap)} {...{ ref, ...props }} />
+))
 
 export default Icon

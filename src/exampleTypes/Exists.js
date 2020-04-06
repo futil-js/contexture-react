@@ -5,6 +5,7 @@ import { contexturify } from '../utils/hoc'
 let Exists = ({ tree, node, theme: { RadioList } }) => (
   <div className="contexture-exists">
     <RadioList
+      columnCount={2}
       value={node.value ? 'exists' : 'doesNotExist'}
       onChange={value => {
         tree.mutate(node.path, { value: value === 'exists' })

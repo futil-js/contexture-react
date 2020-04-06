@@ -4,18 +4,10 @@ import * as F from 'futil'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
-
-import {
-  QueryBuilder,
-  FilterList,
-  Awaiter,
-  Flex,
-  componentForType,
-  FilterAdder,
-} from '../../'
+import { Awaiter, Flex } from 'grey-vest'
+import { QueryBuilder, FilterList, componentForType, FilterAdder } from '../../'
 import { TextInput, ClampedHTML } from '../DemoControls'
 import { ResultCount, PagedResultTable, TypeMap } from '../../exampleTypes'
-
 import Contexture, { updateClient } from './contexture'
 
 let state = observable({
@@ -103,7 +95,7 @@ let Story = observer(() => {
   let { tree, schemas } = state
   return (
     <div style={{ background: '#f4f4f4' }}>
-      <TextInput value={state.url} onChange={e => updateEs(e.target.value)} />
+      <TextInput value={state.url} onChange={updateEs} />
       {schemas && (
         <Awaiter promise={schemas}>
           {schemas =>

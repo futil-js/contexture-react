@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex } from 'grey-vest'
+import { ColumnList, FormField } from 'grey-vest'
 import { contexturifyWithoutLoader } from '../utils/hoc'
 import F from 'futil'
 import _ from 'lodash/fp'
@@ -150,11 +150,11 @@ let DateComponent = ({
   )
 
   return (
-    <div>
+    <ColumnList gap="sm">
       <RadioList
+        columnCount={2}
         options={F.autoLabelOptions(['exact', 'rolling'])}
         value={node.useDateMath ? 'rolling' : 'exact'}
-        style={{ marginBottom: 10 }}
         onChange={mode => {
           tree.mutate(
             node.path,
@@ -172,25 +172,10 @@ let DateComponent = ({
           )
         }}
       />
-      {!node.useDateMath && (
-        <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-          <DateInput
-            value={node.from}
-            onChange={date => tree.mutate(node.path, { from: date })}
-          />
-          <div>-</div>
-          <DateInput
-            value={node.to}
-            onChange={date => tree.mutate(node.path, { to: date })}
-          />
-        </Flex>
-      )}
-      {node.useDateMath && (
+      {node.useDateMath ? (
         <Select
           value={rollingRangeToString(node)}
-          onChange={e =>
-            tree.mutate(node.path, rollingRangeFromString(e.target.value))
-          }
+          onChange={x => tree.mutate(node.path, rollingRangeFromString(x))}
           options={F.map(
             opt => ({
               label: opt.label,
@@ -200,8 +185,25 @@ let DateComponent = ({
             rollingOpts
           )}
         />
+      ) : (
+        <ColumnList columnCount={2} columnGap="sm" gap="sm">
+          <FormField
+            style={{ flex: 1 }}
+            component={DateInput}
+            label="Start date"
+            value={node.from}
+            onChange={date => tree.mutate(node.path, { from: date })}
+          />
+          <FormField
+            style={{ flex: 1 }}
+            component={DateInput}
+            label="End date"
+            value={node.to}
+            onChange={date => tree.mutate(node.path, { to: date })}
+          />
+        </ColumnList>
       )}
-    </div>
+    </ColumnList>
   )
 }
 

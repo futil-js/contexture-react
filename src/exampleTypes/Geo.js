@@ -33,15 +33,13 @@ let GeoComponent = ({
   <Flex style={{ flexFlow: 'column' }}>
     <Select
       style={elementStyle}
-      value={node.operator}
-      onChange={e => tree.mutate(node.path, { operator: e.target.value })}
+      {...F.domLens.value(tree.lens(node.path, 'operator'))}
       options={F.autoLabelOptions(operatorOptions)}
     />
     <div style={elementStyle}>
       <NumberInput
         min="1"
-        value={node.radius}
-        onChange={e => tree.mutate(node.path, { radius: e.target.value })}
+        {...F.domLens.value(tree.lens(node.path, 'radius'))}
         placeholder="Enter number of miles ..."
       />{' '}
       from

@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil'
 import { observer } from 'mobx-react'
+import { Flex, Grid, Divider } from 'grey-vest'
 import { withTheme } from '../../utils/theme'
 import { getTag, tagTerm, tagValueField } from './utils'
 
@@ -9,21 +10,23 @@ let TagActionsMenu = ({
   tag,
   node,
   tree,
-  theme: { Button, Checkbox, RadioList },
+  theme: { Button, Checkbox, RadioList, Text },
 }) => {
   let tagInstance = getTag(tag, node)
   return (
-    <div
+    <Grid
+      gap="sm"
       className="tags-query-tag-actions-menu"
-      style={{ minWidth: 200, padding: 10 }}
+      style={{ minWidth: 200 }}
     >
-      <div>
-        {_.startCase(tagTerm)}:{' '}
-        <span className="filter-field-label">{tag}</span>
-      </div>
+      <Text small>
+        {_.startCase(tagTerm)}: "{tag}"
+      </Text>
+      <Divider margin={0} style={{ marginLeft: -16, marginRight: -16 }} />
       {_.includes(' ', tag) && (
-        <div style={{ margin: '10px 0' }}>
+        <>
           <RadioList
+            columnCount={2}
             options={F.autoLabelOptions(['fuzzy', 'exact'])}
             value={tagInstance.distance ? 'fuzzy' : 'exact'}
             onChange={value => {
@@ -44,19 +47,24 @@ let TagActionsMenu = ({
           >
             Apply to all {tagTerm}s
           </Button>
-        </div>
+        </>
       )}
-      <label className="labeled-checkbox" style={{ marginTop: 15 }}>
+      <Flex
+        as="label"
+        className="labeled-checkbox"
+        alignItems="center"
+        gap="sm"
+      >
         <Checkbox
           checked={tagInstance.onlyShowTheseResults}
-          onChange={e => {
-            tagInstance.onlyShowTheseResults = e.target.checked
+          onChange={checked => {
+            tagInstance.onlyShowTheseResults = checked
             tree.mutate(node.path, { tags: [...node.tags] })
           }}
         />
-        <span>Only view this {tagTerm}</span>
-      </label>
-    </div>
+        <Text small>Only view this {tagTerm}</Text>
+      </Flex>
+    </Grid>
   )
 }
 

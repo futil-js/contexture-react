@@ -16,22 +16,22 @@ let NumberComponent = ({
     <Flex style={{ alignItems: 'center' }}>
       <NumberInput
         value={formatter(node.min) || ''}
-        onChange={e =>
+        onChange={value =>
           tree.mutate(node.path, {
             min: _.isNumber(significantDigits)
-              ? _.toString(round(e.target.value, significantDigits))
-              : e.target.value,
+              ? _.toString(round(value, significantDigits))
+              : value,
           })
         }
       />
       <div className="contexture-number-separator">-</div>
       <NumberInput
         value={formatter(node.max) || ''}
-        onChange={e =>
+        onChange={value =>
           tree.mutate(node.path, {
             max: _.isNumber(significantDigits)
-              ? _.toString(round(e.target.value, significantDigits))
-              : e.target.value,
+              ? _.toString(round(value, significantDigits))
+              : value,
           })
         }
       />

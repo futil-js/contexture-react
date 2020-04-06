@@ -31,8 +31,6 @@ let ResultTable = ({
   pageSizeOptions, // an array of options to set the # of rows per page (default [20, 50, 100, 250])
   theme: { Table },
 }) => {
-  // From Theme/Components
-  let mutate = tree.mutate(path)
   // NOTE infer + add columns does not work together (except for anything explicitly passed in)
   //   When removing a field, it's not longer on the record, so infer can't pick it up since it runs per render
   let schema = _.flow(
@@ -43,10 +41,7 @@ let ResultTable = ({
   )(fields)
   let includes = getIncludes(schema, node)
   let isIncluded = x => _.includes(x.field, includes)
-  let visibleFields = _.flow(
-    _.map(field => _.find({ field }, schema)),
-    _.compact
-  )(includes)
+  let visibleFields = F.compactMap(field => _.find({ field }, schema), includes)
   let hiddenFields = _.reject(isIncluded, schema)
 
   let headerProps = {
@@ -58,7 +53,7 @@ let ResultTable = ({
     addFilter: field => tree.add(criteria, newNodeFromField({ field, fields })),
     tree,
     node,
-    mutate,
+    mutate: tree.mutate(path),
     criteria,
   }
 

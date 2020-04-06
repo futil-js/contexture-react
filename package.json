@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "description": "React components for building contexture interfaces",
   "main": "dist/index.js",
   "scripts": {
@@ -114,13 +114,13 @@
   },
   "dependencies": {
     "futil": "^1.64.3",
-    "grey-vest": "^3.0.0-alpha.21",
+    "grey-vest": "^3.0.0-alpha.24",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
     "react-measure": "^2.3.0",
-    "react-outside-click-handler": "^1.2.3",
+    "react-outside-click-handler": "^1.3.0",
     "recompose": "^0.30.0"
   },
   "readme": "README.mdx"

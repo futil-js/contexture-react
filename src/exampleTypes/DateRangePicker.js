@@ -4,15 +4,21 @@ import { contexturify } from '../utils/hoc'
 
 let DateComponent = ({ tree, node, ranges, theme: { Select } }) => (
   <Select
-    value={(_.find({ from: node.from, to: node.to }, ranges) || {}).label}
-    onChange={event => {
-      let value = _.get('target.value', event)
-      if (value) {
-        let { from, to } = _.find({ label: value }, ranges)
-        tree.mutate(node.path, { from, to })
-      }
-    }}
-    options={_.map(x => ({ value: x.label, label: x.label }), ranges)}
+    value={_.flow(
+      _.find(_.pick(['from', 'to'], node)),
+      _.get('label')
+    )(ranges)}
+    onChange={label =>
+      label &&
+      tree.mutate(
+        node.path,
+        _.flow(
+          _.find({ label }),
+          _.pick(['from', 'to'])
+        )(ranges)
+      )
+    }
+    options={_.map(({ label }) => ({ label, value: label }), ranges)}
   />
 )
 DateComponent.displayName = 'DateRangePicker'

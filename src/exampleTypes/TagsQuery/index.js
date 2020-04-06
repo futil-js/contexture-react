@@ -1,41 +1,37 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil'
-import { Grid, GridItem } from 'grey-vest'
+import { Grid, GridItem, Popover } from 'grey-vest'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
-import { useLensObject } from '../../utils/react'
 import { getTagStyle, tagValueField } from './utils'
 import TagActionsMenu from './TagActionsMenu'
 import ActionsMenu from './ActionsMenu'
 
 export let innerHeight = 40
 
+let stopPropagation = e => e.stopPropagation()
+
 let TagsQuery = ({
   tree,
   node,
   style,
-  popoverState,
   actionWrapper,
   onAddTag = _.noop,
-  theme: { Icon, TagsInput, Tag, Popover },
+  theme: { TagsInput, Tag },
   ...props
 }) => {
-  let newPopoverState = useLensObject({ open: false, tagOpen: '' })
-  popoverState = popoverState || newPopoverState
-
-  let TagWithPopover = props => (
-    <>
+  let open = React.useState(false)
+  let TagWithPopover = tagProps => (
+    <div onClick={stopPropagation}>
       <Popover
-        isOpen={F.view(popoverState.tagOpen) === props.value}
-        onClose={F.sets('', popoverState.tagOpen)}
-        style={{ left: 0, top: 20 }}
+        Trigger={Tag}
+        triggerProps={tagProps}
+        keepOpen
+        popupProps={{ onClick: stopPropagation }}
       >
-        <TagActionsMenu tag={props.value} {...{ node, tree }} />
+        <TagActionsMenu tag={tagProps.value} {...{ node, tree }} />
       </Popover>
-      <Tag {...props} />
-    </>
+    </div>
   )
-
   return (
     <Grid
       className="tags-query"
@@ -53,7 +49,6 @@ let TagsQuery = ({
             })
             onAddTag(tag)
           }}
-          onTagClick={tag => F.set(tag, popoverState.tagOpen)}
           removeTag={tag => {
             tree.mutate(node.path, {
               tags: _.reject({ [tagValueField]: tag }, node.tags),
@@ -66,20 +61,16 @@ let TagsQuery = ({
           {...props}
         />
       </GridItem>
-      <GridItem place="center">
-        <div onClick={F.on(popoverState.open)}>
-          <Icon icon="TableColumnMenu" />
-        </div>
-        <Popover open={popoverState.open} style={{ right: 0 }}>
-          <ActionsMenu
-            {...{
-              node,
-              tree,
-              actionWrapper,
-              open: popoverState.open,
-            }}
-          />
-        </Popover>
+      <GridItem
+        place="center"
+        onClick={e => {
+          // This is to prevent clicks on the button or inside the popup from
+          // bubbling up to TagsQuerySearchBar and triggering an uncollapse,
+          // which would rerender the component and reset the popover state.
+          e.stopPropagation()
+        }}
+      >
+        <ActionsMenu {...{ node, tree, actionWrapper, open }} />
       </GridItem>
     </Grid>
   )

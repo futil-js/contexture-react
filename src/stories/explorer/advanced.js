@@ -4,8 +4,8 @@ import * as F from 'futil'
 import { observable } from 'mobx'
 import { fromPromise } from 'mobx-utils'
 import { observer } from 'mobx-react'
-
-import { Awaiter, Flex, QueryBuilder, componentForType } from '../../'
+import { Awaiter, Flex } from 'grey-vest'
+import { QueryBuilder, componentForType } from '../../'
 import { TextInput } from '../DemoControls'
 import { ResultCount, ResultTable, TypeMap } from '../../exampleTypes'
 
@@ -66,7 +66,7 @@ let Story = observer(() => {
   let { tree, schemas } = state
   return (
     <div>
-      <TextInput value={state.url} onChange={e => updateEs(e.target.value)} />
+      <TextInput value={state.url} onChange={updateEs} />
       {schemas && (
         <Awaiter promise={schemas}>
           {schemas =>

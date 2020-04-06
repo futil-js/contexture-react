@@ -18,7 +18,7 @@ export * from './exampleTypes'
 // generic search layouts
 export QueryBuilder from './queryBuilder/'
 export QueryWizard from './queryWizard'
-export FilterList, { FilterActions, Label } from './FilterList'
+export FilterList from './FilterList'
 export FilterAdder from './FilterAdder'
 export FilterButtonList from './FilterButtonList'
 export SearchFilters, { SearchTree } from './SearchFilters'

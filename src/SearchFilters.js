@@ -3,9 +3,9 @@ import _ from 'lodash/fp'
 import PropTypes from 'prop-types'
 import F from 'futil'
 import { observer } from 'mobx-react'
-import { Flex, QueryBuilder, FilterAdder, FilterList } from '.'
+import { QueryBuilder, FilterAdder, FilterList } from '.'
 import { ToggleFiltersButton, TreePauseButton } from './purgatory'
-import { LinkText } from 'grey-vest'
+import { Flex, LinkText } from 'grey-vest'
 import { withTheme } from './utils/theme'
 
 export let SearchTree = () => {}
@@ -24,46 +24,61 @@ let LabelledList = ({ list, Component }) =>
 export let AddableFilterList = props => (
   <>
     <FilterList {...props} />
-    <FilterAdder {...props} uniqueFields={!props.allowDuplicateFields} />
+    <FilterAdder
+      secondary
+      style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
+      {...props}
+      uniqueFields={!props.allowDuplicateFields}
+    />
   </>
 )
 
 export let FiltersBox = withTheme(({ theme: { Box }, ...props }) => (
-  <Box className="filter-list">
+  <Box padding={0}>
     <AddableFilterList {...props} />
   </Box>
 ))
 FiltersBox.displayName = 'FiltersBox'
 
-let BasicSearchFilters = ({ setMode, trees, children, BasicFilters }) => (
-  <div>
-    <Flex alignItems="center" justifyContent="space-between">
-      <Flex alignItems="center">
-        <h1>Filters</h1>
-        <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
+let BasicSearchFilters = withTheme(
+  ({ setMode, trees, children, BasicFilters, theme: { Title } }) => (
+    <div>
+      <Flex alignItems="center" justifyContent="space-between">
+        <Flex alignItems="center">
+          <ToggleFiltersButton onClick={() => setMode('resultsOnly')} />
+          <Title>Filters</Title>
+        </Flex>
+        <div>
+          <TreePauseButton children={children} />
+        </div>
       </Flex>
-      <div>
-        <TreePauseButton children={children} />
-      </div>
-    </Flex>
-    <LabelledList list={trees} Component={BasicFilters} />
-    <LinkText onClick={() => setMode('builder')} style={{ marginTop: 15 }}>
-      Switch to Advanced Search Builder
-    </LinkText>
-  </div>
-)
-
-let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
-  <div>
-    <Flex style={{ alignItems: 'center' }}>
-      <h1>Filters</h1>
-      <LinkText onClick={() => setMode('basic')}>
-        Back to Regular Search
+      <LabelledList list={trees} Component={BasicFilters} />
+      <LinkText
+        as="button"
+        onClick={() => setMode('builder')}
+        style={{ marginTop: 16 }}
+      >
+        Switch to Advanced Search Builder
       </LinkText>
-    </Flex>
-    <LabelledList list={trees} Component={BuilderFilters} />
-  </div>
+    </div>
+  )
 )
+BasicSearchFilters.displayName = 'BasicSearchFilters'
+
+let BuilderSearchFilters = withTheme(
+  ({ setMode, trees, BuilderFilters, theme: { Title } }) => (
+    <div>
+      <Flex style={{ alignItems: 'center' }}>
+        <Title>Filters</Title>
+        <LinkText as="button" onClick={() => setMode('basic')}>
+          Back to Regular Search
+        </LinkText>
+      </Flex>
+      <LabelledList list={trees} Component={BuilderFilters} />
+    </div>
+  )
+)
+BuilderSearchFilters.displayName = 'BuilderSearchFilters'
 
 let SearchFilters = ({
   mode,

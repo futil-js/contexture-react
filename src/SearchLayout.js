@@ -1,22 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { observer } from 'mobx-react'
+import { Grid } from 'grey-vest'
 
-let margin = 24
-
-let styles = mode => ({
-  display: 'grid',
-  gridGap: margin,
-  margin: `0 ${margin}px`,
-  marginBottom: margin,
-  gridTemplateColumns:
-    mode === 'basic' ? '320px minmax(0, 1fr)' : 'minmax(0, 1fr)',
-})
-
-let SearchLayout = ({ mode, style, className, ...props }) => (
-  <div
+let SearchLayout = ({ mode, gap = 24, className, ...props }) => (
+  <Grid
+    gap={gap}
+    columns={mode === 'basic' ? '320px minmax(0, 1fr)' : 'minmax(0, 1fr)'}
     className={`search-layout search-layout-${mode} ${className}`}
-    style={{ ...styles(mode), ...style }}
     {...props}
   />
 )

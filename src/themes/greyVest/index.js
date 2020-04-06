@@ -1,4 +1,4 @@
-import { defaultProps } from 'recompose'
+import { defaultProps } from '../../utils/react'
 
 // components exported from component library
 import {
@@ -6,7 +6,9 @@ import {
   Button,
   ButtonGroup,
   Checkbox,
+  CheckboxList,
   DateInput,
+  Dropdown,
   DropdownItem,
   NestedPicker,
   Modal,
@@ -14,24 +16,29 @@ import {
   RadioList,
   Select,
   Table,
+  Tag,
+  TagsInput,
   IconButton,
   TextHighlight,
   TextInput,
+  Text,
+  Subtitle,
 } from 'grey-vest'
 
 //components used only for theme
 import Icon from './Icon'
 import PickerItem from './PickerItem'
-import TagsInput, { Tag } from './TagsInput'
 import Root from './Root'
 
 export default {
-  AlternateButton: IconButton,
+  AlternateButton: defaultProps({ Icon })(IconButton),
   Box,
-  Button,
+  Button: defaultProps({ Icon })(Button),
   ButtonGroup,
   Checkbox,
+  CheckboxList,
   DateInput,
+  Dropdown,
   Root,
   Icon,
   TextInput,
@@ -46,4 +53,6 @@ export default {
   Select,
   Table,
   TextHighlight,
+  Text,
+  Title: defaultProps({ large: true })(Subtitle),
 }

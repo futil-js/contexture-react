@@ -1,7 +1,6 @@
 import React from 'react'
 import F from 'futil'
-import _ from 'lodash/fp'
-import TableFooter from 'grey-vest'
+import { TableFooter } from 'grey-vest'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 
 let ResultTableFooter = ({ tree, node, pageSizeOptions }) => {
@@ -12,12 +11,7 @@ let ResultTableFooter = ({ tree, node, pageSizeOptions }) => {
       page={node.page || 1}
       onChangePage={page => tree.mutate(node.path, { page })}
       pageSize={node.pageSize}
-      onChangePageSize={pageSize => {
-        tree.mutate(node.path, {
-          pageSize,
-          page: _.ceil((getFromContext('startRecord') || 0) / pageSize) || 1,
-        })
-      }}
+      onChangePageSize={pageSize => tree.mutate(node.path, { pageSize })}
       pageSizeOptions={pageSizeOptions}
       {...F.arrayToObject(x => x, getFromContext, [
         'hasMore',

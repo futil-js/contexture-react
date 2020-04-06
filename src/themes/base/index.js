@@ -1,6 +1,5 @@
 import F from 'futil'
 import React from 'react'
-import { defaultProps } from 'recompose'
 // components exported from base component library
 import {
   BarChart,
@@ -16,12 +15,16 @@ import {
 } from 'grey-vest'
 
 // components used only for base theme
+import CheckboxList from './CheckboxList'
 import Icon from './Icon'
 import UnmappedNodeComponent from './UnmappedNodeComponent'
 
+import { defaultProps } from '../../utils/react'
 import { defaultTheme } from '../../utils/theme'
 
 let native = defaultProps({ native: true })
+
+let Checkbox = props => <input type="checkbox" {...props} />
 
 let theme = {
   AlternateButton: 'button',
@@ -29,11 +32,13 @@ let theme = {
   Box: 'div',
   Button: 'button',
   ButtonGroup: 'div',
-  Checkbox: props => <input type="checkbox" {...props} />,
+  Checkbox,
+  CheckboxList,
   DateInput: native(DateInput),
   UnmappedNodeComponent,
   Icon,
   Input: 'input',
+  Dropdown: Popover,
   DropdownItem: 'li',
   Modal,
   NumberInput: props => <input type="number" {...props} />,
@@ -47,6 +52,9 @@ let theme = {
   TagsInput,
   TextHighlight,
   TextInput: 'input',
+  Text: 'span',
+  Title: 'h1',
+  Subtitle: 'h3',
 }
 // To add `withTheme` components to the default theme, we have to mutate them onto
 // the theme object after it's declared, because importing them into `utils/theme`

@@ -6,7 +6,7 @@ import { withTheme } from '../utils/theme'
 let setPausedNested = (tree, path, value) =>
   tree[`${value ? '' : 'un'}pauseNested`](path)
 
-let TreePauseButton = ({ children, theme: { AlternateButton, Icon } }) => {
+let TreePauseButton = ({ children, theme: { AlternateButton } }) => {
   let trees = _.flow(
     React.Children.toArray,
     _.map('props')
@@ -16,9 +16,11 @@ let TreePauseButton = ({ children, theme: { AlternateButton, Icon } }) => {
     _.each(({ tree, path }) => setPausedNested(tree, path, !allPaused), trees)
   let title = `${allPaused ? 'Expand' : 'Collapse'} Filters`
   return (
-    <AlternateButton title={title} onClick={flip}>
-      <Icon icon={allPaused ? 'TreeUnpause' : 'TreePause'} />
-    </AlternateButton>
+    <AlternateButton
+      title={title}
+      onClick={flip}
+      icon={allPaused ? 'TreeUnpause' : 'TreePause'}
+    />
   )
 }
 

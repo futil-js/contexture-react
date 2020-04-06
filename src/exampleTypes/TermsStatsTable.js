@@ -18,7 +18,7 @@ let SimpleFilter = _.flow(
 )(({ theme: { TextInput }, ...props }) => (
   <Flex style={{ ...toolBarStyle, width: '75%' }}>
     <SimpleLabel text="Filter:" />
-    <TextInput {...props} />
+    <TextInput style={{ flex: 1 }} {...props} />
   </Flex>
 ))
 
@@ -36,9 +36,7 @@ let SelectSize = _.flow(
     <Flex style={toolBarStyle}>
       <SimpleLabel text="Size:" />
       <Select
-        onChange={e => {
-          tree.mutate(node.path, { size: e.target.value })
-        }}
+        onChange={size => tree.mutate(node.path, { size })}
         value={_.getOr(25, 'size', node)}
         placeholder={null}
         style={{ width: '100px' }}
@@ -61,7 +59,11 @@ let TermsStatsTable = ({
   ...props
 }) => (
   <div>
-    <Flex style={{ ...toolBarStyle, margin: 40, marginBottom: 0 }}>
+    <Flex
+      alignItems="center"
+      justifyContent="space-between"
+      style={{ padding: '16px 16px 8px' }}
+    >
       <SimpleFilter {...F.domLens.value(tree.lens(node.path, 'filter'))} />
       <SelectSize node={node} tree={tree} options={sizeOptions} />
     </Flex>

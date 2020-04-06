@@ -3,38 +3,24 @@ import F from 'futil'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
 import OutsideClickHandler from 'react-outside-click-handler'
-import { useLensObject } from '../utils/react'
 import { withNode } from '../utils/hoc'
-import {
-  Box,
-  ButtonGroup,
-  Button,
-  TagsInput as ExpandableTagsInput,
-  Tags,
-} from 'grey-vest'
+import { Box, ButtonGroup, Button, theme } from 'grey-vest'
 import ExpandableTagsQuery from './ExpandableTagsQuery'
-
-let searchBarStyle = {
-  overflow: 'visible', // for the search button animation
-}
 
 let searchBarBoxStyle = {
   padding: '8px 10px',
   flex: 1,
 }
 
-let inputStyle = {
-  border: 'none',
-}
-
 let buttonStyle = {
-  boxShadow: '0 2px 10px 0 rgba(39, 44, 65, 0.1)',
+  boxShadow: theme.boxShadows.normal,
   fontSize: 18,
   maxHeight: 56,
 }
 
 let AnimatedButton = ({ disabled, style, className, ...props }) => (
   <Button
+    large
     className={`${
       disabled ? 'disabled' : 'animated pulse infinite'
     } ${className || ''}`}
@@ -68,28 +54,15 @@ let SearchBar = ({
   searchButtonProps,
 }) => {
   let collapse = React.useState(true)
-  let popoverState = useLensObject({ open: false, tagOpen: '' })
   return (
-    <OutsideClickHandler
-      onOutsideClick={() => {
-        F.on(collapse)()
-        F.off(popoverState.open)()
-        F.set('', popoverState.tagOpen)
-      }}
-    >
-      <ButtonGroup style={searchBarStyle}>
+    <OutsideClickHandler display="contents" onOutsideClick={F.on(collapse)}>
+      <ButtonGroup inline={false} style={{ overflow: 'visible' }}>
         <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
           <ExpandableTagsQuery
-            {...{ tree, node, collapse, popoverState, actionWrapper }}
+            {...{ tree, node, collapse, actionWrapper }}
             onAddTag={F.off(collapse)}
             Loader={({ children }) => <div>{children}</div>}
-            style={inputStyle}
-            theme={{
-              TagsInput:
-                F.view(collapse) && !_.isEmpty(node.tags)
-                  ? Tags
-                  : ExpandableTagsInput,
-            }}
+            style={{ border: 0 }}
             autoFocus
           />
         </Box>

@@ -5,6 +5,7 @@ import { contexturify } from '../utils/hoc'
 let Bool = ({ tree, node, theme: { RadioList } }) => (
   <div className="contexture-bool">
     <RadioList
+      columnCount={2}
       value={node.value ? 'yes' : 'no'}
       onChange={value => {
         tree.mutate(node.path, { value: value === 'yes' })
