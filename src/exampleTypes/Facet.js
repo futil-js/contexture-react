@@ -112,7 +112,7 @@ let Facet = ({
     facetFilter: false, // Hide the search box above the facet checkboxes
     counts: false, // Hide the facet counts so only the labels are displayed
   },
-  display = x => x,
+  display = (name, label) => (_.isString(label) ? label : name),
   displayBlank = () => <i>Not Specified</i>,
   formatCount = x => x,
   theme: { CheckboxList, RadioList },
@@ -131,10 +131,10 @@ let Facet = ({
       <SelectAll node={node} tree={tree} />
       <CheckboxList
         options={_.map(
-          ({ name, count }) => ({
+          ({ name, label, count }) => ({
             label: (
               <Flex justifyContent="space-between" gap="xs">
-                <span>{display(name) || displayBlank()}</span>
+                <span>{display(name, label) || displayBlank()}</span>
                 <span>{!hide.counts && formatCount(count)}</span>
               </Flex>
             ),
