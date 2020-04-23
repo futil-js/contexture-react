@@ -204,11 +204,14 @@ let Header = ({
       <Modal open={state.adding}>
         <NestedPicker
           options={addOptions}
-          onChange={field => {
-            if (!_.contains(field, includes))
-              mutate({ include: [...includes, field] })
-            F.off(state.adding)()
-          }}
+          onChange={triggerField => {
+              let index = includes.indexOf(field)
+              if (index >= 0) {
+                includes.splice(index + 1, 0, triggerField)
+                mutate({ include: includes })
+              }
+              F.off(adding)()
+            }}
         />
       </Modal>
     </HeaderCell>
