@@ -210,7 +210,10 @@ let DateComponent = ({
         <Select
           value={rollingRangeToString(node)}
           onChange={e =>
-            tree.mutate(node.path, rollingRangeFromString(e.target.value))
+            tree.mutate(node.path, {
+              ...rollingRangeFromString(e.target.value),
+              timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            })
           }
           options={F.map(
             opt => ({
