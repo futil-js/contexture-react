@@ -1,10 +1,9 @@
 import React from 'react'
 import _ from 'lodash/fp'
 import F from 'futil'
-import { observer } from 'mobx-react'
 import Checkbox from './Checkbox'
 
-let CheckboxList = ({ options, value, onChange, ...props }) => (
+let CheckboxList = ({ value, onChange, options, ...props }) => (
   <div {...props}>
     {_.map(
       option => (
@@ -13,10 +12,13 @@ let CheckboxList = ({ options, value, onChange, ...props }) => (
           style={{ display: 'flex', cursor: 'pointer', marginRight: 25 }}
         >
           <Checkbox
-            {...F.domLens.checkboxValues(option.value, {
-              get: () => value,
-              set: onChange,
-            })}
+            value={_.includes(option.value, value)}
+            onChange={e => {
+              let x = e.target.value
+              onChange(
+                x ? F.push(option.value, value) : _.pull(option.value, value)
+              )
+            }}
           />
           <div style={{ paddingLeft: 15 }}>{option.label}</div>
         </label>
@@ -26,4 +28,4 @@ let CheckboxList = ({ options, value, onChange, ...props }) => (
   </div>
 )
 
-export default observer(CheckboxList)
+export default CheckboxList
