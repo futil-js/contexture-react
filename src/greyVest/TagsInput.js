@@ -7,7 +7,7 @@ import DefaultTag from './Tag'
 
 let isValidInput = (tag, tags) => !_.isEmpty(tag) && !_.includes(tag, tags)
 
-let TagsInput = ({
+let TagsInput = React.forwardRef({
   tags,
   addTag,
   removeTag,
@@ -21,9 +21,8 @@ let TagsInput = ({
   onTagClick = _.noop,
   Tag = DefaultTag,
   ...props
-}) => {
+}, inputRef) => {
   let containerRef = React.useRef()
-  let inputRef = React.useRef()
   let state = useLocalStore(() => ({ currentInput: '' }))
   addTag = splitCommas
     ? _.flow(
