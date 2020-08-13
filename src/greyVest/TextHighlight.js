@@ -1,7 +1,7 @@
 import React from 'react'
 import * as F from 'futil'
 
-let DefaultWrap = (props) => (
+let DefaultWrap = props => (
   <b style={{ backgroundColor: 'yellow' }} {...props} />
 )
 

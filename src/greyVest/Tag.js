@@ -3,7 +3,7 @@ import F from 'futil'
 import { observer } from 'mobx-react'
 import Flex from './Flex'
 
-let RemoveTagIcon = (props) => (
+let RemoveTagIcon = props => (
   <span className="tags-input-tag-remove" {...props}>
     x
   </span>
@@ -41,7 +41,7 @@ let Tag = ({
         {value}
       </span>
       <RemoveIcon
-        onClick={(e) => {
+        onClick={e => {
           e.stopPropagation()
           removeTag(value)
         }}

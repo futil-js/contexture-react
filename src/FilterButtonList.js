@@ -84,7 +84,7 @@ let FilterButtonList = ({
     {...{ nested, className }}
     nodeJoinColor={node && styles.joinColor(node)}
   >
-    {_.map((child) => {
+    {_.map(child => {
       let Component = child.children ? FilterButtonList : FilterButtonItem
       return (
         <Component

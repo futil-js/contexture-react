@@ -91,10 +91,10 @@ export let FacetOptionsFilter = _.flow(
     <ButtonGroup>
       <TextInput
         value={val}
-        onChange={(e) => {
+        onChange={e => {
           setVal(e.target.value)
         }}
-        onKeyPress={(e) => e.key === 'Enter' && submit()}
+        onKeyPress={e => e.key === 'Enter' && submit()}
         onBlur={submit}
         placeholder="Search..."
       />
@@ -116,7 +116,7 @@ export let FacetCheckboxList = contexturifyWithoutLoader(
     theme: { Checkbox },
   }) =>
     _.flow(
-      _.partition((x) => _.includes(x.name, node.values)),
+      _.partition(x => _.includes(x.name, node.values)),
       _.flatten,
       _.map(({ name, label, count }) => {
         let lens = tree.lens(node.path, 'values')

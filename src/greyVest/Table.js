@@ -1,6 +1,6 @@
 import React from 'react'
 
-let Table = (x) => (
+let Table = x => (
   <div style={{ overflow: 'auto' }}>
     <table className="gv-table" {...x} />
   </div>

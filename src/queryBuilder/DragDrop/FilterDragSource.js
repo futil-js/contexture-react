@@ -2,7 +2,7 @@ import { DragSource } from 'react-dnd'
 export default DragSource(
   'filter',
   {
-    beginDrag: (props) => ({
+    beginDrag: props => ({
       node: props.child || props.node,
       tree: props.tree,
     }),

@@ -137,7 +137,7 @@ let Header = ({
         )}
         <DropdownItem
           onClick={() =>
-            moveColumn(mutate, (i) => i - 1, field, visibleFields, includes)
+            moveColumn(mutate, i => i - 1, field, visibleFields, includes)
           }
         >
           <Icon icon="MoveLeft" />
@@ -145,7 +145,7 @@ let Header = ({
         </DropdownItem>
         <DropdownItem
           onClick={() =>
-            moveColumn(mutate, (i) => i + 1, field, visibleFields, includes)
+            moveColumn(mutate, i => i + 1, field, visibleFields, includes)
           }
         >
           <Icon icon="MoveRight" />
@@ -194,7 +194,7 @@ let Header = ({
         <Modal open={adding}>
           <NestedPicker
             options={addOptions}
-            onChange={(triggerField) => {
+            onChange={triggerField => {
               let index = includes.indexOf(field)
               if (index >= 0) {
                 includes.splice(index + 1, 0, triggerField)

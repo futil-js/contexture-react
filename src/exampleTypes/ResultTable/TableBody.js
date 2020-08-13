@@ -16,14 +16,14 @@ let TableBody = ({
   <tbody>
     {!!getResults(node).length &&
       _.map(
-        (x) => (
+        x => (
           <Row
             key={x._id}
             record={getRecord(x)}
             {...{ fields, visibleFields, hiddenFields }}
           >
             {_.map(
-              ({ field, display = (x) => x, Cell = 'td' }) => (
+              ({ field, display = x => x, Cell = 'td' }) => (
                 <Cell key={field}>
                   {display(_.get(field, getRecord(x)), getRecord(x))}
                 </Cell>

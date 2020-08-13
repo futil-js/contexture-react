@@ -47,7 +47,7 @@ export let loadHereOptions = async (
     console.error('loadHereOptions', data.error)
     throw new Error(data.error)
   } else {
-    return _.getOr([], 'suggestions', data).map((d) => ({
+    return _.getOr([], 'suggestions', data).map(d => ({
       label: formatAddress(d),
       value: d.locationId,
     }))

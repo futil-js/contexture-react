@@ -13,7 +13,7 @@ import ResultTableFooter from './ResultTableFooter'
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
-let Tr = (props) => (
+let Tr = props => (
   <tr
     {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
   />
@@ -51,9 +51,9 @@ let ResultTable = ({
     _.orderBy('order', 'desc')
   )(fields)
   let includes = getIncludes(schema, node)
-  let isIncluded = (x) => _.includes(x.field, includes)
+  let isIncluded = x => _.includes(x.field, includes)
   let visibleFields = _.flow(
-    _.map((field) => _.find({ field }, schema)),
+    _.map(field => _.find({ field }, schema)),
     _.compact
   )(includes)
   let hiddenFields = _.reject(isIncluded, schema)
@@ -64,8 +64,7 @@ let ResultTable = ({
     visibleFields,
     includes,
     addOptions: fieldsToOptions(hiddenFields),
-    addFilter: (field) =>
-      tree.add(criteria, newNodeFromField({ field, fields })),
+    addFilter: field => tree.add(criteria, newNodeFromField({ field, fields })),
     tree,
     node,
     mutate,
@@ -78,7 +77,7 @@ let ResultTable = ({
           <thead>
             <tr>
               {F.mapIndexed(
-                (x) => (
+                x => (
                   <Header key={x.field} field={x} {...headerProps} />
                 ),
                 visibleFields

@@ -31,20 +31,20 @@ let Text = ({
     <div className="contexture-text">
       <Select
         value={node.operator}
-        onChange={(e) => tree.mutate(node.path, { operator: e.target.value })}
+        onChange={e => tree.mutate(node.path, { operator: e.target.value })}
         options={operatorOptions}
       />
       <TagsInput
         splitCommas
         tags={node.values}
-        onTagClick={(tag) => {
+        onTagClick={tag => {
           F.on(open)()
           setSelectedTag(tag)
         }}
-        addTag={(tag) => {
+        addTag={tag => {
           tree.mutate(node.path, { values: [...node.values, tag] })
         }}
-        removeTag={(tag) => {
+        removeTag={tag => {
           tree.mutate(node.path, {
             values: _.without([tag], node.values),
           })

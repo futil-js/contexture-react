@@ -5,11 +5,11 @@ import { StripedLoader } from '../greyVest'
 import { wrapDisplayName } from './react'
 import { withTheme } from './theme'
 
-export let withNode = (Component) =>
+export let withNode = Component =>
   wrapDisplayName(
     'withNode',
     Component
-  )((props) => {
+  )(props => {
     let { tree, node, path } = props
     node = node || (tree && path && tree.getNode(path))
 
@@ -19,7 +19,7 @@ export let withNode = (Component) =>
     return <Component {...props} node={node} />
   })
 
-export let withLoader = (Component) =>
+export let withLoader = Component =>
   _.flow(
     wrapDisplayName('withLoader', Component),
     observer
@@ -34,7 +34,7 @@ export let withLoader = (Component) =>
   })
 
 // I am a band-aid, please rip me off as quickly as possible
-export let withInlineLoader = (Component) =>
+export let withInlineLoader = Component =>
   _.flow(
     wrapDisplayName('withInlineLoader', Component),
     observer
@@ -56,7 +56,7 @@ export let contexturify = _.flow(observer, withLoader, withNode, withTheme)
 export let contexturifyWithoutLoader = _.flow(observer, withNode, withTheme)
 
 // this is used for the text components
-export let withTreeLens = (Component) =>
+export let withTreeLens = Component =>
   wrapDisplayName(
     'withTreeLens',
     Component

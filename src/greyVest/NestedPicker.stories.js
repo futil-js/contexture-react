@@ -8,7 +8,7 @@ storiesOf('GreyVest Library|NestedPicker', module)
   .addDecorator(decorator)
   .add('story', () => (
     <NestedPicker
-      options={['abcd', 'bcde', 'cdef'].map((x) => ({ label: x, value: x }))}
+      options={['abcd', 'bcde', 'cdef'].map(x => ({ label: x, value: x }))}
       onChange={action(`picked`)}
     />
   ))

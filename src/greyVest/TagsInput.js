@@ -50,7 +50,7 @@ let TagsInput = forwardRef(
           }}
         >
           {_.map(
-            (t) => (
+            t => (
               <Tag
                 key={t}
                 value={t}
@@ -69,7 +69,7 @@ let TagsInput = forwardRef(
               minWidth: 120,
             }}
             ref={inputRef}
-            onChange={(e) => {
+            onChange={e => {
               state.currentInput = e.target.value
               onInputChange()
             }}
@@ -80,7 +80,7 @@ let TagsInput = forwardRef(
                 onBlur()
               }
             }}
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === 'Enter' && !state.currentInput) submit()
               if (
                 (_.includes(e.key, ['Enter', 'Tab']) ||

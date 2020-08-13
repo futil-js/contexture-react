@@ -42,7 +42,8 @@
   "prettier": {
     "singleQuote": true,
     "semi": false,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "arrowParens": "avoid"
   },
   "storybook-deployer": {
     "commitMessage": "Deploy Storybook [ci skip]"

@@ -5,9 +5,9 @@ import { newNodeFromField } from './utils/search'
 import { ModalPicker } from './purgatory'
 import { Flex } from './greyVest'
 
-export let fieldsToOptions = _.map((x) => ({ value: x.field, ...x }))
+export let fieldsToOptions = _.map(x => ({ value: x.field, ...x }))
 
-let getGroupFields = (node) => _.map('field', _.getOr([], 'children', node))
+let getGroupFields = node => _.map('field', _.getOr([], 'children', node))
 
 let FilterAdder = ({
   tree,
@@ -20,10 +20,7 @@ let FilterAdder = ({
 }) => {
   let options = fieldsToOptions(fields)
   if (uniqueFields) {
-    options = _.reject(
-      (x) => _.includes(x.field, getGroupFields(node)),
-      options
-    )
+    options = _.reject(x => _.includes(x.field, getGroupFields(node)), options)
   }
   let Label = (
     <Flex justifyContent="center" alignItems="center">
@@ -34,7 +31,7 @@ let FilterAdder = ({
   return (
     <Picker
       options={options}
-      onChange={(field) => tree.add(path, newNodeFromField({ field, fields }))}
+      onChange={field => tree.add(path, newNodeFromField({ field, fields }))}
       label={Label}
     />
   )
