@@ -20,26 +20,25 @@ export let facetSelect = () => (
 
 export let emojiDataset = () => {
   let data = require('emoji-datasource')
-
   let service = memoryService(data)
   console.log(service)
   let tree = ContextureMobx({ service })({
     key: 'root',
-    children: [{ type: 'facet', field: 'category' }, { type: 'results' }],
+    children: [{ type: 'facet', field: 'name' }, { type: 'results' }],
   })
 
   tree.refresh(['root'])
   return (
     <Grid columns="1fr 3fr" gap={8}>
       <Box>
-        <Facet tree={tree} path={['root', 'category-facet']} />
+        <Facet tree={tree} path={['root', 'name-facet']} />
       </Box>
       <Box style={{ overflow: 'auto' }}>
         <ResultTable
           infer
           tree={tree}
           path={['root', 'results']}
-          fields={{ category: { order: 1 } }}
+          fields={{ name: { order: 1 } }}
         />
       </Box>
     </Grid>
