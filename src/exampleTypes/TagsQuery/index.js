@@ -23,7 +23,7 @@ let TagsQuery = ({
   let newPopoverState = useLensObject({ open: false, tagOpen: '' })
   popoverState = popoverState || newPopoverState
 
-  let TagWithPopover = props => (
+  let TagWithPopover = (props) => (
     <>
       <Popover
         isOpen={F.view(popoverState.tagOpen) === props.value}
@@ -47,14 +47,14 @@ let TagsQuery = ({
         <TagsInput
           splitCommas
           tags={_.map(tagValueField, node.tags)}
-          addTag={tag => {
+          addTag={(tag) => {
             tree.mutate(node.path, {
               tags: [...node.tags, { [tagValueField]: tag, distance: 3 }],
             })
             onAddTag(tag)
           }}
-          onTagClick={tag => F.set(tag, popoverState.tagOpen)}
-          removeTag={tag => {
+          onTagClick={(tag) => F.set(tag, popoverState.tagOpen)}
+          removeTag={(tag) => {
             tree.mutate(node.path, {
               tags: _.reject({ [tagValueField]: tag }, node.tags),
             })

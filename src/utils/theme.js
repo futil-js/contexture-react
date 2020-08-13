@@ -19,7 +19,7 @@ export let ThemeProvider = ({ theme, children }) => {
   )
 }
 
-let hasNested = key => F.findIndexed((v, k) => _.startsWith(`${key}.`, k))
+let hasNested = (key) => F.findIndexed((v, k) => _.startsWith(`${key}.`, k))
 
 export let mergeNestedTheme = (theme, key) =>
   F.when(
@@ -46,7 +46,7 @@ export let ThemeConsumer = ({ name, children, theme }) => {
   )
 }
 
-export let withNamedTheme = name => Component => {
+export let withNamedTheme = (name) => (Component) => {
   let themed = ({ theme, ...props }) => {
     let newTheme = useTheme(name, theme)
     return (

@@ -29,7 +29,7 @@ let Facet = ({
     {!hide.radioList && (
       <RadioList
         value={node.mode || 'include'} // Fix by changing defaults in client example type
-        onChange={mode => tree.mutate(node.path, { mode })}
+        onChange={(mode) => tree.mutate(node.path, { mode })}
         options={F.autoLabelOptions(['include', 'exclude'])}
       />
     )}

@@ -5,7 +5,7 @@ import DDContext from '../DragDrop/DDContext'
 
 let DnDWrap = DDContext(({ children }) => <div>{children}</div>)
 
-export let DnDDecorator = storyFn => <DnDWrap>{storyFn()}</DnDWrap>
+export let DnDDecorator = (storyFn) => <DnDWrap>{storyFn()}</DnDWrap>
 
 export let parent = {
   lens: {

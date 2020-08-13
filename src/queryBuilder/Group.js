@@ -15,7 +15,7 @@ import { blankNode } from '../utils/search'
 import { useLensObject } from '../utils/react'
 import { setDisplayName } from 'recompose'
 
-let GroupItem = FilterDragSource(props => {
+let GroupItem = FilterDragSource((props) => {
   let {
     child,
     node,
@@ -48,7 +48,7 @@ let GroupItem = FilterDragSource(props => {
 let Group = _.flow(
   setDisplayName('Group'),
   observer
-)(props => {
+)((props) => {
   let { parent, node, tree, adding, isRoot } = props
   let hover = useLensObject({ wrap: false, join: '', remove: false })
   return (
@@ -76,9 +76,11 @@ let Group = _.flow(
                 <FilterIndentTarget {...{ ...props, child, index }} />
                 {/*<FilterMoveTarget index={index} tree={tree} />*/}
                 <GroupItem {...{ ...props, child, index, adding, hover }} />
-                {/*index !== (tree.children.length-1) &&*/ !child.children && (
-                  <FilterMoveTarget {...{ ...props, child, index }} />
-                )}
+                {
+                  /*index !== (tree.children.length-1) &&*/ !child.children && (
+                    <FilterMoveTarget {...{ ...props, child, index }} />
+                  )
+                }
               </div>
             ),
             _.toArray(node.children)

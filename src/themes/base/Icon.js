@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dynamic } from '../../greyVest'
 
-let toIcon = symbol => props => <span {...props}>{symbol}</span>
+let toIcon = (symbol) => (props) => <span {...props}>{symbol}</span>
 
 export let iconMap = {
   SortAscending: toIcon('▲'),

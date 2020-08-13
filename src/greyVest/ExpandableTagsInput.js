@@ -21,7 +21,7 @@ export let Tags = ({
   >
     {_.flow(
       reverse ? _.reverse : _.identity,
-      _.map(t => (
+      _.map((t) => (
         <Tag
           key={t}
           value={t}
@@ -66,7 +66,7 @@ let ExpandableTagsInput = ({
       <span className="tags-input-container" columns="1fr auto" gap="8px 4px">
         <input
           style={{ flex: 1, border: 0 }}
-          onChange={e => {
+          onChange={(e) => {
             setCurrentInput(e.target.value)
             onInputChange()
           }}
@@ -77,7 +77,7 @@ let ExpandableTagsInput = ({
               onBlur()
             }
           }}
-          onKeyDown={e => {
+          onKeyDown={(e) => {
             if (e.key === 'Enter' && !currentInput) submit()
             if (
               (_.includes(e.key, ['Enter', 'Tab']) ||

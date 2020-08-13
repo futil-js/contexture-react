@@ -5,7 +5,7 @@ import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'
 
 const customStyles = {
-  valueContainer: styles => ({
+  valueContainer: (styles) => ({
     ...styles,
     ...{
       overflow: 'hidden',
@@ -34,14 +34,14 @@ let GeoComponent = ({
     <Select
       style={elementStyle}
       value={node.operator}
-      onChange={e => tree.mutate(node.path, { operator: e.target.value })}
+      onChange={(e) => tree.mutate(node.path, { operator: e.target.value })}
       options={F.autoLabelOptions(operatorOptions)}
     />
     <div style={elementStyle}>
       <NumberInput
         min="1"
         value={node.radius}
-        onChange={e => tree.mutate(node.path, { radius: e.target.value })}
+        onChange={(e) => tree.mutate(node.path, { radius: e.target.value })}
         placeholder="Enter number of miles ..."
       />{' '}
       from
@@ -56,7 +56,7 @@ let GeoComponent = ({
           noOptionsMessage={() => ''}
           styles={customStyles}
           loadOptions={loadOptions}
-          onInputChange={newValue => {
+          onInputChange={(newValue) => {
             const inputValue = newValue.replace(/[^a-zA-Z0-9\s]+/g, '')
             return inputValue
           }}

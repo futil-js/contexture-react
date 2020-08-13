@@ -2,13 +2,10 @@ import F from 'futil'
 import _ from 'lodash/fp'
 import { defaultNodeProps } from './schema'
 
-export let oppositeJoin = node =>
+export let oppositeJoin = (node) =>
   F.getOrReturn('join', node) === 'and' ? 'or' : 'and'
 
-export let randomString = () =>
-  Math.random()
-    .toString(36)
-    .substring(7)
+export let randomString = () => Math.random().toString(36).substring(7)
 
 export let blankNode = () => ({ key: randomString() })
 
@@ -28,7 +25,7 @@ export let newNodeFromField = ({ field, fields, ...optionalNodeProps }) => {
   }
 }
 
-export let transformNodeFromField = args => node => ({
+export let transformNodeFromField = (args) => (node) => ({
   ..._.pick('key', node),
   ...newNodeFromField(args),
 })
@@ -52,5 +49,5 @@ export let getTypeLabel = (tree, type) =>
   _.getOr(F.autoLabel(type), ['types', type, 'label'], tree)
 
 export let getTypeLabelOptions = _.curry((tree, types) =>
-  _.map(type => ({ label: getTypeLabel(tree, type), value: type }), types)
+  _.map((type) => ({ label: getTypeLabel(tree, type), value: type }), types)
 )

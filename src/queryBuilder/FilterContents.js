@@ -33,7 +33,7 @@ let FilterContents = ({
       <ModalPicker
         label={nodeField ? nodeLabel : 'Pick a Field'}
         options={fieldsToOptions(fields)}
-        onChange={field =>
+        onChange={(field) =>
           tree.replace(node.path, transformNodeFromField({ field, fields }))
         }
       />

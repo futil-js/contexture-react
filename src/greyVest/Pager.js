@@ -23,7 +23,7 @@ let Pager = ({
       )}
       {_.reverse(
         _.times(
-          n =>
+          (n) =>
             value > n + 1 && (
               <PagerItem
                 key={`prev${n}`}
@@ -37,7 +37,7 @@ let Pager = ({
       )}
       <PagerItem active>{value}</PagerItem>
       {_.times(
-        n =>
+        (n) =>
           value + (n + 1) <= pageCount && (
             <PagerItem
               key={`next${n}`}

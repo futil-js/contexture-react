@@ -5,7 +5,7 @@ import _ from 'lodash/fp'
 // Lifted from contexture-client since it's not exported
 let treeLens = _.curry((tree, path, prop) => ({
   get: () => _.get(prop, tree.getNode(path)),
-  set: value => tree.mutate(path, { [prop]: value }),
+  set: (value) => tree.mutate(path, { [prop]: value }),
 }))
 
 export default (f = _.identity) => {
@@ -224,7 +224,7 @@ export default (f = _.identity) => {
 
   let r = f(testTree)
 
-  let Obj = function() {
+  let Obj = function () {
     return r
   }
   Obj.prototype.toString = () => 'THIS IS A CONTEXTURE TEST TREE'

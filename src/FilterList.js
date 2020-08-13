@@ -38,7 +38,7 @@ export let FilterActions = _.flow(
         <Modal open={modal}>
           <NestedPicker
             options={fieldsToOptions(fields)}
-            onChange={field => {
+            onChange={(field) => {
               tree.replace(node.path, transformNodeFromField({ field, fields }))
               F.off(modal)()
             }}
@@ -51,7 +51,7 @@ export let FilterActions = _.flow(
                 Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
               </DropdownItem>
               {_.map(
-                x => (
+                (x) => (
                   <DropdownItem
                     key={x.value}
                     onClick={() =>
@@ -113,7 +113,7 @@ export let Label = _.flow(
       {tree && node && (
         <React.Fragment>
           <span
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation()
               F.flip(popover)()
             }}
@@ -160,7 +160,7 @@ let FilterList = _.flow(
   }) => (
     <div style={style} className={className}>
       {_.map(
-        child =>
+        (child) =>
           child.children ? (
             <FilterList
               key={child.path}
@@ -192,12 +192,13 @@ let FilterList = _.flow(
                     tree.disableAutoUpdate &&
                     // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
                     _.some(
-                      treeNode => treeNode !== node && treeNode.markedForUpdate,
+                      (treeNode) =>
+                        treeNode !== node && treeNode.markedForUpdate,
                       F.treeToArray(_.get('children'))(tree.tree)
                     ) && (
                       <div
                         className="apply-filter-button"
-                        onClick={e => {
+                        onClick={(e) => {
                           e.stopPropagation()
                           tree.triggerUpdate()
                         }}

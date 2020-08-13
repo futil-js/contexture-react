@@ -15,7 +15,7 @@ let unflattenObjectBy = _.curry((iteratee, x) =>
   _.zipObjectDeep(F.mapIndexed(iteratee, x), _.values(x))
 )
 
-let isField = x => x.typeDefault
+let isField = (x) => x.typeDefault
 
 let FilteredSection = _.flow(
   setDisplayName('FilteredSection'),
@@ -36,7 +36,7 @@ let FilteredSection = _.flow(
   )
 })
 
-let getItemLabel = item =>
+let getItemLabel = (item) =>
   isField(item) ? item.shortLabel || item.label : _.startCase(item._key)
 
 let Section = _.flow(
@@ -47,7 +47,7 @@ let Section = _.flow(
   return (
     <div style={{ overflow: 'auto', width: '100%' }}>
       {_.map(
-        item => (
+        (item) => (
           <PickerItem
             key={item._key}
             onClick={() => onClick(item.value || item._key, item)}
@@ -65,7 +65,7 @@ let Section = _.flow(
 })
 
 let toNested = _.flow(
-  _.map(x => _.defaults({ path: x.value }, x)),
+  _.map((x) => _.defaults({ path: x.value }, x)),
   unflattenObjectBy('path')
 )
 let PanelTreePicker = inject((store, { onChange, options }) => {
@@ -105,7 +105,7 @@ let PanelTreePicker = inject((store, { onChange, options }) => {
 )
 PanelTreePicker.displayName = 'PanelTreePicker'
 
-let matchLabel = str => _.filter(x => F.matchAllWords(str)(x.label))
+let matchLabel = (str) => _.filter((x) => F.matchAllWords(str)(x.label))
 
 let NestedPicker = ({
   options,

@@ -56,7 +56,7 @@ export default {
 
 export let advanced = () => (
   <Awaiter promise={schemas}>
-    {schemas => (
+    {(schemas) => (
       <div>
         <QueryBuilder
           tree={tree}
