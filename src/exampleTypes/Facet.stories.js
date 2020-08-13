@@ -21,7 +21,6 @@ export let facetSelect = () => (
 export let emojiDataset = () => {
   let data = require('emoji-datasource')
   let service = memoryService(data)
-  console.log(service)
   let tree = ContextureMobx({ service })({
     key: 'root',
     children: [{ type: 'facet', field: 'name' }, { type: 'results' }],
