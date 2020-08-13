@@ -20,11 +20,14 @@ export let facetSelect = () => (
 
 export let emojiDataset = () => {
   let data = require('emoji-datasource')
+
   let service = memoryService(data)
+  console.log(service)
   let tree = ContextureMobx({ service })({
     key: 'root',
     children: [{ type: 'facet', field: 'category' }, { type: 'results' }],
   })
+
   tree.refresh(['root'])
   return (
     <Grid columns="1fr 3fr" gap={8}>
