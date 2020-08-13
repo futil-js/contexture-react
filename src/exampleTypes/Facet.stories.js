@@ -23,21 +23,20 @@ export let emojiDataset = () => {
   let service = memoryService(data)
   let tree = ContextureMobx({ service })({
     key: 'root',
-    children: [{ type: 'facet', field: 'name' }, { type: 'results' }],
+    children: [{ type: 'facet', field: 'category' }, { type: 'results' }],
   })
-
   tree.refresh(['root'])
   return (
     <Grid columns="1fr 3fr" gap={8}>
       <Box>
-        <Facet tree={tree} path={['root', 'name-facet']} />
+        <Facet tree={tree} path={['root', 'category-facet']} />
       </Box>
       <Box style={{ overflow: 'auto' }}>
         <ResultTable
           infer
           tree={tree}
           path={['root', 'results']}
-          fields={{ name: { order: 1 } }}
+          fields={{ category: { order: 1 } }}
         />
       </Box>
     </Grid>
