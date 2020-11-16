@@ -162,11 +162,7 @@ let FilterList = _.flow(
   }) => {
     let updateRequired =
       tree.disableAutoUpdate &&
-      // find if any nodes in the tree are marked for update (i.e. usually nodes are marked for update because they react to "others" reactor)
-      _.some(
-        treeNode => treeNode !== node && treeNode.markedForUpdate,
-        F.treeToArray(_.get('children'))(node)
-      )
+      tree.getNode(['root', 'results']).markedForUpdate
 
     return (
       <div style={style} className={className}>
