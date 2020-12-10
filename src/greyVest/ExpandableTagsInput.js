@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
+import F from 'futil'
 import { observer } from 'mobx-react'
 import { Tag as DefaultTag, Flex } from '.'
 
@@ -48,6 +49,7 @@ let ExpandableTagsInput = ({
   onInputChange = _.noop,
   onTagClick = _.noop,
   Tag = DefaultTag,
+  collapse = [],
   ...props
 }) => {
   addTag = splitCommas
@@ -64,41 +66,43 @@ let ExpandableTagsInput = ({
   return (
     <div style={style}>
       <span className="tags-input-container" columns="1fr auto" gap="8px 4px">
-        <input
-          style={{ flex: 1, border: 0 }}
-          onChange={e => {
-            setCurrentInput(e.target.value)
-            onInputChange()
-          }}
-          onBlur={() => {
-            if (isValidInput(currentInput, tags)) {
-              addTag(currentInput)
-              setCurrentInput('')
-              onBlur()
-            }
-          }}
-          onKeyDown={e => {
-            if (e.key === 'Enter' && !currentInput) submit()
-            if (
-              (_.includes(e.key, ['Enter', 'Tab']) ||
-                (splitCommas && e.key === ',')) &&
-              isValidInput(currentInput, tags)
-            ) {
-              addTag(currentInput)
-              setCurrentInput('')
-              e.preventDefault()
-            }
-            if (e.key === 'Backspace' && !currentInput && tags.length) {
-              let last = _.last(tags)
-              removeTag(last)
-              setCurrentInput(last)
-              e.preventDefault()
-            }
-          }}
-          value={currentInput}
-          placeholder={placeholder}
-          {...props}
-        />
+        {(!F.view(collapse) || _.isEmpty(tags)) && (
+          <input
+            style={{ flex: 1, border: 0 }}
+            onChange={e => {
+              setCurrentInput(e.target.value)
+              onInputChange()
+            }}
+            onBlur={() => {
+              if (isValidInput(currentInput, tags)) {
+                addTag(currentInput)
+                setCurrentInput('')
+                onBlur()
+              }
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' && !currentInput) submit()
+              if (
+                (_.includes(e.key, ['Enter', 'Tab']) ||
+                  (splitCommas && e.key === ',')) &&
+                isValidInput(currentInput, tags)
+              ) {
+                addTag(currentInput)
+                setCurrentInput('')
+                e.preventDefault()
+              }
+              if (e.key === 'Backspace' && !currentInput && tags.length) {
+                let last = _.last(tags)
+                removeTag(last)
+                setCurrentInput(last)
+                e.preventDefault()
+              }
+            }}
+            value={currentInput}
+            placeholder={placeholder}
+            {...props}
+          />
+        )}
         <Tags reverse {...{ tags, removeTag, tagStyle, onTagClick, Tag }} />
       </span>
     </div>

@@ -77,10 +77,7 @@ let SearchBar = ({
             Loader={({ children }) => <div>{children}</div>}
             style={inputStyle}
             theme={{
-              TagsInput:
-                F.view(collapse) && !_.isEmpty(node.tags)
-                  ? Tags
-                  : ExpandableTagsInput,
+              TagsInput: ExpandableTagsInput,
             }}
             autoFocus
             {...tagsQueryProps}
