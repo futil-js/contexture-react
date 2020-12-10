@@ -1,6 +1,5 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import F from 'futil'
 import { observer } from 'mobx-react'
 import { Tag as DefaultTag, Flex } from '.'
 
