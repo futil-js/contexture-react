@@ -9,7 +9,7 @@ import { copyTags, tagTerm } from './utils'
 let ActionsMenu = ({
   node,
   tree,
-  close,
+  close = _.noop,
   theme: { Button, Checkbox },
   actionWrapper = _.identity,
 }) => (
@@ -40,7 +40,10 @@ let ActionsMenu = ({
       <Checkbox
         htmlId="stemming"
         checked={!node.exact}
-        onChange={e => tree.mutate(node.path, { exact: !e.target.checked })}
+        onChange={actionWrapper(e => {
+          tree.mutate(node.path, { exact: !e.target.checked })
+          close()
+        })}
       />
       <span>Include word variations</span>
     </label>
