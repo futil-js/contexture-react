@@ -79,18 +79,16 @@ let SearchBar = ({
 
   return (
     <ButtonGroup style={searchBarStyle}>
-      <Box style={searchBarBoxStyle}>
-        <div onClick={() => setIsOpen(true)} ref={ref}>
-          <ExpandableTagsQuery
-            {...{ tree, node, actionWrapper, isOpen }}
-            Loader={({ children }) => <div>{children}</div>}
-            style={inputStyle}
-            theme={{ TagsInput: ExpandableTagsInput }}
-            onAddTag={() => setIsOpen(true)}
-            autoFocus
-            {...tagsQueryProps}
-          />
-        </div>
+      <Box onClick={() => setIsOpen(true)} ref={ref} style={searchBarBoxStyle}>
+        <ExpandableTagsQuery
+          {...{ tree, node, actionWrapper, isOpen }}
+          Loader={({ children }) => <div>{children}</div>}
+          style={inputStyle}
+          theme={{ TagsInput: ExpandableTagsInput }}
+          onAddTag={() => setIsOpen(true)}
+          autoFocus
+          {...tagsQueryProps}
+        />
       </Box>
       {tree.disableAutoUpdate && (
         <SearchButton
