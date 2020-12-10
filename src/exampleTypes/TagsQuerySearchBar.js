@@ -66,35 +66,33 @@ let SearchBar = ({
   let [isOpen, setIsOpen] = useState(false)
 
   let handleOutsideClick = e => {
-    if (ref.current.contains(e.target)) {
-      console.log('CLICKED INSIDE')
-      return
+    if (!ref.current.contains(e.target)) {
+      setTimeout(() => setIsOpen(false), 0)
     }
-    console.log('CLICKED OUTSIDE')
-    setTimeout(() => setIsOpen(false), 0)
   }
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick)
+    document.addEventListener('mouseup', handleOutsideClick)
 
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick)
+      document.removeEventListener('mouseup', handleOutsideClick)
     }
   }, [])
 
   return (
     <ButtonGroup style={searchBarStyle}>
-      <Box onClick={() => setIsOpen(true)} ref={ref} style={searchBarBoxStyle}>
-        <ExpandableTagsQuery
-          {...{ tree, node, actionWrapper }}
-          Loader={({ children }) => <div>{children}</div>}
-          style={inputStyle}
-          theme={{ TagsInput: ExpandableTagsInput }}
-          onAddTag={() => setIsOpen(true)}
-          autoFocus
-          isOpen
-          {...tagsQueryProps}
-        />
+      <Box style={searchBarBoxStyle}>
+        <div onClick={() => setIsOpen(true)} ref={ref}>
+          <ExpandableTagsQuery
+            {...{ tree, node, actionWrapper, isOpen }}
+            Loader={({ children }) => <div>{children}</div>}
+            style={inputStyle}
+            theme={{ TagsInput: ExpandableTagsInput }}
+            onAddTag={() => setIsOpen(true)}
+            autoFocus
+            {...tagsQueryProps}
+          />
+        </div>
       </Box>
       {tree.disableAutoUpdate && (
         <SearchButton
