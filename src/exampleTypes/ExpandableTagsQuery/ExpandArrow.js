@@ -6,9 +6,9 @@ import { Flex } from '../../greyVest'
 import { withTheme } from '../../utils/theme'
 import { tagTerm } from '../TagsQuery/utils'
 
-let ExpandArrow = ({ collapse, tagsLength, style, theme: { Icon } }) =>
-  !!(F.view(collapse) && tagsLength) && (
-    <div className="expand-arrow" onClick={F.off(collapse)} style={style}>
+let ExpandArrow = ({ isOpen, onClick, tagsLength, style, theme: { Icon } }) =>
+  !!(!isOpen && tagsLength) && (
+    <div className="expand-arrow" onClick={onClick} style={style}>
       <div
         style={{
           height: 0,

@@ -49,7 +49,7 @@ let ExpandableTagsInput = ({
   onInputChange = _.noop,
   onTagClick = _.noop,
   Tag = DefaultTag,
-  collapse = [],
+  isOpen = false,
   ...props
 }) => {
   addTag = splitCommas
@@ -66,7 +66,7 @@ let ExpandableTagsInput = ({
   return (
     <div style={style}>
       <span className="tags-input-container" columns="1fr auto" gap="8px 4px">
-        {(!F.view(collapse) || _.isEmpty(tags)) && (
+        {(isOpen || _.isEmpty(tags)) && (
           <input
             style={{ flex: 1, border: 0 }}
             onChange={e => {

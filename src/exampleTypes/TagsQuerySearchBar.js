@@ -1,11 +1,11 @@
-import React from 'react'
-import F from 'futil'
+import React, { useRef, useEffect, useState } from 'react'
+// import F from 'futil'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
-import OutsideClickHandler from 'react-outside-click-handler'
+// import OutsideClickHandler from 'react-outside-click-handler'
 import { withNode } from '../utils/hoc'
 import { Box, ButtonGroup, Button } from '../greyVest'
-import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput'
+import ExpandableTagsInput from '../greyVest/ExpandableTagsInput'
 import ExpandableTagsQuery from './ExpandableTagsQuery'
 
 let searchBarStyle = {
@@ -62,36 +62,48 @@ let SearchBar = ({
   searchButtonProps,
   tagsQueryProps,
 }) => {
-  let collapse = React.useState(true)
+  let ref = useRef(null)
+  let [isOpen, setIsOpen] = useState(false)
+
+  let handleOutsideClick = e => {
+    if (ref.current.contains(e.target)) {
+      console.log('CLICKED INSIDE')
+      return
+    }
+    console.log('CLICKED OUTSIDE')
+    setTimeout(() => setIsOpen(false), 0)
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [])
+
   return (
-    <OutsideClickHandler
-      onOutsideClick={() => {
-        F.on(collapse)()
-      }}
-    >
-      <ButtonGroup style={searchBarStyle}>
-        <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
-          <ExpandableTagsQuery
-            {...{ tree, node, collapse, actionWrapper }}
-            onAddTag={F.off(collapse)}
-            Loader={({ children }) => <div>{children}</div>}
-            style={inputStyle}
-            theme={{
-              TagsInput: ExpandableTagsInput,
-            }}
-            autoFocus
-            {...tagsQueryProps}
-          />
-        </Box>
-        {tree.disableAutoUpdate && (
-          <SearchButton
-            tree={tree}
-            resultsPath={resultsPath}
-            searchButtonProps={searchButtonProps}
-          />
-        )}
-      </ButtonGroup>
-    </OutsideClickHandler>
+    <ButtonGroup style={searchBarStyle}>
+      <Box onClick={() => setIsOpen(true)} ref={ref} style={searchBarBoxStyle}>
+        <ExpandableTagsQuery
+          {...{ tree, node, actionWrapper }}
+          Loader={({ children }) => <div>{children}</div>}
+          style={inputStyle}
+          theme={{ TagsInput: ExpandableTagsInput }}
+          onAddTag={() => setIsOpen(true)}
+          autoFocus
+          isOpen
+          {...tagsQueryProps}
+        />
+      </Box>
+      {tree.disableAutoUpdate && (
+        <SearchButton
+          tree={tree}
+          resultsPath={resultsPath}
+          searchButtonProps={searchButtonProps}
+        />
+      )}
+    </ButtonGroup>
   )
 }
 
