@@ -1,8 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
-// import F from 'futil'
 import _ from 'lodash/fp'
 import { observer } from 'mobx-react'
-// import OutsideClickHandler from 'react-outside-click-handler'
 import { withNode } from '../utils/hoc'
 import { Box, ButtonGroup, Button } from '../greyVest'
 import ExpandableTagsInput from '../greyVest/ExpandableTagsInput'
