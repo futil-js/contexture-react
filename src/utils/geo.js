@@ -1,8 +1,8 @@
 import _ from 'lodash/fp'
 
 const defaultHereConfig = {
-  app_id: 'KzmI0fMwTyOG10rqZacS', // TEMP EMAIL USED - USE/GET YOUR APP_ID
-  app_code: 'PykXtnTUeH7DDM-RLlpwyA', // TEMP EMAIL USED - USE/GET YOUR APP_CODE
+  app_id: 'DHMQbcTBXz02ats9ijvk', // TEMP EMAIL USED - USE/GET YOUR APP_ID
+  app_code: 'y922OvMMVXtyBsdXyvVv351cTlKY7vAlvmATEnfEIFE', // TEMP EMAIL USED - USE/GET YOUR APP_CODE
   country: 'USA',
   autocomplete: 'https://autocomplete.geocoder.api.here.com/6.2/suggest.json',
   geoCoding: 'https://geocoder.api.here.com/6.2/geocode.json?gen=9',
