@@ -1,4 +1,5 @@
 import React from 'react'
+import Icon from './Icon'
 
 // Low effort custom checkbox
 let Checkbox = React.forwardRef(
@@ -14,7 +15,7 @@ let Checkbox = React.forwardRef(
         {...{ checked, onChange }}
       />
       {checked ? (
-        <i className="material-icons">check</i>
+        <Icon icon="Check" />
       ) : (
         String.fromCharCode(160) // non-breaking space
       )}

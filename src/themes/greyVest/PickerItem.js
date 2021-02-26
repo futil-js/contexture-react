@@ -1,6 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Flex } from '../../greyVest'
+import Icon from '../../greyVest/Icon'
 
 let PickerItem = ({ active, disabled, hasChildren, children, ...props }) => (
   <div
@@ -16,9 +17,7 @@ let PickerItem = ({ active, disabled, hasChildren, children, ...props }) => (
     {hasChildren ? (
       <Flex style={{ alignItems: 'center' }}>
         {children}
-        <i className="material-icons" style={{ fontSize: 20 }}>
-          chevron_right
-        </i>
+        <Icon icon="MoveRight" />
       </Flex>
     ) : (
       children

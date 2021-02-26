@@ -2,6 +2,7 @@ import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp'
 import { Flex } from '../greyVest'
+import Icon from './Icon'
 
 let ErrorText = ({ children }) => (
   <div className="gv-text-error">{children}</div>
@@ -9,9 +10,7 @@ let ErrorText = ({ children }) => (
 
 let ErrorBlock = ({ children, ...props }) => (
   <Flex className="gv-block-error" alignItems="center" {...props}>
-    <i className="material-icons" style={{ marginRight: 8 }}>
-      warning
-    </i>
+    <Icon icon="Warning" style={{ marginRight: 8 }} />
     <div>
       <ErrorList>{children}</ErrorList>
     </div>

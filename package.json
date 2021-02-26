@@ -128,6 +128,7 @@
     "react-date-picker": "^7.2.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
+    "react-icons": "^4.2.0",
     "react-measure": "^2.3.0",
     "react-outside-click-handler": "^1.2.3",
     "reactjs-popup": "^2.0.4",

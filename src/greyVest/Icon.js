@@ -1,49 +1,65 @@
+import _ from 'lodash/fp'
 import React from 'react'
 import { Dynamic } from '../greyVest'
 import TextButton from './TextButton'
+import { ImFilter } from 'react-icons/im'
+import {
+  MdAdd,
+  MdDone,
+  MdRemove,
+  MdRefresh,
+  MdWarning,
+  MdMoreVert,
+  MdFiberNew,
+  MdAutorenew,
+  MdExpandLess,
+  MdExpandMore,
+  MdUnfoldLess,
+  MdUnfoldMore,
+  MdFilterList,
+  MdChevronLeft,
+  MdChevronRight,
+  MdKeyboardArrowUp,
+  MdKeyboardArrowDown,
+} from 'react-icons/md'
 
-let SmallIcon = ({ icon, style, ...props }) => (
-  <i className="material-icons" style={{ fontSize: 20, ...style }} {...props}>
-    {icon}
-  </i>
-)
-
-let toIcon = id => props => <SmallIcon icon={id} {...props} />
+let toIcon = Icon => ({ style, ...props}) => _.isString(Icon)
+  ? <i className="material-icons" style={{ fontSize: 20, ...style }} {...props}>
+      {Icon}
+    </i>
+  : <Icon size="1.5em" style={{ verticalAlign: 'middle', ...style }} {...props} />
 
 let iconMap = {
-  SortAscending: toIcon('expand_less'),
-  SortDescending: toIcon('expand_more'),
-  MoveLeft: toIcon('chevron_left'),
-  MoveRight: toIcon('chevron_right'),
-  RemoveColumn: toIcon('remove'),
-  AddColumn: toIcon('add'),
-  FilterExpand: toIcon('filter_alt'),
-  FilterCollapse: toIcon('filter_list'),
-  FilterAdd: toIcon('filter_list'),
-  TableColumnMenu: () => (
-    <TextButton>
-      <SmallIcon icon="more_vert" />
-    </TextButton>
-  ),
-  FilterListExpand: toIcon('keyboard_arrow_down'),
-  FilterListCollapse: toIcon('keyboard_arrow_up'),
-  TreePause: toIcon('unfold_less'),
-  TreeUnpause: toIcon('unfold_more'),
-  PreviousPage: toIcon('chevron_left'),
-  NextPage: toIcon('chevron_right'),
+  SortAscending: toIcon(MdExpandLess),
+  SortDescending: toIcon(MdExpandMore),
+  MoveLeft: toIcon(MdChevronLeft),
+  MoveRight: toIcon(MdChevronRight),
+  RemoveColumn: toIcon(MdRemove),
+  AddColumn: toIcon(MdAdd),
+  FilterExpand: toIcon(ImFilter),
+  FilterCollapse: toIcon(MdFilterList),
+  FilterAdd: toIcon(MdFilterList),
+  TableColumnMenu: () => <TextButton>{toIcon(MdMoreVert)()}</TextButton>,
+  FilterListExpand: toIcon(MdKeyboardArrowDown),
+  FilterListCollapse: toIcon(MdKeyboardArrowUp),
+  TreePause: toIcon(MdUnfoldLess),
+  TreeUnpause: toIcon(MdUnfoldMore),
+  PreviousPage: toIcon(MdChevronLeft),
+  NextPage: toIcon(MdChevronRight),
+  Check: toIcon(MdDone),
+  Warning: toIcon(MdWarning),
   Previous5Pages: () => <span>...</span>,
   Next5Pages: () => <span>...</span>,
-  Refresh: () => (
+  Refresh: () =>
     <TextButton
       className="animated pulse slow infinite"
       style={{ animationDuration: '500ms' }}
     >
-      <SmallIcon icon="refresh" />
-    </TextButton>
-  ),
-  AutoUpdate: toIcon('autorenew'),
-  New: toIcon('fiber_new'),
-  Expand: toIcon('keyboard_arrow_down'),
+      {toIcon(MdRefresh)()}
+    </TextButton>,
+  AutoUpdate: toIcon(MdAutorenew),
+  New: toIcon(MdFiberNew),
+  Expand: toIcon(MdRemove),
 }
 
 let Icon = ({ icon, ...props }) => (
