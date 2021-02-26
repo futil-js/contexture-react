@@ -23,11 +23,18 @@ import {
   MdKeyboardArrowDown,
 } from 'react-icons/md'
 
-let toIcon = Icon => ({ style, ...props}) => _.isString(Icon)
-  ? <i className="material-icons" style={{ fontSize: 20, ...style }} {...props}>
+let toIcon = Icon => ({ style, ...props }) =>
+  _.isString(Icon) ? (
+    <i className="material-icons" style={{ fontSize: 20, ...style }} {...props}>
       {Icon}
     </i>
-  : <Icon size="1.5em" style={{ verticalAlign: 'middle', ...style }} {...props} />
+  ) : (
+    <Icon
+      size="1.5em"
+      style={{ verticalAlign: 'middle', ...style }}
+      {...props}
+    />
+  )
 
 let iconMap = {
   SortAscending: toIcon(MdExpandLess),
@@ -50,13 +57,14 @@ let iconMap = {
   Warning: toIcon(MdWarning),
   Previous5Pages: () => <span>...</span>,
   Next5Pages: () => <span>...</span>,
-  Refresh: () =>
+  Refresh: () => (
     <TextButton
       className="animated pulse slow infinite"
       style={{ animationDuration: '500ms' }}
     >
       {toIcon(MdRefresh)()}
-    </TextButton>,
+    </TextButton>
+  ),
   AutoUpdate: toIcon(MdAutorenew),
   New: toIcon(MdFiberNew),
   Expand: toIcon(MdRemove),
