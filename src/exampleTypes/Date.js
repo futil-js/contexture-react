@@ -48,7 +48,9 @@ let DateComponent = ({
   excludeRollingRanges = [],
   theme: { DateInput, RadioList, Select },
 }) => {
-  let [range, setRange] = React.useState(node.range !== 'exact' ? 'rolling': 'exact')
+  let [range, setRange] = React.useState(
+    node.range !== 'exact' ? 'rolling' : 'exact'
+  )
 
   // We need the hook to deal with the `clear/reset` case where the node.range is changed but the range remains unchanged
   React.useEffect(() => {
