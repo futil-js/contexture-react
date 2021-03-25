@@ -48,12 +48,14 @@ let DateComponent = ({
   excludeRollingRanges = [],
   theme: { DateInput, RadioList, Select },
 }) => {
-  let [range, setRange] = React.useState(node.range === 'exact' ? 'exact' : 'rolling')
+  let [range, setRange] = React.useState(
+    node.range === 'exact' ? 'exact' : 'rolling'
+  )
 
   // We need the hook to deal with the `clear/reset` case where the node.range is changed but the range remains unchanged
   React.useEffect(() => {
     if (node.range !== range && node.range === 'exact') setRange('exact')
-  }, [node.range]);
+  }, [node.range])
 
   let rollingOpts = _.reject(
     opt => _.includes(opt.type, excludeRollingRanges),
@@ -72,9 +74,7 @@ let DateComponent = ({
         <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
           <DateInput
             value={node.from}
-            onChange={date =>
-              tree.mutate(node.path, { range, from: date })
-            }
+            onChange={date => tree.mutate(node.path, { range, from: date })}
           />
           <div>-</div>
           <DateInput
