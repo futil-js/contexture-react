@@ -172,8 +172,8 @@ let Header = ({
                   icon={
                     filterNode
                       ? F.view(filtering)
-                        ? 'FilterCollapse'
-                        : 'FilterExpand'
+                        ? 'FilterExpand'
+                        : 'FilterCollapse'
                       : 'FilterAdd'
                   }
                 />
