@@ -48,6 +48,9 @@ let DateComponent = ({
   excludeRollingRanges = [],
   theme: { DateInput, RadioList, Select },
 }) => {
+  let [to, setTo] = React.useState(node.to)
+  let [from, setFrom] = React.useState(node.from)
+  let [dateRange, setDateRange] = React.useState(node.range)
   let [range, setRange] = React.useState(
     node.range !== 'exact' ? 'rolling' : 'exact'
   )
@@ -68,31 +71,45 @@ let DateComponent = ({
         options={F.autoLabelOptions(['exact', 'rolling'])}
         value={range}
         style={{ marginBottom: 10 }}
-        onChange={value => setRange(value)}
+        onChange={value => {
+          // Deal with the reset of the values
+          if (value !== 'exact') {
+            setTo(null)
+            setFrom(null)
+          } else {
+            setDateRange(null)
+          }
+          setRange(value)
+        }}
       />
       {range === 'exact' ? (
         <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
           <DateInput
-            value={node.from}
-            onChange={date => tree.mutate(node.path, { range, from: date })}
+            value={from}
+            onChange={date => {
+              setFrom(date)
+              tree.mutate(node.path, { range, from: date })
+            }}
           />
           <div>-</div>
           <DateInput
-            value={node.to}
-            onChange={date =>
+            value={to}
+            onChange={date => {
+              setTo(date)
               tree.mutate(node.path, { range, to: endOfDay(date) })
-            }
+            }}
           />
         </Flex>
       ) : (
         <Select
-          value={node.range}
-          onChange={e =>
+          value={dateRange}
+          onChange={e => {
+            setDateRange(e.target.value)
             tree.mutate(node.path, {
               range: e.target.value,
               timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             })
-          }
+          }}
           options={F.map(
             ({ range }) => ({
               label: _.startCase(range),
