@@ -19,7 +19,7 @@ let TagsQuery = ({
   popoverPosition = 'bottom right',
   popoverArrow,
   popoverOffsetY,
-  theme: { Icon, TagsInput, Tag, Popover },
+  theme: { Icon, TagsInput, Tag, Popover, Loader },
   joinOptions,
   ...props
 }) => {
@@ -30,6 +30,9 @@ let TagsQuery = ({
       ...(!_.isNil(result)
         ? { label: `${props.value} (${toNumber(result)})` }
         : {}),
+      ...(node.updating
+        ? { label: <>{props.value} (<Loader loading>{toNumber(result)}</Loader>)</> }
+        : {})
     }
     return (
       <Popover
