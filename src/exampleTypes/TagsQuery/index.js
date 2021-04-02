@@ -31,8 +31,14 @@ let TagsQuery = ({
         ? { label: `${props.value} (${toNumber(result)})` }
         : {}),
       ...(node.updating
-        ? { label: <>{props.value} (<Loader loading>{toNumber(result)}</Loader>)</> }
-        : {})
+        ? {
+            label: (
+              <>
+                {props.value} (<Loader loading>{toNumber(result)}</Loader>)
+              </>
+            ),
+          }
+        : {}),
     }
     return (
       <Popover
