@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash/fp'
-import { Grid, GridItem } from '../../greyVest'
+import { Grid, GridItem, StripedLoader } from '../../greyVest'
 import { contexturifyWithoutLoader } from '../../utils/hoc'
 import { getTagStyle, tagValueField } from './utils'
 import TagActionsMenu from './TagActionsMenu'
@@ -19,16 +19,27 @@ let TagsQuery = ({
   popoverPosition = 'bottom right',
   popoverArrow,
   popoverOffsetY,
-  theme: { Icon, TagsInput, Tag, Popover },
+  Loader,
+  theme: { Icon, TagsInput, Tag, Popover, Loader: ThemeLoader },
   joinOptions,
   ...props
 }) => {
+  Loader = Loader || ThemeLoader || StripedLoader
   let TagWithPopover = observer(props => {
     let result = _.get(['context', 'results', props.value], node)
     let tagProps = {
       ...props,
       ...(!_.isNil(result)
         ? { label: `${props.value} (${toNumber(result)})` }
+        : {}),
+      ...(node.updating
+        ? {
+            label: (
+              <>
+                <Loader loading={true}>{props.value}</Loader>
+              </>
+            ),
+          }
         : {}),
     }
     return (

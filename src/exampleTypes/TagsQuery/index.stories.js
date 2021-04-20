@@ -12,6 +12,12 @@ let treeWithTags = TestTree(testTree => {
   return testTree
 })
 
+let treeWithTagsLoading = TestTree(testTree => {
+  testTree.getNode(['tagsQuery']).tags = tags
+  testTree.getNode(['tagsQuery']).updating = true
+  return testTree
+})
+
 storiesOf('ExampleTypes|Tags Query', module)
   .addDecorator(ThemePicker('greyVest'))
   .add('Default', () => <TagsQuery tree={treeWithTags} path={['tagsQuery']} />)
@@ -19,4 +25,7 @@ storiesOf('ExampleTypes|Tags Query', module)
     <div style={{ maxWidth: 500 }}>
       <TagsQuery tree={treeWithTags} path={['tagsQuery']} />
     </div>
+  ))
+  .add('Loading', () => (
+    <TagsQuery tree={treeWithTagsLoading} path={['tagsQuery']} />
   ))
