@@ -36,7 +36,24 @@ let TagsQuery = ({
         ? {
             label: (
               <>
-                <Loader loading={true}>{props.value}</Loader>
+                {props.value}(
+                <div
+                  style={{
+                    display: 'inline-block',
+                    verticalAlign: 'middle',
+                    margin: '0 .1rem',
+                  }}
+                >
+                  <Loader
+                    loading
+                    style={{
+                      height: '1rem',
+                      width: '1.5rem',
+                      minHeight: 'auto',
+                    }}
+                  />
+                </div>
+                )
               </>
             ),
           }
