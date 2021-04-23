@@ -57,12 +57,12 @@ let TagsQuery = ({
           sanitizeTags={sanitizeTags}
           wordsMatchPattern={wordsMatchPattern}
           tags={_.map(tagValueField, node.tags)}
-          addTag={tag => {
+          addTag={_.debounce(tag => {
             tree.mutate(node.path, {
               tags: [...node.tags, { [tagValueField]: tag, distance: 3 }],
             })
             onAddTag(tag)
-          }}
+          })}
           removeTag={tag => {
             tree.mutate(node.path, {
               tags: _.reject({ [tagValueField]: tag }, node.tags),
