@@ -2,7 +2,7 @@ import * as F from 'futil'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import AsyncSelect from 'react-select/lib/Async'
-import { loadHereOptions, geoCodeLocation } from '../utils/geo'
+import { loadOptions, geoCodeLocation } from '../utils/geo'
 import { ThemeProvider } from '../utils/theme'
 import theme from '../stories/DemoControls'
 
@@ -51,7 +51,7 @@ storiesOf('ExampleTypes|Full Demo', module).add('Full Demo', () => {
                 <Number tree={tree} path={['number']} />
                 <Geo
                   tree={tree}
-                  loadOptions={loadHereOptions}
+                  loadOptions={loadOptions}
                   path={['geo']}
                   AutoComplete={AsyncSelect}
                   GeoCodeLocation={geoCodeLocation}
