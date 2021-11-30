@@ -15,6 +15,7 @@ let Pager = ({
   pageCount > 1 && (
     <Flex justifyContent="center" alignItems="center">
       <PagerItem
+        data-testid="pager-previous-chevron"
         disabled={disabled || !(value > 1)}
         onClick={() => onChange(value - 1)}
       >
@@ -22,6 +23,7 @@ let Pager = ({
       </PagerItem>
       {value > 3 && (
         <PagerItem
+          data-testid="pager-previous-dots"
           disabled={disabled}
           onClick={() => onChange(_.max([0, value - 5]))}
         >
@@ -61,6 +63,7 @@ let Pager = ({
       )}
       {value + 2 < pageCount && (
         <PagerItem
+          data-testid="pager-next-dots"
           disabled={disabled}
           onClick={() => onChange(_.min([pageCount, value + 5]))}
         >
@@ -68,6 +71,7 @@ let Pager = ({
         </PagerItem>
       )}
       <PagerItem
+        data-testid="pager-next-chevron"
         disabled={disabled || !(value < pageCount)}
         onClick={() => onChange(value + 1)}
       >

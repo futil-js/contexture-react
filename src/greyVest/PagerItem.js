@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 
 let PagerItem = ({ active, disabled, ...props }) => (
   <span
+    data-testid={`page${active ? '-active' : ''}`}
     className={`gv-pager-item ${disabled ? 'disabled' : ''} ${
       active ? 'active' : ''
     }`}

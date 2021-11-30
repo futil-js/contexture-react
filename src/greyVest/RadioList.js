@@ -10,7 +10,11 @@ let RadioList = ({
   native = false,
   ...props
 }) => (
-  <div className={`gv-radio-list ${className}`} {...props}>
+  <div
+    data-testid="radio-list"
+    className={`gv-radio-list ${className}`}
+    {...props}
+  >
     {_.map(
       option => (
         <label
@@ -19,6 +23,7 @@ let RadioList = ({
           style={{ cursor: 'pointer', marginRight: 25 }}
         >
           <input
+            data-testid="radio-option"
             type="radio"
             style={{
               marginRight: 10,

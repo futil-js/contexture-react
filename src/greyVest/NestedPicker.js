@@ -169,6 +169,7 @@ let NestedPicker = ({
           {() => (
             <>
               <TextInput
+                data-testid="text-input"
                 style={{ marginBottom: 10 }}
                 value={state.filter}
                 onChange={e => (state.filter = e.target.value)}
@@ -189,6 +190,7 @@ let NestedPicker = ({
       </Box>
       <Flex justifyContent="space-between" style={{ marginTop: 20 }}>
         <Button
+          data-testid="cancel-button"
           onClick={() => {
             state.checked = new Map()
             onChange()
@@ -200,6 +202,7 @@ let NestedPicker = ({
           {() =>
             !!state.checked.size && (
               <Button
+                data-testid="add-button"
                 primary
                 onClick={() => onChange(Array.from(state.checked.values()))}
               >

@@ -4,7 +4,11 @@ import React from 'react'
 let SpacedList = ({ children, style = { marginBottom: '25px' } }) =>
   F.mapIndexed(
     (child, i) => (
-      <div style={i !== children.length - 1 ? style : {}} key={i}>
+      <div
+        data-testid="spaced-list"
+        style={i !== children.length - 1 ? style : {}}
+        key={i}
+      >
         {child}
       </div>
     ),

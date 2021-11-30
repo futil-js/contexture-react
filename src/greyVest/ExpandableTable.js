@@ -58,7 +58,7 @@ let TableBody = inject(TableBodyState)(
     ({ data, columns, recordKey, expanded, onClick, blankRows, pageSize }) => {
       let rows = blankRows ? addBlankRows(data, pageSize, recordKey) : data
       return (
-        <tbody>
+        <tbody data-testid="table-body">
           {_.map(
             x => (
               <React.Fragment key={x[recordKey]}>

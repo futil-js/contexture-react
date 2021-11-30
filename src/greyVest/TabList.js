@@ -7,6 +7,7 @@ let TabList = ({ value, onChange = () => {}, options }) => (
     {_.map(
       x => (
         <div
+          data-testid={`tab-${x.value}`}
           key={x.value}
           className={`gv-tab ${x.value === value ? 'active' : ''}`}
           onClick={() => onChange(x.value, value)}
