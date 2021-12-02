@@ -70,3 +70,7 @@ storybook-static/
 test-results.json
 
 .idea/
+
+# OS-X
+.DS_Store
+src/.DS_Store

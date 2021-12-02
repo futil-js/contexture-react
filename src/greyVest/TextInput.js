@@ -3,7 +3,11 @@ import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
 
 let TextInput = ({ className = '', type = 'text', ...props }, ref) => (
-  <input className={`${className} gv-input`} {...{ type, ref, ...props }} />
+  <input
+    data-testid="search-bar"
+    className={`${className} gv-input`}
+    {...{ type, ref, ...props }}
+  />
 )
 
 export default _.flow(React.forwardRef, observer)(TextInput)

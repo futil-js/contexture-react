@@ -2,7 +2,11 @@ import React from 'react'
 import { withTheme } from '../utils/theme'
 
 let ShowFiltersButton = ({ onClick, theme: { AlternateButton, Icon } }) => (
-  <AlternateButton title="Show Filters" onClick={onClick}>
+  <AlternateButton
+    data-testid="show-filters"
+    title="Show Filters"
+    onClick={onClick}
+  >
     <Icon icon="FilterExpand" />
   </AlternateButton>
 )
