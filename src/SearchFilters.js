@@ -67,7 +67,7 @@ let BasicSearchFilters = withTheme(
             <TreePauseButton children={children} Component={DropdownItem} />
             {setMode && !disableAdvancedMode && (
               <DropdownItem
-                data-testid="advanced-search"
+                data-testid="to-advanced-search"
                 onClick={() => setMode('builder')}
               >
                 Advanced Search Builder
