@@ -58,7 +58,7 @@ let BasicSearchFilters = withTheme(
           >
             {setMode && (
               <DropdownItem
-                data-testid="hide-filters"
+                data-testid="DropdownItem-hideFilters"
                 onClick={() => setMode('resultsOnly')}
               >
                 Hide Filters
@@ -67,7 +67,7 @@ let BasicSearchFilters = withTheme(
             <TreePauseButton children={children} Component={DropdownItem} />
             {setMode && !disableAdvancedMode && (
               <DropdownItem
-                data-testid="to-advanced-search"
+                data-testid="DrowpdownItem-linkToAdvancedSearch"
                 onClick={() => setMode('builder')}
               >
                 Advanced Search Builder
@@ -87,7 +87,7 @@ let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
       <h1>Filters</h1>
       {setMode && (
         <LinkButton
-          data-testid="to-regular-search"
+          data-testid="LinkButton-linkToRegularSearch"
           onClick={() => setMode('basic')}
         >
           Back to Regular Search

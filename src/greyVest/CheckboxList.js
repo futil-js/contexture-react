@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 import Checkbox from './Checkbox'
 
 let CheckboxList = ({ options, value, onChange, ...props }) => (
-  <div data-testid="checkbox-list" {...props}>
+  <div data-testid="div-checkboxList" {...props}>
     {_.map(
       option => (
         <label

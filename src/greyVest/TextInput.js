@@ -4,7 +4,7 @@ import _ from 'lodash/fp'
 
 let TextInput = ({ className = '', type = 'text', ...props }, ref) => (
   <input
-    data-testid="search-bar"
+    data-testid="input-searchBar"
     className={`${className} gv-input`}
     {...{ type, ref, ...props }}
   />

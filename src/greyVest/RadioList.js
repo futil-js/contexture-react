@@ -11,7 +11,7 @@ let RadioList = ({
   ...props
 }) => (
   <div
-    data-testid="radio-list"
+    data-testid="div-radioList"
     className={`gv-radio-list ${className}`}
     {...props}
   >
@@ -23,7 +23,7 @@ let RadioList = ({
           style={{ cursor: 'pointer', marginRight: 25 }}
         >
           <input
-            data-testid="radio-option"
+            data-testid="input-radioOption"
             type="radio"
             style={{
               marginRight: 10,

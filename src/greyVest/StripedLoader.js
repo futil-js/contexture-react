@@ -4,7 +4,7 @@ import { loading as loadingStyle } from '../styles/generic'
 
 let StripedLoader = ({ loading, style = {}, children }) => (
   <div
-    data-testid="striped-loader"
+    data-testid="div-stripedLoader"
     style={{ ...style, ...(loading && loadingStyle) }}
   >
     {children}

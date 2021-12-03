@@ -3,7 +3,7 @@ import { withTheme } from '../utils/theme'
 
 let ShowFiltersButton = ({ onClick, theme: { AlternateButton, Icon } }) => (
   <AlternateButton
-    data-testid="show-filters"
+    data-testid="AlternateButton-showFilters"
     title="Show Filters"
     onClick={onClick}
   >

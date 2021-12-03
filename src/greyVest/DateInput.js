@@ -6,7 +6,7 @@ import _ from 'lodash/fp'
 
 let NativeDateInput = ({ value, onChange, ...props }) => (
   <input
-    data-testid="date-picker"
+    data-testid="input-datePicker"
     type="date"
     value={value ? moment(value).format('YYYY-MM-DD') : ''}
     onChange={e => onChange(new Date(e.target.value))}

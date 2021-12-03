@@ -29,7 +29,10 @@ let Tag = ({
     }}
     onClick={onClick}
   >
-    <Flex data-testid={`tag-${value}`} style={{ alignItems: 'center' }}>
+    <Flex
+      data-testid={`Flex-searchItem-${value}`}
+      style={{ alignItems: 'center' }}
+    >
       <span
         style={{
           paddingLeft: '0.45em',
@@ -42,7 +45,7 @@ let Tag = ({
         {label || value}
       </span>
       <RemoveIcon
-        data-testid="tag-remove"
+        data-testid="RemoveIcon-removeSearchItem"
         onClick={e => {
           e.stopPropagation()
           removeTag(value)
