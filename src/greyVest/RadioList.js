@@ -23,7 +23,7 @@ let RadioList = ({
           style={{ cursor: 'pointer', marginRight: 25 }}
         >
           <input
-            data-testid="input-radioOption"
+            data-testid={`input-radioOption-${option.label}`}
             type="radio"
             style={{
               marginRight: 10,

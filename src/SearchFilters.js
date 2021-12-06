@@ -51,7 +51,7 @@ let BasicSearchFilters = withTheme(
           <Popover
             position="bottom right"
             trigger={
-              <DropdownItem>
+              <DropdownItem data-testid="DropdownItem-tableColumnMenu">
                 <Icon icon="TableColumnMenu" />
               </DropdownItem>
             }

@@ -90,7 +90,7 @@ let Header = ({
         left: isStickyColumn ? 0 : '',
       }}
     >
-      <span>
+      <span data-testid={`span-header-${label}`}>
         {_.isFunction(label) ? <Label /> : label}{' '}
         {field === node.sortField && (
           <Icon
@@ -105,6 +105,7 @@ let Header = ({
         >
           {!disableSort && (
             <DropdownItem
+              data-testid="DropdownItem-sortAscending"
               onClick={() => {
                 mutate({ sortField, sortDir: 'asc' })
               }}
@@ -115,6 +116,7 @@ let Header = ({
           )}
           {!disableSort && (
             <DropdownItem
+              data-testid="DropdownItem-sortDescending"
               onClick={() => {
                 mutate({ sortField, sortDir: 'desc' })
               }}
@@ -124,6 +126,7 @@ let Header = ({
             </DropdownItem>
           )}
           <DropdownItem
+            data-testid="DropdownItem-moveLeft"
             onClick={() =>
               moveColumn(mutate, i => i - 1, field, visibleFields, includes)
             }
@@ -132,6 +135,7 @@ let Header = ({
             Move Left
           </DropdownItem>
           <DropdownItem
+            data-testid="DropdownItem-moveRight"
             onClick={() =>
               moveColumn(mutate, i => i + 1, field, visibleFields, includes)
             }
@@ -141,6 +145,7 @@ let Header = ({
           </DropdownItem>
           {!hideRemoveColumn && (
             <DropdownItem
+              data-testid="DropdownItem-removeColumn"
               onClick={() => mutate({ include: _.without([field], includes) })}
             >
               <Icon icon="RemoveColumn" />
@@ -148,14 +153,17 @@ let Header = ({
             </DropdownItem>
           )}
           {!!addOptions.length && (
-            <DropdownItem onClick={F.on(adding)}>
+            <DropdownItem
+              data-testid="DropdownItem-addColumn"
+              onClick={F.on(adding)}
+            >
               <Icon icon="AddColumn" />
               Add Column
             </DropdownItem>
           )}
           {criteria && (typeDefault || filterNode) && !disableFilter && (
             <div>
-              <DropdownItem onClick={filter}>
+              <DropdownItem data-testid="DropdownItem-filter" onClick={filter}>
                 <Icon
                   icon={
                     filterNode
