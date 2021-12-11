@@ -3,7 +3,7 @@ import F from 'futil'
 
 let LinkButton = ({ className = '', ...props }) => (
   <button
-    data-testid="button-linkButton"
+    data-testid="link-button"
     className={F.compactJoin(' ', ['gv-link-button', className])}
     {...props}
   />

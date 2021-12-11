@@ -9,7 +9,7 @@ let Modal = ({ isOpen, onClose, children, style = {}, className = '' }) => (
   <Portal>
     {isOpen && (
       <div
-        data-testid="div-modal"
+        data-testid="modal"
         style={{
           position: 'fixed',
           top: 0,

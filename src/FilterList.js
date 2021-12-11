@@ -61,7 +61,7 @@ export let FilterActions = _.flow(
           {!_.isEmpty(typeOptions) && (
             <>
               <DropdownItem
-                data-testid="DropdownItem-filterType"
+                data-testid="dropdown-filter-type"
                 className="filter-actions-selected-type"
               >
                 Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
@@ -69,7 +69,7 @@ export let FilterActions = _.flow(
               {_.map(
                 x => (
                   <DropdownItem
-                    data-testid={`DropdownItem-typeOption-${x.value}`}
+                    data-testid={`dropdown-type-option-${x.value}`}
                     key={x.value}
                     onClick={() =>
                       tree.replace(
@@ -87,7 +87,7 @@ export let FilterActions = _.flow(
             </>
           )}
           <DropdownItem
-            data-testid="DropdownItem-openPickFieldModal"
+            data-testid="dropdown-open-pick-field-modal"
             onClick={F.on(modal)}
           >
             Pick Field
@@ -95,14 +95,14 @@ export let FilterActions = _.flow(
           {/* If only contexture-client diffed the tree before sending a request... */}
           {(node.hasValue || false) && (
             <DropdownItem
-              data-testid="DropdownItem-clear-filter"
+              data-testid="dropdown-clear-filter"
               onClick={() => tree.clear(node.path)}
             >
               Clear Filter
             </DropdownItem>
           )}
           <DropdownItem
-            data-testid="Dropdownitem-deleteFilter"
+            data-testid="dropdown-delete-filter"
             onClick={() => tree.remove(node.path)}
           >
             Delete Filter

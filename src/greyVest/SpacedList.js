@@ -5,7 +5,7 @@ let SpacedList = ({ children, style = { marginBottom: '25px' } }) =>
   F.mapIndexed(
     (child, i) => (
       <div
-        data-testid="div-spacedList"
+        data-testid="spaced-list"
         style={i !== children.length - 1 ? style : {}}
         key={i}
       >

@@ -170,14 +170,14 @@ let ExpandableTable = inject(TableState)(
                         }}
                       >
                         <DropdownItem
-                          data-testid="DropdownItem-sortAscending"
+                          data-testid="dropdown-sort-ascending"
                           onClick={() => columnSort({ ...c, sortDir: 'asc' })}
                         >
                           <Icon icon="SortAscending" />
                           Sort Ascending
                         </DropdownItem>
                         <DropdownItem
-                          data-testid="DropdownItem-sortDescending"
+                          data-testid="dropdown-sort-descending"
                           onClick={() => columnSort({ ...c, sortDir: 'desc' })}
                         >
                           <Icon icon="SortDescending" />

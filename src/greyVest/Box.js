@@ -3,7 +3,7 @@ import F from 'futil'
 
 let Box = ({ className = '', ...props }) => (
   <div
-    data-testid="div-box"
+    data-testid="box"
     className={F.compactJoin(' ', ['gv-box', className])}
     {...props}
   />

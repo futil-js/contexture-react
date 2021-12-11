@@ -51,14 +51,14 @@ let BasicSearchFilters = withTheme(
           <Popover
             position="bottom right"
             trigger={
-              <DropdownItem data-testid="DropdownItem-tableColumnMenu">
+              <DropdownItem data-testid="dropdown-table-column-menu">
                 <Icon icon="TableColumnMenu" />
               </DropdownItem>
             }
           >
             {setMode && (
               <DropdownItem
-                data-testid="DropdownItem-hideFilters"
+                data-testid="dropdown-hide-filters"
                 onClick={() => setMode('resultsOnly')}
               >
                 Hide Filters
@@ -67,7 +67,7 @@ let BasicSearchFilters = withTheme(
             <TreePauseButton children={children} Component={DropdownItem} />
             {setMode && !disableAdvancedMode && (
               <DropdownItem
-                data-testid="DrowpdownItem-linkToAdvancedSearch"
+                data-testid="dropdown-link-to-advanced-search"
                 onClick={() => setMode('builder')}
               >
                 Advanced Search Builder
@@ -87,7 +87,7 @@ let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
       <h1>Filters</h1>
       {setMode && (
         <LinkButton
-          data-testid="LinkButton-linkToRegularSearch"
+          data-testid="link-to-regular-search"
           onClick={() => setMode('basic')}
         >
           Back to Regular Search

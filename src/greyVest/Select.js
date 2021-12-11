@@ -3,17 +3,12 @@ import { observer } from 'mobx-react'
 import _ from 'lodash/fp'
 
 let Select = ({ options, placeholder = 'Please Select...', ...props }, ref) => (
-  <select
-    data-testid="select-selectionBox"
-    className="gv-input"
-    {...props}
-    ref={ref}
-  >
+  <select data-testid="selection-box" className="gv-input" {...props} ref={ref}>
     {placeholder && <option value="">{placeholder}</option>}
     {_.map(
       x => (
         <option
-          data-testid={`option-optionChoice-${x.label}`}
+          data-testid={`option-choice-${x.label}`}
           key={x.value}
           value={x.value}
         >

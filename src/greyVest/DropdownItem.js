@@ -6,7 +6,7 @@ export let DropdownItem = ({ style = {}, ...props }) => {
   let hovering = React.useState(false)
   return (
     <div
-      data-testid="div-DropdownItem"
+      data-testid="dropdown-item"
       style={{
         cursor: 'pointer',
         padding: '2.5px 5px',

@@ -9,7 +9,7 @@ let Checkbox = React.forwardRef(
       ref={ref}
     >
       <input
-        data-testid="input-checkbox"
+        data-testid="checkbox"
         type="checkbox"
         style={{ display: 'none' }}
         {...{ checked, onChange }}
