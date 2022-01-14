@@ -43,7 +43,7 @@ let Rule = ({
           <div
             style={{
               ...(F.view(hover.rule) || { visibility: 'hidden' }),
-              minWidth: 82,
+              minWidth: 88,
             }}
           >
             <button
