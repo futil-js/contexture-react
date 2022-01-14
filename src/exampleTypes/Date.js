@@ -71,7 +71,7 @@ let DateComponent = ({
         }}
       />
       {node.range === 'exact' ? (
-        <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+        <Flex style={{ justifyContent: 'start', alignItems: 'center' }}>
           <DateInput
             value={node.from}
             onChange={date =>
