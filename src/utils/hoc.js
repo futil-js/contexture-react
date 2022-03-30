@@ -33,13 +33,7 @@ export let withLoader = Component =>
     )
   })
 
-export let contexturify = _.flow(
-  withLoader,
-  React.memo,
-  observer,
-  withNode,
-  withTheme
-)
+export let contexturify = _.flow(withLoader, observer, withNode, withTheme)
 
 export let contexturifyWithoutLoader = _.flow(observer, withNode, withTheme)
 
