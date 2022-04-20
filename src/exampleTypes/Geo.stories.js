@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import AsyncSelect from 'react-select/lib/Async'
+import AsyncSelect from 'react-select/async'
 import ThemePicker from '../stories/themePicker'
 import { Flex } from '../greyVest'
 import TestTree from './stories/testTree'

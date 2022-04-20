@@ -37,7 +37,8 @@
     "mobx": "^4.3.1",
     "mobx-react": "^6.1.1",
     "mobx-utils": "^5.0.0",
-    "react": "^16.8.0 || ^17.0.0"
+    "react": "^16.8.0 || ^17.0.0",
+    "react-select": "^5.3.0"
   },
   "prettier": {
     "singleQuote": true,
@@ -114,7 +115,6 @@
     "raw-loader": "^2.0.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-select": "^2.0.0",
     "react-test-renderer": "^16.2.0",
     "read-pkg": "^5.2.0",
     "storybook-addon-jsx": "^7.3.12",

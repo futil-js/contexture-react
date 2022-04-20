@@ -1,7 +1,7 @@
 import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp'
-import Async from 'react-select/lib/Async'
+import Async from 'react-select/async'
 import { components } from 'react-select'
 import { Flex } from '../greyVest'
 import { contexturify } from '../utils/hoc'

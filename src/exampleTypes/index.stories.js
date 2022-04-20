@@ -1,7 +1,7 @@
 import * as F from 'futil'
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import AsyncSelect from 'react-select/lib/Async'
+import AsyncSelect from 'react-select/async'
 import { loadHereOptions, geoCodeLocation } from '../utils/geo'
 import { ThemeProvider } from '../utils/theme'
 import theme from '../stories/DemoControls'
