@@ -70,3 +70,5 @@ storybook-static/
 test-results.json
 
 .idea/
+
+yarn.lock

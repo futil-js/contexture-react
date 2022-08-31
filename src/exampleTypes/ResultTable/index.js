@@ -20,6 +20,10 @@ let DefaultRow = withTheme(({ theme: { Tr = 'tr' }, ...props }) => (
   />
 ))
 
+const validateInput = (fields, infer) => {
+  if (_.isEmpty(fields) && !infer) throw new Error('Fields are empty')
+}
+
 let ResultTable = ({
   fields,
   infer,
@@ -41,9 +45,15 @@ let ResultTable = ({
 }) => {
   // If there are no fields, we won't render anything. This is most definitely a
   // user error when it happens
-  if (_.isEmpty(fields) && !infer) throw new Error('Fields are empty')
+  try{
+    validateInput(fields, infer)
+  }catch(error){
+    console.error(`Error encountered during validation of fields: ${error}`)
+    return (<><h1>Search Failed</h1><p>Description: {error}</p></>)
+  }
   // From Theme/Components
   let mutate = tree.mutate(path)
+  
   // Account for all providers here (memory provider has results with no response parent)
   let resultsLength = F.cascade(
     ['context.response.results.length', 'context.results.length'],
