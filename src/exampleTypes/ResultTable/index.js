@@ -45,15 +45,20 @@ let ResultTable = ({
 }) => {
   // If there are no fields, we won't render anything. This is most definitely a
   // user error when it happens
-  try{
+  try {
     validateInput(fields, infer)
-  }catch(error){
+  } catch (error) {
     console.error(`Error encountered during validation of fields: ${error}`)
-    return (<><h1>Search Failed</h1><p>Description: {error}</p></>)
+    return (
+      <>
+        <h1>Search Failed</h1>
+        <p>Description: {error}</p>
+      </>
+    )
   }
   // From Theme/Components
   let mutate = tree.mutate(path)
-  
+
   // Account for all providers here (memory provider has results with no response parent)
   let resultsLength = F.cascade(
     ['context.response.results.length', 'context.results.length'],
