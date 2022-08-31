@@ -48,11 +48,11 @@ let ResultTable = ({
   try {
     validateInput(fields, infer)
   } catch (error) {
-    console.error(`Error encountered during validation of fields: ${error}`)
+    console.info(`Error encountered during validation of fields: ${error.message}`)
     return (
       <>
         <h1>Search Failed</h1>
-        <p>Description: {error}</p>
+        <p>Description: {error.message}</p>
       </>
     )
   }
