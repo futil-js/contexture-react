@@ -105,7 +105,7 @@
     "emoji-datasource": "^5.0.1",
     "eslint": "^4.12.1",
     "eslint-config-smartprocure": "^1.1.0",
-    "jest": "^24.7.1",
+    "jest": "^29.3.1",
     "material-ui-chip-input": "^1.0.0",
     "mobx": ">=4.0.0",
     "mobx-react": ">=6.3.0",
