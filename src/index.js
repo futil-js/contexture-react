@@ -4,12 +4,8 @@ export {
   componentForType,
   schemaFieldProps,
 } from './utils/schema.js'
-export {
-  ThemeProvider,
-  useTheme,
-  ThemeConsumer,
-  withTheme,
-} from './utils/theme.js'
+export { ThemeProvider } from './utils/theme/provider.js'
+export { useTheme, ThemeConsumer, withTheme } from './utils/theme.js'
 export { contexturify, contexturifyWithoutLoader } from './utils/hoc.js'
 
 export * as format from './utils/format.js'

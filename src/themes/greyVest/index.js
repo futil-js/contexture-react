@@ -1,6 +1,4 @@
 import { defaultProps } from 'react-recompose'
-
-// components exported from component library
 import {
   BarChart,
   Box,
@@ -19,12 +17,12 @@ import {
   TextButton,
   TextHighlight,
   TextInput,
+  Popover,
 } from '../../greyVest/index.js'
-
-//components used only for theme
 import PickerItem from './PickerItem.js'
 import TagsInput, { Tag } from './TagsInput.js'
 import Root from './Root.js'
+import UnmappedNodeComponent from './UnmappedNodeComponent.js'
 
 export default {
   AlternateButton: TextButton,
@@ -48,4 +46,13 @@ export default {
   Select,
   Table,
   TextHighlight,
+  Popover,
+  Tbody: 'tbody',
+  Td: 'td',
+  TextButton: 'button',
+  Tfoot: 'tfoot',
+  Th: 'th',
+  Thead: 'thead',
+  Tr: 'tr',
+  UnmappedNodeComponent,
 }
