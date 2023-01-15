@@ -1,3 +1,7 @@
+# 2.54.15
+
+- Migrate to storybook v7 and fix lots of stories
+
 # 2.54.14
 
 - Fix grey-vest publishing v2
@@ -50,7 +54,7 @@
 
 # 2.54.1
 
-- Fix useLocal{Store,Observable} import
+- Fix useLocal\{Store,Observable} import
 
 # 2.54.0
 

@@ -1,6 +1,6 @@
 {
   "name": "contexture-react",
-  "version": "2.54.14",
+  "version": "2.54.15",
   "description": "React components for building contexture interfaces",
   "type": "module",
   "main": "dist/esm/index.js",
@@ -14,8 +14,8 @@
     "lint:ci": "yarn lint -o lint-results.json -f json",
     "duti:fix": "yarn lint --fix && yarn fmt",
     "start": "npm run storybook",
-    "storybook": "start-storybook -p 3001",
-    "storybook:build": "build-storybook",
+    "storybook": "storybook dev -p 3001",
+    "storybook:build": "storybook build",
     "storybook:deploy": "storybook-to-ghpages",
     "update-pkg": "node scripts/updatePackage.js"
   },
@@ -45,14 +45,20 @@
     "commitMessage": "Deploy Storybook [ci skip]"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
     "@date-io/moment": "^1.3.9",
     "@material-ui/core": "^4.3.3",
     "@material-ui/pickers": "^3.2.3",
-    "@storybook/addon-actions": "^6.3.7",
-    "@storybook/addon-docs": "^6.3.7",
-    "@storybook/react": "^6.3.7",
-    "@storybook/source-loader": "^6.3.7",
-    "@storybook/storybook-deployer": "^2.8.10",
+    "@mdx-js/react": "^2.2.1",
+    "@storybook/addon-actions": "^7.0.0-beta.27",
+    "@storybook/addon-docs": "^7.0.0-beta.27",
+    "@storybook/addon-essentials": "^7.0.0-beta.27",
+    "@storybook/react": "^7.0.0-beta.27",
+    "@storybook/react-webpack5": "^7.0.0-beta.27",
+    "@storybook/storybook-deployer": "^2.8.16",
+    "babel-loader": "^9.1.2",
     "contexture": "^0.12.11",
     "contexture-client": "^2.49.5",
     "contexture-elasticsearch": "^1.13.0",
@@ -64,6 +70,7 @@
     "eslint": "^8.31.0",
     "eslint-plugin-import": "^2.27.4",
     "eslint-plugin-react": "^7.32.0",
+    "eslint-plugin-storybook": "^0.6.10",
     "glob": "^8.0.3",
     "material-ui-chip-input": "^1.0.0",
     "mobx": ">=4.0.0",
@@ -74,8 +81,8 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-select": "^2.0.0",
-    "react-test-renderer": "^16.2.0",
     "read-pkg": "^5.2.0",
+    "storybook": "^7.0.0-beta.27",
     "write-pkg": "^4.0.0"
   },
   "dependencies": {
@@ -92,6 +99,6 @@
     "react-recompose": "^0.31.2",
     "reactjs-popup": "^2.0.4"
   },
-  "readme": "README.mdx",
+  "readme": "README.md",
   "packageManager": "yarn@3.3.1"
 }

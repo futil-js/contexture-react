@@ -10,8 +10,8 @@ import {
   FilterList,
   componentForType,
   FilterAdder,
+  Button,
 } from '../../index.js'
-import theme, { Button } from '../DemoControls.js'
 import {
   Query,
   ResultCount,
@@ -20,7 +20,6 @@ import {
   TermsStats,
   TypeMap,
 } from '../../exampleTypes/index.js'
-import { ThemeProvider } from '../../utils/theme.js'
 
 let formatYear = (x) => new Date(x).getUTCFullYear()
 
@@ -107,7 +106,11 @@ let whiteBox = {
   margin: '15px',
 }
 
-let Story = () => (
+export default {
+  title: 'Search Button',
+}
+
+export const SearchButton = () => (
   <Awaiter promise={schemas}>
     {(schemas) => (
       <div style={{ background: '#f4f4f4' }}>
@@ -163,10 +166,4 @@ let Story = () => (
       </div>
     )}
   </Awaiter>
-)
-
-export default () => (
-  <ThemeProvider theme={theme}>
-    <Story />
-  </ThemeProvider>
 )

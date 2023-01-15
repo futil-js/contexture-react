@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 let { danger, markdown, fail, message, warn } = require('danger')
 
 let fs = require('fs')

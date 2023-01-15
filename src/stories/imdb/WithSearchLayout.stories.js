@@ -12,7 +12,11 @@ import {
   SearchFilters,
   SearchTree,
   ToggleFiltersHeader,
+  ButtonGroup,
+  Icon,
+  Box,
 } from '../../index.js'
+import { useTheme } from '../../utils/theme.js'
 import { Grid, Tab, TabContent, TabLabel, Tabs } from '../../greyVest/index.js'
 import {
   DateRangePicker,
@@ -23,7 +27,6 @@ import {
   ResultTable,
 } from '../../exampleTypes/index.js'
 import { Column } from '../../greyVest/ExpandableTable.js'
-import { ThemeConsumer } from '../../utils/theme.js'
 import { aspectWrapper } from '../../utils/futil.js'
 
 let tree = Contexture({
@@ -227,114 +230,119 @@ let mapNodeToProps = F.mergeOverAll([
     },
 ])
 
-let GreyVestSearchBarStory = (theme) => (
-  <Awaiter promise={schemas}>
-    {(schemas) => (
-      <SearchLayout mode={state.mode}>
-        <SearchFilters mode={state.mode} setMode={(x) => (state.mode = x)}>
-          <SearchTree
-            tree={tree}
-            path={['root', 'criteria']}
-            fields={schemas.movies.fields}
-            mapNodeToLabel={({ key }) =>
-              ({
-                titleContains: 'Title Contains',
-                titleDoesNotContain: 'Title Does Not Contain',
-              }[key])
-            }
-            mapNodeToProps={mapNodeToProps}
-          />
-        </SearchFilters>
-        <div>
-          <ToggleFiltersHeader
-            mode={state.mode}
-            setMode={(x) => (state.mode = x)}
-          >
-            Search Movies
-          </ToggleFiltersHeader>
-          <Grid columns="1fr auto" gap={10} placeItems="center stretch">
-            <TagsQuerySearchBar
-              tree={tree}
-              path={['root', 'bar']}
-              resultsPath={['root', 'results']}
-              autoFocus
-              actionWrapper={aspectWrapper}
-              searchButtonProps={{ ['data-attribute']: 'attribute1' }}
-            />
-            <theme.ButtonGroup>
-              <theme.AlternateButton
-                title="Auto Update"
-                primary={!tree.disableAutoUpdate}
-                onClick={F.flip('disableAutoUpdate', tree)}
-              >
-                <theme.Icon icon="AutoUpdate" />
-              </theme.AlternateButton>
-              <theme.AlternateButton
-                onClick={() => {
-                  window.location.reload()
-                }}
-                title="New Search"
-              >
-                <theme.Icon icon="New" />
-              </theme.AlternateButton>
-            </theme.ButtonGroup>
-          </Grid>
-          <h1>Search Results</h1>
-          <Tabs defaultValue="results" TabPanel={theme.Box}>
-            <TabLabel value="results">
-              Movies (
-              <ResultCount tree={tree} path={['root', 'results']} />)
-            </TabLabel>
-            <TabContent value="results">
-              <ResultTable
-                tree={tree}
-                path={['root', 'results']}
-                fields={_.omit(
-                  ['imdbId', 'runtimeMinutes'],
-                  schemas[tree.tree.schema].fields
-                )}
-                criteria={['root', 'criteria']}
-                mapNodeToProps={componentForType(TypeMap)}
-              />
-            </TabContent>
-            <Tab value="analytics" label="Analytics">
-              <TermsStatsTable
-                tree={tree}
-                criteria={['root', 'criteria']}
-                criteriaField="genres"
-                path={['root', 'genreScores']}
-                tableAttrs={{ className: 'gv-table' }}
-                sizeOptions={[10, 25, 50]}
-                getValue="key"
-              >
-                <Column field="key" label="Genre" />
-                <Column field="count" label="Found" />
-                <Column
-                  field="key"
-                  label=""
-                  expand={{ display: (x) => `Show results for ${x} +` }}
-                  collapse={{ display: (x) => `Hide results for ${x} -` }}
-                >
-                  {(x) => (
-                    <div style={{ marginBottom: 25 }}>
-                      <ResultTable
-                        tree={termDetailsTree(x)}
-                        path={['detailRoot', 'results']}
-                        fields={_.pick(
-                          ['title', 'year', 'genres'],
-                          schemas.movies.fields
-                        )}
-                      />
-                    </div>
-                  )}
-                </Column>
-              </TermsStatsTable>
-            </Tab>
-          </Tabs>
-        </div>
-      </SearchLayout>
-    )}
-  </Awaiter>
-)
+export default {
+  title: 'With Search Layout',
+}
 
-export default () => <ThemeConsumer>{GreyVestSearchBarStory}</ThemeConsumer>
+export const WithSearchLayout = () => {
+  const { AlternateButton } = useTheme()
+  return (
+    <Awaiter promise={schemas}>
+      {(schemas) => (
+        <SearchLayout mode={state.mode}>
+          <SearchFilters mode={state.mode} setMode={(x) => (state.mode = x)}>
+            <SearchTree
+              tree={tree}
+              path={['root', 'criteria']}
+              fields={schemas.movies.fields}
+              mapNodeToLabel={({ key }) =>
+                ({
+                  titleContains: 'Title Contains',
+                  titleDoesNotContain: 'Title Does Not Contain',
+                }[key])
+              }
+              mapNodeToProps={mapNodeToProps}
+            />
+          </SearchFilters>
+          <div>
+            <ToggleFiltersHeader
+              mode={state.mode}
+              setMode={(x) => (state.mode = x)}
+            >
+              Search Movies
+            </ToggleFiltersHeader>
+            <Grid columns="1fr auto" gap={10} placeItems="center stretch">
+              <TagsQuerySearchBar
+                tree={tree}
+                path={['root', 'bar']}
+                resultsPath={['root', 'results']}
+                autoFocus
+                actionWrapper={aspectWrapper}
+                searchButtonProps={{ ['data-attribute']: 'attribute1' }}
+              />
+              <ButtonGroup>
+                <AlternateButton
+                  title="Auto Update"
+                  primary={!tree.disableAutoUpdate}
+                  onClick={F.flip('disableAutoUpdate', tree)}
+                >
+                  <Icon icon="AutoUpdate" />
+                </AlternateButton>
+                <AlternateButton
+                  onClick={() => {
+                    window.location.reload()
+                  }}
+                  title="New Search"
+                >
+                  <Icon icon="New" />
+                </AlternateButton>
+              </ButtonGroup>
+            </Grid>
+            <h1>Search Results</h1>
+            <Tabs defaultValue="results" TabPanel={Box}>
+              <TabLabel value="results">
+                Movies (
+                <ResultCount tree={tree} path={['root', 'results']} />)
+              </TabLabel>
+              <TabContent value="results">
+                <ResultTable
+                  tree={tree}
+                  path={['root', 'results']}
+                  fields={_.omit(
+                    ['imdbId', 'runtimeMinutes'],
+                    schemas[tree.tree.schema].fields
+                  )}
+                  criteria={['root', 'criteria']}
+                  mapNodeToProps={componentForType(TypeMap)}
+                />
+              </TabContent>
+              <Tab value="analytics" label="Analytics">
+                <TermsStatsTable
+                  tree={tree}
+                  criteria={['root', 'criteria']}
+                  criteriaField="genres"
+                  path={['root', 'genreScores']}
+                  tableAttrs={{ className: 'gv-table' }}
+                  sizeOptions={[10, 25, 50]}
+                  getValue="key"
+                >
+                  <Column field="key" label="Genre" />
+                  <Column field="count" label="Found" />
+                  <Column
+                    field="key"
+                    label=""
+                    expand={{ display: (x) => `Show results for ${x} +` }}
+                    collapse={{ display: (x) => `Hide results for ${x} -` }}
+                  >
+                    {(x) => (
+                      <div style={{ marginBottom: 25 }}>
+                        <ResultTable
+                          tree={termDetailsTree(x)}
+                          path={['detailRoot', 'results']}
+                          fields={_.pick(
+                            ['title', 'year', 'genres'],
+                            schemas.movies.fields
+                          )}
+                        />
+                      </div>
+                    )}
+                  </Column>
+                </TermsStatsTable>
+              </Tab>
+            </Tabs>
+          </div>
+        </SearchLayout>
+      )}
+    </Awaiter>
+  )
+}

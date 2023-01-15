@@ -2,11 +2,6 @@
 
 React components for building contexture interfaces https://smartprocure.github.io/contexture-react
 
-<!---
-Comment this out once we enable greenkeeper
-[![Greenkeeper badge](https://badges.greenkeeper.io/smartprocure/contexture-react.svg)](https://greenkeeper.io/)
---->
-
 [![CircleCI](https://circleci.com/gh/smartprocure/contexture-react.svg?style=svg)](https://circleci.com/gh/smartprocure/contexture-react)
 [![npm version](https://badge.fury.io/js/contexture-react.svg)](https://badge.fury.io/js/contexture-react)
 ![dependencies](https://david-dm.org/smartprocure/contexture-react.svg)

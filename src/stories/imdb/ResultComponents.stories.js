@@ -79,6 +79,7 @@ let state = observable({
 })
 
 let divs = _.map((x) => <div key={x}>{x}</div>)
+
 let schemas = fromPromise(
   updateSchemas()
     .then(
@@ -113,7 +114,11 @@ let CheckboxResultTable = observer((props) => {
   )
 })
 
-export default () => {
+export default {
+  title: 'Result Components',
+}
+
+export const ResultComponents = () => {
   let theme = useTheme()
   return (
     <Awaiter promise={schemas}>

@@ -2,18 +2,19 @@
   "extends": [
     "eslint:recommended",
     "plugin:import/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:storybook/recommended"
   ],
   "ignorePatterns": ["dist", "node_modules", "!.storybook"],
   "parserOptions": {
     "ecmaVersion": "2022",
     "sourceType": "module",
-    "ecmaFeatures": { "jsx": true }
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "env": {
     "browser": true,
-    "node": true,
-    "jest": true,
     "es2022": true
   },
   "rules": {

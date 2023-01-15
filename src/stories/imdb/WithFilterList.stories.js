@@ -1,10 +1,9 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import React from 'react'
-import { autorun } from 'mobx'
 import { observable } from '../../utils/mobx.js'
 import { fromPromise } from 'mobx-utils'
-import { observer, inject } from 'mobx-react'
+import { Observer } from 'mobx-react'
 import Contexture, { updateSchemas } from './utils/contexture.js'
 import {
   FilterList,
@@ -14,7 +13,6 @@ import {
   componentForType,
   FilterAdder,
 } from '../../index.js'
-import theme, { DarkBox } from '../DemoControls.js'
 import {
   Query,
   ResultCount,
@@ -23,7 +21,6 @@ import {
   CheckableTermsStatsTable,
   TypeMap,
 } from '../../exampleTypes/index.js'
-import { ThemeProvider } from '../../utils/theme.js'
 import { Column } from '../../greyVest/ExpandableTable.js'
 
 let formatYear = (x) => new Date(x).getUTCFullYear()
@@ -119,16 +116,18 @@ let schemas = fromPromise(
   )
 )
 
-const Story = inject(() => {
-  let state = observable({
-    selected: [],
-  })
-  state.getValue = (x) => x.key
-  autorun(() => console.info(state.selected.slice()))
-  return { state }
-})(
-  observer(({ state }) => (
-    <DarkBox>
+export default {
+  title: 'With Filter List',
+}
+
+let state = observable({
+  selected: [],
+  getValue: (x) => x.key,
+})
+
+export const WithFilterList = () => (
+  <Observer>
+    {() => (
       <Awaiter promise={schemas}>
         {(schemas) => (
           <SpacedList>
@@ -226,12 +225,6 @@ const Story = inject(() => {
           </SpacedList>
         )}
       </Awaiter>
-    </DarkBox>
-  ))
-)
-
-export default () => (
-  <ThemeProvider theme={theme}>
-    <Story />
-  </ThemeProvider>
+    )}
+  </Observer>
 )
