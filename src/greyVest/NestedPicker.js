@@ -106,20 +106,15 @@ let Section = observer(function Section({
 
 let PanelTreePicker = observer(function PanelTreePicker({ options, checked }) {
   let nestedOptions = toNested(options)
-  let [state] = React.useState(() => {
-    let state = observable({
-      selected: [],
-      selectAtLevel: _.curry((level, key, field) => {
-        if (isField(field)) {
-          checked.has(field.value)
-            ? checked.delete(field.value)
-            : checked.set(field.value, field)
-        } else {
-          state.selected.splice(level, state.selected.length - level, key)
-        }
-      }),
-    })
-    return state
+  let [state] = React.useState(() => observable({ selected: [] }))
+  let selectAtLevel = _.curry((level, key, field) => {
+    if (isField(field)) {
+      checked.has(field.value)
+        ? checked.delete(field.value)
+        : checked.set(field.value, field)
+    } else {
+      state.selected.splice(level, state.selected.length - level, key)
+    }
   })
   return (
     <div
@@ -129,7 +124,7 @@ let PanelTreePicker = observer(function PanelTreePicker({ options, checked }) {
       <Section
         checked={checked}
         options={nestedOptions}
-        onClick={state.selectAtLevel(0)}
+        onClick={selectAtLevel(0)}
         selected={state.selected[0]}
       />
       {F.mapIndexed(
@@ -138,7 +133,7 @@ let PanelTreePicker = observer(function PanelTreePicker({ options, checked }) {
             key={index}
             checked={checked}
             options={_.get(state.selected.slice(0, index + 1), nestedOptions)}
-            onClick={state.selectAtLevel(index + 1)}
+            onClick={selectAtLevel(index + 1)}
             selected={state.selected[index + 1]}
           />
         ),
@@ -150,15 +145,15 @@ let PanelTreePicker = observer(function PanelTreePicker({ options, checked }) {
 
 let matchLabel = (str) => _.filter((x) => F.matchAllWords(str)(x.label))
 
-export default function NestedPicker({
+let NestedPicker = ({
   options,
   onChange,
   PickerItem = 'div',
   itemType = 'filter',
   style = {},
   theme,
-}) {
-  theme = useTheme(theme)
+}) => {
+  let { Button, TextInput, TextHighlight } = useTheme(theme)
   let [state] = React.useState(() =>
     observable({
       filter: '',
@@ -170,11 +165,12 @@ export default function NestedPicker({
     })
   )
   let showDescriptionPanel = _.some('description', options)
+
   return (
     <PickerContext.Provider
       value={{
         PickerItem,
-        TextHighlight: theme.TextHighlight,
+        TextHighlight,
         setHoverItem: _.debounce(100, (item) => (state.hoverItem = item)),
       }}
     >
@@ -211,7 +207,7 @@ export default function NestedPicker({
           <Observer>
             {() => (
               <>
-                <theme.TextInput
+                <TextInput
                   style={{ marginBottom: 10 }}
                   value={state.filter}
                   onChange={(e) => (state.filter = e.target.value)}
@@ -230,18 +226,18 @@ export default function NestedPicker({
             )}
           </Observer>
           <Flex justifyContent="space-between" style={{ marginTop: 20 }}>
-            <theme.Button
+            <Button
               onClick={() => {
                 state.checked = new Map()
                 onChange()
               }}
             >
               Cancel
-            </theme.Button>
+            </Button>
             <Observer>
               {() =>
                 !!state.checked.size && (
-                  <theme.Button
+                  <Button
                     primary
                     onClick={() => onChange(Array.from(state.checked.values()))}
                   >
@@ -250,7 +246,7 @@ export default function NestedPicker({
                       itemType,
                       state.checked.size
                     )}`}
-                  </theme.Button>
+                  </Button>
                 )
               }
             </Observer>
@@ -260,3 +256,5 @@ export default function NestedPicker({
     </PickerContext.Provider>
   )
 }
+
+export default NestedPicker

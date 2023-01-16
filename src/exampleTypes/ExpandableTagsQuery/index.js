@@ -69,7 +69,7 @@ let TagsWrapper = observer(
     popoverPosition = 'bottom right',
     popoverArrow,
     popoverOffsetY,
-    theme,
+    theme: { Icon, TagsInput, Tag, Popover },
     joinOptions,
     wordsMatchPattern,
     sanitizeTags = true,
@@ -77,24 +77,27 @@ let TagsWrapper = observer(
     maxTags = 1000,
     ...props
   }) => {
-    let TagWithPopover = observer((props) => {
-      let result = _.get(['context', 'results', props.value], node)
-      let tagProps = {
-        ...props,
-        ...(!_.isNil(result)
-          ? { label: `${props.value} (${toNumber(result)})` }
-          : {}),
-      }
-      return (
-        <theme.Popover
-          position="right top"
-          closeOnPopoverClick={false}
-          trigger={<theme.Tag {...tagProps} />}
-        >
-          <TagActionsMenu tag={props.value} {...{ node, tree }} />
-        </theme.Popover>
-      )
-    })
+    let TagWithPopover = React.memo(
+      observer((props) => {
+        let result = _.get(['context', 'results', props.value], node)
+        let tagProps = {
+          ...props,
+          ...(!_.isNil(result)
+            ? { label: `${props.value} (${toNumber(result)})` }
+            : {}),
+        }
+        return (
+          <Popover
+            position="right top"
+            closeOnPopoverClick={false}
+            trigger={<Tag {...tagProps} />}
+          >
+            <TagActionsMenu tag={props.value} {...{ node, tree }} />
+          </Popover>
+        )
+      })
+    )
+
     return (
       <Grid
         data-path={node.path}
@@ -103,7 +106,7 @@ let TagsWrapper = observer(
         style={style}
       >
         <GridItem height={2} place="center stretch">
-          <theme.TagsInput
+          <TagsInput
             splitCommas={splitCommas}
             sanitizeTags={sanitizeTags}
             maxTags={maxTags}
@@ -137,7 +140,7 @@ let TagsWrapper = observer(
           />
         </GridItem>
         <GridItem place="center">
-          <theme.Popover
+          <Popover
             style={{ width: 'auto' }}
             position={popoverPosition}
             arrow={popoverArrow}
@@ -145,7 +148,7 @@ let TagsWrapper = observer(
             closeOnPopoverClick={false}
             trigger={
               <div>
-                <theme.Icon icon="TableColumnMenu" />
+                <Icon icon="TableColumnMenu" />
               </div>
             }
           >
@@ -160,7 +163,7 @@ let TagsWrapper = observer(
                 }}
               />
             )}
-          </theme.Popover>
+          </Popover>
         </GridItem>
       </Grid>
     )

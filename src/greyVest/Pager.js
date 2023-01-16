@@ -4,15 +4,15 @@ import GVPagerItem from './PagerItem.js'
 import Flex from './Flex.js'
 import { useTheme } from '../utils/hooks.js'
 
-export default function Pager({
+let Pager = ({
   value,
   onChange = () => {},
   pageCount,
   PagerItem = GVPagerItem,
   disabled = false,
   theme,
-}) {
-  theme = useTheme(theme)
+}) => {
+  let { Icon } = useTheme(theme)
   return (
     pageCount > 1 && (
       <Flex justifyContent="center" alignItems="center">
@@ -20,14 +20,14 @@ export default function Pager({
           disabled={disabled || !(value > 1)}
           onClick={() => onChange(value - 1)}
         >
-          <theme.Icon icon="PreviousPage" />
+          <Icon icon="PreviousPage" />
         </PagerItem>
         {value > 3 && (
           <PagerItem
             disabled={disabled}
             onClick={() => onChange(_.max([0, value - 5]))}
           >
-            <theme.Icon icon="Previous5Pages" />
+            <Icon icon="Previous5Pages" />
           </PagerItem>
         )}
         {_.reverse(
@@ -66,16 +66,18 @@ export default function Pager({
             disabled={disabled}
             onClick={() => onChange(_.min([pageCount, value + 5]))}
           >
-            <theme.Icon icon="Next5Pages" />
+            <Icon icon="Next5Pages" />
           </PagerItem>
         )}
         <PagerItem
           disabled={disabled || !(value < pageCount)}
           onClick={() => onChange(value + 1)}
         >
-          <theme.Icon icon="NextPage" />
+          <Icon icon="NextPage" />
         </PagerItem>
       </Flex>
     )
   )
 }
+
+export default Pager

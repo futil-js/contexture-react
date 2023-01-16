@@ -6,7 +6,7 @@ import { useTheme } from '../../utils/hooks.js'
 import { getTag, tagTerm, tagValueField } from './utils.js'
 
 export default observer(function TagActionsMenu({ tag, node, tree, theme }) {
-  theme = useTheme(theme)
+  let { Button, Checkbox, RadioList } = useTheme(theme)
   let tagInstance = getTag(tag, node)
   return (
     <div
@@ -19,7 +19,7 @@ export default observer(function TagActionsMenu({ tag, node, tree, theme }) {
       </div>
       {_.includes(' ', tag) && (
         <div style={{ margin: '10px 0' }}>
-          <theme.RadioList
+          <RadioList
             options={F.autoLabelOptions(['fuzzy', 'exact'])}
             value={tagInstance.distance ? 'fuzzy' : 'exact'}
             onChange={(value) => {
@@ -27,7 +27,7 @@ export default observer(function TagActionsMenu({ tag, node, tree, theme }) {
               tree.mutate(node.path, { tags: [...node.tags] })
             }}
           />
-          <theme.Button
+          <Button
             onClick={() => {
               tree.mutate(node.path, {
                 tags: _.map((tag) => {
@@ -39,11 +39,11 @@ export default observer(function TagActionsMenu({ tag, node, tree, theme }) {
             }}
           >
             Apply to all {tagTerm}s
-          </theme.Button>
+          </Button>
         </div>
       )}
       <label className="labeled-checkbox" style={{ marginTop: 15 }}>
-        <theme.Checkbox
+        <Checkbox
           checked={tagInstance.onlyShowTheseResults}
           onChange={(e) => {
             tagInstance.onlyShowTheseResults = e.target.checked

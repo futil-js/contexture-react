@@ -11,7 +11,7 @@ export default observer(function ExpandArrow({
   style,
   theme,
 }) {
-  theme = useTheme(theme)
+  let { Icon } = useTheme(theme)
   return (
     !!(F.view(collapse) && tagsLength) && (
       <div className="expand-arrow" onClick={F.off(collapse)} style={style}>
@@ -37,7 +37,7 @@ export default observer(function ExpandArrow({
             justifyContent="center"
           >
             View all {tagsLength} {tagTerm}s
-            <theme.Icon icon="Expand" style={{ fontSize: 16, marginLeft: 6 }} />
+            <Icon icon="Expand" style={{ fontSize: 16, marginLeft: 6 }} />
           </Flex>
         </div>
       </div>

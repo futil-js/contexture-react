@@ -18,6 +18,7 @@ let FilterButtonItem = ({
   mapNodeToLabel,
   theme,
 }) => {
+  let { Button, FilterButton, UnmappedNodeComponent, Modal } = useTheme(theme)
   let mappedProps = mapNodeToProps(node, fields)
   let modal = React.useState(false)
   let title = // we really need a title, so here's every possible fallback
@@ -36,10 +37,11 @@ let FilterButtonItem = ({
           F.on(modal)()
           tree.mutate(node.path, { paused: false })
         }}
+        theme={{ Button: FilterButton }}
       >
         {title}
       </CheckButton>
-      <theme.Modal open={modal}>
+      <Modal open={modal}>
         <Flex column className="filter-button-modal">
           <h1>{title}</h1>
           {description && (
@@ -48,7 +50,7 @@ let FilterButtonItem = ({
           <div className="filter-component">
             <Dynamic
               {...{
-                component: theme.UnmappedNodeComponent,
+                component: UnmappedNodeComponent,
                 tree,
                 node,
                 path: _.toArray(node.path),
@@ -57,10 +59,8 @@ let FilterButtonItem = ({
             />
           </div>
           <Flex style={{ justifyContent: 'flex-end' }}>
-            <theme.Button onClick={() => tree.clear(node.path)}>
-              Clear Filter
-            </theme.Button>
-            <theme.Button
+            <Button onClick={() => tree.clear(node.path)}>Clear Filter</Button>
+            <Button
               primary
               onClick={() => {
                 F.off(modal)()
@@ -69,10 +69,10 @@ let FilterButtonItem = ({
               style={{ marginLeft: '10px' }}
             >
               Done
-            </theme.Button>
+            </Button>
           </Flex>
         </Flex>
-      </theme.Modal>
+      </Modal>
     </div>
   )
 }
@@ -104,7 +104,7 @@ let FilterButtonList = ({
   theme,
 }) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Icon, FilterButton } = useTheme(theme)
   let options = allowDuplicateFields
     ? fieldsToOptions(fields)
     : unusedOptions(fields)
@@ -128,7 +128,6 @@ let FilterButtonList = ({
               mapNodeToProps,
               mapNodeToLabel,
               className,
-              theme,
             }}
           />
         )
@@ -147,11 +146,11 @@ let FilterButtonList = ({
             }
             label={
               <Flex alignItems="center" justifyContent="center">
-                <theme.Icon icon="AddColumn" />
+                <Icon icon="AddColumn" />
                 {addFilters !== true && <>&nbsp;{addFilters}</>}
               </Flex>
             }
-            theme={theme}
+            theme={{ Button: FilterButton }}
           />
         </div>
       )}

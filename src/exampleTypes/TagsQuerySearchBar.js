@@ -4,6 +4,7 @@ import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { useNode, useTheme } from '../utils/hooks.js'
+import { Button } from '../greyVest/index.js'
 import ExpandableTagsInput, { Tags } from '../greyVest/ExpandableTagsInput.js'
 import ExpandableTagsQuery from './ExpandableTagsQuery/index.js'
 
@@ -26,8 +27,8 @@ let buttonStyle = {
   maxHeight: 56,
 }
 
-let AnimatedButton = ({ theme, disabled, style, className, ...props }) => (
-  <theme.Button
+let AnimatedButton = ({ disabled, style, className, ...props }) => (
+  <Button
     className={`${disabled ? 'disabled' : 'animated pulse infinite'} ${
       className || ''
     }`}
@@ -42,32 +43,29 @@ let AnimatedButton = ({ theme, disabled, style, className, ...props }) => (
   />
 )
 
-let SearchButton = observer(
-  ({ theme, tree, resultsPath, searchButtonProps }) => (
-    <AnimatedButton
-      theme={theme}
-      disabled={!tree.getNode(resultsPath).markedForUpdate}
-      onClick={tree.triggerUpdate}
-      style={buttonStyle}
-      {...searchButtonProps}
-    >
-      Search
-    </AnimatedButton>
-  )
-)
+let SearchButton = observer(({ tree, resultsPath, searchButtonProps }) => (
+  <AnimatedButton
+    disabled={!tree.getNode(resultsPath).markedForUpdate}
+    onClick={tree.triggerUpdate}
+    style={buttonStyle}
+    {...searchButtonProps}
+  >
+    Search
+  </AnimatedButton>
+))
 
-export default observer(function SearchBar({
+let SearchBar = ({
   tree,
   node,
-  path,
   resultsPath,
   actionWrapper,
   searchButtonProps,
   tagsQueryProps,
+  path,
   theme,
-}) {
+}) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Box, ButtonGroup } = useTheme(theme)
   let collapse = React.useState(true)
   return (
     <OutsideClickHandler.default
@@ -76,7 +74,7 @@ export default observer(function SearchBar({
       }}
       useCapture={false}
     >
-      <theme.ButtonGroup
+      <ButtonGroup
         data-path={node.path}
         style={searchBarStyle}
         // The outside click handler listens for the onMouseUp event which takes priority over any onClick handlers in the children
@@ -85,7 +83,7 @@ export default observer(function SearchBar({
           e.stopPropagation()
         }}
       >
-        <theme.Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
+        <Box style={searchBarBoxStyle} onClick={F.off(collapse)}>
           <ExpandableTagsQuery
             {...{ tree, node, collapse, actionWrapper }}
             onAddTag={F.off(collapse)}
@@ -100,16 +98,17 @@ export default observer(function SearchBar({
             autoFocus
             {...tagsQueryProps}
           />
-        </theme.Box>
+        </Box>
         {tree.disableAutoUpdate && (
           <SearchButton
-            theme={theme}
             tree={tree}
             resultsPath={resultsPath}
             searchButtonProps={searchButtonProps}
           />
         )}
-      </theme.ButtonGroup>
+      </ButtonGroup>
     </OutsideClickHandler.default>
   )
-})
+}
+
+export default observer(SearchBar)

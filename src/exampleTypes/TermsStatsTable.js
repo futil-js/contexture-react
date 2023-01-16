@@ -6,28 +6,30 @@ import { useNode, useTheme } from '../utils/hooks.js'
 import { ExpandableTable, Column, Flex } from '../greyVest/index.js'
 
 let toolBarStyle = { justifyContent: 'space-between', alignItems: 'center' }
-
 let SimpleLabel = ({ text }) => (
   <label style={{ paddingRight: '5px' }}>{text}</label>
 )
 
-let SimpleFilter = ({ theme, ...props }) => (
-  <Flex style={{ ...toolBarStyle, width: '75%' }}>
-    <SimpleLabel text="Filter:" />
-    <theme.TextInput {...props} />
-  </Flex>
-)
+let SimpleFilter = observer(function SimpleFilter(props) {
+  let { TextInput } = useTheme()
+  return (
+    <Flex style={{ ...toolBarStyle, width: '75%' }}>
+      <SimpleLabel text="Filter:" />
+      <TextInput {...props} />
+    </Flex>
+  )
+})
 
 let SelectSize = observer(function SelectSize({
   node,
   tree,
-  theme,
   options = [10, 25, 50, 100, 500, 1000],
 }) {
+  let { Select } = useTheme()
   return (
     <Flex style={{ marginLeft: 12, ...toolBarStyle }}>
       <SimpleLabel text="Size:" />
-      <theme.Select
+      <Select
         onChange={(e) => {
           tree.mutate(node.path, { size: e.target.value })
         }}
@@ -40,36 +42,28 @@ let SelectSize = observer(function SelectSize({
   )
 })
 
-export default observer(function TermsStatsTable({
+let TermsStatsTable = ({
   node,
-  path,
-  tree,
   criteria,
   criteriaField,
   criteriaFieldLabel = '',
   criteriaGetValue = _.identity,
+  tree,
   children,
   sizeOptions,
   limitedResults,
+  path,
   theme,
   ...props
-}) {
+}) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader, Button } = useTheme(theme)
   return (
-    <theme.Loader loading={node.updating}>
+    <Loader node={node}>
       <div>
         <Flex style={{ ...toolBarStyle, margin: '0 8px' }}>
-          <SimpleFilter
-            theme={theme}
-            {...F.domLens.value(tree.lens(node.path, 'filter'))}
-          />
-          <SelectSize
-            node={node}
-            tree={tree}
-            options={sizeOptions}
-            theme={theme}
-          />
+          <SimpleFilter {...F.domLens.value(tree.lens(node.path, 'filter'))} />
+          <SelectSize node={node} tree={tree} options={sizeOptions} />
         </Flex>
         <ExpandableTable
           {...{
@@ -83,7 +77,7 @@ export default observer(function TermsStatsTable({
                     expand={{
                       display: (value, record) => (
                         <div>
-                          <theme.Button
+                          <Button
                             onClick={async () => {
                               let field = criteriaField || node.key_field
                               let filter =
@@ -115,7 +109,7 @@ export default observer(function TermsStatsTable({
                             }}
                           >
                             Add as Filter
-                          </theme.Button>
+                          </Button>
                         </div>
                       ),
                     }}
@@ -138,6 +132,8 @@ export default observer(function TermsStatsTable({
           pageSize={node.size}
         />
       </div>
-    </theme.Loader>
+    </Loader>
   )
-})
+}
+
+export default observer(TermsStatsTable)

@@ -15,9 +15,9 @@ let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
 let DefaultRow = ({ theme, ...props }) => {
-  theme = useTheme(theme)
+  let { Tr } = useTheme(theme)
   return (
-    <theme.Tr
+    <Tr
       {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
     />
   )
@@ -44,7 +44,7 @@ export default observer(function ResultTable({
   theme,
 }) {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Table, Thead, Tr, Th } = useTheme(theme)
   // If there are no fields, we won't render anything. This is most definitely a
   // user error when it happens
   if (_.isEmpty(fields) && !infer) throw new Error('Fields are empty')
@@ -119,16 +119,13 @@ export default observer(function ResultTable({
 
   return (
     <>
-      <theme.Table data-path={node.path}>
-        <theme.Thead>
+      <Table data-path={node.path}>
+        <Thead>
           {F.mapIndexed(
             (columnGroupRow, i) => (
-              <theme.Tr key={i}>
+              <Tr key={i}>
                 {F.mapIndexed(
-                  (
-                    { groupName, colspan, HeaderCell = theme.Th, HeaderGroup },
-                    j
-                  ) => (
+                  ({ groupName, colspan, HeaderCell = Th, HeaderGroup }, j) => (
                     <HeaderCell key={j} colSpan={colspan}>
                       <span>
                         {HeaderGroup ? (
@@ -141,11 +138,11 @@ export default observer(function ResultTable({
                   ),
                   columnGroupRow
                 )}
-              </theme.Tr>
+              </Tr>
             ),
             columnGroups
           )}
-          <theme.Tr>
+          <Tr>
             {F.mapIndexed(
               (x, i) => (
                 <Header
@@ -159,8 +156,8 @@ export default observer(function ResultTable({
               visibleFields
             )}
             <HighlightedColumnHeader node={node} />
-          </theme.Tr>
-        </theme.Thead>
+          </Tr>
+        </Thead>
         <TableBody
           {...{
             node,
@@ -178,7 +175,7 @@ export default observer(function ResultTable({
             defaultDisplay,
           }}
         />
-      </theme.Table>
+      </Table>
 
       {!hideFooter && node.pageSize > 0 && (
         <ResultTableFooter

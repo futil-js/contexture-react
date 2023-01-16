@@ -20,25 +20,20 @@ let operatorOptions = F.autoLabelOptions([
   // { value: 'doesNotContain', label: 'Does Not Contain'}
 ])
 
-export default observer(function TagsText({
-  tree,
-  node,
-  path,
-  placeholder,
-  theme,
-}) {
+let Text = ({ tree, node, path, placeholder, theme }) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader, Select, TagsInput, Popover, Icon } = useTheme(theme)
   return (
-    <theme.Loader loading={node.updating}>
+    <Loader node={node}>
       <div className="contexture-text">
-        <theme.Select
+        <Select
           value={node.operator}
           onChange={(e) => tree.mutate(node.path, { operator: e.target.value })}
           options={operatorOptions}
         />
+
         <Flex className="tags-query">
-          <theme.TagsInput
+          <TagsInput
             splitCommas
             tags={node.values}
             addTags={(tags) => {
@@ -54,11 +49,12 @@ export default observer(function TagsText({
             placeholder={placeholder}
             style={{ flex: 1, border: 0 }}
           />
+
           <div style={{ paddingTop: 4 }}>
-            <theme.Popover
+            <Popover
               trigger={
                 <div>
-                  <theme.Icon icon="TableColumnMenu" />
+                  <Icon icon="TableColumnMenu" />
                 </div>
               }
               position="bottom right"
@@ -66,10 +62,12 @@ export default observer(function TagsText({
               style={{ width: 240 }}
             >
               <TagsJoinPicker node={node} tree={tree} />
-            </theme.Popover>
+            </Popover>
           </div>
         </Flex>
       </div>
-    </theme.Loader>
+    </Loader>
   )
-})
+}
+
+export default observer(Text)

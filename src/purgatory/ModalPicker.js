@@ -3,7 +3,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { useTheme } from '../utils/hooks.js'
 
-export default observer(function ModalPicker({
+let ModalPicker = ({
   options = [],
   className = '',
   modalClassName = '',
@@ -11,14 +11,14 @@ export default observer(function ModalPicker({
   label,
   theme,
   ...props
-}) {
-  theme = useTheme(theme)
+}) => {
+  let { Button, NestedPicker, Modal } = useTheme(theme)
   let open = React.useState(false)
   return (
     !!options.length && (
       <>
-        <theme.Modal open={open} className={modalClassName}>
-          <theme.NestedPicker
+        <Modal open={open} className={modalClassName}>
+          <NestedPicker
             options={options}
             onChange={(x) => {
               onChange(x)
@@ -26,14 +26,16 @@ export default observer(function ModalPicker({
             }}
             {...props}
           />
-        </theme.Modal>
-        <theme.Button
+        </Modal>
+        <Button
           className={`modal-picker-button ${className}`}
           onClick={F.on(open)}
         >
           {label}
-        </theme.Button>
+        </Button>
       </>
     )
   )
-})
+}
+
+export default observer(ModalPicker)

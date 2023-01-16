@@ -18,10 +18,9 @@ let maxChecked = 500
 // The number of items selected after which we will show the warning message
 let warningCheck = 250
 
-export default observer(function Facet({
+let Facet = ({
   tree,
   node,
-  path,
   hide = {
     selectAll: false, // Hide the initial "Select All" checkbox
     radioList: false, // Hide the Include/Exclude radio list
@@ -31,13 +30,14 @@ export default observer(function Facet({
   display = displayFn,
   displayBlank = displayBlankFn,
   formatCount = toNumber,
+  path,
   theme,
-}) {
+}) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader, RadioList } = useTheme(theme)
   let valuesChecked = _.size(node.values)
   return (
-    <theme.Loader loading={node.updating}>
+    <Loader node={node}>
       <div className="contexture-facet" data-path={node.path}>
         {valuesChecked > warningCheck && (
           <span>
@@ -48,7 +48,7 @@ export default observer(function Facet({
           </span>
         )}
         {!hide.radioList && (
-          <theme.RadioList
+          <RadioList
             value={node.mode || 'include'} // Fix by changing defaults in client example type
             onChange={(mode) => tree.mutate(node.path, { mode })}
             options={F.autoLabelOptions(['include', 'exclude'])}
@@ -68,6 +68,8 @@ export default observer(function Facet({
         />
         <Cardinality {...{ node, tree }} />
       </div>
-    </theme.Loader>
+    </Loader>
   )
-})
+}
+
+export default observer(Facet)

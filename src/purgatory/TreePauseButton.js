@@ -6,13 +6,9 @@ import { useTheme } from '../utils/hooks.js'
 let setPausedNested = (tree, path, value) =>
   tree[`${value ? '' : 'un'}pauseNested`](path)
 
-export default observer(function TreePauseButton({
-  children,
-  theme,
-  Component,
-}) {
-  theme = useTheme(theme)
-  Component = Component || theme.AlternateButton
+let TreePauseButton = ({ children, theme, Component }) => {
+  let { AlternateButton } = useTheme(theme)
+  Component ||= AlternateButton
   let trees = _.flow(React.Children.toArray, _.map('props'))(children)
   let allPaused = _.every(({ tree, path }) => tree.isPausedNested(path), trees)
   let flip = () =>
@@ -22,4 +18,6 @@ export default observer(function TreePauseButton({
       {`${allPaused ? 'Expand' : 'Collapse'} Filters`}
     </Component>
   )
-})
+}
+
+export default observer(TreePauseButton)

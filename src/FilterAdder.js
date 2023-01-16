@@ -30,14 +30,14 @@ let FilterAdder = ({
   ...props
 }) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Icon } = useTheme(theme)
   let options = uniqueFields
     ? unusedOptions(fields, node)
     : fieldsToOptions(fields)
   let Label = (
     <Flex justifyContent="center" alignItems="center">
       Add Custom Filter
-      <theme.Icon style={{ paddingLeft: 5 }} icon="FilterAdd" />
+      <Icon style={{ paddingLeft: 5 }} icon="FilterAdd" />
     </Flex>
   )
   return (

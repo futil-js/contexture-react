@@ -115,31 +115,30 @@ let TableBody = observer(
   }
 )
 
-let TableState = (props) =>
-  observable({
-    columns: _.map(
-      ({ props }) => ({
-        ..._.pick(['field', 'label', 'display', 'enableSort'], props),
-        details: F.compactObject({
-          ..._.pick(['expand', 'collapse'], props),
-          Component: props.children,
-        }),
+let TableState = (props) => ({
+  columns: _.map(
+    ({ props }) => ({
+      ..._.pick(['field', 'label', 'display', 'enableSort'], props),
+      details: F.compactObject({
+        ..._.pick(['expand', 'collapse'], props),
+        Component: props.children,
       }),
-      _.castArray(props.children)
-    ),
-  })
+    }),
+    _.castArray(props.children)
+  ),
+})
 
-export default observer(function ExpandableTable({
+let ExpandableTable = ({
   data,
   recordKey = 'key',
   columnSort = _.identity,
   theme,
   ...props
-}) {
-  theme = useTheme(theme)
-  let [{ columns }] = React.useState(() => TableState(props))
+}) => {
+  let { Table, Icon, Popover, DropdownItem } = useTheme(theme)
+  let [{ columns }] = React.useState(() => observable(TableState(props)))
   return (
-    <theme.Table {...props.tableAttrs}>
+    <Table {...props.tableAttrs}>
       <thead>
         <tr>
           {F.mapIndexed(
@@ -153,8 +152,8 @@ export default observer(function ExpandableTable({
                 <span>
                   {F.callOrReturn(_.getOr(F.autoLabel(c.field), 'label', c))}
                   {c.enableSort && (
-                    <theme.Popover
-                      trigger={<theme.Icon icon="TableColumnMenu" />}
+                    <Popover
+                      trigger={<Icon icon="TableColumnMenu" />}
                       position={`bottom ${
                         i === columns.length - 1 ? 'right' : 'center'
                       }`}
@@ -163,19 +162,19 @@ export default observer(function ExpandableTable({
                         width: 'auto',
                       }}
                     >
-                      <theme.DropdownItem
+                      <DropdownItem
                         onClick={() => columnSort({ ...c, sortDir: 'asc' })}
                       >
-                        <theme.Icon icon="SortAscending" />
+                        <Icon icon="SortAscending" />
                         Sort Ascending
-                      </theme.DropdownItem>
-                      <theme.DropdownItem
+                      </DropdownItem>
+                      <DropdownItem
                         onClick={() => columnSort({ ...c, sortDir: 'desc' })}
                       >
-                        <theme.Icon icon="SortDescending" />
+                        <Icon icon="SortDescending" />
                         Sort Descending
-                      </theme.DropdownItem>
-                    </theme.Popover>
+                      </DropdownItem>
+                    </Popover>
                   )}
                 </span>
               </th>
@@ -190,6 +189,8 @@ export default observer(function ExpandableTable({
         recordKey={recordKey}
         {...props}
       />
-    </theme.Table>
+    </Table>
   )
-})
+}
+
+export default observer(ExpandableTable)

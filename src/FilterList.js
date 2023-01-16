@@ -22,16 +22,17 @@ export let FilterActions = observer(function FilterActions({
   theme,
 }) {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { DropdownItem, Popover, Modal, NestedPicker } = useTheme(theme)
   let modal = React.useState(false)
   let typeOptions = _.flow(
     _.getOr([], [node.field, 'typeOptions']),
     _.without([node.type])
   )(fields)
+
   return (
     <>
-      <theme.Modal open={modal}>
-        <theme.NestedPicker
+      <Modal open={modal}>
+        <NestedPicker
           options={fieldsToOptions(fields)}
           onChange={(pickedFields) => {
             // If several fields picked, using the last one user clicked on
@@ -46,8 +47,8 @@ export let FilterActions = observer(function FilterActions({
             F.off(modal)()
           }}
         />
-      </theme.Modal>
-      <theme.Popover
+      </Modal>
+      <Popover
         open={popover}
         arrow={false}
         position="bottom center"
@@ -55,12 +56,12 @@ export let FilterActions = observer(function FilterActions({
       >
         {!_.isEmpty(typeOptions) && (
           <>
-            <theme.DropdownItem className="filter-actions-selected-type">
+            <DropdownItem className="filter-actions-selected-type">
               Filter type: <strong>{getTypeLabel(tree, node.type)}</strong>
-            </theme.DropdownItem>
+            </DropdownItem>
             {_.map(
               (x) => (
-                <theme.DropdownItem
+                <DropdownItem
                   key={x.value}
                   onClick={() =>
                     tree.replace(
@@ -70,26 +71,24 @@ export let FilterActions = observer(function FilterActions({
                   }
                 >
                   —Change to {x.label}
-                </theme.DropdownItem>
+                </DropdownItem>
               ),
               getTypeLabelOptions(tree, typeOptions)
             )}
             <div className="filter-actions-separator" />
           </>
         )}
-        <theme.DropdownItem onClick={F.on(modal)}>
-          Pick Field
-        </theme.DropdownItem>
+        <DropdownItem onClick={F.on(modal)}>Pick Field</DropdownItem>
         {/* If only contexture-client diffed the tree before sending a request... */}
         {(node.hasValue || false) && (
-          <theme.DropdownItem onClick={() => tree.clear(node.path)}>
+          <DropdownItem onClick={() => tree.clear(node.path)}>
             Clear Filter
-          </theme.DropdownItem>
+          </DropdownItem>
         )}
-        <theme.DropdownItem onClick={() => tree.remove(node.path)}>
+        <DropdownItem onClick={() => tree.remove(node.path)}>
           Delete Filter
-        </theme.DropdownItem>
-      </theme.Popover>
+        </DropdownItem>
+      </Popover>
     </>
   )
 })
@@ -104,7 +103,7 @@ export let Label = observer(function Label({
   ...props
 }) {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Icon } = useTheme(theme)
   let popover = React.useState(false)
   let modal = React.useState(false)
   let field = _.get('field', node)
@@ -135,12 +134,11 @@ export let Label = observer(function Label({
             }
           >
             <span className="filter-field-label-icon">
-              <theme.Icon icon="TableColumnMenu" />
+              <Icon icon="TableColumnMenu" />
             </span>
             <FilterActions
               node={node}
               tree={tree}
-              path={path}
               fields={fields}
               popover={popover}
               modal={modal}
@@ -156,80 +154,86 @@ export let Label = observer(function Label({
   )
 })
 
-export default observer(function FilterList({
-  tree,
-  node,
-  path,
-  fields,
-  resultsPath,
-  mapNodeToProps = _.noop,
-  mapNodeToLabel = _.noop,
-  className,
-  style,
-  theme,
-}) {
-  node = useNode(node, path, tree)
-  theme = useTheme(theme)
-  // find results node that this filter node is targeting (['root', 'results'])
-  let updateRequired =
-    tree.disableAutoUpdate && tree.getNode(resultsPath)?.markedForUpdate
-  return (
-    <div style={style} className={className}>
-      {_.map(
-        (child) =>
-          child.children ? (
-            <FilterList
-              key={child.path}
-              tree={tree}
-              node={child}
-              fields={fields}
-              mapNodeToProps={mapNodeToProps}
-              mapNodeToLabel={mapNodeToLabel}
-              className={'filter-list-group'}
-              style={bdJoin(child)}
-            />
-          ) : (
-            <Expandable
-              key={child.path}
-              className="filter-list-item"
-              isOpen={!child.paused}
-              Label={
-                <Label tree={tree} node={child} fields={fields}>
-                  {mapNodeToLabel(child, fields)}
-                </Label>
-              }
-              onClick={() =>
-                tree && tree.mutate(child.path, { paused: !child.paused })
-              }
-            >
-              <div className="filter-list-item-contents">
-                <Dynamic
-                  {...{
-                    component: theme.UnmappedNodeComponent,
-                    tree,
-                    node: child,
-                    path: _.toArray(child.path),
-                    ...mapNodeToProps(child, fields),
-                  }}
-                />
-              </div>
-            </Expandable>
-          ),
-        _.get('children', node)
-      )}
-      <div
-        className={`apply-filter ${updateRequired ? 'active' : ''}`}
-        onClick={(e) => {
-          e.stopPropagation()
-          tree.triggerUpdate()
-        }}
-      >
-        <theme.Button primary>
-          <Flex justifyContent="center" alignItems="center">
-            Search
-          </Flex>
-        </theme.Button>
+let FilterList = observer(
+  ({
+    tree,
+    node,
+    path,
+    fields,
+    resultsPath,
+    mapNodeToProps = _.noop,
+    mapNodeToLabel = _.noop,
+    className,
+    style,
+    theme,
+  }) => {
+    node = useNode(node, path, tree)
+    let { UnmappedNodeComponent, Button } = useTheme(theme)
+    // find results node that this filter node is targeting (['root', 'results'])
+    let updateRequired =
+      tree.disableAutoUpdate && tree.getNode(resultsPath)?.markedForUpdate
+
+    return (
+      <div style={style} className={className}>
+        {_.map(
+          (child) =>
+            child.children ? (
+              <FilterList
+                key={child.path}
+                tree={tree}
+                node={child}
+                fields={fields}
+                mapNodeToProps={mapNodeToProps}
+                mapNodeToLabel={mapNodeToLabel}
+                className={'filter-list-group'}
+                style={bdJoin(child)}
+              />
+            ) : (
+              <Expandable
+                key={child.path}
+                className="filter-list-item"
+                isOpen={!child.paused}
+                Label={
+                  <Label tree={tree} node={child} fields={fields}>
+                    {mapNodeToLabel(child, fields)}
+                  </Label>
+                }
+                onClick={() =>
+                  tree && tree.mutate(child.path, { paused: !child.paused })
+                }
+              >
+                <div className="filter-list-item-contents">
+                  <Dynamic
+                    {...{
+                      component: UnmappedNodeComponent,
+                      tree,
+                      node: child,
+                      path: _.toArray(child.path),
+                      ...mapNodeToProps(child, fields),
+                    }}
+                  />
+                </div>
+              </Expandable>
+            ),
+          _.get('children', node)
+        )}
+
+        <div
+          className={`apply-filter ${updateRequired ? 'active' : ''}`}
+          onClick={(e) => {
+            e.stopPropagation()
+            tree.triggerUpdate()
+          }}
+        >
+          <Button primary>
+            <Flex justifyContent="center" alignItems="center">
+              Search
+            </Flex>
+          </Button>
+        </div>
       </div>
-    </div>
-  )
-})
+    )
+  }
+)
+
+export default FilterList

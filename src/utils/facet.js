@@ -14,7 +14,6 @@ let commonStyle = {
 }
 
 export let displayFn = (name, label) => (_.isString(label) ? label : name)
-
 export let displayBlankFn = () => <i>Not Specified</i>
 
 export let Cardinality = observer(function Cardinality({ node, tree }) {
@@ -52,7 +51,7 @@ export let SelectAll = observer(function SelectAll({
   theme,
   maxChecked = 500,
 }) {
-  theme = useTheme(theme)
+  let { Checkbox } = useTheme(theme)
   let notChecked = _.difference(
     _.map('name', _.get('context.options', node)),
     node.values
@@ -65,7 +64,7 @@ export let SelectAll = observer(function SelectAll({
   // then show the "Select All". This way we still allow the user to be able to "Unselect all"
   return !isOverTheLimit || isAllChecked ? (
     <label style={commonStyle}>
-      <theme.Checkbox
+      <Checkbox
         checked={isAllChecked}
         onChange={() => {
           if (isAllChecked)
@@ -87,14 +86,14 @@ export let FacetOptionsFilter = observer(function FacetOptionsFilter({
   node,
   theme,
 }) {
-  theme = useTheme(theme)
+  let { TextInput, Button, ButtonGroup } = useTheme(theme)
   let [val, setVal] = useState(node.optionsFilter)
   let buttonEnabled = val !== node.optionsFilter
   let submit = () =>
     buttonEnabled && tree.mutate(node.path, { optionsFilter: val })
   return (
-    <theme.ButtonGroup>
-      <theme.TextInput
+    <ButtonGroup>
+      <TextInput
         value={val}
         onChange={(e) => {
           setVal(e.target.value)
@@ -103,25 +102,25 @@ export let FacetOptionsFilter = observer(function FacetOptionsFilter({
         onBlur={submit}
         placeholder="Search..."
       />
-      <theme.Button primary={node.optionsFilter !== val} onClick={submit}>
+      <Button primary={node.optionsFilter !== val} onClick={submit}>
         Find
-      </theme.Button>
-    </theme.ButtonGroup>
+      </Button>
+    </ButtonGroup>
   )
 })
 
 export let FacetCheckboxList = observer(function FacetCheckboxList({
   tree,
-  path,
   node,
   hide,
   display = displayFn,
   displayBlank = displayBlankFn,
   formatCount,
+  path,
   theme,
 }) {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Checkbox } = useTheme(theme)
   return _.flow(
     _.partition((x) => _.includes(x.name, node.values)),
     _.flatten,
@@ -136,7 +135,7 @@ export let FacetCheckboxList = observer(function FacetCheckboxList({
           style={commonStyle}
           title={`${display(name, label)} : ${formatCount(count)}`}
         >
-          <theme.Checkbox {...F.domLens.checkboxValues(name, lens)} />
+          <Checkbox {...F.domLens.checkboxValues(name, lens)} />
           <div style={{ flex: 2, padding: '0 5px' }}>
             {display(name, label) || displayBlank()}
           </div>

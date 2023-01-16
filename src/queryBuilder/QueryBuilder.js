@@ -9,7 +9,7 @@ let { background } = styles
 
 let QueryBuilder = ({ tree, path, node, fields, mapNodeToProps, theme }) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Button } = useTheme(theme)
   let adding = React.useState(false)
   return (
     <div style={{ background }}>
@@ -25,9 +25,9 @@ let QueryBuilder = ({ tree, path, node, fields, mapNodeToProps, theme }) => {
           }}
         />
       )}
-      <theme.Button onClick={F.flip(adding)}>
+      <Button onClick={F.flip(adding)}>
         {F.view(adding) ? 'Cancel' : 'Add Filter'}
-      </theme.Button>
+      </Button>
     </div>
   )
 }

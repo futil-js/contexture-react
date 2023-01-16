@@ -22,29 +22,29 @@ const elementStyle = {
 
 const operatorOptions = ['within', 'not within']
 
-export default observer(function Geo({
+let GeoComponent = ({
   tree,
   node,
-  path,
   loadOptions,
   GeoCodeLocation = _.noop,
   AutoComplete = null,
   placeholder = 'Address ...',
+  path,
   theme,
-}) {
+}) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader, Select, NumberInput } = useTheme(theme)
   return (
-    <theme.Loader loading={node.updating}>
+    <Loader node={node}>
       <Flex style={{ flexFlow: 'column' }}>
-        <theme.Select
+        <Select
           style={elementStyle}
           value={node.operator}
           onChange={(e) => tree.mutate(node.path, { operator: e.target.value })}
           options={F.autoLabelOptions(operatorOptions)}
         />
         <div style={elementStyle}>
-          <theme.NumberInput
+          <NumberInput
             min="1"
             value={node.radius}
             onChange={(e) => tree.mutate(node.path, { radius: e.target.value })}
@@ -83,6 +83,8 @@ export default observer(function Geo({
           {!AutoComplete && <div>Autocomplete component is required!</div>}
         </div>
       </Flex>
-    </theme.Loader>
+    </Loader>
   )
-})
+}
+
+export default observer(GeoComponent)

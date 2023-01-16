@@ -33,9 +33,7 @@ export default {
   ButtonGroup,
   Checkbox,
   DateInput,
-  FilterButton: Button,
   Root,
-  Loader: StripedLoader,
   Icon,
   TextInput,
   DropdownItem,
@@ -45,6 +43,8 @@ export default {
   NumberInput: function NumberInput(props) {
     return <TextInput type="number" {...props} />
   },
+  FilterButton: Button,
+  Loader: StripedLoader,
   TagsInput,
   Tag,
   Modal,

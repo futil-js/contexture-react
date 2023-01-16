@@ -14,14 +14,14 @@ import {
 } from '../utils/search.js'
 import { useTheme } from '../utils/hooks.js'
 
-export default observer(function FilterContents({
+let FilterContents = ({
   node,
   tree,
   fields,
   mapNodeToProps = _.noop,
   theme,
-}) {
-  theme = useTheme(theme)
+}) => {
+  let { Select, UnmappedNodeComponent } = useTheme(theme)
   // `get` allows us to create a mobx dependency on field before we know it
   // exists (because the client will only add it if it's a type that uses it
   // as it wouldn't make sense for something like `results`)
@@ -56,7 +56,7 @@ export default observer(function FilterContents({
       />
       {nodeField && (
         <div style={{ margin: '0 5px' }}>
-          <theme.Select
+          <Select
             onChange={({ target: { value: type } }) => {
               tree.replace(node.path, newNodeFromType(type, fields, node))
             }}
@@ -77,7 +77,7 @@ export default observer(function FilterContents({
         >
           <Dynamic
             {...{
-              component: theme.UnmappedNodeComponent,
+              component: UnmappedNodeComponent,
               tree,
               node,
               ...mapNodeToProps(node, fields),
@@ -87,4 +87,6 @@ export default observer(function FilterContents({
       )}
     </Grid>
   )
-})
+}
+
+export default observer(FilterContents)

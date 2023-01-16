@@ -17,7 +17,7 @@ export default observer(function CheckableTermsStatsTable({
   ...props
 }) {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader, Checkbox } = useTheme(theme)
   let results = _.result('context.terms.slice', node)
   let allChecked = _.size(results) === _.size(F.view(selected))
   let checkAll = F.sets(
@@ -25,18 +25,16 @@ export default observer(function CheckableTermsStatsTable({
     selected
   )
   return (
-    <theme.Loader loading={node.updating}>
+    <Loader node={node}>
       <TermsStatsTable
         {...{
           ...props,
           children: [
             <Column
               key="checkbox"
-              label={
-                <theme.Checkbox checked={allChecked} onChange={checkAll} />
-              }
+              label={<Checkbox checked={allChecked} onChange={checkAll} />}
               display={(x, y) => (
-                <theme.Checkbox
+                <Checkbox
                   {...F.domLens.checkboxValues(
                     _.iteratee(getValue)(y),
                     selected
@@ -48,6 +46,6 @@ export default observer(function CheckableTermsStatsTable({
           ],
         }}
       />
-    </theme.Loader>
+    </Loader>
   )
 })

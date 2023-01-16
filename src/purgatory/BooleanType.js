@@ -5,20 +5,20 @@ import { useNode, useTheme } from '../utils/hooks.js'
 
 let getValue = (value) => (_.isNil(value) ? null : !!value)
 
-export default observer(function BooleanType({
+let BooleanType = ({
   tree,
   node,
   path,
   display = (value) => (_.isNil(value) ? 'Either' : value ? 'Yes' : 'No'),
   className = 'contexture-bool',
   theme,
-}) {
+}) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader, RadioList } = useTheme(theme)
   return (
-    <theme.Loader loading={node.updating}>
+    <Loader node={node}>
       <div className={className}>
-        <theme.RadioList
+        <RadioList
           value={getValue(node.value)}
           onChange={(value) => {
             tree.mutate(node.path, {
@@ -32,6 +32,8 @@ export default observer(function BooleanType({
           ]}
         />
       </div>
-    </theme.Loader>
+    </Loader>
   )
-})
+}
+
+export default observer(BooleanType)

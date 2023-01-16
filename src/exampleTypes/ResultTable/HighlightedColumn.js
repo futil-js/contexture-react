@@ -16,16 +16,16 @@ export default observer(function HighlightedColumn({
   theme,
   Cell,
 }) {
-  theme = useTheme(theme)
-  Cell ||= theme.Td
+  let { Modal, Table, Td } = useTheme(theme)
+  Cell ||= Td
   let viewModal = React.useState(false)
   return _.isEmpty(additionalFields) ? (
     <Cell key="additionalFields" />
   ) : (
     <Cell key="additionalFields">
-      <theme.Modal open={viewModal}>
+      <Modal open={viewModal}>
         <h3>Other Matching Fields</h3>
-        <theme.Table>
+        <Table>
           <tbody>
             {_.map(
               ({ label, value }) => (
@@ -37,8 +37,8 @@ export default observer(function HighlightedColumn({
               additionalFields
             )}
           </tbody>
-        </theme.Table>
-      </theme.Modal>
+        </Table>
+      </Modal>
       <button
         className="gv-link-button"
         onClick={(e) => {

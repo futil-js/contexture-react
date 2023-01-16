@@ -1,24 +1,25 @@
 import React from 'react'
+import { observer } from 'mobx-react'
 import { toNumber } from '../utils/format.js'
 import { FacetCheckboxList, displayFn, displayBlankFn } from '../utils/facet.js'
-import { observer } from 'mobx-react'
 import { useNode, useTheme } from '../utils/hooks.js'
 
-export default observer(function DateRangeFacet({
+let DateRangeFacet = ({
   tree,
   node,
-  path,
-  theme,
-  // Hide the facet counts so only the labels are displayed
-  hide = { counts: false },
+  hide = {
+    counts: false, // Hide the facet counts so only the labels are displayed
+  },
   display = displayFn,
   displayBlank = displayBlankFn,
   formatCount = toNumber,
-}) {
+  path,
+  theme,
+}) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader } = useTheme(theme)
   return (
-    <theme.Loader loading={node.updating}>
+    <Loader node={node}>
       <div className="contexture-daterangefacet" data-path={node.path}>
         <FacetCheckboxList
           tree={tree}
@@ -29,6 +30,8 @@ export default observer(function DateRangeFacet({
           formatCount={formatCount}
         />
       </div>
-    </theme.Loader>
+    </Loader>
   )
-})
+}
+
+export default observer(DateRangeFacet)

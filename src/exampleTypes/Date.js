@@ -1,9 +1,9 @@
 import React from 'react'
 import { Flex } from '../greyVest/index.js'
+import { observer } from 'mobx-react'
 import F from 'futil'
 import _ from 'lodash/fp.js'
 import moment from 'moment'
-import { observer } from 'mobx-react'
 import { useNode, useTheme } from '../utils/hooks.js'
 
 let allRollingOpts = [
@@ -45,22 +45,23 @@ let allRollingOpts = [
 
 let endOfDay = (date) => date && moment(date).endOf('day').toDate()
 
-export default observer(function DateComponent({
+let DateComponent = ({
   tree,
   node,
-  path,
   excludeRollingRanges = [],
+  path,
   theme,
-}) {
+}) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { DateInput, RadioList, Select } = useTheme(theme)
   let rollingOpts = _.reject(
     (opt) => _.includes(opt.type, excludeRollingRanges),
     allRollingOpts
   )
+
   return (
     <div data-path={node.path}>
-      <theme.RadioList
+      <RadioList
         options={F.autoLabelOptions(['exact', 'rolling'])}
         value={node.range !== 'exact' ? 'rolling' : 'exact'}
         style={{ marginBottom: 10 }}
@@ -75,14 +76,14 @@ export default observer(function DateComponent({
       />
       {node.range === 'exact' ? (
         <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-          <theme.DateInput
+          <DateInput
             value={node.from}
             onChange={(date) =>
               tree.mutate(node.path, { range: 'exact', from: date })
             }
           />
           <div>-</div>
-          <theme.DateInput
+          <DateInput
             value={node.to}
             onChange={(date) =>
               tree.mutate(node.path, { range: 'exact', to: endOfDay(date) })
@@ -90,7 +91,7 @@ export default observer(function DateComponent({
           />
         </Flex>
       ) : (
-        <theme.Select
+        <Select
           value={node.range}
           onChange={(e) =>
             tree.mutate(node.path, {
@@ -110,4 +111,6 @@ export default observer(function DateComponent({
       )}
     </div>
   )
-})
+}
+
+export default observer(DateComponent)

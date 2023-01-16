@@ -19,21 +19,23 @@ let getJoinOptions = _.intersectionWith(
   ]
 )
 
-export default observer(function TagsJoinPicker({
+let TagsJoinPicker = ({
   node,
   tree,
   path,
   theme,
   joinOptions = ['any', 'all', 'none'],
-}) {
+}) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Select } = useTheme(theme)
   return (
-    <theme.Select
+    <Select
       value={node.join}
       onChange={(e) => tree.mutate(node.path, { join: e.target.value })}
       options={getJoinOptions(joinOptions)}
       placeholder={false}
     />
   )
-})
+}
+
+export default observer(TagsJoinPicker)

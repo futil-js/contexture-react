@@ -1,6 +1,7 @@
 import React from 'react'
 import F from 'futil'
-import { ThemeProvider, ThemeConsumer, withTheme } from '../utils/theme.js'
+import { ThemeProvider } from '../utils/theme/provider.js'
+import { ThemeConsumer, withTheme } from '../utils/theme.js'
 import { wrapDisplayName } from '../utils/react.js'
 
 export default {

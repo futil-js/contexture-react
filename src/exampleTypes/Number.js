@@ -5,22 +5,22 @@ import { Flex } from '../greyVest/index.js'
 import { observer } from 'mobx-react'
 import { useNode, useTheme } from '../utils/hooks.js'
 
-export default observer(function NumberComponent({
+let NumberComponent = ({
   tree,
   node,
-  path,
   showBestRange = false,
   formatter = _.identity,
   significantDigits,
+  path,
   theme,
-}) {
+}) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader, NumberInput, Button } = useTheme(theme)
   return (
-    <theme.Loader loading={node.updating}>
+    <Loader node={node}>
       <div className="contexture-number" data-path={node.path}>
         <Flex style={{ alignItems: 'center' }}>
-          <theme.NumberInput
+          <NumberInput
             value={formatter(node.min) || ''}
             onChange={(e) =>
               tree.mutate(node.path, {
@@ -31,7 +31,7 @@ export default observer(function NumberComponent({
             }
           />
           <div className="contexture-number-separator">-</div>
-          <theme.NumberInput
+          <NumberInput
             value={formatter(node.max) || ''}
             onChange={(e) =>
               tree.mutate(node.path, {
@@ -44,7 +44,7 @@ export default observer(function NumberComponent({
         </Flex>
         {showBestRange && (
           <div className="contexture-number-best-range">
-            <theme.Button
+            <Button
               style={{ width: '100%' }}
               onClick={async () => {
                 // Calculate best range
@@ -63,10 +63,12 @@ export default observer(function NumberComponent({
               }}
             >
               Find best range
-            </theme.Button>
+            </Button>
           </div>
         )}
       </div>
-    </theme.Loader>
+    </Loader>
   )
-})
+}
+
+export default observer(NumberComponent)

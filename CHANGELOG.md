@@ -1,3 +1,12 @@
+# 2.54.17
+
+- Remove usage of `withNode`, `withTheme`, `withLoader`, `withTreeLens`, `contexturify`, and `contexturifyWithoutLoader` and mark them as deprecated
+- Introduce two new hooks `useNode` and `useTheme`, which are very simple and cover all the functionality provided by the deprecated ones
+- Add `Loader` component to the theme
+- Remove usage of mobx's `inject`
+- Drag N Drop HOCs will be replaced later
+- Remove `react-recompose`
+
 # 2.54.16
 
 - Remove unmaintained themes. Make grey-vest the default

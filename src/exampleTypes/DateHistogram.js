@@ -2,24 +2,20 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { useNode, useTheme } from '../utils/hooks.js'
 
-export default observer(function DateHistogram({
-  node,
-  tree,
-  path,
-  theme,
-  ...props
-}) {
+let DateHistogram = ({ node, tree, path, theme, ...props }) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader, BarChart } = useTheme(theme)
   return (
-    <theme.Loader loading={node.updating}>
-      <theme.BarChart
+    <Loader node={node}>
+      <BarChart
         data={node.context.entries}
         categoryField="key"
         valueField="count"
         gutter={0}
         {...props}
       />
-    </theme.Loader>
+    </Loader>
   )
-})
+}
+
+export default observer(DateHistogram)

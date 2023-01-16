@@ -6,9 +6,9 @@ import { useNode, useTheme } from '../../../utils/hooks.js'
 
 export default observer(function IMDBCards({ node, path, tree, theme }) {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader } = useTheme(theme)
   return (
-    <theme.Loader loading={node.updating}>
+    <Loader node={node}>
       <Flex style={{ flexWrap: 'wrap', justifyContent: 'center' }}>
         {_.map(
           ({ _id, _source: { title, poster } }) => (
@@ -23,6 +23,6 @@ export default observer(function IMDBCards({ node, path, tree, theme }) {
           node.context.response.results
         )}
       </Flex>
-    </theme.Loader>
+    </Loader>
   )
 })

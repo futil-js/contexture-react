@@ -47,7 +47,16 @@ export default observer(function Header({
   isLastColumn,
   theme,
 }) {
-  theme = useTheme(theme)
+  let {
+    Th,
+    Button,
+    DropdownItem,
+    Icon,
+    Popover,
+    Modal,
+    NestedPicker,
+    UnmappedNodeComponent,
+  } = useTheme(theme)
   let adding = React.useState(false)
   let {
     disableFilter,
@@ -59,7 +68,7 @@ export default observer(function Header({
     hideMenu,
     typeDefault,
   } = fieldSchema
-  let HeaderCell = fieldSchema.HeaderCell || theme.Th
+  let HeaderCell = fieldSchema.HeaderCell || Th
   let filterNode =
     criteria &&
     _.find({ field }, _.getOr([], 'children', tree.getNode(criteria)))
@@ -85,70 +94,70 @@ export default observer(function Header({
       <span>
         {_.isFunction(label) ? <Label /> : label}{' '}
         {field === node.sortField && (
-          <theme.Icon
+          <Icon
             icon={node.sortDir === 'asc' ? 'SortAscending' : 'SortDescending'}
           />
         )}
-        <theme.Popover
-          trigger={hideMenu ? null : <theme.Icon icon="TableColumnMenu" />}
+        <Popover
+          trigger={hideMenu ? null : <Icon icon="TableColumnMenu" />}
           position={`bottom ${isLastColumn ? 'right' : 'center'}`}
           closeOnPopoverClick={false}
           style={popoverStyle}
         >
           {!disableSort && (
-            <theme.DropdownItem
+            <DropdownItem
               onClick={() => {
                 mutate({ sortField, sortDir: 'asc' })
               }}
             >
-              <theme.Icon icon="SortAscending" />
+              <Icon icon="SortAscending" />
               Sort Ascending
-            </theme.DropdownItem>
+            </DropdownItem>
           )}
           {!disableSort && (
-            <theme.DropdownItem
+            <DropdownItem
               onClick={() => {
                 mutate({ sortField, sortDir: 'desc' })
               }}
             >
-              <theme.Icon icon="SortDescending" />
+              <Icon icon="SortDescending" />
               Sort Descending
-            </theme.DropdownItem>
+            </DropdownItem>
           )}
-          <theme.DropdownItem
+          <DropdownItem
             onClick={() =>
               moveColumn(mutate, (i) => i - 1, field, visibleFields, includes)
             }
           >
-            <theme.Icon icon="MoveLeft" />
+            <Icon icon="MoveLeft" />
             Move Left
-          </theme.DropdownItem>
-          <theme.DropdownItem
+          </DropdownItem>
+          <DropdownItem
             onClick={() =>
               moveColumn(mutate, (i) => i + 1, field, visibleFields, includes)
             }
           >
-            <theme.Icon icon="MoveRight" />
+            <Icon icon="MoveRight" />
             Move Right
-          </theme.DropdownItem>
+          </DropdownItem>
           {!hideRemoveColumn && (
-            <theme.DropdownItem
+            <DropdownItem
               onClick={() => mutate({ include: _.without([field], includes) })}
             >
-              <theme.Icon icon="RemoveColumn" />
+              <Icon icon="RemoveColumn" />
               Remove Column
-            </theme.DropdownItem>
+            </DropdownItem>
           )}
           {!!addOptions.length && (
-            <theme.DropdownItem onClick={F.on(adding)}>
-              <theme.Icon icon="AddColumn" />
+            <DropdownItem onClick={F.on(adding)}>
+              <Icon icon="AddColumn" />
               Add Column
-            </theme.DropdownItem>
+            </DropdownItem>
           )}
           {criteria && (typeDefault || filterNode) && !disableFilter && (
             <div>
-              <theme.DropdownItem onClick={filter}>
-                <theme.Icon
+              <DropdownItem onClick={filter}>
+                <Icon
                   icon={
                     filterNode
                       ? F.view(filtering)
@@ -158,19 +167,19 @@ export default observer(function Header({
                   }
                 />
                 Filter
-              </theme.DropdownItem>
+              </DropdownItem>
               {F.view(filtering) && filterNode && !filterNode.paused && (
                 <>
                   <Dynamic
                     {...{
-                      component: theme.UnmappedNodeComponent,
+                      component: UnmappedNodeComponent,
                       tree,
                       path: _.toArray(filterNode.path),
                       ...mapNodeToProps(filterNode, fields),
                     }}
                   />
                   {tree.disableAutoUpdate && node.markedForUpdate && (
-                    <theme.Button
+                    <Button
                       primary
                       style={{ width: '100%' }}
                       onClick={(e) => {
@@ -179,14 +188,14 @@ export default observer(function Header({
                       }}
                     >
                       Search
-                    </theme.Button>
+                    </Button>
                   )}
                 </>
               )}
             </div>
           )}
-          <theme.Modal open={adding}>
-            <theme.NestedPicker
+          <Modal open={adding}>
+            <NestedPicker
               itemType="column"
               options={addOptions}
               onChange={(selectedFields) => {
@@ -200,8 +209,8 @@ export default observer(function Header({
                 F.off(adding)()
               }}
             />
-          </theme.Modal>
-        </theme.Popover>
+          </Modal>
+        </Popover>
       </span>
     </HeaderCell>
   )

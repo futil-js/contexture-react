@@ -15,30 +15,27 @@ let Buttons = observer(function Buttons({
   onSubmit,
   theme,
 }) {
-  theme = useTheme(theme)
+  let { Button, Icon } = useTheme(theme)
   return (
     <>
       {step > 0 && (
-        <theme.Button
-          onClick={F.sets(step - 1, currentStep)}
-          className="back-button"
-        >
-          <theme.Icon icon="PreviousPage" />
+        <Button onClick={F.sets(step - 1, currentStep)} className="back-button">
+          <Icon icon="PreviousPage" />
           Back
-        </theme.Button>
+        </Button>
       )}
       {step < totalSteps - 1 ? (
-        <theme.Button
+        <Button
           primary
           onClick={F.sets(step + 1, currentStep)}
           disabled={false}
         >
           Continue
-        </theme.Button>
+        </Button>
       ) : (
-        <theme.Button primary onClick={onSubmit}>
+        <Button primary onClick={onSubmit}>
           View Results
-        </theme.Button>
+        </Button>
       )}
     </>
   )
@@ -56,7 +53,7 @@ export let AccordionStep = ({
   children,
   theme,
 }) => {
-  theme = useTheme(theme)
+  let { Icon } = useTheme(theme)
   let open = F.view(currentStep) === step
   return (
     <div className={`accordion-step ${className || ''}`} style={style}>
@@ -73,7 +70,7 @@ export let AccordionStep = ({
           {!isRequired && <em style={{ marginLeft: 6 }}>(Optional)</em>}
         </Flex>
         <div className="filter-field-label-icon">
-          <theme.Icon icon={open ? 'FilterListCollapse' : 'FilterListExpand'} />
+          <Icon icon={open ? 'FilterListCollapse' : 'FilterListExpand'} />
         </div>
       </Flex>
       {open && (

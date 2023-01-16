@@ -3,18 +3,12 @@ import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
 import { useNode, useTheme } from '../utils/hooks.js'
 
-export default observer(function DateComponent({
-  tree,
-  path,
-  node,
-  ranges,
-  theme,
-}) {
+let DateComponent = ({ tree, path, node, ranges, theme }) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader, Select } = useTheme(theme)
   return (
-    <theme.Loader loading={node.updating}>
-      <theme.Select
+    <Loader node={node}>
+      <Select
         value={(_.find({ range: node.range }, ranges) || {}).label}
         onChange={(event) => {
           let value = _.get('target.value', event)
@@ -28,6 +22,8 @@ export default observer(function DateComponent({
         }}
         options={_.map((x) => ({ value: x.label, label: x.label }), ranges)}
       />
-    </theme.Loader>
+    </Loader>
   )
-})
+}
+
+export default observer(DateComponent)

@@ -11,22 +11,22 @@ let CheckButton = ({
   className,
   ...props
 }) => {
-  theme = useTheme(theme)
+  let { Checkbox, Button } = useTheme(theme)
   return (
-    <theme.Button
+    <Button
       onClick={onClick}
       className={`check-button ${className || ''}`}
       {...props}
     >
       <Flex alignItems="center" justifyContent="center">
-        <theme.Checkbox
+        <Checkbox
           checked={!!checked} // prevent react "uncontrolled component" warning when `checked` prop is undefined
           onChange={_.noop} // prevent another react warning when `checked` is passed but `onChange` isn't
           disabled
         />
         &nbsp; {children}
       </Flex>
-    </theme.Button>
+    </Button>
   )
 }
 

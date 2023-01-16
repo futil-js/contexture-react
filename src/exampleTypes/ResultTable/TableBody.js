@@ -26,8 +26,8 @@ export default observer(function TableBody({
   IntroComponent,
   defaultDisplay = displayCell,
 }) {
-  theme = useTheme(theme)
-  Row ||= theme.Tr
+  let { Tbody, Tr, Td, Loader } = useTheme(theme)
+  Row ||= Tr
   let results = blankRows
     ? addBlankRows(getResults(node), pageSize, '_id')
     : getResults(node)
@@ -39,7 +39,7 @@ export default observer(function TableBody({
 
   return (
     <>
-      <theme.Tbody
+      <Tbody
         style={{
           display: showIntro || showNoResults ? 'none' : '',
         }}
@@ -53,7 +53,7 @@ export default observer(function TableBody({
                 {...{ fields, visibleFields, hiddenFields }}
               >
                 {_.map(
-                  ({ field, display = (x) => x, Cell = theme.Td }) => (
+                  ({ field, display = (x) => x, Cell = Td }) => (
                     <Cell
                       key={field}
                       className={field === stickyColumn ? 'sticky-column' : ''}
@@ -85,21 +85,21 @@ export default observer(function TableBody({
             ),
             results
           )}
-      </theme.Tbody>
-      <theme.Tbody
+      </Tbody>
+      <Tbody
         style={{
           display: showIntro || showLoader || showNoResults ? '' : 'none',
         }}
       >
-        <theme.Tr>
-          <theme.Td colSpan={visibleFields.length} style={{ padding: 0 }}>
-            <theme.Loader loading={showLoader}>
+        <Tr>
+          <Td colSpan={visibleFields.length} style={{ padding: 0 }}>
+            <Loader node={node}>
               {(showLoader || showIntro) && IntroComponent}
               {showNoResults && NoResultsComponent}
-            </theme.Loader>
-          </theme.Td>
-        </theme.Tr>
-      </theme.Tbody>
+            </Loader>
+          </Td>
+        </Tr>
+      </Tbody>
     </>
   )
 })

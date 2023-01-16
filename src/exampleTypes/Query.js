@@ -2,12 +2,12 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { useNode, useTheme } from '../utils/hooks.js'
 
-export default observer(function Query({ tree, path, node, theme }) {
+let Query = ({ tree, node, path, theme }) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader, TextInput } = useTheme(theme)
   return (
-    <theme.Loader loading={node.updating}>
-      <theme.TextInput
+    <Loader node={node}>
+      <TextInput
         value={node.query || ''}
         onChange={(e) =>
           tree.mutate(node.path, {
@@ -16,6 +16,8 @@ export default observer(function Query({ tree, path, node, theme }) {
         }
         placeholder="Search"
       />
-    </theme.Loader>
+    </Loader>
   )
-})
+}
+
+export default observer(Query)

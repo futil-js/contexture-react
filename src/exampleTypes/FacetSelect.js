@@ -5,8 +5,8 @@ import { observer } from 'mobx-react'
 import Async from 'react-select/lib/Async.js'
 import { components } from 'react-select'
 import { Flex } from '../greyVest/index.js'
-import { Cardinality } from '../utils/facet.js'
 import { useNode, useTheme } from '../utils/hooks.js'
+import { Cardinality } from '../utils/facet.js'
 
 let getOptions = (node) =>
   _.map(
@@ -14,10 +14,9 @@ let getOptions = (node) =>
     _.get('context.options', node)
   )
 
-export default observer(function FacetSelect({
+let FacetSelect = ({
   tree,
   node,
-  path,
   hide = {
     counts: false, // Hide the facet counts so only the labels are displayed
   },
@@ -25,10 +24,11 @@ export default observer(function FacetSelect({
   display = (x) => x,
   formatCount = (x) => x,
   displayBlank = () => <i>Not Specified</i>,
+  path,
   theme,
-}) {
+}) => {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Loader, RadioList } = useTheme(theme)
   let MenuList = (props) => (
     <components.MenuList {...props}>
       {!!node.context.cardinality && (
@@ -47,10 +47,11 @@ export default observer(function FacetSelect({
       {props.children}
     </components.MenuList>
   )
+
   return (
-    <theme.Loader loading={node.updating}>
+    <Loader node={node}>
       <div className="contexture-facet-select" data-path={node.path}>
-        <theme.RadioList
+        <RadioList
           value={node.mode || 'include'}
           onChange={(mode) => tree.mutate(node.path, { mode })}
           options={F.autoLabelOptions(['include', 'exclude'])}
@@ -78,6 +79,8 @@ export default observer(function FacetSelect({
           components={{ MenuList }}
         />
       </div>
-    </theme.Loader>
+    </Loader>
   )
-})
+}
+
+export default observer(FacetSelect)

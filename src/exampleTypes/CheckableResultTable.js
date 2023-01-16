@@ -8,14 +8,19 @@ import { useNode, useTheme } from '../utils/hooks.js'
 import ResultTable from './ResultTable/index.js'
 import { selectedBinding } from './utils.js'
 
-let Label = observer(function Label({ node, selected, getValue, theme }) {
+let Label = observer(function Label({
+  node,
+  selected,
+  getValue,
+  theme: { Checkbox },
+}) {
   let results = _.toArray(getResults(node))
   let allChecked = _.size(results) === _.size(F.view(selected))
   let checkAll = F.sets(
     allChecked ? [] : _.map(_.flow(getRecord, _.iteratee(getValue)), results),
     selected
   )
-  return <theme.Checkbox checked={allChecked} onChange={checkAll} />
+  return <Checkbox checked={allChecked} onChange={checkAll} />
 })
 
 // Extends ResultTable with a checkbox column
@@ -29,7 +34,7 @@ export default observer(function CheckableResultTable({
   ...props
 }) {
   node = useNode(node, path, tree)
-  theme = useTheme(theme)
+  let { Checkbox } = useTheme(theme)
   let { selectedValues, onChange } = expandProp(
     'selected',
     selectedBinding,
@@ -46,14 +51,14 @@ export default observer(function CheckableResultTable({
             <Label
               {...{
                 node,
-                theme,
+                theme: { Checkbox },
                 selected: [selectedValues, onChange],
                 getValue,
               }}
             />
           ),
           display: (x, y) => (
-            <theme.Checkbox
+            <Checkbox
               {...F.domLens.checkboxValues(_.iteratee(getValue)(y), [
                 selectedValues,
                 onChange,

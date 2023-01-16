@@ -15,8 +15,8 @@ export default observer(function HighlightedColumnHeader({
     _.isEmpty
   )(results),
 }) {
-  theme = useTheme(theme)
-  Cell ||= theme.Th
+  let { Th } = useTheme(theme)
+  Cell ||= Th
   return hasAdditionalFields && node.showOtherMatches ? (
     <Cell key="additionalFields">Other Matches</Cell>
   ) : null
