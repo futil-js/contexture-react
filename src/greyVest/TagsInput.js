@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import _ from 'lodash/fp.js'
 import { observable } from '../utils/mobx.js'
-import { observer, inject } from 'mobx-react'
+import { observer } from 'mobx-react'
 import Flex from './Flex.js'
 import DefaultTag from './Tag.js'
 import {
@@ -124,20 +124,5 @@ let TagsInput = forwardRef(
     )
   }
 )
-
-// Just uses an internal observable array
-export let MockTagsInput = inject(() => {
-  let tags = observable([])
-  return {
-    tags,
-    addTags(tag) {
-      tags.push(tag)
-    },
-    removeTag(tag) {
-      tags = _.without(tag, tags)
-    },
-  }
-})(TagsInput)
-MockTagsInput.displayName = 'MockTagsInput'
 
 export default observer(TagsInput)

@@ -1,11 +1,11 @@
 import _ from 'lodash/fp.js'
 import React from 'react'
-import { defaultProps } from 'react-recompose'
-import { contexturifyWithoutLoader } from './utils/hoc.js'
+import { observer } from 'mobx-react'
 import { newNodeFromField } from './utils/search.js'
 import { ModalPicker } from './purgatory/index.js'
 import { Flex } from './greyVest/index.js'
 import { fieldsToOptions } from './utils/fields.js'
+import { useTheme, useNode } from './utils/hooks.js'
 
 let getGroupFields = (node) => _.map('field', _.getOr([], 'children', node))
 
@@ -15,23 +15,29 @@ export let unusedOptions = (fields, node) =>
     fieldsToOptions(fields)
   )
 
+let DefaultPicker = (props) => (
+  <ModalPicker modalClassName="filter-adder" {...props} />
+)
+
 let FilterAdder = ({
   tree,
   node,
   path,
   fields,
   uniqueFields,
-  Picker = defaultProps({ modalClassName: 'filter-adder' })(ModalPicker),
-  theme: { Icon },
+  Picker = DefaultPicker,
+  theme,
   ...props
 }) => {
+  node = useNode(node, path, tree)
+  theme = useTheme(theme)
   let options = uniqueFields
     ? unusedOptions(fields, node)
     : fieldsToOptions(fields)
   let Label = (
     <Flex justifyContent="center" alignItems="center">
       Add Custom Filter
-      <Icon style={{ paddingLeft: 5 }} icon="FilterAdd" />
+      <theme.Icon style={{ paddingLeft: 5 }} icon="FilterAdd" />
     </Flex>
   )
   return (
@@ -51,4 +57,4 @@ let FilterAdder = ({
   )
 }
 
-export default contexturifyWithoutLoader(FilterAdder)
+export default observer(FilterAdder)

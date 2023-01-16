@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import { withTheme } from '../utils/theme.js'
 import { toNumber } from '../utils/format.js'
-import { setDisplayName } from 'react-recompose'
 import { observer } from 'mobx-react'
 import { Flex } from '../greyVest/index.js'
-import { contexturifyWithoutLoader } from '../utils/hoc.js'
+import { useTheme, useNode } from '../utils/hooks.js'
 
 let commonStyle = {
   justifyContent: 'space-between',
@@ -16,12 +14,10 @@ let commonStyle = {
 }
 
 export let displayFn = (name, label) => (_.isString(label) ? label : name)
+
 export let displayBlankFn = () => <i>Not Specified</i>
 
-export let Cardinality = _.flow(
-  setDisplayName('Cardinality'),
-  observer
-)(({ node, tree }) => {
+export let Cardinality = observer(function Cardinality({ node, tree }) {
   let size = node.size || 10
   let count = _.get('context.cardinality', node)
   if (count) {
@@ -50,11 +46,13 @@ export let Cardinality = _.flow(
   return null
 })
 
-export let SelectAll = _.flow(
-  setDisplayName('SelectAll'),
-  observer,
-  withTheme
-)(({ node, tree, theme: { Checkbox }, maxChecked = 500 }) => {
+export let SelectAll = observer(function SelectAll({
+  node,
+  tree,
+  theme,
+  maxChecked = 500,
+}) {
+  theme = useTheme(theme)
   let notChecked = _.difference(
     _.map('name', _.get('context.options', node)),
     node.values
@@ -67,7 +65,7 @@ export let SelectAll = _.flow(
   // then show the "Select All". This way we still allow the user to be able to "Unselect all"
   return !isOverTheLimit || isAllChecked ? (
     <label style={commonStyle}>
-      <Checkbox
+      <theme.Checkbox
         checked={isAllChecked}
         onChange={() => {
           if (isAllChecked)
@@ -84,18 +82,19 @@ export let SelectAll = _.flow(
   ) : null
 })
 
-export let FacetOptionsFilter = _.flow(
-  setDisplayName('FacetOptionsFilter'),
-  observer,
-  withTheme
-)(({ tree, node, theme: { TextInput, Button, ButtonGroup } }) => {
+export let FacetOptionsFilter = observer(function FacetOptionsFilter({
+  tree,
+  node,
+  theme,
+}) {
+  theme = useTheme(theme)
   let [val, setVal] = useState(node.optionsFilter)
   let buttonEnabled = val !== node.optionsFilter
   let submit = () =>
     buttonEnabled && tree.mutate(node.path, { optionsFilter: val })
   return (
-    <ButtonGroup>
-      <TextInput
+    <theme.ButtonGroup>
+      <theme.TextInput
         value={val}
         onChange={(e) => {
           setVal(e.target.value)
@@ -104,44 +103,46 @@ export let FacetOptionsFilter = _.flow(
         onBlur={submit}
         placeholder="Search..."
       />
-      <Button primary={node.optionsFilter !== val} onClick={submit}>
+      <theme.Button primary={node.optionsFilter !== val} onClick={submit}>
         Find
-      </Button>
-    </ButtonGroup>
+      </theme.Button>
+    </theme.ButtonGroup>
   )
 })
 
-export let FacetCheckboxList = contexturifyWithoutLoader(
-  ({
-    tree,
-    node,
-    hide,
-    display = displayFn,
-    displayBlank = displayBlankFn,
-    formatCount,
-    theme: { Checkbox },
-  }) =>
-    _.flow(
-      _.partition((x) => _.includes(x.name, node.values)),
-      _.flatten,
-      F.mapIndexed(({ name, label, count }, i) => {
-        let lens = tree.lens(node.path, 'values')
-        return (
-          <label
-            // not using unique keys for smart DOM reordering
-            // this causes the whole filter section to scroll up
-            // when clicking something at the bottom of a long list
-            key={i}
-            style={commonStyle}
-            title={`${display(name, label)} : ${formatCount(count)}`}
-          >
-            <Checkbox {...F.domLens.checkboxValues(name, lens)} />
-            <div style={{ flex: 2, padding: '0 5px' }}>
-              {display(name, label) || displayBlank()}
-            </div>
-            {!hide.counts && <div>{formatCount(count)}</div>}
-          </label>
-        )
-      })
-    )(_.get('context.options', node))
-)
+export let FacetCheckboxList = observer(function FacetCheckboxList({
+  tree,
+  path,
+  node,
+  hide,
+  display = displayFn,
+  displayBlank = displayBlankFn,
+  formatCount,
+  theme,
+}) {
+  node = useNode(node, path, tree)
+  theme = useTheme(theme)
+  return _.flow(
+    _.partition((x) => _.includes(x.name, node.values)),
+    _.flatten,
+    F.mapIndexed(({ name, label, count }, i) => {
+      let lens = tree.lens(node.path, 'values')
+      return (
+        <label
+          // not using unique keys for smart DOM reordering
+          // this causes the whole filter section to scroll up
+          // when clicking something at the bottom of a long list
+          key={i}
+          style={commonStyle}
+          title={`${display(name, label)} : ${formatCount(count)}`}
+        >
+          <theme.Checkbox {...F.domLens.checkboxValues(name, lens)} />
+          <div style={{ flex: 2, padding: '0 5px' }}>
+            {display(name, label) || displayBlank()}
+          </div>
+          {!hide.counts && <div>{formatCount(count)}</div>}
+        </label>
+      )
+    })
+  )(_.get('context.options', node))
+})

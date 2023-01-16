@@ -1,18 +1,19 @@
 import React from 'react'
-import _ from 'lodash/fp.js'
 import F from 'futil'
 import { observer } from 'mobx-react'
-import { withNode } from '../utils/hoc.js'
 import { toNumber } from '../utils/format.js'
-import { withTheme } from '../utils/theme.js'
-import { StripedLoader } from '../greyVest/index.js'
+import { useNode, useTheme } from '../utils/hooks.js'
 
-let ResultCount = ({
-  node = {},
+export default observer(function ResultCount({
+  tree,
+  node,
+  path,
   display = toNumber,
   noResults = 'No Results',
-  theme: { Loader = StripedLoader },
-}) => {
+  theme,
+}) {
+  node = useNode(node, path, tree)
+  theme = useTheme(theme)
   let count = F.cascade(
     [
       'context.response.results.length',
@@ -43,7 +44,7 @@ let ResultCount = ({
         margin: '0 .1rem',
       }}
     >
-      <Loader
+      <theme.Loader
         loading
         style={{ height: '1rem', width: '1.5rem', minHeight: 'auto' }}
       />
@@ -51,6 +52,4 @@ let ResultCount = ({
   ) : (
     noResults
   )
-}
-
-export default _.flow(observer, withNode, withTheme)(ResultCount)
+})

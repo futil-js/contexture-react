@@ -1,9 +1,10 @@
 import React from 'react'
 import { Flex } from '../greyVest/index.js'
-import { contexturifyWithoutLoader } from '../utils/hoc.js'
 import F from 'futil'
 import _ from 'lodash/fp.js'
 import moment from 'moment'
+import { observer } from 'mobx-react'
+import { useNode, useTheme } from '../utils/hooks.js'
 
 let allRollingOpts = [
   { type: 'all', range: 'allDates' },
@@ -44,20 +45,22 @@ let allRollingOpts = [
 
 let endOfDay = (date) => date && moment(date).endOf('day').toDate()
 
-let DateComponent = ({
+export default observer(function DateComponent({
   tree,
   node,
+  path,
   excludeRollingRanges = [],
-  theme: { DateInput, RadioList, Select },
-}) => {
+  theme,
+}) {
+  node = useNode(node, path, tree)
+  theme = useTheme(theme)
   let rollingOpts = _.reject(
     (opt) => _.includes(opt.type, excludeRollingRanges),
     allRollingOpts
   )
-
   return (
     <div data-path={node.path}>
-      <RadioList
+      <theme.RadioList
         options={F.autoLabelOptions(['exact', 'rolling'])}
         value={node.range !== 'exact' ? 'rolling' : 'exact'}
         style={{ marginBottom: 10 }}
@@ -72,14 +75,14 @@ let DateComponent = ({
       />
       {node.range === 'exact' ? (
         <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-          <DateInput
+          <theme.DateInput
             value={node.from}
             onChange={(date) =>
               tree.mutate(node.path, { range: 'exact', from: date })
             }
           />
           <div>-</div>
-          <DateInput
+          <theme.DateInput
             value={node.to}
             onChange={(date) =>
               tree.mutate(node.path, { range: 'exact', to: endOfDay(date) })
@@ -87,7 +90,7 @@ let DateComponent = ({
           />
         </Flex>
       ) : (
-        <Select
+        <theme.Select
           value={node.range}
           onChange={(e) =>
             tree.mutate(node.path, {
@@ -107,6 +110,4 @@ let DateComponent = ({
       )}
     </div>
   )
-}
-
-export default contexturifyWithoutLoader(DateComponent)
+})

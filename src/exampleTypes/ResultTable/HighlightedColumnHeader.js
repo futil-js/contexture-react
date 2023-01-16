@@ -2,21 +2,22 @@ import React from 'react'
 import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
 import { getResults } from '../../utils/schema.js'
-import { withTheme } from '../../utils/theme.js'
+import { useTheme } from '../../utils/hooks.js'
 
-let HighlightedColumnHeader = ({
+export default observer(function HighlightedColumnHeader({
   node,
   results = _.result('slice', getResults(node)),
-  theme: { Th },
-  Cell = Th,
+  theme,
+  Cell,
   hasAdditionalFields = !_.flow(
     _.map('additionalFields'),
     _.compact,
     _.isEmpty
   )(results),
-}) =>
-  hasAdditionalFields && node.showOtherMatches ? (
+}) {
+  theme = useTheme(theme)
+  Cell ||= theme.Th
+  return hasAdditionalFields && node.showOtherMatches ? (
     <Cell key="additionalFields">Other Matches</Cell>
   ) : null
-
-export default _.flow(observer, withTheme)(HighlightedColumnHeader)
+})

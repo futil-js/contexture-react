@@ -12,15 +12,16 @@ import {
   transformNodeFromField,
   getTypeLabelOptions,
 } from '../utils/search.js'
-import { withTheme } from '../utils/theme.js'
+import { useTheme } from '../utils/hooks.js'
 
-let FilterContents = ({
+export default observer(function FilterContents({
   node,
   tree,
   fields,
   mapNodeToProps = _.noop,
-  theme: { Select, UnmappedNodeComponent },
-}) => {
+  theme,
+}) {
+  theme = useTheme(theme)
   // `get` allows us to create a mobx dependency on field before we know it
   // exists (because the client will only add it if it's a type that uses it
   // as it wouldn't make sense for something like `results`)
@@ -55,7 +56,7 @@ let FilterContents = ({
       />
       {nodeField && (
         <div style={{ margin: '0 5px' }}>
-          <Select
+          <theme.Select
             onChange={({ target: { value: type } }) => {
               tree.replace(node.path, newNodeFromType(type, fields, node))
             }}
@@ -76,7 +77,7 @@ let FilterContents = ({
         >
           <Dynamic
             {...{
-              component: UnmappedNodeComponent,
+              component: theme.UnmappedNodeComponent,
               tree,
               node,
               ...mapNodeToProps(node, fields),
@@ -86,6 +87,4 @@ let FilterContents = ({
       )}
     </Grid>
   )
-}
-
-export default _.flow(observer, withTheme)(FilterContents)
+})

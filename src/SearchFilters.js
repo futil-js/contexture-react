@@ -5,8 +5,8 @@ import F from 'futil'
 import { observer } from 'mobx-react'
 import { Flex, QueryBuilder, FilterAdder, FilterList } from './index.js'
 import { TreePauseButton } from './purgatory/index.js'
-import { LinkButton, Popover, DropdownItem } from './greyVest/index.js'
-import { withTheme } from './utils/theme.js'
+import { LinkButton } from './greyVest/index.js'
+import { useTheme } from './utils/hooks.js'
 
 export let SearchTree = () => {}
 
@@ -28,54 +28,57 @@ export let AddableFilterList = (props) => (
   </>
 )
 
-export let FiltersBox = withTheme(({ theme: { Box }, ...props }) => (
-  <Box className="filter-list">
-    <AddableFilterList {...props} />
-  </Box>
-))
-FiltersBox.displayName = 'FiltersBox'
+export let FiltersBox = ({ theme, ...props }) => {
+  theme = useTheme(theme)
+  return (
+    <theme.Box className="filter-list">
+      <AddableFilterList {...props} />
+    </theme.Box>
+  )
+}
 
-let BasicSearchFilters = withTheme(
-  ({
-    setMode,
-    disableAdvancedMode,
-    trees,
-    children,
-    BasicFilters,
-    theme: { Icon },
-  }) => (
+let BasicSearchFilters = ({
+  setMode,
+  disableAdvancedMode,
+  trees,
+  children,
+  BasicFilters,
+  theme,
+}) => {
+  theme = useTheme(theme)
+  return (
     <div>
       <Flex alignItems="center" justifyContent="space-between">
         <h1>Filters</h1>
         <div>
-          <Popover
+          <theme.Popover
             position="bottom right"
             trigger={
-              <DropdownItem>
-                <Icon icon="TableColumnMenu" />
-              </DropdownItem>
+              <theme.DropdownItem>
+                <theme.Icon icon="TableColumnMenu" />
+              </theme.DropdownItem>
             }
           >
             {setMode && (
-              <DropdownItem onClick={() => setMode('resultsOnly')}>
+              <theme.DropdownItem onClick={() => setMode('resultsOnly')}>
                 Hide Filters
-              </DropdownItem>
+              </theme.DropdownItem>
             )}
-            <TreePauseButton Component={DropdownItem}>
+            <TreePauseButton Component={theme.DropdownItem}>
               {children}
             </TreePauseButton>
             {setMode && !disableAdvancedMode && (
-              <DropdownItem onClick={() => setMode('builder')}>
+              <theme.DropdownItem onClick={() => setMode('builder')}>
                 Advanced Search Builder
-              </DropdownItem>
+              </theme.DropdownItem>
             )}
-          </Popover>
+          </theme.Popover>
         </div>
       </Flex>
       <LabelledList list={trees} Component={BasicFilters} />
     </div>
   )
-)
+}
 
 let BuilderSearchFilters = ({ setMode, trees, BuilderFilters }) => (
   <div>

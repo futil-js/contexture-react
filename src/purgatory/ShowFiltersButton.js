@@ -1,9 +1,11 @@
 import React from 'react'
-import { withTheme } from '../utils/theme.js'
+import { useTheme } from '../utils/hooks.js'
 
-let ShowFiltersButton = ({ onClick, theme: { AlternateButton, Icon } }) => (
-  <AlternateButton title="Show Filters" onClick={onClick}>
-    <Icon icon="FilterExpand" />
-  </AlternateButton>
-)
-export default withTheme(ShowFiltersButton)
+export default function ShowFiltersButton({ onClick, theme }) {
+  theme = useTheme(theme)
+  return (
+    <theme.AlternateButton title="Show Filters" onClick={onClick}>
+      <theme.Icon icon="FilterExpand" />
+    </theme.AlternateButton>
+  )
+}

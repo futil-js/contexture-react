@@ -1,7 +1,7 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
 import { observable } from '../utils/mobx.js'
-import { SearchTree } from '../index.js'
+import { SearchTree } from '../SearchFilters.js'
 import Component from './TreePauseButton.js'
 
 export default {

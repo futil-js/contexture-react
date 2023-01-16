@@ -1,22 +1,22 @@
-import _ from 'lodash/fp.js'
 import F from 'futil'
 import React from 'react'
 import { observer } from 'mobx-react'
-import { withNode, withLoader, withTreeLens } from '../utils/hoc.js'
-import { withTheme } from '../utils/theme.js'
-import { setDisplayName } from 'react-recompose'
+import { useNode, useTheme } from '../utils/hooks.js'
 
-let LensInput = ({ lens, theme: { TextInput }, ...props }) => (
-  <TextInput {...F.domLens.value(lens)} {...props} />
-)
-
-let Text = _.flow(
-  setDisplayName('Text'),
-  observer,
-  withTreeLens,
-  withNode,
-  withLoader,
-  withTheme
-)(LensInput)
-
-export default Text
+export default observer(function Text({
+  tree,
+  path,
+  node,
+  theme,
+  prop = 'value',
+  ...props
+}) {
+  node = useNode(node, path, tree)
+  theme = useTheme(theme)
+  let lens = tree.lens(node.path, prop)
+  return (
+    <theme.Loader loading={node.updating}>
+      <theme.TextInput {...F.domLens.value(lens)} {...props} />
+    </theme.Loader>
+  )
+})

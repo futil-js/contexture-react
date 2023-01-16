@@ -1,11 +1,9 @@
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import React from 'react'
-import { setDisplayName } from 'react-recompose'
+import { useNode } from '../utils/hooks.js'
 import FilterButtonList from '../FilterButtonList.js'
 import { StepsAccordion, AccordionStep } from '../purgatory/index.js'
-import { withNode } from '../utils/hoc.js'
-import { withTheme } from '../utils/theme.js'
 
 let generateStepTitle = (node, title) => (i) =>
   (
@@ -19,20 +17,18 @@ let generateStepTitle = (node, title) => (i) =>
     </h1>
   )
 
-let QueryWizard = _.flow(
-  setDisplayName('QueryWizard'),
-  withNode,
-  withTheme
-)(
-  ({
-    tree,
-    node,
-    fields = {},
-    title,
-    onSubmit = _.noop,
-    mapNodeToProps = _.noop,
-    style,
-  }) => (
+let QueryWizard = ({
+  tree,
+  node,
+  path,
+  fields = {},
+  title,
+  onSubmit = _.noop,
+  mapNodeToProps = _.noop,
+  style,
+}) => {
+  node = useNode(node, path, tree)
+  return (
     <StepsAccordion {...{ style, onSubmit }}>
       {F.mapIndexed(
         (child, i) => (
@@ -56,6 +52,6 @@ let QueryWizard = _.flow(
       )}
     </StepsAccordion>
   )
-)
+}
 
 export default QueryWizard

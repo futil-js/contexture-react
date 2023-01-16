@@ -1381,7 +1381,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.2.0, @babel/runtime@npm:^7.5.0, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.2.0, @babel/runtime@npm:^7.5.0, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4":
   version: 7.20.7
   resolution: "@babel/runtime@npm:7.20.7"
   dependencies:
@@ -4933,13 +4933,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"change-emitter@npm:^0.1.2":
-  version: 0.1.6
-  resolution: "change-emitter@npm:0.1.6"
-  checksum: 0ed494ba9901ca56ea6f942668fd294465c334a9a0981dca96da5aea5e387c0023a630d7c658c1b532d203db54c928ddca2564e434b4a8b7f6d39155d09db255
-  languageName: node
-  linkType: hard
-
 "chokidar@npm:^3.5.3":
   version: 3.5.3
   resolution: "chokidar@npm:3.5.3"
@@ -5336,7 +5329,6 @@ __metadata:
     react-dom: ^16.8.0
     react-measure: ^2.3.0
     react-outside-click-handler: ^1.2.3
-    react-recompose: ^0.31.2
     react-select: ^2.0.0
     reactjs-popup: ^2.0.4
     read-pkg: ^5.2.0
@@ -7757,7 +7749,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:^2.1.0, hoist-non-react-statics@npm:^2.5.5":
+"hoist-non-react-statics@npm:^2.1.0":
   version: 2.5.5
   resolution: "hoist-non-react-statics@npm:2.5.5"
   checksum: ee2d05e5c7e1398ad84a15b0327f66bd78f38a8e0015e852f954b36434e32eb7e942d5357505020a3a1147f247b165bf1e69d72393e3accab67cafdafeb86230
@@ -11027,21 +11019,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-recompose@npm:^0.31.2":
-  version: 0.31.2
-  resolution: "react-recompose@npm:0.31.2"
-  dependencies:
-    "@babel/runtime": ^7.16.3
-    change-emitter: ^0.1.2
-    hoist-non-react-statics: ^2.5.5
-    react-lifecycles-compat: ^3.0.4
-    symbol-observable: ^1.2.0
-  peerDependencies:
-    react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: 740fa8955a9cc47608d2532702a4fa263b0bb44ecc0e6e89115ea30e8846b80771ec2823334c41f6c3bcc6dae534ae3b859f7f0ee2381571caed7a123eb801e8
-  languageName: node
-  linkType: hard
-
 "react-refresh@npm:^0.11.0":
   version: 0.11.0
   resolution: "react-refresh@npm:0.11.0"
@@ -12313,7 +12290,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"symbol-observable@npm:^1.0.3, symbol-observable@npm:^1.2.0":
+"symbol-observable@npm:^1.0.3":
   version: 1.2.0
   resolution: "symbol-observable@npm:1.2.0"
   checksum: 48ffbc22e3d75f9853b3ff2ae94a44d84f386415110aea5effc24d84c502e03a4a6b7a8f75ebaf7b585780bda34eb5d6da3121f826a6f93398429d30032971b6

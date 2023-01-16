@@ -4,14 +4,13 @@ import { observer } from 'mobx-react'
 import { getRecord, getResults } from '../../utils/schema.js'
 import HighlightedColumn from './HighlightedColumn.js'
 import { addBlankRows, blankResult } from '../../utils/format.js'
-import { withTheme } from '../../utils/theme.js'
-import { StripedLoader } from '../../greyVest/index.js'
+import { useTheme } from '../../utils/hooks.js'
 
 let displayCell = ({ display, value, record, result }) =>
   result.isBlank ? blankResult(display)(value, record) : display(value, record)
 
 // Separate this our so that the table root doesn't create a dependency on results to headers won't need to rerender on data change
-let TableBody = ({
+export default observer(function TableBody({
   node,
   visibleFields,
   fields,
@@ -21,12 +20,14 @@ let TableBody = ({
   blankRows,
   pageSize,
   stickyColumn,
-  theme: { Tbody, Tr, Td, Loader = StripedLoader },
-  Row = Tr,
+  theme,
+  Row,
   NoResultsComponent,
   IntroComponent,
   defaultDisplay = displayCell,
-}) => {
+}) {
+  theme = useTheme(theme)
+  Row ||= theme.Tr
   let results = blankRows
     ? addBlankRows(getResults(node), pageSize, '_id')
     : getResults(node)
@@ -38,7 +39,7 @@ let TableBody = ({
 
   return (
     <>
-      <Tbody
+      <theme.Tbody
         style={{
           display: showIntro || showNoResults ? 'none' : '',
         }}
@@ -52,7 +53,7 @@ let TableBody = ({
                 {...{ fields, visibleFields, hiddenFields }}
               >
                 {_.map(
-                  ({ field, display = (x) => x, Cell = Td }) => (
+                  ({ field, display = (x) => x, Cell = theme.Td }) => (
                     <Cell
                       key={field}
                       className={field === stickyColumn ? 'sticky-column' : ''}
@@ -84,23 +85,21 @@ let TableBody = ({
             ),
             results
           )}
-      </Tbody>
-      <Tbody
+      </theme.Tbody>
+      <theme.Tbody
         style={{
           display: showIntro || showLoader || showNoResults ? '' : 'none',
         }}
       >
-        <Tr>
-          <Td colSpan={visibleFields.length} style={{ padding: 0 }}>
-            <Loader loading={showLoader}>
+        <theme.Tr>
+          <theme.Td colSpan={visibleFields.length} style={{ padding: 0 }}>
+            <theme.Loader loading={showLoader}>
               {(showLoader || showIntro) && IntroComponent}
               {showNoResults && NoResultsComponent}
-            </Loader>
-          </Td>
-        </Tr>
-      </Tbody>
+            </theme.Loader>
+          </theme.Td>
+        </theme.Tr>
+      </theme.Tbody>
     </>
   )
-}
-
-export default _.flow(observer, withTheme)(TableBody)
+})

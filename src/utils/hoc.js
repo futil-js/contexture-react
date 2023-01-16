@@ -5,6 +5,9 @@ import { StripedLoader } from '../greyVest/index.js'
 import { wrapDisplayName } from './react.js'
 import { withTheme } from './theme.js'
 
+/**
+ * @deprecated
+ */
 export let withNode = (Component) =>
   wrapDisplayName(
     'withNode',
@@ -19,6 +22,9 @@ export let withNode = (Component) =>
     return <Component {...props} node={node} />
   })
 
+/**
+ * @deprecated
+ */
 export let withLoader = (Component) =>
   _.flow(
     wrapDisplayName('withLoader', Component),
@@ -33,17 +39,12 @@ export let withLoader = (Component) =>
     )
   })
 
+/**
+ * @deprecated
+ */
 export let contexturify = _.flow(observer, withLoader, withNode, withTheme)
 
+/**
+ * @deprecated
+ */
 export let contexturifyWithoutLoader = _.flow(observer, withNode, withTheme)
-
-// this is used for the text components
-export let withTreeLens = (Component) =>
-  wrapDisplayName(
-    'withTreeLens',
-    Component
-  )(({ prop = 'value', ...props }) => (
-    <Component
-      {...{ lens: props.tree.lens(props.node.path, prop), ...props }}
-    />
-  ))

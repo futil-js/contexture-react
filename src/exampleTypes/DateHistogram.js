@@ -1,14 +1,25 @@
 import React from 'react'
-import { contexturify } from '../utils/hoc.js'
+import { observer } from 'mobx-react'
+import { useNode, useTheme } from '../utils/hooks.js'
 
-let DateHistogram = ({ node, theme: { BarChart }, ...props }) => (
-  <BarChart
-    data={node.context.entries}
-    categoryField="key"
-    valueField="count"
-    gutter={0}
-    {...props}
-  />
-)
-
-export default contexturify(DateHistogram)
+export default observer(function DateHistogram({
+  node,
+  tree,
+  path,
+  theme,
+  ...props
+}) {
+  node = useNode(node, path, tree)
+  theme = useTheme(theme)
+  return (
+    <theme.Loader loading={node.updating}>
+      <theme.BarChart
+        data={node.context.entries}
+        categoryField="key"
+        valueField="count"
+        gutter={0}
+        {...props}
+      />
+    </theme.Loader>
+  )
+})

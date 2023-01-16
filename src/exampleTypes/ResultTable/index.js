@@ -2,30 +2,33 @@ import React from 'react'
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import { fieldsToOptions } from '../../utils/fields.js'
-import { contexturifyWithoutLoader } from '../../utils/hoc.js'
+import { observer } from 'mobx-react'
 import { applyDefaults, inferSchema } from '../../utils/schema.js'
 import { newNodeFromField } from '../../utils/search.js'
 import Header from './Header.js'
 import TableBody from './TableBody.js'
 import HighlightedColumnHeader from './HighlightedColumnHeader.js'
 import ResultTableFooter from './ResultTableFooter.js'
-import { withTheme } from '../../utils/theme.js'
+import { useNode, useTheme } from '../../utils/hooks.js'
 
 let getIncludes = (schema, node) =>
   F.when(_.isEmpty, _.map('field', schema))(node.include)
 
-let DefaultRow = withTheme(({ theme: { Tr = 'tr' }, ...props }) => (
-  <Tr
-    {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
-  />
-))
+let DefaultRow = ({ theme, ...props }) => {
+  theme = useTheme(theme)
+  return (
+    <theme.Tr
+      {..._.omit(['record', 'fields', 'visibleFields', 'hiddenFields'], props)}
+    />
+  )
+}
 
-let ResultTable = ({
+export default observer(function ResultTable({
   fields,
   infer,
   path,
   criteria,
-  node = {},
+  node,
   tree,
   defaultDisplay,
   NoResultsComponent = 'No Results Found',
@@ -38,8 +41,10 @@ let ResultTable = ({
   stickyColumn,
   hideFooter,
   footerStyle,
-  theme: { Table, Thead, Tr, Th },
-}) => {
+  theme,
+}) {
+  node = useNode(node, path, tree)
+  theme = useTheme(theme)
   // If there are no fields, we won't render anything. This is most definitely a
   // user error when it happens
   if (_.isEmpty(fields) && !infer) throw new Error('Fields are empty')
@@ -114,13 +119,16 @@ let ResultTable = ({
 
   return (
     <>
-      <Table data-path={node.path}>
-        <Thead>
+      <theme.Table data-path={node.path}>
+        <theme.Thead>
           {F.mapIndexed(
             (columnGroupRow, i) => (
-              <Tr key={i}>
+              <theme.Tr key={i}>
                 {F.mapIndexed(
-                  ({ groupName, colspan, HeaderCell = Th, HeaderGroup }, j) => (
+                  (
+                    { groupName, colspan, HeaderCell = theme.Th, HeaderGroup },
+                    j
+                  ) => (
                     <HeaderCell key={j} colSpan={colspan}>
                       <span>
                         {HeaderGroup ? (
@@ -133,11 +141,11 @@ let ResultTable = ({
                   ),
                   columnGroupRow
                 )}
-              </Tr>
+              </theme.Tr>
             ),
             columnGroups
           )}
-          <Tr>
+          <theme.Tr>
             {F.mapIndexed(
               (x, i) => (
                 <Header
@@ -151,8 +159,8 @@ let ResultTable = ({
               visibleFields
             )}
             <HighlightedColumnHeader node={node} />
-          </Tr>
-        </Thead>
+          </theme.Tr>
+        </theme.Thead>
         <TableBody
           {...{
             node,
@@ -170,7 +178,7 @@ let ResultTable = ({
             defaultDisplay,
           }}
         />
-      </Table>
+      </theme.Table>
 
       {!hideFooter && node.pageSize > 0 && (
         <ResultTableFooter
@@ -186,6 +194,4 @@ let ResultTable = ({
       )}
     </>
   )
-}
-
-export default contexturifyWithoutLoader(ResultTable)
+})

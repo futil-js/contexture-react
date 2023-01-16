@@ -1,10 +1,10 @@
 import React from 'react'
 import _ from 'lodash/fp.js'
 import F from 'futil'
-import { withContentRect } from 'react-measure'
-import { contexturifyWithoutLoader } from '../../utils/hoc.js'
+import Measure from 'react-measure'
 import ExpandArrow from './ExpandArrow.js'
 import { observer } from 'mobx-react'
+import { useNode, useTheme } from '../../utils/hooks.js'
 import { toNumber } from '../../utils/format.js'
 import TagActionsMenu from '../TagsQuery/TagActionsMenu.js'
 import { Grid, GridItem } from '../../greyVest/index.js'
@@ -13,30 +13,50 @@ import ActionsMenu from '../TagsQuery/ActionsMenu.js'
 
 let innerHeightLimit = 40
 
-let ExpandableTagsQuery = ({ measureRef, contentRect, collapse, ...props }) => (
-  <>
-    <div
-      style={{
-        overflow: 'hidden',
-        maxHeight: F.view(collapse) ? innerHeightLimit : '',
-      }}
-    >
-      <div ref={measureRef}>
-        <TagsWrapper {..._.omit('measure', props)} />
-      </div>
-    </div>
-    {F.view(collapse) &&
-      contentRect.entry.height > innerHeightLimit &&
-      !!props.node.tags.length && (
-        <div style={{ minHeight: 10 }}>
-          <ExpandArrow
-            collapse={collapse}
-            tagsLength={props.node.tags.length}
-          />
-        </div>
+export default function ExpandableTagsQuery({
+  node,
+  path,
+  tree,
+  theme,
+  collapse,
+  ...props
+}) {
+  node = useNode(node, path, tree)
+  theme = useTheme(theme)
+  return (
+    <Measure bounds>
+      {({
+        measureRef,
+        contentRect,
+        // eslint-disable-next-line no-unused-vars
+        measure,
+      }) => (
+        <>
+          <div
+            style={{
+              overflow: 'hidden',
+              maxHeight: F.view(collapse) ? innerHeightLimit : '',
+            }}
+          >
+            <div ref={measureRef}>
+              <TagsWrapper tree={tree} node={node} theme={theme} {...props} />
+            </div>
+          </div>
+          {F.view(collapse) &&
+            contentRect.entry.height > innerHeightLimit &&
+            !!node.tags.length && (
+              <div style={{ minHeight: 10 }}>
+                <ExpandArrow
+                  collapse={collapse}
+                  tagsLength={node.tags.length}
+                />
+              </div>
+            )}
+        </>
       )}
-  </>
-)
+    </Measure>
+  )
+}
 
 let TagsWrapper = observer(
   ({
@@ -49,7 +69,7 @@ let TagsWrapper = observer(
     popoverPosition = 'bottom right',
     popoverArrow,
     popoverOffsetY,
-    theme: { Icon, TagsInput, Tag, Popover },
+    theme,
     joinOptions,
     wordsMatchPattern,
     sanitizeTags = true,
@@ -57,27 +77,24 @@ let TagsWrapper = observer(
     maxTags = 1000,
     ...props
   }) => {
-    let TagWithPopover = React.memo(
-      observer((props) => {
-        let result = _.get(['context', 'results', props.value], node)
-        let tagProps = {
-          ...props,
-          ...(!_.isNil(result)
-            ? { label: `${props.value} (${toNumber(result)})` }
-            : {}),
-        }
-        return (
-          <Popover
-            position="right top"
-            closeOnPopoverClick={false}
-            trigger={<Tag {...tagProps} />}
-          >
-            <TagActionsMenu tag={props.value} {...{ node, tree }} />
-          </Popover>
-        )
-      })
-    )
-
+    let TagWithPopover = observer((props) => {
+      let result = _.get(['context', 'results', props.value], node)
+      let tagProps = {
+        ...props,
+        ...(!_.isNil(result)
+          ? { label: `${props.value} (${toNumber(result)})` }
+          : {}),
+      }
+      return (
+        <theme.Popover
+          position="right top"
+          closeOnPopoverClick={false}
+          trigger={<theme.Tag {...tagProps} />}
+        >
+          <TagActionsMenu tag={props.value} {...{ node, tree }} />
+        </theme.Popover>
+      )
+    })
     return (
       <Grid
         data-path={node.path}
@@ -86,7 +103,7 @@ let TagsWrapper = observer(
         style={style}
       >
         <GridItem height={2} place="center stretch">
-          <TagsInput
+          <theme.TagsInput
             splitCommas={splitCommas}
             sanitizeTags={sanitizeTags}
             maxTags={maxTags}
@@ -120,7 +137,7 @@ let TagsWrapper = observer(
           />
         </GridItem>
         <GridItem place="center">
-          <Popover
+          <theme.Popover
             style={{ width: 'auto' }}
             position={popoverPosition}
             arrow={popoverArrow}
@@ -128,7 +145,7 @@ let TagsWrapper = observer(
             closeOnPopoverClick={false}
             trigger={
               <div>
-                <Icon icon="TableColumnMenu" />
+                <theme.Icon icon="TableColumnMenu" />
               </div>
             }
           >
@@ -143,14 +160,9 @@ let TagsWrapper = observer(
                 }}
               />
             )}
-          </Popover>
+          </theme.Popover>
         </GridItem>
       </Grid>
     )
   }
 )
-
-export default _.flow(
-  contexturifyWithoutLoader,
-  withContentRect()
-)(ExpandableTagsQuery)

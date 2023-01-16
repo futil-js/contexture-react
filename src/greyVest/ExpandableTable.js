@@ -2,12 +2,9 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 import React from 'react'
 import { observable } from '../utils/mobx.js'
-import { observer, inject } from 'mobx-react'
-import { DropdownItem } from './DropdownItem.js'
-import Popover from './Popover.js'
-import Table from './Table.js'
+import { observer } from 'mobx-react'
 import { addBlankRows, blankResult } from '../utils/format.js'
-import { withTheme } from '../utils/theme.js'
+import { useTheme } from '../utils/hooks.js'
 
 export let Column = _.identity
 Column.displayName = 'Column'
@@ -27,8 +24,8 @@ let ExpandedSection = observer(
 )
 
 let TableBodyState = () => {
-  let state = {
-    expanded: observable(new Map()),
+  let state = observable({
+    expanded: new Map(),
     onClick(field, keyField, record, index, details) {
       let key = record[keyField]
       let indexedField = `${field}${index}`
@@ -48,159 +45,151 @@ let TableBodyState = () => {
         state.expanded.delete(key)
       }
     },
-  }
+  })
 
   return state
 }
 
-let TableBody = inject(TableBodyState)(
-  observer(
-    ({ data, columns, recordKey, expanded, onClick, blankRows, pageSize }) => {
-      let rows = blankRows ? addBlankRows(data, pageSize, recordKey) : data
-      return (
-        <tbody>
-          {_.map(
-            (x) => (
-              <React.Fragment key={x[recordKey]}>
-                <tr
-                  {...x.rowAttrs}
-                  className={
-                    _.getOr('', 'rowAttrs.className', x) +
-                    (expanded.has(x[recordKey]) ? 'expanded' : '')
-                  }
-                >
-                  {F.mapIndexed(
-                    ({ field, display = (x) => x, details = {} }, i) => (
-                      <td
-                        key={`${field}${i}`}
-                        {...(!_.isEmpty(details) && {
-                          style: {
-                            cursor: !_.isEmpty(details) ? 'pointer' : 'auto',
-                          },
-                          onClick: () =>
-                            onClick(field, recordKey, x, i, details, expanded),
-                        })}
-                      >
-                        {F.when(
-                          () => x.isBlank,
-                          blankResult,
-                          _.getOr(
-                            display,
-                            `${
-                              _.isEqual(
-                                _.get(
-                                  'indexedField',
-                                  expanded.get(x[recordKey])
-                                ),
-                                `${field}${i}`
-                              )
-                                ? 'collapse'
-                                : 'expand'
-                            }.display`,
-                            details
-                          )
-                        )(_.get(field, x), x)}
-                      </td>
-                    ),
-                    columns
-                  )}
-                </tr>
-                {/* See if there is a details component to render for the column value when row expanded */}
-                {expanded.has(x[recordKey]) && (
-                  <ExpandedSection
-                    expandedRow={expanded.get(x[recordKey])}
-                    columnCount={columns.length}
-                  />
+let TableBody = observer(
+  ({ data, columns, recordKey, blankRows, pageSize }) => {
+    let rows = blankRows ? addBlankRows(data, pageSize, recordKey) : data
+    let [{ expanded, onClick }] = React.useState(TableBodyState)
+    return (
+      <tbody>
+        {_.map(
+          (x) => (
+            <React.Fragment key={x[recordKey]}>
+              <tr
+                {...x.rowAttrs}
+                className={
+                  _.getOr('', 'rowAttrs.className', x) +
+                  (expanded.has(x[recordKey]) ? 'expanded' : '')
+                }
+              >
+                {F.mapIndexed(
+                  ({ field, display = (x) => x, details = {} }, i) => (
+                    <td
+                      key={`${field}${i}`}
+                      {...(!_.isEmpty(details) && {
+                        style: {
+                          cursor: !_.isEmpty(details) ? 'pointer' : 'auto',
+                        },
+                        onClick: () =>
+                          onClick(field, recordKey, x, i, details, expanded),
+                      })}
+                    >
+                      {F.when(
+                        () => x.isBlank,
+                        blankResult,
+                        _.getOr(
+                          display,
+                          `${
+                            _.isEqual(
+                              _.get('indexedField', expanded.get(x[recordKey])),
+                              `${field}${i}`
+                            )
+                              ? 'collapse'
+                              : 'expand'
+                          }.display`,
+                          details
+                        )
+                      )(_.get(field, x), x)}
+                    </td>
+                  ),
+                  columns
                 )}
-              </React.Fragment>
-            ),
-            rows
-          )}
-        </tbody>
-      )
-    }
-  )
-)
-
-let TableState = (stores, props) => ({
-  columns: _.map(
-    ({ props }) => ({
-      ..._.pick(['field', 'label', 'display', 'enableSort'], props),
-      details: F.compactObject({
-        ..._.pick(['expand', 'collapse'], props),
-        Component: props.children,
-      }),
-    }),
-    _.castArray(props.children)
-  ),
-})
-
-let ExpandableTable = inject(TableState)(
-  observer(
-    ({
-      data,
-      columns,
-      recordKey = 'key',
-      columnSort = _.identity,
-      theme: { Icon },
-      ...props
-    }) => (
-      <Table {...props.tableAttrs}>
-        <thead>
-          <tr>
-            {F.mapIndexed(
-              (c, i) => (
-                <th
-                  key={`${c.field}${i}`}
-                  {...(c.enableSort && {
-                    style: { cursor: 'pointer' },
-                  })}
-                >
-                  <span>
-                    {F.callOrReturn(_.getOr(F.autoLabel(c.field), 'label', c))}
-                    {c.enableSort && (
-                      <Popover
-                        trigger={<Icon icon="TableColumnMenu" />}
-                        position={`bottom ${
-                          i === columns.length - 1 ? 'right' : 'center'
-                        }`}
-                        style={{
-                          userSelect: 'none',
-                          width: 'auto',
-                        }}
-                      >
-                        <DropdownItem
-                          onClick={() => columnSort({ ...c, sortDir: 'asc' })}
-                        >
-                          <Icon icon="SortAscending" />
-                          Sort Ascending
-                        </DropdownItem>
-                        <DropdownItem
-                          onClick={() => columnSort({ ...c, sortDir: 'desc' })}
-                        >
-                          <Icon icon="SortDescending" />
-                          Sort Descending
-                        </DropdownItem>
-                      </Popover>
-                    )}
-                  </span>
-                </th>
-              ),
-              columns
-            )}
-          </tr>
-        </thead>
-        <TableBody
-          columns={columns}
-          data={data}
-          recordKey={recordKey}
-          {...props}
-        />
-      </Table>
+              </tr>
+              {/* See if there is a details component to render for the column value when row expanded */}
+              {expanded.has(x[recordKey]) && (
+                <ExpandedSection
+                  expandedRow={expanded.get(x[recordKey])}
+                  columnCount={columns.length}
+                />
+              )}
+            </React.Fragment>
+          ),
+          rows
+        )}
+      </tbody>
     )
-  )
+  }
 )
 
-ExpandableTable.displayName = 'ExpandableTable'
+let TableState = (props) =>
+  observable({
+    columns: _.map(
+      ({ props }) => ({
+        ..._.pick(['field', 'label', 'display', 'enableSort'], props),
+        details: F.compactObject({
+          ..._.pick(['expand', 'collapse'], props),
+          Component: props.children,
+        }),
+      }),
+      _.castArray(props.children)
+    ),
+  })
 
-export default withTheme(ExpandableTable)
+export default observer(function ExpandableTable({
+  data,
+  recordKey = 'key',
+  columnSort = _.identity,
+  theme,
+  ...props
+}) {
+  theme = useTheme(theme)
+  let [{ columns }] = React.useState(() => TableState(props))
+  return (
+    <theme.Table {...props.tableAttrs}>
+      <thead>
+        <tr>
+          {F.mapIndexed(
+            (c, i) => (
+              <th
+                key={`${c.field}${i}`}
+                {...(c.enableSort && {
+                  style: { cursor: 'pointer' },
+                })}
+              >
+                <span>
+                  {F.callOrReturn(_.getOr(F.autoLabel(c.field), 'label', c))}
+                  {c.enableSort && (
+                    <theme.Popover
+                      trigger={<theme.Icon icon="TableColumnMenu" />}
+                      position={`bottom ${
+                        i === columns.length - 1 ? 'right' : 'center'
+                      }`}
+                      style={{
+                        userSelect: 'none',
+                        width: 'auto',
+                      }}
+                    >
+                      <theme.DropdownItem
+                        onClick={() => columnSort({ ...c, sortDir: 'asc' })}
+                      >
+                        <theme.Icon icon="SortAscending" />
+                        Sort Ascending
+                      </theme.DropdownItem>
+                      <theme.DropdownItem
+                        onClick={() => columnSort({ ...c, sortDir: 'desc' })}
+                      >
+                        <theme.Icon icon="SortDescending" />
+                        Sort Descending
+                      </theme.DropdownItem>
+                    </theme.Popover>
+                  )}
+                </span>
+              </th>
+            ),
+            columns
+          )}
+        </tr>
+      </thead>
+      <TableBody
+        columns={columns}
+        data={data}
+        recordKey={recordKey}
+        {...props}
+      />
+    </theme.Table>
+  )
+})

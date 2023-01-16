@@ -1,4 +1,4 @@
-import { defaultProps } from 'react-recompose'
+import React from 'react'
 import {
   BarChart,
   Box,
@@ -8,7 +8,7 @@ import {
   DateInput,
   Icon,
   DropdownItem,
-  NestedPicker,
+  NestedPicker as GVNestedPicker,
   Modal,
   PagerItem,
   RadioList,
@@ -18,6 +18,7 @@ import {
   TextHighlight,
   TextInput,
   Popover,
+  StripedLoader,
 } from '../../greyVest/index.js'
 import PickerItem from './PickerItem.js'
 import TagsInput, { Tag } from './TagsInput.js'
@@ -32,12 +33,18 @@ export default {
   ButtonGroup,
   Checkbox,
   DateInput,
+  FilterButton: Button,
   Root,
+  Loader: StripedLoader,
   Icon,
   TextInput,
   DropdownItem,
-  NestedPicker: defaultProps({ PickerItem })(NestedPicker),
-  NumberInput: defaultProps({ type: 'number' })(TextInput),
+  NestedPicker: function NestedPicker(props) {
+    return <GVNestedPicker PickerItem={PickerItem} {...props} />
+  },
+  NumberInput: function NumberInput(props) {
+    return <TextInput type="number" {...props} />
+  },
   TagsInput,
   Tag,
   Modal,

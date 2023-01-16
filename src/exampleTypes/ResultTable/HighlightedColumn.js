@@ -3,27 +3,29 @@ import _ from 'lodash/fp.js'
 import F from 'futil'
 import { observer } from 'mobx-react'
 import { getResults } from '../../utils/schema.js'
-import { withTheme } from '../../utils/theme.js'
+import { useTheme } from '../../utils/hooks.js'
 
 let labelForField = (schema, field) =>
   _.getOr(field, 'label', _.find({ field }, schema))
 
-let HighlightedColumn = ({
+export default observer(function HighlightedColumn({
   node,
   results = _.result('slice', getResults(node)),
   additionalFields = _.result('0.additionalFields.slice', results),
   schema,
-  theme: { Modal, Table, Td },
-  Cell = Td,
-}) => {
+  theme,
+  Cell,
+}) {
+  theme = useTheme(theme)
+  Cell ||= theme.Td
   let viewModal = React.useState(false)
   return _.isEmpty(additionalFields) ? (
     <Cell key="additionalFields" />
   ) : (
     <Cell key="additionalFields">
-      <Modal open={viewModal}>
+      <theme.Modal open={viewModal}>
         <h3>Other Matching Fields</h3>
-        <Table>
+        <theme.Table>
           <tbody>
             {_.map(
               ({ label, value }) => (
@@ -35,8 +37,8 @@ let HighlightedColumn = ({
               additionalFields
             )}
           </tbody>
-        </Table>
-      </Modal>
+        </theme.Table>
+      </theme.Modal>
       <button
         className="gv-link-button"
         onClick={(e) => {
@@ -48,6 +50,4 @@ let HighlightedColumn = ({
       </button>
     </Cell>
   )
-}
-
-export default _.flow(observer, withTheme)(HighlightedColumn)
+})

@@ -1,14 +1,11 @@
 import React from 'react'
 import F from 'futil'
 import _ from 'lodash/fp.js'
-import { setDisplayName } from 'react-recompose'
-import { inject, observer, Observer } from 'mobx-react'
+import { observer, Observer } from 'mobx-react'
 import { observable } from '../utils/mobx.js'
-import { withTheme } from '../utils/theme.js'
+import { useTheme } from '../utils/hooks.js'
 import pluralize from 'pluralize'
 import Flex from './Flex.js'
-import GVTextInput from './TextInput.js'
-import GVTextHighlight from './TextHighlight.js'
 import { isField } from '../utils/fields.js'
 
 let PickerContext = React.createContext()
@@ -41,103 +38,90 @@ let toNested = _.flow(
   unflattenObjectBy('path')
 )
 
-let FilteredSection = _.flow(
-  setDisplayName('FilteredSection'),
-  observer
-)(
-  ({
-    options,
-    highlight,
-    style = { maxHeight: 340, overflowY: 'scroll' },
-    checked,
-  }) => {
-    let { PickerItem, TextHighlight, setHoverItem } =
-      React.useContext(PickerContext)
-    return (
-      <div style={style}>
-        {F.mapIndexed(
-          (option, field) => (
-            <PickerItem
-              key={field}
-              isChecked={checked.has(option.value)}
-              onClick={() => {
-                checked.has(option.value)
-                  ? checked.delete(option.value)
-                  : checked.set(option.value, option)
-              }}
-              {...F.domLens.hover((isHover) =>
-                setHoverItem(isHover ? option : null)
-              )}
-            >
-              <TextHighlight text={option.label} pattern={highlight} />
-            </PickerItem>
-          ),
-          options
-        )}
-      </div>
-    )
-  }
-)
+let FilteredSection = observer(function FilteredSection({
+  options,
+  highlight,
+  style = { maxHeight: 340, overflowY: 'scroll' },
+  checked,
+}) {
+  let { PickerItem, TextHighlight, setHoverItem } =
+    React.useContext(PickerContext)
+  return (
+    <div style={style}>
+      {F.mapIndexed(
+        (option, field) => (
+          <PickerItem
+            key={field}
+            isChecked={checked.has(option.value)}
+            onClick={() => {
+              checked.has(option.value)
+                ? checked.delete(option.value)
+                : checked.set(option.value, option)
+            }}
+            {...F.domLens.hover((isHover) =>
+              setHoverItem(isHover ? option : null)
+            )}
+          >
+            <TextHighlight text={option.label} pattern={highlight} />
+          </PickerItem>
+        ),
+        options
+      )}
+    </div>
+  )
+})
 
-let Section = _.flow(
-  setDisplayName('Section'),
-  observer
-)(
-  ({
-    options,
-    onClick,
-    selected,
-    checked,
-    style = { overflow: 'auto', width: '100%', maxHeight: 300 },
-  }) => {
-    let { PickerItem, setHoverItem } = React.useContext(PickerContext)
-    return (
-      <div style={style}>
-        {_.map(
-          (item) => (
-            <PickerItem
-              key={item._key}
-              onClick={() =>
-                onClick(
-                  (_.isString(item.value) && item.value) || item._key,
-                  item
-                )
-              }
-              active={selected === item._key}
-              hasChildren={!isField(item)}
-              isChecked={checked.has(item.value)}
-              {...F.domLens.hover((isHover) =>
-                setHoverItem(isHover ? item : null)
-              )}
-            >
-              {getItemLabel(item)}
-            </PickerItem>
-          ),
-          _.flow(F.unkeyBy('_key'), _.sortBy(getItemLabel))(options)
-        )}
-      </div>
-    )
-  }
-)
+let Section = observer(function Section({
+  options,
+  onClick,
+  selected,
+  checked,
+  style = { overflow: 'auto', width: '100%', maxHeight: 300 },
+}) {
+  let { PickerItem, setHoverItem } = React.useContext(PickerContext)
+  return (
+    <div style={style}>
+      {_.map(
+        (item) => (
+          <PickerItem
+            key={item._key}
+            onClick={() =>
+              onClick((_.isString(item.value) && item.value) || item._key, item)
+            }
+            active={selected === item._key}
+            hasChildren={!isField(item)}
+            isChecked={checked.has(item.value)}
+            {...F.domLens.hover((isHover) =>
+              setHoverItem(isHover ? item : null)
+            )}
+          >
+            {getItemLabel(item)}
+          </PickerItem>
+        ),
+        _.flow(F.unkeyBy('_key'), _.sortBy(getItemLabel))(options)
+      )}
+    </div>
+  )
+})
 
-let PanelTreePicker = inject((store, { options, checked }) => {
-  let x = {
-    checked,
-    state: observable({ selected: [] }),
-    nestedOptions: toNested(options),
-    selectAtLevel: _.curry((level, key, field) => {
-      if (isField(field)) {
-        checked.has(field.value)
-          ? checked.delete(field.value)
-          : checked.set(field.value, field)
-      } else {
-        x.state.selected.splice(level, x.state.selected.length - level, key)
-      }
-    }),
-  }
-  return x
-})(
-  observer(({ selectAtLevel, state, nestedOptions, checked }) => (
+let PanelTreePicker = observer(function PanelTreePicker({ options, checked }) {
+  let nestedOptions = toNested(options)
+  let [state] = React.useState(() => {
+    let state = observable({
+      selected: [],
+      selectAtLevel: _.curry((level, key, field) => {
+        if (isField(field)) {
+          checked.has(field.value)
+            ? checked.delete(field.value)
+            : checked.set(field.value, field)
+        } else {
+          state.selected.splice(level, state.selected.length - level, key)
+        }
+      }),
+    })
+    return state
+  })
+  return (
     <div
       className="panel-tree-picker"
       style={{ display: 'inline-flex', width: '100%' }}
@@ -145,7 +129,7 @@ let PanelTreePicker = inject((store, { options, checked }) => {
       <Section
         checked={checked}
         options={nestedOptions}
-        onClick={selectAtLevel(0)}
+        onClick={state.selectAtLevel(0)}
         selected={state.selected[0]}
       />
       {F.mapIndexed(
@@ -154,29 +138,27 @@ let PanelTreePicker = inject((store, { options, checked }) => {
             key={index}
             checked={checked}
             options={_.get(state.selected.slice(0, index + 1), nestedOptions)}
-            onClick={selectAtLevel(index + 1)}
+            onClick={state.selectAtLevel(index + 1)}
             selected={state.selected[index + 1]}
           />
         ),
         state.selected
       )}
     </div>
-  ))
-)
-PanelTreePicker.displayName = 'PanelTreePicker'
+  )
+})
 
 let matchLabel = (str) => _.filter((x) => F.matchAllWords(str)(x.label))
 
-let NestedPicker = ({
+export default function NestedPicker({
   options,
   onChange,
   PickerItem = 'div',
-  TextInput = GVTextInput,
-  TextHighlight = GVTextHighlight,
   itemType = 'filter',
   style = {},
-  theme: { Button },
-}) => {
+  theme,
+}) {
+  theme = useTheme(theme)
   let [state] = React.useState(() =>
     observable({
       filter: '',
@@ -188,12 +170,11 @@ let NestedPicker = ({
     })
   )
   let showDescriptionPanel = _.some('description', options)
-
   return (
     <PickerContext.Provider
       value={{
         PickerItem,
-        TextHighlight,
+        TextHighlight: theme.TextHighlight,
         setHoverItem: _.debounce(100, (item) => (state.hoverItem = item)),
       }}
     >
@@ -230,7 +211,7 @@ let NestedPicker = ({
           <Observer>
             {() => (
               <>
-                <TextInput
+                <theme.TextInput
                   style={{ marginBottom: 10 }}
                   value={state.filter}
                   onChange={(e) => (state.filter = e.target.value)}
@@ -249,18 +230,18 @@ let NestedPicker = ({
             )}
           </Observer>
           <Flex justifyContent="space-between" style={{ marginTop: 20 }}>
-            <Button
+            <theme.Button
               onClick={() => {
                 state.checked = new Map()
                 onChange()
               }}
             >
               Cancel
-            </Button>
+            </theme.Button>
             <Observer>
               {() =>
                 !!state.checked.size && (
-                  <Button
+                  <theme.Button
                     primary
                     onClick={() => onChange(Array.from(state.checked.values()))}
                   >
@@ -269,7 +250,7 @@ let NestedPicker = ({
                       itemType,
                       state.checked.size
                     )}`}
-                  </Button>
+                  </theme.Button>
                 )
               }
             </Observer>
@@ -279,5 +260,3 @@ let NestedPicker = ({
     </PickerContext.Provider>
   )
 }
-
-export default withTheme(NestedPicker)

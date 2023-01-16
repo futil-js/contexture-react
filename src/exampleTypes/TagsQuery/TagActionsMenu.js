@@ -2,15 +2,11 @@ import React from 'react'
 import _ from 'lodash/fp.js'
 import F from 'futil'
 import { observer } from 'mobx-react'
-import { withTheme } from '../../utils/theme.js'
+import { useTheme } from '../../utils/hooks.js'
 import { getTag, tagTerm, tagValueField } from './utils.js'
 
-let TagActionsMenu = ({
-  tag,
-  node,
-  tree,
-  theme: { Button, Checkbox, RadioList },
-}) => {
+export default observer(function TagActionsMenu({ tag, node, tree, theme }) {
+  theme = useTheme(theme)
   let tagInstance = getTag(tag, node)
   return (
     <div
@@ -23,7 +19,7 @@ let TagActionsMenu = ({
       </div>
       {_.includes(' ', tag) && (
         <div style={{ margin: '10px 0' }}>
-          <RadioList
+          <theme.RadioList
             options={F.autoLabelOptions(['fuzzy', 'exact'])}
             value={tagInstance.distance ? 'fuzzy' : 'exact'}
             onChange={(value) => {
@@ -31,7 +27,7 @@ let TagActionsMenu = ({
               tree.mutate(node.path, { tags: [...node.tags] })
             }}
           />
-          <Button
+          <theme.Button
             onClick={() => {
               tree.mutate(node.path, {
                 tags: _.map((tag) => {
@@ -43,11 +39,11 @@ let TagActionsMenu = ({
             }}
           >
             Apply to all {tagTerm}s
-          </Button>
+          </theme.Button>
         </div>
       )}
       <label className="labeled-checkbox" style={{ marginTop: 15 }}>
-        <Checkbox
+        <theme.Checkbox
           checked={tagInstance.onlyShowTheseResults}
           onChange={(e) => {
             tagInstance.onlyShowTheseResults = e.target.checked
@@ -58,6 +54,4 @@ let TagActionsMenu = ({
       </label>
     </div>
   )
-}
-
-export default _.flow(observer, withTheme)(TagActionsMenu)
+})

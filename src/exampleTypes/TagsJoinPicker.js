@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import _ from 'lodash/fp.js'
-import { withTheme } from '../utils/theme.js'
+import { useNode, useTheme } from '../utils/hooks.js'
 
 export let tagToGroupJoin = (x = 'any') =>
   ({
@@ -19,18 +19,21 @@ let getJoinOptions = _.intersectionWith(
   ]
 )
 
-let TagsJoinPicker = ({
+export default observer(function TagsJoinPicker({
   node,
   tree,
-  theme: { Select },
+  path,
+  theme,
   joinOptions = ['any', 'all', 'none'],
-}) => (
-  <Select
-    value={node.join}
-    onChange={(e) => tree.mutate(node.path, { join: e.target.value })}
-    options={getJoinOptions(joinOptions)}
-    placeholder={false}
-  />
-)
-
-export default _.flow(observer, withTheme)(TagsJoinPicker)
+}) {
+  node = useNode(node, path, tree)
+  theme = useTheme(theme)
+  return (
+    <theme.Select
+      value={node.join}
+      onChange={(e) => tree.mutate(node.path, { join: e.target.value })}
+      options={getJoinOptions(joinOptions)}
+      placeholder={false}
+    />
+  )
+})

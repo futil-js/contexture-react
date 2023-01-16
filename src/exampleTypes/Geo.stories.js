@@ -11,8 +11,6 @@ export default {
 export const Geo = () => (
   <div
     style={{
-      backgroundColor: '#333',
-      color: '#AAA',
       padding: '20px',
       borderRadius: '10px',
     }}

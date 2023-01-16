@@ -10,7 +10,6 @@ export default {
     fields: options,
     tree: {
       add: action('add'),
-      // if falsey, withNode assumes an error
       getNode: () => true,
     },
   },

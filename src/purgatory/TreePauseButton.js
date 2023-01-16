@@ -1,16 +1,18 @@
 import React from 'react'
 import _ from 'lodash/fp.js'
 import { observer } from 'mobx-react'
-import { withTheme } from '../utils/theme.js'
+import { useTheme } from '../utils/hooks.js'
 
 let setPausedNested = (tree, path, value) =>
   tree[`${value ? '' : 'un'}pauseNested`](path)
 
-let TreePauseButton = ({
+export default observer(function TreePauseButton({
   children,
-  theme: { AlternateButton },
-  Component = AlternateButton,
-}) => {
+  theme,
+  Component,
+}) {
+  theme = useTheme(theme)
+  Component = Component || theme.AlternateButton
   let trees = _.flow(React.Children.toArray, _.map('props'))(children)
   let allPaused = _.every(({ tree, path }) => tree.isPausedNested(path), trees)
   let flip = () =>
@@ -20,6 +22,4 @@ let TreePauseButton = ({
       {`${allPaused ? 'Expand' : 'Collapse'} Filters`}
     </Component>
   )
-}
-
-export default _.flow(observer, withTheme)(TreePauseButton)
+})

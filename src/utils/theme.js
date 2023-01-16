@@ -1,7 +1,8 @@
 import React from 'react'
 import { greyVest } from '../themes/index.js'
+import { ThemeContext, useTheme } from './hooks.js'
 
-let ThemeContext = React.createContext()
+export { useTheme } from './hooks.js'
 
 export let ThemeProvider = ({ theme, children }) => {
   theme = { ...greyVest, ...theme }
@@ -13,12 +14,12 @@ export let ThemeProvider = ({ theme, children }) => {
   )
 }
 
-export let useTheme = () => React.useContext(ThemeContext)
+export let ThemeConsumer = ({ children, theme }) => children(useTheme(theme))
 
-export let ThemeConsumer = ({ children, theme }) =>
-  children({ ...useTheme(), ...theme })
-
+/**
+ * @deprecated
+ */
 export let withTheme =
   (Component) =>
   ({ theme, ...props }) =>
-    <Component theme={{ ...useTheme(), ...theme }} {...props} />
+    <Component theme={useTheme(theme)} {...props} />
