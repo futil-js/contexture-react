@@ -1,3 +1,5 @@
+> :warning: **Development has moved to the [contexture monorepo](https://github.com/smartprocure/contexture)**: This package lives in https://github.com/smartprocure/contexture/tree/master/packages/react
+
 # contexture-react
 
 React components for building contexture interfaces https://smartprocure.github.io/contexture-react
